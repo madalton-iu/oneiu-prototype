@@ -291,6 +291,52 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   margin:16px 0 8px;
 }
 .empty{padding:26px 10px;text-align:center;color:var(--muted);font-weight:600;font-size:14px}
+/* one.iu.edu-style task tiles */
+.task-chips{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
+.task-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:12px}
+.task-tile{position:relative;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:15px;display:flex;flex-direction:column;gap:7px;cursor:pointer;transition:transform .12s,box-shadow .12s,border-color .12s;color:var(--ink);min-height:150px}
+.task-tile:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--crimson)}
+.task-ic{width:44px;height:44px;border-radius:13px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:22px}
+.task-name{font-weight:800;font-size:14px;line-height:1.3}
+.task-desc{font-size:12px;color:var(--muted);font-weight:600;line-height:1.4;flex:1}
+.task-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.task-tag{font-size:10.5px;font-weight:800;color:var(--muted);background:var(--cream-dark);border-radius:999px;padding:3px 9px}
+.task-campus{font-size:10.5px;font-weight:800;color:var(--crimson);background:var(--red-soft);border-radius:999px;padding:3px 9px}
+.task-star{position:absolute;top:11px;right:11px;font-size:17px;color:#d9cdb6;background:none;border:0;line-height:1;padding:2px}
+.task-star.on{color:var(--gold)}
+.task-star:hover{transform:scale(1.12)}
+/* Kuali Time (timekeeping) */
+.kt-assign{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.kt-lbl{color:var(--muted);font-weight:700;flex-shrink:0}
+.kt-val{font-weight:800;text-align:right}
+.kt-hours{display:flex;gap:12px;margin:14px 0}
+.kt-hours>div{flex:1;background:var(--cream);border:1.5px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.kt-h{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.kt-hl{font-size:12px;color:var(--muted);font-weight:700;margin-top:2px}
+.kt-timer{text-align:center;margin:8px 0 14px}
+.kt-clock{display:block;font-size:26px;line-height:1;filter:hue-rotate(0)}
+#ktTimer{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px;margin-top:4px}
+.kt-since{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.kt-btn{width:100%;padding:14px;border-radius:14px;background:var(--crimson);color:#fff;font-weight:800;font-size:15px;border:0;cursor:pointer}
+.kt-btn:hover{background:var(--crimson-soft)}
+.kt-note{display:block;width:100%;margin-top:10px;padding:11px;border-radius:12px;background:none;border:1.5px solid var(--line);font-weight:800;font-size:13px;color:var(--crimson);cursor:pointer}
+.kt-note:hover{border-color:var(--crimson)}
+.kt-foot{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:12px;text-align:center}
+
+/* Canvas assignments list (Classes) */
+.assign-note{font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:8px}
+.assign{display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px dashed var(--line)}
+.assign:last-child{border-bottom:none}
+.assign-ic{width:38px;height:38px;border-radius:11px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.assign-course{font-size:11.5px;font-weight:800;color:var(--blue)}
+.assign-title{font-weight:700;font-size:14px;margin-top:1px;line-height:1.3}
+.assign-right{margin-left:auto;text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.assign-due{font-size:12px;font-weight:700;color:var(--muted)}
+.assign-due.soon{color:var(--crimson)}
+.assign-link{font-size:12px;font-weight:800;color:var(--crimson);background:none;border:0;padding:0;cursor:pointer;white-space:nowrap}
+.assign-link:hover{text-decoration:underline}
+.assign-all{margin-top:12px;width:100%;padding:10px;border-radius:12px;background:var(--cream);border:1.5px solid var(--line);font-weight:800;font-size:12.5px;color:var(--crimson)}
+.assign-all:hover{background:#fff;border-color:var(--crimson)}
 
 /* campus map */
 .map-wrap{grid-column:1/-1}
@@ -549,6 +595,9 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .step .stt{font-weight:800;font-size:14.5px}
 .step.todo .stt{color:var(--muted)}
 .step .sts{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.45}
+.step-src{display:inline-block;margin-left:8px;font-size:10px;font-weight:800;color:var(--muted);background:var(--cream-dark);border-radius:999px;padding:2px 8px;vertical-align:middle;text-transform:uppercase;letter-spacing:.3px}
+.step-link{font-size:12px;font-weight:800;color:var(--crimson);background:none;border:0;padding:0;cursor:pointer;white-space:nowrap}
+.step-link:hover{text-decoration:underline}
 
 /* notice */
 .notice{display:flex;gap:14px;align-items:flex-start;border-radius:var(--r-lg);padding:18px 20px}
@@ -712,6 +761,7 @@ body.dark .seg button.active,
 body.dark .qa .qi,
 body.dark .omni-group,
 body.dark .model,
+body.dark .task-tile,
 body.dark .admin-box .close{ background:var(--card); }
 body.dark .qa:hover{ background:#2b251f; }
 body.dark .card{ background:var(--card); }
@@ -735,6 +785,12 @@ body.dark .seg button.active,
 body.dark .team .logo .trident,
 body.dark .cc-manage,
 body.dark .prog-label span:last-child,
+body.dark .task-campus,
+body.dark .assign-due.soon,
+body.dark .assign-link,
+body.dark .assign-all,
+body.dark .kt-note,
+body.dark .step-link,
 body.dark .pcard .pr,
 body.dark .w-controls button:hover,
 body.dark .lbtn:hover,
@@ -1041,7 +1097,6 @@ applicant: {
     {id:"ai_ap2",src:"admissions",title:"Reserve a Red Carpet Day visit",desc:"Oct 10 session is 80% full.",due:"Optional",action:{label:"Reserve visit",target:"the Admissions visit scheduler"},confirm:"system",confirmedBy:"the scheduler records your reservation"},
     {id:"ai_ap3",src:"housing",title:"Submit housing interest form",desc:"Improves your room-selection order later.",due:"Optional",action:{label:"Open form",target:"the Residential Programs form"},confirm:"system",confirmedBy:"the submission is recorded"},
     {id:"ai_ap4",src:"email",title:"Reply about your scholarship interview",desc:"Counselor asked for your availability next week.",due:"Flagged 2d ago",action:{label:"Open in email",target:"your IU email thread"},confirm:"self"},
-    {id:"ai_ap5",src:"reminder",title:"Ask Mr. Lee for a recommendation letter",desc:"You added this reminder.",due:"No date",confirm:"self"},
   ],
   notifCount:2,
   notifications:[
@@ -1062,10 +1117,10 @@ applicant: {
       {type:"hero",kicker:"Application status",title:"Your application is in review",
        sub:"Your Kelley School of Business application is complete and with the admissions committee. Decisions will post by March 15.",
        stats:[{n:"4/4",l:"Items received"},{n:"Mar 15",l:"Decision by"},{n:"2",l:"To-dos open"}]},
-      {type:"steps",title:"📄 Application tracker",items:[
+      {type:"steps",title:"📄 Application tracker · from Admissions",items:[
         {title:"Application submitted",sub:"Received Nov 1 — within the early action window.",state:"done"},
         {title:"Transcript & test scores in",sub:"All supporting materials verified.",state:"done"},
-        {title:"In committee review",sub:"The admissions committee is reviewing your file.",state:"now"},
+        {title:"In committee review",sub:"The admissions committee is reviewing your file.",state:"now",src:"Admissions",link:"your application status",linkLabel:"Check status"},
         {title:"Decision released",sub:"You will receive an email and a status update here by March 15.",state:"todo"},
       ]},
       {type:"actionitems"},
@@ -1079,7 +1134,7 @@ applicant: {
     tasks:[{type:"tasklauncher"}],
     campus:[{type:"campusmap"},{type:"campusfeed"}],
     application:[
-      {type:"steps",title:"📄 Kelley School of Business — Direct Admit",items:[
+      {type:"steps",title:"📄 Kelley School of Business — Direct Admit · from Admissions",items:[
         {title:"Application submitted",sub:"Common App received Nov 1, 2026 · Early Action",state:"done"},
         {title:"Transcript received",sub:"Bloomington HS South · GPA verified",state:"done"},
         {title:"Test scores received",sub:"SAT 1380 (self-reported, verified)",state:"done"},
@@ -1112,10 +1167,10 @@ applicant: {
         {icon:"📚",label:"Books & misc",value:"$2,050",note:"Estimate"},
         {icon:"✨",label:"Avg. freshman award",value:"$11,500",note:"Grants + scholarships"},
       ]},
-      {type:"tasks",title:"✅ Financial aid to-dos",items:[
-        {id:"aid1",txt:"File FAFSA — IU code 001809",due:"Opens Oct 1 · priority deadline Apr 15",urgent:true},
-        {id:"aid2",txt:"IU Academic Scholarships",due:"Automatically considered with your Nov 1 application"},
-        {id:"aid3",txt:"Check 21st Century Scholars eligibility",due:"Indiana residents only"},
+      {type:"list",title:"💰 Financial aid — what's outstanding",items:[
+        {icon:"💸",bg:"gold",title:"File your FAFSA",sub:"IU code 001809 · priority Apr 15",src:"Financial Aid",link:"FAFSA at studentaid.gov",linkLabel:"File"},
+        {icon:"✨",bg:"gold",title:"IU Academic Scholarships",sub:"Automatically considered with your Nov 1 application",src:"Financial Aid"},
+        {icon:"🎓",bg:"green",title:"21st Century Scholars",sub:"Check eligibility · Indiana residents",src:"Financial Aid",link:"the eligibility check",linkLabel:"Check"},
       ]},
       {type:"notice",tone:"green",icon:"🤝",title:"Financial aid assistance",
        sub:"Student Central can walk you and your family through your aid options. Call (812) 855-6500 or chat online, weekdays 9 a.m.–4 p.m."},
@@ -1159,13 +1214,13 @@ firstyear: {
     ill:[{title:"Finite Mathematics (7th ed.) — chapter scan",status:"Ready — check your email"}],
     rooms:[{room:"Wells Library · Room 234",when:"Today 6:00–8:00 p.m.",status:"Reserved"}]},
   favorites:["canvas","timesheet","dining","bus","grades","payBill"],
+  kualitime:{assignment:"Work-Study · Wells Library (circ. desk)",rate:"$15.00/hr",todayMin:0,weekMin:570},
   actionItems:[
     {id:"ai_fy1",src:"hr",title:"Submit work-study timesheet",desc:"9.5 of 12 hours logged.",due:"Fri 5:00 p.m.",high:true,action:{label:"Open Kuali Time",target:"Kuali Time"},confirm:"approval",approver:"your supervisor"},
     {id:"ai_fy2",src:"canvas",title:"MATH-M 118 · Problem Set 7",desc:"Finite Math · submit on the assignment page.",due:"Tomorrow 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
     {id:"ai_fy3",src:"advising",title:"Confirm your advising appointment",desc:"Spring planning · Ferguson 2042.",due:"Thu 3:30 p.m.",action:{label:"Confirm time",target:"the advising scheduler"},confirm:"system",confirmedBy:"the scheduler marks it confirmed"},
     {id:"ai_fy4",src:"compliance",title:"FERPA refresher training",desc:"Required for student employees · ~15 min.",due:"End of month",action:{label:"Start training",target:"IU Learn"},confirm:"system",confirmedBy:"IU Learn logs your completion"},
     {id:"ai_fy5",src:"events",title:"RSVP: Teter floor event",desc:"Pizza night, hosted by your RA.",due:"Friday",action:{label:"RSVP",target:"the event page"},confirm:"system",confirmedBy:"your RSVP is recorded"},
-    {id:"ai_fy6",src:"reminder",title:"Buy a graphing calculator",desc:"You added this reminder for stats next term.",due:"No date",confirm:"self"},
   ],
   notifCount:3,
   notifications:[
@@ -1194,6 +1249,7 @@ firstyear: {
         {t1:"7:00",t2:"8:00",title:"Intramural volleyball",loc:"SRSC Court 3",color:"green"},
       ]},
       {type:"actionitems"},
+      {type:"kualitime"},
       {type:"crimsoncard"},
       {type:"orgs"},
       {type:"libraries"},
@@ -1209,10 +1265,11 @@ firstyear: {
         {icon:"🌎",bg:"green",title:"GEOG-G 110 · Human Geography",sub:"TR 1:00–2:15 · Student Building 150",right:"B",rightSub:"current"},
         {icon:"🎹",bg:"gold",title:"MUS-Z 111 · Intro to Music Theory",sub:"F 1:25–2:15 · Simon Music Center",right:"A",rightSub:"current"},
       ]},
-      {type:"tasks",title:"📌 Due this week",items:[
-        {id:"c1",txt:"Finite problem set 7",due:"Tomorrow 11:59pm",urgent:true},
-        {id:"c2",txt:"W131 draft 2 peer review",due:"Thursday in class"},
-        {id:"c3",txt:"Geography map quiz",due:"Friday · Canvas"},
+      {type:"assignments",title:"📚 Assignments due this week",items:[
+        {course:"MATH-M 118",title:"Problem Set 7",due:"Tomorrow · 11:59 p.m.",soon:true},
+        {course:"ENG-W 131",title:"Draft 2 — peer review",due:"Thursday, in class"},
+        {course:"GEOG-G 110",title:"Map quiz",due:"Friday · 11:59 p.m."},
+        {course:"MUS-Z 111",title:"Listening journal 4",due:"Sunday · 11:59 p.m."},
       ]},
       {type:"notice",tone:"blue",icon:"🧭",title:"Spring registration opens in 2 weeks",
        sub:"Your advising hold clears after Thursday's meeting. Consider bringing two or three majors you are interested in — the Majors & Minors Fair on Tuesday is a good starting point."},
@@ -1230,9 +1287,9 @@ firstyear: {
         {t1:"Today",t2:"3h",title:"Circ desk · 2:00–5:00pm",loc:"East desk · clock in on arrival",tag:"Today",color:"gold",now:true},
         {t1:"Fri",t2:"3h",title:"Stacks shelving · 10:00–1:00",loc:"4th floor",color:"blue"},
       ]},
-      {type:"tasks",title:"✅ Work to-dos",items:[
-        {id:"w1",txt:"Submit timesheet for this week",due:"Friday 5pm — supervisors approve Monday",urgent:true},
-        {id:"w2",txt:"Complete FERPA refresher training",due:"Due end of month · 15 min online"},
+      {type:"list",title:"💼 Work — what's outstanding",items:[
+        {icon:"⏱️",bg:"purple",title:"Submit this week's timesheet",sub:"Friday 5pm · supervisor approves Monday",src:"Kuali Time",link:"Kuali Time",linkLabel:"Open"},
+        {icon:"🛡️",bg:"red",title:"FERPA refresher training",sub:"Due end of month · ~15 min",src:"IU Learn",link:"IU Learn",linkLabel:"Start"},
       ]},
       {type:"notice",tone:"green",icon:"📊",title:"Award pacing",
        sub:"At about 12 hours per week, you will use your full $2,800 work-study award by late April. To request additional spring hours, contact your supervisor by November."},
@@ -1310,7 +1367,6 @@ senior: {
     {id:"ai_sr4",src:"canvas",title:"INFO-I 494 · User research report",desc:"Capstone milestone 2.",due:"Next Friday",action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
     {id:"ai_sr5",src:"finaid",title:"Complete federal loan exit counseling",desc:"Required before you graduate.",due:"Before December",action:{label:"Open studentaid.gov",target:"loan exit counseling"},confirm:"system",confirmedBy:"studentaid.gov reports completion to IU"},
     {id:"ai_sr6",src:"deptform",title:"Order cap & gown",desc:"IU Bookstore · rental ~$65.",due:"By Nov 14",action:{label:"Order regalia",target:"the IU Bookstore"},confirm:"system",confirmedBy:"your order is confirmed at checkout"},
-    {id:"ai_sr7",src:"reminder",title:"Add capstone to LinkedIn portfolio",desc:"You added this reminder.",due:"No date",confirm:"self"},
   ],
   notifCount:3,
   notifications:[
@@ -1360,22 +1416,22 @@ senior: {
         {icon:"⚖️",bg:"blue",title:"INFO-I 453 · Computer & Info Ethics",sub:"Online asynchronous",right:"A",rightSub:"current"},
         {icon:"🎨",bg:"gold",title:"FINA-A 110 · 1-cr A&H elective",sub:"Not yet enrolled — required to graduate",badge:{txt:"Action needed",cls:"red"}},
       ]},
-      {type:"tasks",title:"📌 Due soon",items:[
-        {id:"sc1",txt:"Capstone: user research report",due:"Next Friday",urgent:true},
-        {id:"sc2",txt:"ML assignment 4: model evaluation",due:"Monday 11:59pm"},
-        {id:"sc3",txt:"Ethics discussion post + 2 replies",due:"Sunday"},
+      {type:"assignments",title:"📚 Assignments due soon",items:[
+        {course:"INFO-I 494",title:"Capstone — user research report",due:"Next Friday · 11:59 p.m.",soon:true},
+        {course:"INFO-I 421",title:"Assignment 4 — model evaluation",due:"Monday · 11:59 p.m."},
+        {course:"INFO-I 453",title:"Ethics discussion post + 2 replies",due:"Sunday · 11:59 p.m."},
       ]},
     ],
     graduation:[
       {type:"steps",title:"🎓 Graduation checklist · December 2026",items:[
-        {title:"Degree audit review",sub:"Completed with your advisor in April — 94% complete.",state:"done"},
-        {title:"Register for final credits",sub:"12 credits enrolled — 1 A&H credit still to add.",state:"done"},
-        {title:"Apply to graduate",sub:"Window is open now — deadline Sept 15.",state:"now"},
-        {title:"Clear the last audit item",sub:"Add a 1-credit A&H course (FINA-A 110 or MUS-Z 103 have open seats).",state:"now"},
-        {title:"Order cap & gown",sub:"IU Bookstore, by Nov 14. Rental approximately $65.",state:"todo"},
-        {title:"Commencement — Dec 19",sub:"Simon Skjodt Assembly Hall · guest tickets available in Nov.",state:"todo"},
+        {title:"Degree audit review",sub:"94% complete — reviewed with your advisor in April.",state:"done",src:"iGPS",link:"your iGPS degree audit",linkLabel:"View audit"},
+        {title:"Register for final credits",sub:"12 credits enrolled — 1 A&H credit still to add.",state:"done",src:"SIS"},
+        {title:"Apply to graduate",sub:"Window is open now — deadline Sept 15.",state:"now",src:"Registrar",link:"the graduation application",linkLabel:"Apply"},
+        {title:"Add the last A&H credit",sub:"FINA-A 110 or MUS-Z 103 have open seats.",state:"now",src:"SIS",link:"Student Center registration",linkLabel:"Register"},
+        {title:"Order cap & gown",sub:"By Nov 14 · rental ~$65.",state:"todo",src:"IU Bookstore",link:"the IU Bookstore",linkLabel:"Order"},
+        {title:"Commencement — Dec 19",sub:"Simon Skjodt Assembly Hall · guest tickets open in Nov.",state:"todo",src:"Info"},
       ]},
-      {type:"progress",title:"📊 Degree audit",pct:94,label:"114 / 120 credits",
+      {type:"progress",title:"📊 Degree audit · from iGPS",pct:94,label:"114 / 120 credits",
        note:"Major core complete · Cognate complete · Capstone in progress · 1 credit of Arts & Humanities remaining."},
       {type:"notice",tone:"gold",icon:"⏰",title:"Key deadlines",
        sub:"Apply to graduate by September 15, and enroll in the remaining A&H credit before add/drop closes. The remaining items are ceremony logistics."},
@@ -1402,10 +1458,10 @@ senior: {
         {icon:"💰",label:"Payment plan",value:"Available",note:"4 installments, no interest"},
         {icon:"🧢",label:"Cap & gown",value:"~$65",note:"Order by Nov 14"},
       ]},
-      {type:"tasks",title:"✅ Financial to-dos",items:[
-        {id:"sm1",txt:"Pay or set up plan for fall balance",due:"$1,284 due Aug 10",urgent:true},
-        {id:"sm2",txt:"Complete federal loan exit counseling",due:"Required for December graduates"},
-        {id:"sm3",txt:"Use remaining printing & Crimson Cash",due:"Balances expire after your final semester"},
+      {type:"list",title:"💳 Account — what's outstanding",items:[
+        {icon:"🧾",bg:"red",title:"Pay fall balance ($1,284)",sub:"Due Aug 10 · or enroll in the payment plan",src:"Bursar",link:"the Bursar payment page",linkLabel:"Pay"},
+        {icon:"🎓",bg:"gold",title:"Federal loan exit counseling",sub:"Required before December graduation",src:"Financial Aid",link:"studentaid.gov",linkLabel:"Start"},
+        {icon:"💵",bg:"blue",title:"Use remaining printing & Crimson Cash",sub:"Balances expire after your final semester",src:"CrimsonCard"},
       ]},
       {type:"notice",tone:"blue",icon:"🧮",title:"Loan repayment estimate",
        sub:"On a standard 10-year plan, $21,400 is approximately $225/month beginning June 2027. MoneySmarts offers free one-on-one repayment planning sessions."},
@@ -1436,7 +1492,6 @@ staff: {
     {id:"ai_st3",src:"benefits",title:"Apply the employee tuition benefit",desc:"For your fall SPEA-V 506 course.",due:"Aug 1",action:{label:"Apply benefit",target:"the HR benefits portal"},confirm:"approval",approver:"HR Benefits (eligibility review)"},
     {id:"ai_st4",src:"deptform",title:"Submit Welcome Week final budget",desc:"Route to your director for sign-off.",due:"Friday",action:{label:"Open budget form",target:"the finance form"},confirm:"approval",approver:"your director"},
     {id:"ai_st5",src:"hr",title:"Performance self-assessment",desc:"Submit your portion of the annual review.",due:"Sept 19",action:{label:"Open self-assessment",target:"the HR review tool"},confirm:"system",confirmedBy:"your submission is recorded (manager review follows)"},
-    {id:"ai_st6",src:"reminder",title:"Reserve Alumni Hall for orientation",desc:"You added this reminder.",due:"No date",confirm:"self"},
   ],
   notifCount:3,
   notifications:[
@@ -1482,12 +1537,6 @@ staff: {
         {icon:"⏱️",bg:"gold",title:"Timesheet · Alex R.",sub:"7.5 hrs · social media",badge:{txt:"Approve",cls:"gold"}},
         {icon:"🧾",bg:"blue",title:"Reimbursement · vendor deposit",sub:"$240 · Dunn Meadow stage",badge:{txt:"In review",cls:"blue"}},
       ]},
-      {type:"tasks",title:"📋 Projects on deck",items:[
-        {id:"sw1",txt:"Welcome Week final budget → director",due:"Friday",urgent:true},
-        {id:"sw2",txt:"Fall student-staff hiring: post 6 roles",due:"This week"},
-        {id:"sw3",txt:"Draft FYE newsletter #1",due:"Aug 4"},
-        {id:"sw4",txt:"Reserve Alumni Hall for family orientation",due:"Aug 12"},
-      ]},
       {type:"notice",tone:"blue",icon:"🗓️",title:"Performance check-ins open Sept 1",
        sub:"Annual review self-assessments are due September 19. Your director has shared this year's template."},
     ],
@@ -1509,10 +1558,10 @@ staff: {
         {icon:"💵",bg:"green",title:"Jun 26 · Biweekly",sub:"Regular pay",right:"$2,104.17",rightSub:"net"},
         {icon:"💵",bg:"green",title:"Jun 12 · Biweekly",sub:"Regular pay",right:"$2,104.17",rightSub:"net"},
       ]},
-      {type:"tasks",title:"✅ Benefits to-dos",items:[
-        {id:"sb1",txt:"Review open enrollment changes",due:"Window: Oct 15 – Nov 5",urgent:true},
-        {id:"sb2",txt:"Apply tuition benefit for fall course",due:"By Aug 1 — SPEA-V 506 qualifies"},
-        {id:"sb3",txt:"Update HSA contribution for 2027",due:"During open enrollment"},
+      {type:"list",title:"🏥 Benefits — what's outstanding",items:[
+        {icon:"🏥",bg:"red",title:"Review open enrollment changes",sub:"Window Oct 15 – Nov 5",src:"HR Benefits",link:"the benefits portal",linkLabel:"Review"},
+        {icon:"🎓",bg:"green",title:"Apply tuition benefit for fall course",sub:"By Aug 1 · SPEA-V 506 qualifies",src:"HR Benefits",link:"the benefits portal",linkLabel:"Apply"},
+        {icon:"🏦",bg:"blue",title:"Update HSA contribution for 2027",sub:"During open enrollment",src:"HR Benefits"},
       ]},
       {type:"notice",tone:"green",icon:"🎓",title:"Tuition benefit deadline",
        sub:"IU covers a significant portion of tuition for staff, and 50% for dependents at IU campuses. Your fall course qualifies — apply before August 1."},
@@ -1572,7 +1621,6 @@ faculty: {
     {id:"ai_fac4",src:"deptform",title:"Sign PhD committee form — J. Kim",desc:"Yours is the last signature needed.",due:"This week",action:{label:"Sign form",target:"the Graduate School form"},confirm:"system",confirmedBy:"the form records your signature and closes"},
     {id:"ai_fac5",src:"compliance",title:"Annual conflict-of-interest disclosure",desc:"Required for all PIs.",due:"Aug 15",action:{label:"Open disclosure",target:"the compliance disclosure form"},confirm:"system",confirmedBy:"the disclosure system logs your filing"},
     {id:"ai_fac6",src:"registrar",title:"Submit spring textbook orders",desc:"Bookstore adoption deadline.",due:"Aug 15",action:{label:"Open adoptions",target:"the textbook adoption tool"},confirm:"system",confirmedBy:"the adoption tool records your orders"},
-    {id:"ai_fac7",src:"reminder",title:"Email co-PI about revised budget",desc:"You added this reminder.",due:"No date",confirm:"self"},
   ],
   notifCount:3,
   notifications:[
@@ -1616,10 +1664,10 @@ faculty: {
         {icon:"🎨",bg:"red",title:"INFO-I 365 · HCI Design",sub:"MWF 10:10–11:25 · Luddy 1106 · 82 enrolled",badge:{txt:"Grades due Fri",cls:"red"}},
         {icon:"🧪",bg:"purple",title:"INFO-I 590 · Grad UX Methods",sub:"T 4:00–6:30 · Luddy 3166 · 18 enrolled",badge:{txt:"On track",cls:"green"}},
       ]},
-      {type:"tasks",title:"📝 Grading queue",items:[
-        {id:"ft1",txt:"I-365 midterm projects — 38 remaining",due:"Grades due Friday",urgent:true},
-        {id:"ft2",txt:"I-590 annotated bibliographies — 18",due:"Return by next Tuesday"},
-        {id:"ft3",txt:"Regrade requests (2)",due:"Respond within one week per syllabus"},
+      {type:"list",title:"📝 Grading queue",items:[
+        {icon:"📘",bg:"red",title:"INFO-I 365 · midterm projects",sub:"38 to grade · grades due Friday",src:"Canvas",link:"the Faculty Center roster",linkLabel:"Grade"},
+        {icon:"📗",bg:"blue",title:"INFO-I 590 · annotated bibliographies",sub:"18 to grade · return by Tuesday",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
+        {icon:"↩️",bg:"gold",title:"Regrade requests (2)",sub:"Respond within one week per syllabus",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Open"},
       ]},
       {type:"list",title:"📊 Course pulse",items:[
         {icon:"📈",bg:"green",title:"I-365 attendance",sub:"Averaging 91% — up from 84% last term",right:"91%"},
@@ -1645,10 +1693,10 @@ faculty: {
        sub:"Unapproved course plans will block your advisees from registering. The two pending approvals take about 3 minutes each."},
     ],
     research:[
-      {type:"steps",title:"🔬 NSF CAREER proposal — status",items:[
+      {type:"steps",title:"🔬 NSF CAREER proposal — status · from Kuali Research/ORA",items:[
         {title:"Draft complete",sub:"Project description v4 finalized with co-PI.",state:"done"},
         {title:"Budget approved by department",sub:"$642K over 5 years · signed off Jul 8.",state:"done"},
-        {title:"Route through ORA",sub:"Internal deadline Aug 1 — routing should begin now.",state:"now"},
+        {title:"Route through ORA",sub:"Internal deadline Aug 1 — routing should begin now.",state:"now",src:"Kuali/ORA",link:"Kuali Research routing",linkLabel:"Route"},
         {title:"NSF submission",sub:"Sponsor deadline Sep 15.",state:"todo"},
       ]},
       {type:"balances",title:"💰 Active awards",items:[
@@ -1674,7 +1722,6 @@ parent: {
     {id:"ai_pa2",src:"events",title:"Register for Family Weekend",desc:"Oct 17–19 · includes the Homecoming game.",due:"Hotels limited",action:{label:"Register",target:"Family Weekend registration"},confirm:"system",confirmedBy:"your registration is confirmed at checkout"},
     {id:"ai_pa3",src:"deptform",title:"Verify emergency contact info",desc:"Annual verification · ~2 min.",due:"This month",action:{label:"Review contacts",target:"the emergency contact form"},confirm:"system",confirmedBy:"the form saves your confirmation"},
     {id:"ai_pa4",src:"email",title:"Reply to the move-in logistics email",desc:"Residential Programs asked which arrival window you prefer.",due:"Flagged 4d ago",action:{label:"Open in email",target:"your IU email thread"},confirm:"self"},
-    {id:"ai_pa5",src:"reminder",title:"Book a Bloomington hotel",desc:"You added this reminder for Family Weekend.",due:"No date",confirm:"self"},
   ],
   notifCount:2,
   notifications:[
@@ -1767,6 +1814,7 @@ state.ai = { filter:"all", explain:false };
 state.omniQ = "";
 state.feedTab = "events";
 state.feedSport = "All";
+state.ktIn = false; state.ktSince = 0; state.ktSinceLabel = "";
 state.theme = "light";
 state.settings = { notifs:true, digest:false, reduceMotion:false };
 try{ const th=localStorage.getItem("oneiu_theme"); if(th) state.theme=th;
@@ -1841,7 +1889,10 @@ function renderCard(c){
     case "list": return card(c.title, c.items.map(i=>`
       <div class="li">
         <div class="lic ${esc(i.bg||"")}">${esc(i.icon)}</div>
-        <div style="min-width:0"><div class="lit">${esc(i.title)}</div><div class="lis">${esc(i.sub)}</div></div>
+        <div style="min-width:0">
+          <div class="lit">${esc(i.title)}${i.src?`<span class="step-src">${esc(i.src)}</span>`:""}</div>
+          <div class="lis">${esc(i.sub)}${i.link?` <button class="step-link" onclick="toast('Prototype: opens ${esc(i.link)}.')">${esc(i.linkLabel||"Open")} ↗</button>`:""}</div>
+        </div>
         <div class="lir">
           ${i.badge?`<span class="badge ${esc(i.badge.cls)}">${esc(i.badge.txt)}</span>`:""}
           ${i.right?`<div class="lirt">${esc(i.right)}</div>`:""}
@@ -1857,6 +1908,19 @@ function renderCard(c){
     case "libraries": return renderLibraries();
     case "campusfeed": return renderCampusFeed();
     case "signin": return renderSignin();
+    case "kualitime": return renderKualiTime();
+    case "assignments": return card(c.title,
+      `<div class="assign-note">📘 From Canvas · your enrolled courses</div>` +
+      c.items.map(a=>`
+      <div class="assign">
+        <div class="assign-ic">📘</div>
+        <div style="min-width:0"><div class="assign-course">${esc(a.course)}</div><div class="assign-title">${esc(a.title)}</div></div>
+        <div class="assign-right">
+          <div class="assign-due ${a.soon?"soon":""}">${esc(a.due)}</div>
+          <button class="assign-link" onclick="toast('Prototype: opens “${esc(a.title)}” in Canvas.')">Open in Canvas ↗</button>
+        </div>
+      </div>`).join("") +
+      `<button class="assign-all" onclick="toast('Prototype: opens your Canvas dashboard.')">View all in Canvas ↗</button>`);
     case "progress": return card(c.title, `
       <div class="prog-label"><span>${esc(c.label)}</span><span>${c.pct}%</span></div>
       <div class="prog-bar"><div class="prog-fill" style="width:${c.pct}%"></div></div>
@@ -1864,7 +1928,10 @@ function renderCard(c){
     case "steps": return card(c.title, c.items.map((s,i)=>`
       <div class="step ${s.state}">
         <div class="rail"><div class="knob">${s.state==="done"?"✓":i+1}</div>${i<c.items.length-1?'<div class="wire"></div>':""}</div>
-        <div class="sbody"><div class="stt">${esc(s.title)}</div><div class="sts">${esc(s.sub)}</div></div>
+        <div class="sbody">
+          <div class="stt">${esc(s.title)}${s.src?`<span class="step-src">${esc(s.src)}</span>`:""}</div>
+          <div class="sts">${esc(s.sub)}${s.link?` <button class="step-link" onclick="toast('Prototype: opens ${esc(s.link)}.')">${esc(s.linkLabel||"Open")} ↗</button>`:""}</div>
+        </div>
       </div>`).join(""));
     case "notice": return `
       <div class="notice ${esc(c.tone)}"><div class="ni">${esc(c.icon)}</div>
@@ -1907,34 +1974,24 @@ function renderTaskLauncher(){
   return `<div class="card span2">
     <div class="card-head"><h3>⊞ One.IU tasks</h3>
       <span class="link" style="cursor:default;color:var(--muted)">${personaTasks().length} tasks${P().guest?"":" for your role"}</span></div>
-    <input class="tsearch" id="taskSearchInput" type="text" placeholder="Search all One.IU tasks (e.g., transcript, parking, W-2)…"
-      value="${esc(state.q).replace(/"/g,"&quot;")}" oninput="onTaskSearch(this.value)">
-    <div class="chips" id="taskChips">${cats.map(c=>`
+    <div class="task-chips" id="taskChips">${cats.map(c=>`
       <button class="chip ${state.cat===c?"active":""}" onclick="setCat('${c}')">${c}</button>`).join("")}</div>
     <div id="taskResults">${taskResultsHTML()}</div>
   </div>`;
 }
 function taskResultsHTML(){
-  const q = state.q.trim().toLowerCase();
-  let list, note = "";
-  if(q){
-    list = TASKS.filter(t => (t.name+" "+t.desc+" "+t.cat).toLowerCase().includes(q));
-    note = `<div class="launch-divider">Search results across all of One.IU</div>`;
-  } else {
-    list = personaTasks();
-    if(state.cat!=="All") list = list.filter(t=>t.cat===state.cat);
-  }
-  if(!list.length) return `<div class="empty">No tasks match "${esc(state.q)}".</div>`;
-  return note + list.map(t=>`
-    <div class="li" style="cursor:pointer" onclick="launchTask('${t.id}')">
-      <div class="lic">${t.icon}</div>
-      <div style="min-width:0"><div class="lit">${esc(t.name)}</div><div class="lis">${esc(t.desc)}</div></div>
-      <div class="lir" style="display:flex;align-items:center;gap:8px">
-        <span class="cat-tag">${esc(t.cat)}</span>
-        ${P().guest?"":`<button class="star ${state.favs.has(t.id)?"on":""}" title="Favorite"
-          onclick="toggleFav(event,'${t.id}')">${state.favs.has(t.id)?"★":"☆"}</button>`}
-      </div>
-    </div>`).join("");
+  let list = personaTasks();
+  if(state.cat!=="All") list = list.filter(t=>t.cat===state.cat);
+  if(!list.length) return `<div class="empty">No tasks in ${esc(state.cat)}.</div>`;
+  return `<div class="task-grid">${list.map(t=>`
+    <div class="task-tile" onclick="launchTask('${t.id}')">
+      ${P().guest?"":`<button class="task-star ${state.favs.has(t.id)?"on":""}" title="Favorite"
+        onclick="toggleFav(event,'${t.id}')">${state.favs.has(t.id)?"★":"☆"}</button>`}
+      <div class="task-ic">${t.icon}</div>
+      <div class="task-name">${esc(t.name)}</div>
+      <div class="task-desc">${esc(t.desc)}</div>
+      <div class="task-meta"><span class="task-campus">IUB</span><span class="task-tag">${esc(t.cat)}</span></div>
+    </div>`).join("")}</div>`;
 }
 function onTaskSearch(v){ state.q = v; refreshTaskResults(); }
 function setCat(c){ state.cat = c; state.q=""; const i=$("taskSearchInput"); if(i) i.value="";
@@ -2093,7 +2150,6 @@ function aiFiltered(){
   let l=aiLive(); const f=state.ai.filter;
   if(f==="urgent")    l=l.filter(i=>i.high);
   if(f==="progress")  l=l.filter(i=>aiStarted(i.id));
-  if(f==="reminders") l=l.filter(i=>i.src==="reminder");
   return l;
 }
 function aiActiveCount(){ return aiLive().filter(i=>!aiResolved(i.id)).length; }
@@ -2109,24 +2165,16 @@ function aiInner(){
   });
   const dismissedCount = state.aiDismissed[state.persona].size;
   return `
-    <div class="ai-head"><span class="w-title">Action Items</span><span class="count-badge">${aiActiveCount()}</span>
-      <button class="ai-add" onclick="aiToggleCompose()">${state.ai.compose?"✕ Cancel":"＋ Reminder"}</button></div>
+    <div class="ai-head"><span class="w-title">Action Items</span><span class="count-badge">${aiActiveCount()}</span></div>
     <div class="ai-sub">Actions from across IU. A link starts a task; its source marks it done.</div>
-    ${state.ai.compose?`<div class="ai-compose">
-      <input id="aiRemTitle" class="ai-rem-input" type="text" placeholder="Add a personal reminder…" autocomplete="off"
-        onkeydown="if(event.key==='Enter')aiAddReminder(); if(event.key==='Escape')aiToggleCompose()">
-      <input id="aiRemDue" class="ai-rem-input" type="text" placeholder="When? (optional — e.g. Friday)" autocomplete="off"
-        onkeydown="if(event.key==='Enter')aiAddReminder()">
-      <button class="act" onclick="aiAddReminder()">Add reminder</button>
-    </div>`:""}
     <button class="explainer-toggle" onclick="aiToggleExplain()">${state.ai.explain?"▾":"▸"} How “done” works</button>
     <div class="explainer ${state.ai.explain?"open":""}">
       <div class="model-row"><span class="model-key">🔗</span><div><b>System-confirmed</b> (default). Clears when the source reports it — Canvas, Bursar, Registrar. Starting isn't finishing.</div></div>
       <div class="model-row"><span class="model-key">🖊️</span><div><b>Needs approval.</b> You act, then someone else signs off. Shows as awaiting them.</div></div>
-      <div class="model-row"><span class="model-key">🙋</span><div><b>Self-reported.</b> Email, reminders — nothing verifies these. “Mark done” only clears your list.</div></div>
+      <div class="model-row"><span class="model-key">🙋</span><div><b>Self-reported.</b> Email requests — nothing verifies these. “Mark done” only clears your list.</div></div>
       <div style="margin-top:9px"><b>Dismiss</b> just hides an item — use it if you've handled something the feed hasn't caught up on. It never notifies the source.</div>
     </div>
-    <div class="ai-chips">${aiChip("all","All")}${aiChip("urgent","Urgent")}${aiChip("progress","In progress")}${aiChip("reminders","My reminders")}</div>
+    <div class="ai-chips">${aiChip("all","All")}${aiChip("urgent","Urgent")}${aiChip("progress","In progress")}</div>
     <div class="ai-items">${ list.length ? `<div class="ai-grid">${list.map(aiRenderItem).join("")}</div>` : aiEmpty() }</div>
     <div class="ai-foot">
       ${dismissedCount ? `<span class="restore" onclick="aiRestoreAll()">↺ Restore ${dismissedCount} dismissed</span>` : `<span>Nothing dismissed</span>`}
@@ -2185,27 +2233,12 @@ function aiActions(it){
 }
 function aiSim(it){ return `<button class="sim" onclick="aiSimulate('${it.id}')">🛠️ Simulate ${it.confirm==="approval"?"approval":"source confirmation"}</button>`; }
 function aiEmpty(){
-  if(state.ai.filter==="progress")  return `<div class="empty">Nothing in progress right now.</div>`;
-  if(state.ai.filter!=="all")       return `<div class="empty">No ${state.ai.filter==="urgent"?"urgent":"reminder"} items right now.</div>`;
+  if(state.ai.filter==="progress") return `<div class="empty">Nothing in progress right now.</div>`;
+  if(state.ai.filter==="urgent")   return `<div class="empty">No urgent items right now.</div>`;
   return `<div class="empty">You're all caught up. New actions appear as their source systems request them.</div>`;
 }
 function aiSetFilter(f){ state.ai.filter=f; aiRefresh(); }
 function aiToggleExplain(){ state.ai.explain=!state.ai.explain; aiRefresh(); }
-function aiToggleCompose(){
-  state.ai.compose=!state.ai.compose; aiRefresh();
-  if(state.ai.compose) setTimeout(()=>{ const i=$("aiRemTitle"); if(i) i.focus(); },40);
-}
-function aiAddReminder(){
-  const ti=$("aiRemTitle"), di=$("aiRemDue");
-  const title=((ti&&ti.value)||"").trim();
-  if(!title){ toast("Type a reminder first."); if(ti) ti.focus(); return; }
-  const due=((di&&di.value)||"").trim()||"No date";
-  P().actionItems.unshift({id:"rem_"+Date.now(),src:"reminder",title,desc:"You added this reminder.",due,confirm:"self"});
-  state.ai.compose=false;
-  if(state.ai.filter!=="all" && state.ai.filter!=="reminders") state.ai.filter="all";
-  aiRefresh();
-  toast("Reminder added.");
-}
 function aiDoAction(id){
   const it=aiItems().find(x=>x.id===id);
   if(!it || !it.action) return;
@@ -2400,6 +2433,56 @@ const FEED_SRC = {events:"events.iu.edu", news:"news.iu.edu", athletics:"iuhoosi
 function renderCampusFeed(){
   return `<div class="card"><div id="feedRoot">${feedInner()}</div></div>`;
 }
+/* =====================================================
+   Kuali Time — timekeeping for hourly employees (incl. work-study)
+   Rounds to 6-minute increments, like the real system.
+===================================================== */
+function ktFmtTime(d){ let h=d.getHours(),m=d.getMinutes(); const ap=h>=12?"PM":"AM"; h=h%12||12; return `${h}:${String(m).padStart(2,"0")} ${ap}`; }
+function ktRound6(ts){ const six=6*60000; return Math.round(ts/six)*six; }   // round a punch to the nearest 6-min clock mark (3:00, 3:06, …)
+function ktFmtElapsed(ms){ const s=Math.max(0,Math.floor(ms/1000)); const p=n=>String(n).padStart(2,"0"); return `${p(Math.floor(s/3600))}:${p(Math.floor(s%3600/60))}:${p(s%60)}`; }
+function renderKualiTime(){ return `<div class="card"><div id="ktRoot">${ktInner()}</div></div>`; }
+function ktInner(){
+  const k=P().kualitime;
+  if(!k) return `<div class="card-head"><h3>🕐 Kuali Time</h3></div>
+    <div class="empty">No hourly (or work-study) job is linked to this account.</div>`;
+  const todayH=(k.todayMin/60).toFixed(1), weekH=(k.weekMin/60).toFixed(1);
+  return `
+    <div class="card-head"><h3>🕐 Kuali Time</h3>
+      <span class="link" onclick="toast('Prototype: opens your detailed time view in Kuali Time.')">Open ↗</span></div>
+    <div class="kt-assign"><span class="kt-lbl">Assignment</span><span class="kt-val">${esc(k.assignment)} · ${esc(k.rate)}</span></div>
+    <div class="kt-hours">
+      <div><div class="kt-h">${todayH}</div><div class="kt-hl">Hours today</div></div>
+      <div><div class="kt-h">${weekH}</div><div class="kt-hl">This week</div></div>
+    </div>
+    ${state.ktIn?`
+      <div class="kt-timer"><span class="kt-clock">🕐</span>
+        <div id="ktTimer">${ktFmtElapsed(Date.now()-state.ktSince)}</div>
+        <div class="kt-since">Clocked in at ${esc(state.ktSinceLabel)}</div></div>
+      <button class="kt-btn" onclick="ktClockOut()">Clock out</button>`
+    :`<button class="kt-btn" onclick="ktClockIn()">Clock in</button>`}
+    <button class="kt-note" onclick="toast('Prototype: report a missed punch.')">Missed punch</button>`;
+}
+function ktRefresh(){ const r=$("ktRoot"); if(r) r.innerHTML=ktInner(); }
+function ktStopTick(){ if(window._ktTimer){ clearInterval(window._ktTimer); window._ktTimer=null; } }
+function ktStartTick(){ ktStopTick(); window._ktTimer=setInterval(()=>{
+  const el=$("ktTimer"); if(!el||!state.ktIn){ ktStopTick(); return; }
+  el.textContent=ktFmtElapsed(Date.now()-state.ktSince);
+},1000); }
+function ktClockIn(){
+  state.ktIn=true;
+  state.ktSince=ktRound6(Date.now());               // punch rounded to the nearest 6-min clock mark
+  state.ktSinceLabel=ktFmtTime(new Date(state.ktSince));
+  ktRefresh(); ktStartTick();
+  toast(`Clocked in · logged at ${state.ktSinceLabel}.`);
+}
+function ktClockOut(){
+  const outTs=ktRound6(Date.now());                 // clock-out punch also rounded to the 6-min mark
+  const mins=Math.max(0,Math.round((outTs-state.ktSince)/60000));
+  P().kualitime.todayMin+=mins; P().kualitime.weekMin+=mins;
+  state.ktIn=false; ktStopTick(); ktRefresh();
+  toast(`Clocked out · logged at ${ktFmtTime(new Date(outTs))} · ${(mins/60).toFixed(1)} h.`);
+}
+
 /* Sign-in call to action (guest view) */
 function renderSignin(){
   return `<div class="card signin-card">
@@ -2606,6 +2689,7 @@ function visibleTypes(){ return visibleTokens().map(tokenDef).filter(Boolean).ma
 /* Every widget a user can add, regardless of their default screen. */
 const WIDGET_CATALOG = [
   {type:"actionitems",label:"✅ Action Items",     desc:"Tasks that need you, from across IU"},
+  {type:"kualitime",  label:"🕐 Kuali Time",        desc:"Clock in/out · timekeeping for hourly jobs"},
   {type:"campusfeed", label:"📰 Campus feed",       desc:"Athletics, events & news across IU"},
   {type:"crimsoncard",label:"💳 CrimsonCard",       desc:"Your card, balances & photo"},
   {type:"orgs",       label:"🧑‍🤝‍🧑 Student Organizations", desc:"Memberships, announcements & events"},
@@ -2619,6 +2703,7 @@ const WIDE_TYPES = ["actionitems","campusfeed"];   // max 2 columns wide
 function widgetLabel(def){
   if(def.type==="signin") return "🔐 Sign in";
   if(def.type==="actionitems") return "✅ Action Items";
+  if(def.type==="kualitime") return "🕐 Kuali Time";
   if(def.type==="crimsoncard") return "💳 CrimsonCard";
   if(def.type==="orgs") return "🧑‍🤝‍🧑 Student Organizations";
   if(def.type==="libraries") return "📚 Libraries";
@@ -2810,6 +2895,7 @@ function renderMain(){
     </div>
     <div class="grid">${gridHtml}</div>`;
   if(cards.some(c=>c.type==="campusmap")) setTimeout(setupCampusMap,0);
+  if(cards.some(c=>c.type==="kualitime") && state.ktIn) setTimeout(ktStartTick,0); else if(!cards.some(c=>c.type==="kualitime")) ktStopTick();
   const inner = $("main"); inner.classList.remove("main-inner"); void inner.offsetWidth; inner.classList.add("main-inner");
 }
 function render(){ renderSidebar(); renderBottomNav(); renderMain(); }
@@ -2825,6 +2911,8 @@ function setPersona(key){
   state.favs = new Set(DATA[key].favorites);
   state.ai = { filter:"all", explain:false };
   state.omniQ = "";
+  if(typeof ktStopTick==="function") ktStopTick();
+  state.ktIn=false;
   toggleAdmin(false); closeDrawer(); render(); window.scrollTo({top:0});
   toast(`Now viewing as ${DATA[key].name} — ${DATA[key].role}`);
 }
