@@ -1,0 +1,2927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>One.IU — Indiana University</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+:root{
+  --crimson:#990000; --crimson-dark:#6e0000; --crimson-soft:#b3272d;
+  --cream:#FAF5EC; --cream-dark:#F1E9DA;
+  --ink:#231d1a; --muted:#83786f; --line:#eadfce;
+  --card:#ffffff; --gold:#F5B841; --gold-soft:#FDEFD2;
+  --green:#1E7F4F; --green-soft:#DDF2E6;
+  --blue:#2b6cb0; --blue-soft:#DFEBF8;
+  --purple:#6b46c1; --purple-soft:#EBE4F9;
+  --red-soft:#FBE3E3;
+  --body-text:#5c5245; --accent-text:#990000;
+  --r-lg:24px; --r-md:16px; --r-sm:10px;
+  --shadow:0 6px 24px rgba(60,35,10,.08);
+  --shadow-lg:0 16px 48px rgba(60,35,10,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--cream); color:var(--ink); min-height:100vh;
+}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit}
+
+/* ---------- Layout shell ---------- */
+.app{display:flex;min-height:100vh}
+.sidebar{
+  width:232px;flex-shrink:0;position:sticky;top:0;height:100vh;
+  background:var(--crimson);color:#fff;display:flex;flex-direction:column;
+  padding:22px 14px;z-index:30;
+}
+.logo{display:flex;align-items:center;gap:11px;padding:4px 10px 22px}
+.logo-mark{
+  width:42px;height:42px;border-radius:13px;background:#fff;color:var(--crimson);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:19px;letter-spacing:-1px;font-family:Georgia,serif;
+}
+.logo-mark .trident{height:24px;width:auto;display:block}
+.logo-name{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.logo-name span{color:var(--gold)}
+.nav{display:flex;flex-direction:column;gap:4px;flex:1}
+.nav button{
+  display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:14px;
+  color:rgba(255,255,255,.82);font-size:15px;font-weight:600;text-align:left;
+  transition:background .15s;
+}
+.nav button:hover{background:rgba(255,255,255,.12)}
+.nav button.active{background:#fff;color:var(--crimson)}
+.nav .ic{font-size:18px;width:22px;text-align:center}
+.side-foot{
+  margin-top:auto;padding:14px 12px;border-radius:16px;background:rgba(0,0,0,.18);
+  font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.85);
+}
+.side-foot b{color:var(--gold)}
+.side-foot button{
+  margin-top:9px;width:100%;padding:9px;border-radius:10px;background:#fff;
+  color:var(--crimson);font-weight:700;font-size:13px;
+}
+
+/* ---------- Main ---------- */
+.main{flex:1;min-width:0;padding:26px 30px 110px;max-width:1360px;margin:0 auto;width:100%}
+.topbar{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.greeting h1{font-size:27px;font-weight:800;letter-spacing:-.5px;line-height:1.15}
+.greeting p{color:var(--muted);font-size:14.5px;margin-top:3px;font-weight:500}
+.top-actions{margin-left:auto;display:flex;align-items:center;gap:10px}
+.search{
+  display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);
+  border-radius:999px;padding:10px 18px;color:var(--muted);font-size:14px;min-width:220px;
+  box-shadow:var(--shadow);font-weight:500;
+}
+.icon-btn{
+  width:44px;height:44px;border-radius:999px;background:#fff;border:1.5px solid var(--line);
+  font-size:18px;box-shadow:var(--shadow);position:relative;flex-shrink:0;
+}
+.icon-btn .dot{
+  position:absolute;top:9px;right:10px;width:9px;height:9px;border-radius:50%;
+  background:var(--crimson-soft);border:2px solid #fff;
+}
+.avatar{
+  width:44px;height:44px;border-radius:999px;background:var(--gold-soft);
+  display:flex;align-items:center;justify-content:center;font-size:21px;
+  border:2px solid var(--gold);flex-shrink:0;cursor:pointer;
+}
+
+/* ---------- Cards grid ---------- */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+
+/* widget wrappers (customizable layout) */
+.widget{position:relative;min-width:0}
+.widget.full{grid-column:1/-1}
+.widget.wide{grid-column:span 2}   /* 3-col: hero spans 2, search takes the 3rd */
+.widget.searchw{grid-column:auto}
+.widget>.card,.widget>.hero,.widget>.notice,.widget>.map-wrap{height:100%;box-sizing:border-box}
+.w-controls{
+  position:absolute;top:-9px;right:-6px;z-index:6;display:flex;gap:5px;
+  opacity:0;transition:opacity .15s;
+}
+.widget:hover .w-controls{opacity:1}
+@media (hover:none){.w-controls{opacity:.9}}
+.w-controls button{
+  width:30px;height:30px;border-radius:999px;background:#fff;border:1.5px solid var(--line);
+  box-shadow:var(--shadow);font-size:13px;color:var(--muted);display:flex;align-items:center;
+  justify-content:center;font-weight:800;
+}
+.w-grab{cursor:grab;font-size:15px !important;letter-spacing:-1px}
+.w-grab:active{cursor:grabbing}
+.w-controls button:hover{border-color:var(--crimson);color:var(--crimson)}
+.widget.dragging{opacity:.45}
+.widget.drop-target{outline:2.5px dashed var(--crimson);outline-offset:5px;border-radius:26px}
+.widget.selected{outline:3px solid var(--gold);outline-offset:5px;border-radius:26px}
+.widget.selected .w-grab{background:var(--gold);color:#5b3d00;border-color:var(--gold)}
+.layout-bar{display:flex;justify-content:flex-end;gap:8px;margin-bottom:14px;align-items:center;flex-wrap:wrap}
+.layout-bar .hint{margin-right:auto;font-size:12.5px;color:var(--muted);font-weight:600}
+.lbtn{
+  padding:8px 15px;border-radius:999px;background:#fff;border:1.5px solid var(--line);
+  font-size:12.5px;font-weight:700;color:var(--ink);box-shadow:var(--shadow);transition:all .12s;
+}
+.lbtn:hover{border-color:var(--crimson);color:var(--crimson)}
+.grid-empty{
+  grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);font-weight:600;
+  background:var(--cream-dark);border-radius:24px;border:2px dashed var(--line);
+}
+.grid-empty button{color:var(--crimson);font-weight:800;text-decoration:underline}
+.wp-row{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px dashed var(--line)}
+.wp-row:last-child{border-bottom:none}
+.wp-row .wpn{font-weight:700;font-size:14px;flex:1;min-width:0}
+.wp-add{
+  padding:7px 16px;border-radius:999px;background:var(--crimson);color:#fff;font-weight:800;font-size:12.5px;
+}
+.card{
+  background:var(--card);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow);
+  border:1px solid rgba(234,223,206,.6);
+}
+.span2{grid-column:1/-1}
+.card-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:15px}
+.card-head h3{font-size:16.5px;font-weight:800;letter-spacing:-.2px;display:flex;gap:8px;align-items:center}
+.card-head .link{font-size:13px;font-weight:700;color:var(--crimson);cursor:pointer;flex-shrink:0}
+
+/* hero */
+.hero{
+  grid-column:1/-1;border-radius:var(--r-lg);padding:26px 28px;color:#fff;
+  background:linear-gradient(112deg,var(--crimson) 0%,var(--crimson-soft) 60%,#c94b30 100%);
+  box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
+}
+.hero::after{
+  content:"";position:absolute;right:-70px;top:-90px;width:270px;height:270px;border-radius:50%;
+  background:rgba(255,255,255,.09);
+}
+.hero::before{
+  content:"";position:absolute;right:60px;bottom:-110px;width:210px;height:210px;border-radius:50%;
+  background:rgba(255,255,255,.07);
+}
+.hero .kicker{
+  display:inline-block;background:rgba(255,255,255,.2);border-radius:999px;
+  padding:5px 13px;font-size:12px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;margin-bottom:12px;
+}
+.hero h2{font-size:24px;font-weight:800;letter-spacing:-.4px;max-width:560px;line-height:1.25}
+.hero p{margin-top:8px;font-size:15px;opacity:.92;max-width:540px;line-height:1.5;font-weight:500}
+.hero-stats{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;position:relative;z-index:1}
+.hstat{
+  background:rgba(255,255,255,.16);backdrop-filter:blur(4px);border-radius:16px;
+  padding:12px 18px;min-width:110px;
+}
+.hstat .n{font-size:21px;font-weight:800}
+.hstat .l{font-size:12px;opacity:.9;font-weight:600;margin-top:2px}
+
+/* schedule */
+.sched{display:flex;flex-direction:column;gap:10px}
+.sched-item{display:flex;gap:14px;align-items:stretch}
+.sched-time{width:66px;flex-shrink:0;text-align:right;padding-top:2px}
+.sched-time .t1{font-size:14px;font-weight:800}
+.sched-time .t2{font-size:12px;color:var(--muted);font-weight:600}
+.sched-body{
+  flex:1;border-radius:14px;padding:11px 15px;border-left:4.5px solid var(--crimson);
+  background:var(--cream);
+}
+.sched-body.blue{border-color:var(--blue);}
+.sched-body.gold{border-color:var(--gold);}
+.sched-body.green{border-color:var(--green);}
+.sched-body.purple{border-color:var(--purple);}
+.sched-body .st{font-weight:800;font-size:14.5px}
+.sched-body .sl{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.sched-tag{
+  float:right;font-size:11px;font-weight:800;padding:3px 9px;border-radius:999px;
+  background:#fff;color:var(--muted);margin-left:8px;
+}
+.sched-now .sched-body{background:var(--gold-soft)}
+.sched-now .sched-tag{background:var(--gold);color:#5b3d00}
+
+/* tasks (to-dos) */
+.task{display:flex;align-items:flex-start;gap:12px;padding:11px 4px;border-bottom:1px dashed var(--line)}
+.task:last-child{border-bottom:none}
+.task .box{
+  width:24px;height:24px;border-radius:8px;border:2.5px solid var(--crimson);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:900;
+  transition:all .15s;margin-top:1px;
+}
+.task.done .box{background:var(--green);border-color:var(--green)}
+.task .tt{font-weight:700;font-size:14.5px;line-height:1.35}
+.task.done .tt{text-decoration:line-through;color:var(--muted)}
+.task .td{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.task .urgent{color:var(--crimson-soft);font-weight:800}
+.task{cursor:pointer}
+
+/* balances */
+.bal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:12px}
+.bal{
+  border-radius:16px;padding:14px;background:var(--cream);border:1.5px solid var(--line);
+}
+.bal .bi{font-size:20px}
+.bal .bv{font-size:19px;font-weight:800;margin-top:6px;letter-spacing:-.3px}
+.bal .bl{font-size:12px;color:var(--muted);font-weight:700;margin-top:1px}
+.bal .bn{font-size:11.5px;color:var(--muted);margin-top:4px}
+.bal.alert{background:var(--red-soft);border-color:#f2c4c4}
+.bal.alert .bv{color:var(--crimson)}
+
+/* generic list */
+.li{display:flex;align-items:center;gap:13px;padding:11px 2px;border-bottom:1px dashed var(--line)}
+.li:last-child{border-bottom:none}
+.li .lic{
+  width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+  font-size:19px;flex-shrink:0;background:var(--cream);
+}
+.lic.gold{background:var(--gold-soft)} .lic.green{background:var(--green-soft)}
+.lic.blue{background:var(--blue-soft)} .lic.purple{background:var(--purple-soft)}
+.lic.red{background:var(--red-soft)}
+.li .lit{font-weight:700;font-size:14.5px;line-height:1.3}
+.li .lis{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.4}
+.li .lir{margin-left:auto;text-align:right;flex-shrink:0;padding-left:10px}
+.li .lirt{font-weight:800;font-size:14px}
+.li .lirs{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.badge{
+  display:inline-block;font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;
+}
+.badge.green{background:var(--green-soft);color:var(--green)}
+.badge.gold{background:var(--gold-soft);color:#8a5a00}
+.badge.red{background:var(--red-soft);color:var(--crimson)}
+.badge.blue{background:var(--blue-soft);color:var(--blue)}
+.badge.gray{background:var(--cream-dark);color:var(--muted)}
+
+/* quick-launch tiles */
+.qa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:11px}
+.qa{
+  border-radius:16px;padding:14px 8px;background:var(--cream);border:1.5px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;gap:8px;font-weight:700;font-size:12.5px;
+  text-align:center;transition:transform .12s, box-shadow .12s;color:var(--ink);
+}
+.qa:hover{transform:translateY(-2px);box-shadow:var(--shadow);background:#fff}
+.qa .qi{
+  width:40px;height:40px;border-radius:12px;background:#fff;display:flex;align-items:center;
+  justify-content:center;font-size:19px;box-shadow:0 2px 8px rgba(60,35,10,.09);
+}
+
+/* task launcher (One.IU tasks) */
+.tsearch{
+  width:100%;padding:13px 18px;border-radius:14px;border:1.5px solid var(--line);
+  background:var(--cream);font:inherit;font-size:14.5px;font-weight:600;margin-bottom:13px;outline:none;
+  color:var(--ink);
+}
+.tsearch::placeholder{color:var(--muted)}
+.tsearch:focus{border-color:var(--crimson);background:#fff}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{
+  padding:7px 14px;border-radius:999px;background:var(--cream);border:1.5px solid var(--line);
+  font-size:12.5px;font-weight:700;color:var(--muted);transition:all .12s;
+}
+.chip:hover{border-color:var(--crimson);color:var(--crimson)}
+.chip.active{background:var(--crimson);border-color:var(--crimson);color:#fff}
+.star{
+  font-size:19px;color:#d9cdb6;padding:6px 4px;flex-shrink:0;transition:transform .12s;line-height:1;
+}
+.star:hover{transform:scale(1.15)}
+.star.on{color:var(--gold)}
+.cat-tag{font-size:11px;font-weight:800;color:var(--muted);background:var(--cream-dark);padding:3px 9px;border-radius:999px}
+.pop-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.pop-chip{
+  display:inline-flex;gap:7px;align-items:center;padding:8px 14px;border-radius:999px;
+  background:var(--cream);border:1.5px solid var(--line);font-size:12.5px;font-weight:700;
+  transition:all .12s;color:var(--ink);
+}
+.pop-chip:hover{border-color:var(--crimson);background:#fff}
+.launch-divider{
+  font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);
+  margin:16px 0 8px;
+}
+.empty{padding:26px 10px;text-align:center;color:var(--muted);font-weight:600;font-size:14px}
+
+/* campus map */
+.map-wrap{grid-column:1/-1}
+.map-topbar{display:flex;gap:10px;flex-wrap:wrap}
+.msearch{
+  flex:1;min-width:200px;padding:12px 20px;border-radius:999px;border:1.5px solid var(--line);
+  background:#fff;font:inherit;font-size:14.5px;font-weight:600;outline:none;box-shadow:var(--shadow);
+  color:var(--ink);
+}
+.msearch::placeholder{color:var(--muted)}
+.msearch:focus{border-color:var(--crimson)}
+.campus-pill{
+  padding:12px 20px;border-radius:999px;background:var(--crimson);color:#fff;font-weight:800;
+  font-size:14px;box-shadow:var(--shadow);flex-shrink:0;
+}
+.map-chips{display:flex;gap:8px;overflow-x:auto;padding:12px 2px;scrollbar-width:none}
+.map-chips::-webkit-scrollbar{display:none}
+.mchip{
+  white-space:nowrap;display:inline-flex;gap:7px;align-items:center;padding:9px 16px;border-radius:999px;
+  background:#fff;border:1.5px solid var(--line);font-size:13px;font-weight:700;color:var(--ink);
+  box-shadow:var(--shadow);transition:all .12s;flex-shrink:0;
+}
+.mchip:hover{border-color:var(--crimson)}
+.mchip.active{background:var(--crimson);border-color:var(--crimson);color:#fff}
+.map-box{
+  height:420px;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);
+  border:1px solid var(--line);position:relative;z-index:1;background:var(--cream-dark);
+}
+.map-note{font-size:12px;color:var(--muted);font-weight:600;margin-top:9px}
+.pdot{
+  width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+  font-size:19px;flex-shrink:0;
+}
+.pdot.building{background:var(--gold-soft)} .pdot.parking{background:var(--purple-soft)}
+.pdot.bus{background:var(--blue-soft)} .pdot.food{background:var(--red-soft)}
+.permit{
+  display:inline-block;font-size:11px;font-weight:800;border:1.5px solid var(--line);
+  border-radius:999px;padding:3px 9px;color:var(--muted);margin-right:4px;
+}
+.dhead-dist{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:4px}
+.dhead-addr{font-size:13.5px;color:var(--muted);font-weight:600;margin-top:4px}
+.getthere{
+  display:inline-flex;gap:8px;align-items:center;background:var(--crimson);color:#fff;border-radius:999px;
+  padding:11px 20px;font-weight:800;font-size:13.5px;text-decoration:none;margin-top:16px;
+}
+.dsec{margin-top:20px;border-top:1px dashed var(--line);padding-top:14px}
+.dsec h4{
+  font-size:11.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);
+  font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:7px;
+}
+.dsec .drow{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:14px;font-weight:700}
+.dsec .drow .sub{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.dsec .drow .right{margin-left:auto;flex-shrink:0}
+.abbr-chip{
+  float:right;font-size:15px;font-weight:900;color:var(--muted);letter-spacing:.5px;
+  background:var(--cream);border-radius:10px;padding:6px 12px;
+}
+@media (max-width:768px){ .map-box{height:340px} }
+
+/* action items widget */
+.ai-head{display:flex;align-items:center;gap:10px}
+.ai-head .w-title{font-size:17px;font-weight:800;letter-spacing:-.2px}
+.count-badge{background:var(--crimson);color:#fff;font-size:12px;font-weight:800;border-radius:999px;padding:3px 10px;min-width:24px;text-align:center}
+.ai-sub{color:var(--muted);font-size:13px;font-weight:600;margin-top:5px;line-height:1.5}
+.explainer-toggle{margin-top:10px;font-size:12.5px;font-weight:700;color:var(--blue);display:inline-flex;gap:5px;align-items:center}
+.explainer{margin-top:10px;background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:13px 14px;font-size:12.5px;color:var(--body-text);font-weight:600;line-height:1.55;display:none}
+.explainer.open{display:block}
+.explainer b{color:var(--ink)}
+.model-row{display:flex;gap:9px;align-items:flex-start;margin-top:9px}
+.model-key{flex-shrink:0;font-size:15px;width:22px;text-align:center}
+.ai-add{margin-left:auto;font-size:12px;font-weight:800;color:var(--crimson);border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;flex-shrink:0}
+.ai-add:hover{border-color:var(--crimson);background:var(--red-soft)}
+.ai-compose{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px;padding:12px;border:1.5px dashed var(--line);border-radius:14px;background:var(--cream)}
+.ai-rem-input{flex:1;min-width:150px;padding:10px 13px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:13.5px;font-weight:600;outline:none;color:var(--ink)}
+.ai-rem-input:focus{border-color:var(--crimson)}
+.ai-chips{display:flex;gap:8px;flex-wrap:wrap;margin:13px 0 4px}
+.ai-items{margin-top:8px;max-height:340px;overflow-y:auto;padding-right:6px}
+.ai-items::-webkit-scrollbar{width:8px}
+.ai-items::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+.ai-grid{display:flex;flex-direction:column;gap:12px}   /* each item = full widget width */
+.item{border:1px solid var(--line);border-radius:16px;padding:14px 15px;background:#fff;transition:opacity .2s}
+.item.high{border-left:5px solid var(--crimson-soft)}
+.item.resolved{opacity:.6}
+.item.resolved .it-title{color:var(--muted)}
+.it-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.src-chip{display:inline-flex;gap:6px;align-items:center;font-size:11px;font-weight:800;border-radius:999px;padding:4px 10px 4px 5px}
+.src-ic{width:19px;height:19px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px}
+.src-chip.blue{background:var(--blue-soft);color:var(--blue)} .src-chip.blue .src-ic{background:#fff}
+.src-chip.green{background:var(--green-soft);color:var(--green)} .src-chip.green .src-ic{background:#fff}
+.src-chip.gold{background:var(--gold-soft);color:#8a5a00} .src-chip.gold .src-ic{background:#fff}
+.src-chip.purple{background:var(--purple-soft);color:var(--purple)} .src-chip.purple .src-ic{background:#fff}
+.src-chip.red{background:var(--red-soft);color:var(--crimson)} .src-chip.red .src-ic{background:#fff}
+.model{display:inline-flex;gap:4px;align-items:center;font-size:10.5px;font-weight:800;border-radius:999px;padding:3px 8px;border:1.5px solid var(--line);color:var(--muted);background:#fff}
+.model.approve{color:var(--blue);border-color:var(--blue-soft);background:var(--blue-soft)}
+.model.self{color:var(--purple);border-color:var(--purple-soft);background:var(--purple-soft)}
+.due{margin-left:auto;font-size:11px;font-weight:800;padding:4px 9px;border-radius:999px;background:var(--cream);color:var(--muted);flex-shrink:0}
+.due.high{background:var(--red-soft);color:var(--crimson)}
+.it-title{font-weight:800;font-size:14.5px;line-height:1.3}
+.it-desc{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:3px;line-height:1.45}
+.status{display:flex;gap:7px;align-items:flex-start;margin-top:10px;border-radius:11px;padding:8px 10px;font-size:12px;font-weight:700;line-height:1.4}
+.status .si{flex-shrink:0}
+.status.wait{background:var(--gold-soft);color:#8a5a00}
+.status.approve{background:var(--blue-soft);color:var(--blue)}
+.status.doneS{background:var(--green-soft);color:var(--green)}
+.status.self{background:var(--purple-soft);color:var(--purple)}
+.it-actions{display:flex;gap:7px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.act{display:inline-flex;gap:6px;align-items:center;background:var(--crimson);color:#fff;border-radius:999px;padding:8px 15px;font-weight:800;font-size:12px}
+.act:hover{background:var(--crimson-soft)}
+.act.ghost{background:var(--cream);color:var(--ink);border:1.5px solid var(--line)}
+.act.ghost:hover{border-color:var(--green);color:var(--green)}
+.dismiss{margin-left:auto;font-size:11.5px;font-weight:800;color:var(--muted);padding:7px 9px;border-radius:10px;display:inline-flex;gap:5px;align-items:center}
+.dismiss:hover{color:var(--crimson);background:var(--red-soft)}
+.sim{width:100%;margin-top:9px;font-size:10.5px;font-weight:700;color:var(--muted);border:1px dashed var(--line);border-radius:10px;padding:6px 10px;background:repeating-linear-gradient(45deg,#fff,#fff 8px,var(--cream) 8px,var(--cream) 16px)}
+.sim:hover{border-color:var(--gold);color:#8a5a00}
+.ai-foot{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;color:var(--muted);flex-wrap:wrap}
+.ai-foot .restore{color:var(--blue);cursor:pointer}
+.ai-foot .sync{margin-left:auto;display:inline-flex;gap:6px;align-items:center}
+
+/* omni-search widget */
+.omni{display:flex;flex-direction:column;height:100%}
+.omni h3{font-size:16.5px;font-weight:800;letter-spacing:-.2px;display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.omni-input{width:100%;padding:12px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--cream);font:inherit;font-size:14px;font-weight:600;outline:none;color:var(--ink)}
+.omni-input::placeholder{color:var(--muted)}
+.omni-input:focus{border-color:var(--crimson);background:#fff}
+.omni-scope{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:8px;line-height:1.4}
+.omni-results{margin-top:12px;height:300px;overflow-y:auto;border-top:1px dashed var(--line);padding-top:6px}
+.omni-results::-webkit-scrollbar{width:8px}
+.omni-results::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+.ores{display:flex;align-items:center;gap:11px;padding:10px 4px;border-bottom:1px dashed var(--line);cursor:pointer;border-radius:10px}
+.ores:hover{background:var(--cream)}
+.ores:last-child{border-bottom:none}
+.ores .oic{width:34px;height:34px;border-radius:10px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ores .ot{font-weight:700;font-size:13.5px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ores .os{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ores .otag{margin-left:auto;flex-shrink:0;font-size:10px;font-weight:800;color:var(--muted);background:var(--cream-dark);border-radius:999px;padding:3px 8px;text-transform:uppercase;letter-spacing:.3px}
+.omni-empty{padding:30px 12px;text-align:center;color:var(--muted);font-weight:600;font-size:13px;line-height:1.6}
+.omni-group{font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin:12px 4px 4px;position:sticky;top:0;background:#fff}
+.omni-group:first-child{margin-top:2px}
+@media (max-width:768px){ .omni-results{height:auto;max-height:340px} }
+
+/* search bar (above widgets) */
+.omnibar{position:relative;display:flex;align-items:center;gap:11px;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px 18px;box-shadow:var(--shadow);margin-bottom:18px}
+.omnibar:focus-within{border-color:var(--crimson)}
+.omnibar-ic{font-size:18px;color:var(--muted);flex-shrink:0}
+.omnibar-input{flex:1;min-width:0;border:none;outline:none;background:none;font:inherit;font-size:16px;font-weight:600;color:var(--ink)}
+.omnibar-input::placeholder{color:var(--muted);font-weight:600}
+.omnibar-clear{width:26px;height:26px;border-radius:999px;background:var(--cream);color:var(--muted);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.omnibar-clear:hover{color:var(--crimson);background:var(--red-soft)}
+.omnibar-results{position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);max-height:400px;overflow-y:auto;z-index:25;padding:6px 12px}
+.omnibar-results::-webkit-scrollbar{width:8px}
+.omnibar-results::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+
+/* Profile & settings */
+.set-profile{display:flex;align-items:center;gap:14px;background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:6px}
+.set-av{width:52px;height:52px;border-radius:15px;background:var(--gold-soft);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.set-name{font-weight:800;font-size:16px}
+.set-role{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.set-row{display:flex;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px dashed var(--line)}
+.set-row:last-child{border-bottom:none}
+.set-row .si{width:38px;height:38px;border-radius:11px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.set-row .st{font-weight:700;font-size:14px;line-height:1.25}
+.set-row .ss{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px}
+.set-right{margin-left:auto;flex-shrink:0;color:var(--muted);font-weight:800;font-size:16px;display:flex;align-items:center}
+.switch{width:46px;height:28px;border-radius:999px;background:var(--line);position:relative;transition:background .15s;flex-shrink:0;border:0;cursor:pointer}
+.switch.on{background:var(--green)}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .15s;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.switch.on::after{left:21px}
+
+/* Sign-in CTA (guest) */
+.signin-card{display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  background:linear-gradient(112deg,var(--crimson) 0%,var(--crimson-soft) 60%,#c94b30 100%);
+  color:#fff;border:none}
+.signin-ic{font-size:34px;flex-shrink:0}
+.signin-body{flex:1;min-width:200px}
+.signin-t{font-size:18px;font-weight:800;letter-spacing:-.2px}
+.signin-s{font-size:13.5px;opacity:.92;font-weight:500;margin-top:4px;line-height:1.5}
+.signin-actions{flex-shrink:0;text-align:center}
+.signin-btn{background:#fff;color:var(--crimson);font-weight:800;font-size:14px;border-radius:12px;padding:13px 20px;box-shadow:var(--shadow)}
+.signin-btn:hover{background:var(--cream)}
+.signin-alt{font-size:12.5px;opacity:.95;font-weight:600;margin-top:9px}
+.signin-alt .link{color:var(--gold);cursor:pointer}
+
+/* Campus feed */
+.seg{display:flex;background:var(--cream);border:1.5px solid var(--line);border-radius:12px;padding:4px;gap:4px;margin-bottom:14px}
+.seg button{flex:1;padding:9px 6px;border-radius:9px;font-weight:800;font-size:13px;color:var(--muted);transition:all .12s}
+.seg button.active{background:#fff;color:var(--crimson);box-shadow:var(--shadow)}
+.feed-filter{display:flex;gap:8px;flex-wrap:wrap;margin:-2px 0 12px}
+.feed-list{max-height:360px;overflow-y:auto;padding-right:5px}
+.feed-list::-webkit-scrollbar{width:8px}.feed-list::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+.feed-item{display:flex;gap:13px;border:1px solid var(--line);border-radius:14px;padding:12px 13px;margin-bottom:10px;cursor:pointer;background:#fff;transition:border-color .12s}
+.feed-item:hover{border-color:var(--crimson)}
+.feed-date{width:80px;flex-shrink:0;border-right:1px solid var(--line);padding-right:12px}
+.feed-date .fd1{font-weight:800;font-size:14px}
+.feed-date .fd2{font-size:12px;color:var(--muted);font-weight:600;margin-top:1px}
+.feed-title{font-weight:800;font-size:14.5px;line-height:1.3}
+.feed-sub{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:3px}
+.feed-cat{font-size:12px;font-weight:800;color:var(--blue);margin-bottom:5px}
+.feed-src{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:8px;text-align:right}
+.game{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;cursor:pointer;background:#fff;transition:border-color .12s}
+.game:hover{border-color:var(--crimson)}
+.game-date{font-size:13px;font-weight:800;margin-bottom:7px}
+.game-top{display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:9px}
+.team{display:flex;align-items:center;gap:10px;padding:4px 0;font-weight:800;font-size:14.5px}
+.team .logo{width:28px;height:28px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:15px;border:1px solid var(--line);flex-shrink:0}
+.team .logo .trident{height:16px;width:auto;color:var(--crimson)}
+.team .ha{margin-left:auto;font-size:10px;font-weight:800;color:var(--muted);background:var(--cream);border:1px solid var(--line);border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center}
+
+/* CrimsonCard visual */
+.cc-card{border-radius:16px;padding:16px 18px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow);
+  background:linear-gradient(135deg,var(--crimson-dark),var(--crimson) 55%,#c94b30)}
+.cc-card::after{content:"";position:absolute;right:-46px;top:-46px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.09)}
+.cc-card::before{content:"";position:absolute;right:26px;bottom:-60px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.06)}
+.cc-top{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:13px;letter-spacing:.3px;position:relative;z-index:1}
+.cc-iu{background:#fff;color:var(--crimson);border-radius:7px;padding:4px 7px;display:inline-flex;align-items:center}
+.cc-iu .trident{height:16px;width:auto;display:block}
+.cc-photo{width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:26px;margin:14px 0 10px;position:relative;z-index:1}
+.cc-name{font-weight:800;font-size:16px;position:relative;z-index:1}
+.cc-kind{font-size:12px;opacity:.85;font-weight:600;margin-top:1px;position:relative;z-index:1}
+.cc-id{font-family:ui-monospace,Menlo,monospace;font-size:13px;letter-spacing:1.5px;margin-top:12px;opacity:.95;position:relative;z-index:1}
+.cc-card.lg{padding:22px 22px 24px}
+.cc-card.lg .cc-photo{width:62px;height:62px;font-size:32px}
+.cc-card.lg .cc-name{font-size:19px}
+.cc-manage{width:100%;margin-top:12px;padding:11px;border-radius:12px;background:var(--cream);border:1.5px solid var(--line);font-weight:800;font-size:13px;color:var(--crimson)}
+.cc-manage:hover{background:#fff;border-color:var(--crimson)}
+.cc-hint{font-size:12px;color:var(--muted);font-weight:600;margin-top:9px;text-align:center}
+.pill-btn{font-size:11.5px;font-weight:800;padding:5px 12px;border-radius:999px;background:var(--crimson);color:#fff}
+.pill-btn:hover{background:var(--crimson-soft)}
+.lib-search{width:100%;padding:11px 15px;border-radius:12px;border:1.5px solid var(--line);background:var(--cream);font:inherit;font-size:14px;font-weight:600;outline:none;color:var(--ink);margin-bottom:12px}
+.lib-search::placeholder{color:var(--muted)}
+.lib-search:focus{border-color:var(--crimson);background:#fff}
+
+/* progress */
+.prog-label{display:flex;justify-content:space-between;font-size:13.5px;font-weight:700;margin-bottom:8px}
+.prog-label span:last-child{color:var(--crimson)}
+.prog-bar{height:14px;border-radius:999px;background:var(--cream-dark);overflow:hidden}
+.prog-fill{
+  height:100%;border-radius:999px;
+  background:linear-gradient(90deg,var(--crimson),var(--crimson-soft) 70%,var(--gold));
+}
+.prog-note{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:9px;line-height:1.5}
+
+/* steps tracker */
+.step{display:flex;gap:14px}
+.step .rail{display:flex;flex-direction:column;align-items:center;width:30px;flex-shrink:0}
+.step .knob{
+  width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:900;flex-shrink:0;
+}
+.step .wire{width:3px;flex:1;background:var(--line);min-height:14px;border-radius:2px}
+.step.done .knob{background:var(--green);color:#fff}
+.step.done .wire{background:var(--green)}
+.step.now .knob{background:var(--gold);color:#5b3d00;box-shadow:0 0 0 5px var(--gold-soft)}
+.step.todo .knob{background:var(--cream-dark);color:var(--muted)}
+.step .sbody{padding:3px 0 18px}
+.step:last-child .sbody{padding-bottom:4px}
+.step .stt{font-weight:800;font-size:14.5px}
+.step.todo .stt{color:var(--muted)}
+.step .sts{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.45}
+
+/* notice */
+.notice{display:flex;gap:14px;align-items:flex-start;border-radius:var(--r-lg);padding:18px 20px}
+.notice.gold{background:var(--gold-soft);border:1.5px solid #f0d9a4}
+.notice.green{background:var(--green-soft);border:1.5px solid #bfe4cd}
+.notice.blue{background:var(--blue-soft);border:1.5px solid #c2d8ef}
+.notice .ni{font-size:24px}
+.notice .nt{font-weight:800;font-size:14.5px}
+.notice .ns{font-size:13px;color:var(--body-text);font-weight:600;margin-top:3px;line-height:1.5}
+
+/* ---------- Bottom nav (mobile) ---------- */
+.bottom-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;z-index:40;
+  border-top:1.5px solid var(--line);padding:8px 4px calc(8px + env(safe-area-inset-bottom));
+  box-shadow:0 -8px 30px rgba(60,35,10,.1);
+}
+.bottom-nav .bn-inner{display:flex;justify-content:space-around;max-width:560px;margin:0 auto}
+.bottom-nav button{
+  display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:700;
+  color:var(--muted);padding:5px 6px;border-radius:12px;min-width:50px;
+}
+.bottom-nav button.active{color:var(--crimson)}
+.bottom-nav button.active .bic{background:var(--crimson);color:#fff}
+.bottom-nav .bic{
+  width:34px;height:25px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+  font-size:15px;transition:all .15s;
+}
+
+/* ---------- Overlays ---------- */
+.scrim{
+  position:fixed;inset:0;background:rgba(35,25,15,.45);z-index:60;opacity:0;pointer-events:none;
+  transition:opacity .2s;backdrop-filter:blur(2px);
+}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;top:0;right:-420px;width:min(400px,92vw);height:100vh;background:#fff;z-index:70;
+  transition:right .25s cubic-bezier(.3,.8,.4,1);padding:24px 22px calc(24px + env(safe-area-inset-bottom));
+  overflow-y:auto;box-shadow:var(--shadow-lg);
+}
+.drawer.open{right:0}
+.drawer h2{font-size:20px;font-weight:800;margin-bottom:4px}
+.drawer .dsub{color:var(--muted);font-size:13.5px;font-weight:600;margin-bottom:18px}
+.drawer .close{
+  position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:999px;
+  background:var(--cream);font-size:15px;font-weight:800;
+}
+.notif{
+  display:flex;gap:12px;padding:13px 4px;border-bottom:1px dashed var(--line);align-items:flex-start;
+}
+.notif .nic{width:38px;height:38px;border-radius:12px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.notif .nt{font-weight:700;font-size:13.5px;line-height:1.35}
+.notif .ns{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px;line-height:1.45}
+.notif .ntime{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
+.notif.unread .nt::before{content:"● ";color:var(--crimson-soft);font-size:10px}
+
+/* ---------- Admin ---------- */
+.admin-fab{
+  position:fixed;bottom:22px;right:22px;z-index:50;background:var(--ink);color:#fff;
+  border-radius:999px;padding:13px 20px;font-weight:800;font-size:13.5px;box-shadow:var(--shadow-lg);
+  display:flex;align-items:center;gap:8px;transition:transform .12s;
+}
+.admin-fab:hover{transform:scale(1.04)}
+.admin-modal{
+  position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:20px;
+}
+.admin-modal.open{display:flex}
+.admin-box{
+  background:var(--cream);border-radius:28px;max-width:860px;width:100%;max-height:88vh;overflow-y:auto;
+  padding:30px;box-shadow:var(--shadow-lg);position:relative;
+}
+.admin-box h2{font-size:23px;font-weight:800;letter-spacing:-.4px}
+.admin-box .asub{color:var(--muted);font-size:14px;font-weight:600;margin:5px 0 20px;line-height:1.5}
+.admin-box .close{
+  position:absolute;top:20px;right:20px;width:38px;height:38px;border-radius:999px;background:#fff;
+  font-size:15px;font-weight:800;box-shadow:var(--shadow);
+}
+.persona-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:14px}
+.pcard{
+  background:#fff;border-radius:20px;padding:18px;text-align:left;border:2.5px solid transparent;
+  box-shadow:var(--shadow);transition:all .15s;display:flex;flex-direction:column;gap:4px;
+}
+.pcard:hover{transform:translateY(-2px)}
+.pcard.sel{border-color:var(--crimson)}
+.pcard .pav{
+  width:52px;height:52px;border-radius:16px;background:var(--cream);display:flex;align-items:center;
+  justify-content:center;font-size:27px;margin-bottom:8px;
+}
+.pcard .pn{font-weight:800;font-size:15.5px}
+.pcard .pr{font-size:12px;font-weight:800;color:var(--crimson);text-transform:uppercase;letter-spacing:.5px}
+.pcard .pd{font-size:12.5px;color:var(--muted);font-weight:600;line-height:1.45;margin-top:4px}
+.pcard .sel-tag{
+  margin-top:10px;font-size:11.5px;font-weight:800;color:var(--green);display:none;
+}
+.pcard.sel .sel-tag{display:block}
+
+/* toast */
+.toast{
+  position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);z-index:90;
+  background:var(--ink);color:#fff;border-radius:14px;padding:12px 20px;font-size:13.5px;font-weight:700;
+  opacity:0;pointer-events:none;transition:all .25s;max-width:88vw;text-align:center;box-shadow:var(--shadow-lg);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* page transition */
+.main-inner{animation:fadeUp .28s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1250px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  /* below 3 columns, hero + search stop spanning and stack full-width */
+  .widget.wide, .widget.searchw{grid-column:1/-1}
+}
+@media (max-width:960px){
+  .grid{grid-template-columns:1fr}
+  .widget.wide, .widget.searchw, .widget.full{grid-column:1/-1}
+  .search{display:none}
+}
+@media (max-width:768px){
+  .sidebar{display:none}
+  .bottom-nav{display:block}
+  .main{padding:20px 16px 130px}
+  .greeting h1{font-size:23px}
+  .hero{padding:22px 20px}
+  .hero h2{font-size:20px}
+  .admin-fab{bottom:88px;right:14px;padding:11px 16px}
+  .card{padding:18px}
+}
+
+/* ============ Dark mode ============ */
+body.dark{
+  --crimson:#7d1418; --crimson-dark:#5c0d10; --crimson-soft:#9c2a2f;
+  --cream:#15110e; --cream-dark:#1f1a15;
+  --ink:#f1ebe1; --muted:#b3a89a; --line:#39322b;
+  --card:#221d19;
+  --gold:#F5B841; --gold-soft:#3a2f16;
+  --green:#54cf94; --green-soft:#123024;
+  --blue:#61a6e2; --blue-soft:#142a3d;
+  --purple:#b697ec; --purple-soft:#251c3a;
+  --red-soft:#3c1c1a;
+  --body-text:#d0c6b6;                 /* readable explanatory text on dark */
+  --accent-text:#ef6f68;               /* crimson-as-text, lightened for contrast */
+}
+body.dark{background:var(--cream)}
+/* surfaces that were hard-coded white → dark card */
+body.dark .icon-btn,
+body.dark .search,
+body.dark .omnibar,
+body.dark .omnibar-results,
+body.dark .omni-results,
+body.dark .msearch,
+body.dark .drawer,
+body.dark .lbtn,
+body.dark .mchip,
+body.dark .pcard,
+body.dark .w-controls button,
+body.dark .item,
+body.dark .feed-item,
+body.dark .game,
+body.dark .seg button.active,
+body.dark .qa .qi,
+body.dark .omni-group,
+body.dark .model,
+body.dark .admin-box .close{ background:var(--card); }
+body.dark .qa:hover{ background:#2b251f; }
+body.dark .card{ background:var(--card); }
+/* keep gold-on-gold legible on dark */
+body.dark .status.wait,
+body.dark .badge.gold,
+body.dark .src-chip.gold,
+body.dark .sim:hover{ color:#e7b74f; }
+/* crimson-as-text → lightened accent so it stays legible on dark surfaces
+   (crimson fills, borders, and marks on white keep the deep crimson) */
+body.dark .card-head .link,
+body.dark .ai-add,
+body.dark .grid-empty button,
+body.dark .bal.alert .bv,
+body.dark .badge.red,
+body.dark .src-chip.red,
+body.dark .due.high,
+body.dark .dismiss:hover,
+body.dark .omnibar-clear:hover,
+body.dark .seg button.active,
+body.dark .team .logo .trident,
+body.dark .cc-manage,
+body.dark .prog-label span:last-child,
+body.dark .pcard .pr,
+body.dark .w-controls button:hover,
+body.dark .lbtn:hover,
+body.dark .chip:hover{ color:var(--accent-text); }
+body.dark .switch::after{ background:#efe9df; }
+body.reduce-motion *{animation:none !important; transition:none !important}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main"><div class="main-inner" id="main"></div></main>
+</div>
+
+<nav class="bottom-nav"><div class="bn-inner" id="bottomNav"></div></nav>
+
+<div class="scrim" id="scrim" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer"></div>
+
+<div class="admin-modal" id="adminModal">
+  <div class="admin-box">
+    <button class="close" onclick="toggleAdmin(false)">✕</button>
+    <h2>🛠️ Prototype Admin</h2>
+    <p class="asub">Switch between personas to preview how One.IU adapts to each member of the IU community. All data is simulated.</p>
+    <div class="persona-grid" id="personaGrid"></div>
+  </div>
+</div>
+
+<button class="admin-fab" onclick="toggleAdmin(true)">🛠️ Personas</button>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================
+   One.IU task catalog
+   cat: category · personas: who sees it by default ("all" = everyone)
+   popular: surfaces in "Popular" rows
+===================================================== */
+const TASKS = [
+  {id:"canvas",icon:"📖",name:"Canvas",desc:"Courses, assignments, and grades",cat:"Academics",personas:["firstyear","senior","faculty"],popular:true},
+  {id:"register",icon:"🗓️",name:"Register for classes",desc:"Enroll, add, drop, and swap",cat:"Academics",personas:["firstyear","senior"],popular:true},
+  {id:"schedule",icon:"📅",name:"View class schedule",desc:"Your current semester schedule",cat:"Academics",personas:["firstyear","senior"]},
+  {id:"grades",icon:"🎯",name:"View grades",desc:"Final grades by semester",cat:"Academics",personas:["firstyear","senior"]},
+  {id:"degreeAudit",icon:"📋",name:"Degree audit (iGPS)",desc:"Track requirements and plan ahead",cat:"Academics",personas:["firstyear","senior"]},
+  {id:"applyGrad",icon:"🎓",name:"Apply for graduation",desc:"Submit your graduation application",cat:"Academics",personas:["senior"]},
+  {id:"transcript",icon:"📄",name:"Order official transcript",desc:"Electronic or paper delivery",cat:"Academics",personas:["senior","firstyear"],popular:true},
+  {id:"advising",icon:"🧑‍🏫",name:"Schedule advising",desc:"Book time with your advisor",cat:"Academics",personas:["firstyear","senior"]},
+  {id:"rosters",icon:"🗂️",name:"Class rosters & grade entry",desc:"Faculty Center rosters and grading",cat:"Academics",personas:["faculty"]},
+  {id:"earlyAlert",icon:"⚠️",name:"Submit early alert",desc:"Flag a student who needs support",cat:"Academics",personas:["faculty"]},
+
+  {id:"payBill",icon:"🧾",name:"Pay my bursar bill",desc:"View statements and make payments",cat:"Finances",personas:["firstyear","senior","parent"],popular:true},
+  {id:"payPlan",icon:"📆",name:"Enroll in payment plan",desc:"Split your balance into installments",cat:"Finances",personas:["firstyear","senior","parent"]},
+  {id:"aid",icon:"💰",name:"View financial aid",desc:"Awards, disbursements, and to-dos",cat:"Finances",personas:["firstyear","senior","applicant","parent"]},
+  {id:"fafsa",icon:"💸",name:"FAFSA & aid applications",desc:"File or renew your FAFSA",cat:"Finances",personas:["applicant","firstyear","parent"]},
+  {id:"scholarships",icon:"✨",name:"Scholarship applications",desc:"Browse and apply for IU scholarships",cat:"Finances",personas:["applicant","firstyear","senior"]},
+  {id:"refund",icon:"🏦",name:"Direct deposit & refunds",desc:"Set up bank info for refunds and pay",cat:"Finances",personas:["firstyear","senior","staff","faculty"]},
+
+  {id:"timesheet",icon:"⏱️",name:"Submit timesheet",desc:"Report hours worked",cat:"Employment",personas:["firstyear","staff"],popular:true},
+  {id:"approveTime",icon:"🖊️",name:"Approve timesheets",desc:"Review and approve employee hours",cat:"Employment",personas:["staff","faculty"]},
+  {id:"payslip",icon:"💵",name:"View payslip",desc:"Pay statements and history",cat:"Employment",personas:["firstyear","staff","faculty"]},
+  {id:"w2",icon:"🧮",name:"Tax documents (W-2)",desc:"View and download tax forms",cat:"Employment",personas:["firstyear","senior","staff","faculty"]},
+  {id:"pto",icon:"🌴",name:"Request time off",desc:"Vacation and sick time requests",cat:"Employment",personas:["staff","faculty"]},
+  {id:"benefits",icon:"🏥",name:"My benefits",desc:"Medical, dental, retirement, HSA",cat:"Employment",personas:["staff","faculty"]},
+  {id:"tuitionBenefit",icon:"🎓",name:"Employee tuition benefit",desc:"Apply the IU tuition subsidy",cat:"Employment",personas:["staff","faculty"]},
+  {id:"jobs",icon:"💼",name:"Student jobs & Handshake",desc:"On-campus jobs and career postings",cat:"Employment",personas:["firstyear","senior"]},
+
+  {id:"appStatus",icon:"📄",name:"Check application status",desc:"Track your IU application",cat:"Admissions",personas:["applicant"],popular:true},
+  {id:"visitReg",icon:"🎟️",name:"Register for a campus visit",desc:"Tours, Red Carpet Days, and info sessions",cat:"Admissions",personas:["applicant"]},
+  {id:"acceptOffer",icon:"✅",name:"Accept admission offer",desc:"Confirm enrollment and pay deposit",cat:"Admissions",personas:["applicant"]},
+  {id:"housingApp",icon:"🏠",name:"Housing application",desc:"Apply for and manage campus housing",cat:"Admissions",personas:["applicant","firstyear"]},
+
+  {id:"bus",icon:"🚌",name:"Bus routes & tracker",desc:"Campus and Bloomington Transit, live",cat:"Campus Life",personas:["all"],popular:true},
+  {id:"map",icon:"🗺️",name:"Campus map",desc:"Buildings, parking, and accessibility",cat:"Campus Life",personas:["all"]},
+  {id:"dining",icon:"🍽️",name:"Dining menus & balances",desc:"Menus, hours, and meal points",cat:"Campus Life",personas:["firstyear","senior"]},
+  {id:"crimsonCard",icon:"💳",name:"CrimsonCard",desc:"Manage your campus ID and funds",cat:"Campus Life",personas:["all"]},
+  {id:"events",icon:"🎟️",name:"Events calendar",desc:"Everything happening across IU",cat:"Campus Life",personas:["all"]},
+  {id:"recreation",icon:"🏋️",name:"Recreation & fitness",desc:"SRSC hours, classes, and intramurals",cat:"Campus Life",personas:["firstyear","senior","staff","faculty"]},
+  {id:"library",icon:"📚",name:"Libraries & study rooms",desc:"Search, renew, and reserve rooms",cat:"Campus Life",personas:["firstyear","senior","faculty","staff"]},
+  {id:"health",icon:"🩺",name:"Student Health appointments",desc:"Schedule care at the health center",cat:"Campus Life",personas:["firstyear","senior"]},
+  {id:"caps",icon:"🧘",name:"Counseling (CAPS)",desc:"Appointments and drop-in options",cat:"Campus Life",personas:["firstyear","senior"]},
+  {id:"parking",icon:"🅿️",name:"Parking permits",desc:"Buy, renew, and manage permits",cat:"Campus Life",personas:["staff","faculty","senior"]},
+
+  {id:"duo",icon:"🔑",name:"Passphrase & Duo (2FA)",desc:"Manage login and two-step verification",cat:"IT & Accounts",personas:["all"],popular:true},
+  {id:"wifi",icon:"📶",name:"Wi-Fi & device setup",desc:"Connect to IU Secure and eduroam",cat:"IT & Accounts",personas:["all"]},
+  {id:"printing",icon:"🖨️",name:"Printing (PawPrints)",desc:"Balances and campus printer map",cat:"IT & Accounts",personas:["firstyear","senior","faculty","staff"]},
+  {id:"software",icon:"💻",name:"IUware software",desc:"Free and discounted software",cat:"IT & Accounts",personas:["all"]},
+  {id:"alerts",icon:"🚨",name:"IU-Notify alerts",desc:"Emergency alert preferences",cat:"IT & Accounts",personas:["all"]},
+
+  {id:"proxy",icon:"🔗",name:"Manage third-party access",desc:"Grant or review shared record access",cat:"Family",personas:["parent","firstyear","senior"]},
+  {id:"famWeekend",icon:"🏈",name:"Family Weekend registration",desc:"Register and buy game tickets",cat:"Family",personas:["parent"]},
+  {id:"famGuide",icon:"📘",name:"Parent & family guide",desc:"Key dates and campus resources",cat:"Family",personas:["parent"]},
+
+  {id:"grants",icon:"🔬",name:"Grants portal (Kuali)",desc:"Proposal routing and award management",cat:"Research",personas:["faculty"]},
+  {id:"irb",icon:"🧾",name:"IRB protocols",desc:"Human subjects submissions",cat:"Research",personas:["faculty"]},
+  {id:"travel",icon:"✈️",name:"Travel & reimbursement",desc:"Book travel and file expenses",cat:"Research",personas:["faculty","staff"]},
+  {id:"roomRes",icon:"🏛️",name:"Room reservations",desc:"Reserve classrooms and event spaces",cat:"Campus Life",personas:["faculty","staff"]},
+];
+
+/* =====================================================
+   Campus places (IU Bloomington · simulated live data)
+===================================================== */
+const USER_LOC = {lat:39.1701, lng:-86.5155, label:"Simulated location: Teter Quad"};
+
+const PLACES = [
+  /* buildings */
+  {id:"ballantine",type:"building",name:"Ballantine Hall",abbr:"BH",addr:"1020 E Kirkwood Ave",lat:39.1653,lng:-86.5232,
+   accessible:["South Entrance"],printers:16,
+   food:[{name:"Ballantine Hall Cafe",floor:"Floor G",hours:[8,15],days:"Mon–Fri",services:"In Person, Grubhub"}]},
+  {id:"wells",type:"building",name:"Herman B Wells Library",abbr:"WL",addr:"1320 E 10th St",lat:39.1712,lng:-86.5185,
+   accessible:["East Entrance","North Plaza"],printers:24,
+   food:[{name:"Bookmark Cafe",floor:"1st Floor, East Tower",hours:[8,22],days:"Daily",services:"In Person"}]},
+  {id:"luddy",type:"building",name:"Luddy Hall",abbr:"LD",addr:"700 N Woodlawn Ave",lat:39.1727,lng:-86.5230,
+   accessible:["West Entrance (ramp)"],printers:9,
+   food:[{name:"Luddy Cafe",floor:"1st Floor Atrium",hours:[8,14],days:"Mon–Fri",services:"In Person"}]},
+  {id:"imu",type:"building",name:"Indiana Memorial Union",abbr:"IMU",addr:"900 E 7th St",lat:39.1674,lng:-86.5257,
+   accessible:["Circle Drive Entrance","East Lounge Entrance"],printers:12,
+   food:[{name:"Starbucks",floor:"Ground Floor",hours:[7,21],days:"Daily",services:"In Person, Mobile Order"},
+         {name:"Tudor Room",floor:"2nd Floor",hours:[11,14],days:"Mon–Fri",services:"In Person"},
+         {name:"Sugar & Spice",floor:"Ground Floor",hours:[9,17],days:"Daily",services:"In Person"}]},
+  {id:"hodge",type:"building",name:"Hodge Hall (Kelley)",abbr:"HH",addr:"1309 E 10th St",lat:39.1716,lng:-86.5166,
+   accessible:["North Atrium Entrance"],printers:11,
+   food:[{name:"Kelley Cafe",floor:"1st Floor",hours:[7,15],days:"Mon–Fri",services:"In Person, Grubhub"}]},
+  {id:"woodburn",type:"building",name:"Woodburn Hall",abbr:"WH",addr:"1100 E 7th St",lat:39.1667,lng:-86.5222,
+   accessible:["East Entrance"],printers:4},
+  {id:"assembly",type:"building",name:"Simon Skjodt Assembly Hall",abbr:"AH",addr:"1001 E 17th St",lat:39.1809,lng:-86.5225,
+   accessible:["South Lobby"],printers:0},
+  {id:"srsc",type:"building",name:"Student Rec. Sports Center",abbr:"SRSC",addr:"1601 Law Ln",lat:39.1731,lng:-86.5122,
+   accessible:["Main Entrance"],printers:2},
+  /* parking */
+  {id:"atwater",type:"parking",name:"Atwater Parking Garage",addr:"1100 E Atwater Ave",lat:39.1645,lng:-86.5197,
+   permits:["EMP","SV"],rate:"Starting at $0.00",spots:"142 spaces open"},
+  {id:"henderson",type:"parking",name:"Henderson Parking Garage",addr:"310 S Henderson St",lat:39.1652,lng:-86.5258,
+   permits:["ST","EMP","Visitor"],rate:"$2/hr visitor",spots:"88 spaces open"},
+  {id:"feelane",type:"parking",name:"Fee Lane Parking Garage",addr:"1310 N Fee Ln",lat:39.1770,lng:-86.5218,
+   permits:["ST","EMP"],rate:"Starting at $0.00",spots:"260 spaces open"},
+  {id:"poplars",type:"parking",name:"Poplars Parking Garage",addr:"400 E 7th St",lat:39.1670,lng:-86.5290,
+   permits:["EMP","Visitor"],rate:"$2/hr visitor",spots:"51 spaces open"},
+  /* bus stops */
+  {id:"bus3rd",type:"bus",name:"3rd St. / Biology",lat:39.1647,lng:-86.5222,
+   routes:[{r:"B Route",mins:4},{r:"6 Limited (BT)",mins:11}]},
+  {id:"bus7th",type:"bus",name:"7th & Woodlawn (IMU)",lat:39.1679,lng:-86.5236,
+   routes:[{r:"A Route",mins:2},{r:"E Route",mins:9},{r:"3 Route (BT)",mins:14}]},
+  {id:"bus10fee",type:"bus",name:"10th & Fee Ln",lat:39.1731,lng:-86.5262,
+   routes:[{r:"A Route",mins:6},{r:"X Campus",mins:12}]},
+  {id:"buslaw",type:"bus",name:"Law Lane / SRSC",lat:39.1727,lng:-86.5133,
+   routes:[{r:"E Route",mins:5},{r:"9 Campus (BT)",mins:16}]},
+  /* standalone food */
+  {id:"wright",type:"food",name:"Wright Food Court",addr:"501 N Eagleson Ave",lat:39.1686,lng:-86.5152,
+   hours:[10,21],days:"Daily",services:"In Person, Grubhub"},
+  {id:"woodland",type:"food",name:"Woodland Eatery",addr:"1101 N Fee Ln",lat:39.1752,lng:-86.5245,
+   hours:[10,20],days:"Daily",services:"In Person"},
+];
+
+const MARKER_COLORS = {building:"#c8930c", parking:"#8a5fc9", bus:"#2b6cb0", food:"#b3272d"};
+const TYPE_ICONS = {building:"🏛️", parking:"🅿️", bus:"🚌", food:"🍽️"};
+
+function allMapPlaces(){
+  const out = [...PLACES];
+  for(const b of PLACES.filter(p=>p.type==="building" && p.food)){
+    b.food.forEach((f,i)=>out.push({
+      id:`${b.id}_food${i}`, type:"food", name:f.name, addr:`${b.name} · ${f.floor}`,
+      lat:b.lat, lng:b.lng, hours:f.hours, days:f.days, services:f.services, parent:b.id
+    }));
+  }
+  return out;
+}
+function distMi(a,b){
+  const R=3958.8, toR=x=>x*Math.PI/180;
+  const dLat=toR(b.lat-a.lat), dLng=toR(b.lng-a.lng);
+  const h=Math.sin(dLat/2)**2 + Math.cos(toR(a.lat))*Math.cos(toR(b.lat))*Math.sin(dLng/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+}
+function distLabel(p){
+  const d = distMi(USER_LOC,p);
+  return d < 0.19 ? `${Math.round(d*5280/10)*10} feet away` : `${d.toFixed(1)} miles away`;
+}
+function isOpen(hours){ const h=new Date().getHours(); return h>=hours[0] && h<hours[1]; }
+function hr12(h){ const ap=h>=12?"p.m.":"a.m."; const x=h%12||12; return `${x} ${ap}`; }
+function openBadge(p){
+  const o = isOpen(p.hours);
+  return `<span class="badge ${o?"green":"red"}">${o?"Open":"Closed"}</span>`;
+}
+function nearestStops(p,n=2){
+  return PLACES.filter(x=>x.type==="bus" && x.id!==p.id)
+    .map(s=>({s,d:distMi(p,s)})).sort((a,b)=>a.d-b.d).slice(0,n);
+}
+function visiblePlaces(){
+  const q = state.mapQ.trim().toLowerCase();
+  const list = allMapPlaces();
+  if(q) return list.filter(p=>(p.name+" "+(p.addr||"")).toLowerCase().includes(q))
+                   .sort((a,b)=>distMi(USER_LOC,a)-distMi(USER_LOC,b));
+  const t = {buildings:"building", buses:"bus", parking:"parking", food:"food"}[state.mapFilter];
+  return list.filter(p=>p.type===t).sort((a,b)=>distMi(USER_LOC,a)-distMi(USER_LOC,b));
+}
+
+/* =====================================================
+   Action Items — source systems + completion models
+   confirm: "system" (source confirms) | "approval" (needs approver) | "self"
+===================================================== */
+const SOURCES = {
+  canvas:{name:"Canvas (LMS)",icon:"📘",cls:"blue"},
+  registrar:{name:"Office of the Registrar",icon:"🎓",cls:"red"},
+  bursar:{name:"Bursar · Student Central",icon:"🧾",cls:"green"},
+  finaid:{name:"Financial Aid",icon:"💰",cls:"gold"},
+  hr:{name:"HR · Kuali Time",icon:"⏱️",cls:"purple"},
+  compliance:{name:"Compliance Training",icon:"🛡️",cls:"red"},
+  events:{name:"IU Events",icon:"🎟️",cls:"gold"},
+  deptform:{name:"Department Form",icon:"📋",cls:"blue"},
+  email:{name:"From your IU email",icon:"✉️",cls:"purple"},
+  research:{name:"Research · Kuali/ORA",icon:"🔬",cls:"green"},
+  admissions:{name:"Admissions",icon:"📄",cls:"red"},
+  housing:{name:"Residential Programs",icon:"🏠",cls:"gold"},
+  advising:{name:"Academic Advising",icon:"🧑‍🏫",cls:"blue"},
+  benefits:{name:"HR Benefits",icon:"🏥",cls:"green"},
+  reminder:{name:"Personal reminder",icon:"🔔",cls:"gold"},
+};
+
+/* =====================================================
+   Campus feed — shared, campus-wide (simulated)
+   events.iu.edu · news.iu.edu · iuhoosiers.com
+===================================================== */
+const FEED = {
+  events:[
+    {id:"ev1",date:"Jul 17",t1:"10:00am",t2:"to 12:00pm",title:"OUR Summer Experience Symposium",
+     loc:"Global & International Studies Building",
+     desc:"Undergraduate researchers present summer projects across the sciences, humanities, and the arts. Open to all students and faculty; light refreshments provided.",host:"Office of Undergraduate Research"},
+    {id:"ev2",date:"Jul 17",t1:"10:00am",t2:"to 4:00pm",title:"Summer String Academy Studio Recital",
+     loc:"Ford-Crawford Hall",
+     desc:"Pre-college string students perform selections prepared during the Summer String Academy. Free and open to the public.",host:"Jacobs School of Music"},
+    {id:"ev3",date:"Jul 18",t1:"7:00pm",t2:"to 9:00pm",title:"IU Cinema: Studio Ghibli Series",
+     loc:"IU Cinema",
+     desc:"A summer screening series celebrating the animated films of Studio Ghibli. Student tickets $3 with a valid CrimsonCard.",host:"IU Cinema"},
+    {id:"ev4",date:"Jul 19",t1:"9:00am",t2:"to 1:00pm",title:"Farmers' Market at Dunn Meadow",
+     loc:"Dunn Meadow",
+     desc:"Local growers and makers bring produce, baked goods, and crafts to campus. Meal points and Crimson Cash accepted at participating stands.",host:"Student Life"},
+    {id:"ev5",date:"Jul 22",t1:"5:30pm",t2:"to 7:00pm",title:"New Student Welcome Mixer",
+     loc:"Indiana Memorial Union · Solarium",
+     desc:"Meet fellow incoming students and student-org leaders before the fall term begins. Registration encouraged.",host:"First Year Experience"},
+  ],
+  news:[
+    {id:"nw1",date:"Jul 16, 2026",cat:"Global",title:"Hamilton Lugar School doctoral student earns competitive fellowship for research on Egyptian family vlogging",
+     summary:"A doctoral candidate in the Hamilton Lugar School has been awarded a national fellowship supporting fieldwork on how Egyptian families use online video to document daily life. The award funds a year of research and writing."},
+    {id:"nw2",date:"Jul 16, 2026",cat:"Science and Technology",title:"Luddy School excels during ACM Interactive Health Conference",
+     summary:"Faculty and students from the Luddy School presented several papers and a demo at a leading conference on interactive health technology, earning recognition for work on accessible patient-facing tools."},
+    {id:"nw3",date:"Jul 16, 2026",cat:"Business and Innovation",title:"Kelley School establishes undergraduate accounting scholarship with $1M gift",
+     summary:"A new endowed scholarship, funded by a $1 million commitment, will support undergraduate accounting students at the Kelley School of Business beginning in the coming academic year."},
+    {id:"nw4",date:"Jul 16, 2026",cat:"Arts and Humanities",title:"$7M investment to help retain arts talent and strengthen southern Indiana workforce",
+     summary:"A multi-year investment aims to keep creative professionals in the region by expanding arts programming, internships, and community partnerships across southern Indiana."},
+  ],
+  athletics:[
+    {id:"g1",date:"August 5, 2026",sport:"Women's Soccer",time:"1 P.M.",venue:"Bill Armstrong Stadium",
+     away:{name:"Louisville (Exh.)",logo:"🐦"}, home:{name:"Hoosiers",logo:"IU"}, note:"Exhibition · free admission"},
+    {id:"g2",date:"August 8, 2026",sport:"Women's Soccer",time:"1 P.M.",venue:"Dayton, Ohio",
+     away:{name:"Hoosiers",logo:"IU"}, home:{name:"Dayton (Exh.)",logo:"🔴"}, note:"Exhibition · away"},
+    {id:"g3",date:"August 9, 2026",sport:"Men's Soccer",time:"TBA",venue:"Bill Armstrong Stadium",
+     away:{name:"Bowling Green (Exh.)",logo:"🟠"}, home:{name:"Hoosiers",logo:"IU"}, note:"Exhibition · season opener tune-up"},
+    {id:"g4",date:"August 29, 2026",sport:"Football",time:"3:30 P.M.",venue:"Memorial Stadium",
+     away:{name:"Old Dominion",logo:"🦁"}, home:{name:"Hoosiers",logo:"IU"}, note:"Season opener · student tickets via CrimsonCard"},
+  ],
+};
+
+/* =====================================================
+   Personas (simulated data)
+===================================================== */
+const DATA = {
+
+/* ---------- 0. GUEST (unauthenticated) ---------- */
+guest: {
+  name:"Guest", first:"Guest", avatar:"🔓", guest:true,
+  role:"Not signed in · Public view",
+  adminDesc:"A visitor who hasn't signed in. Sees only public content — campus feed, map, and public services — with a prompt to sign in.",
+  greetSub:"You're browsing public information. Sign in for your personalized One.IU.",
+  favorites:["bus","map","events","wifi"],
+  actionItems:[],
+  notifCount:0,
+  notifications:[],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Welcome to One.IU",title:"Explore Indiana University",
+       sub:"You're viewing public information. Sign in with your IU username to see your classes, Action Items, CrimsonCard, and personalized services.",
+       stats:[{n:"🎟️",l:"Events & news"},{n:"🗺️",l:"Campus map"},{n:"🔎",l:"Search IU"}]},
+      {type:"signin"},
+      {type:"campusfeed"},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    campus:[{type:"campusmap"},{type:"campusfeed"}],
+  }
+},
+
+/* ---------- 1. APPLICANT ---------- */
+applicant: {
+  name:"Jordan Reyes", first:"Jordan", avatar:"🌟",
+  role:"Applicant · Fall 2027", adminDesc:"High-school senior who applied to the Kelley School of Business. Tracking their application and planning a campus visit.",
+  greetSub:"Application status, campus visits, and financial aid in one place.",
+  favorites:["appStatus","visitReg","fafsa","housingApp","duo"],
+  actionItems:[
+    {id:"ai_ap1",src:"finaid",title:"File your FAFSA",desc:"Add IU (code 001809) so your aid can be packaged.",due:"Priority Apr 15",high:true,action:{label:"Open studentaid.gov",target:"FAFSA at studentaid.gov"},confirm:"system",confirmedBy:"IU receives your processed FAFSA (a few days)"},
+    {id:"ai_ap2",src:"admissions",title:"Reserve a Red Carpet Day visit",desc:"Oct 10 session is 80% full.",due:"Optional",action:{label:"Reserve visit",target:"the Admissions visit scheduler"},confirm:"system",confirmedBy:"the scheduler records your reservation"},
+    {id:"ai_ap3",src:"housing",title:"Submit housing interest form",desc:"Improves your room-selection order later.",due:"Optional",action:{label:"Open form",target:"the Residential Programs form"},confirm:"system",confirmedBy:"the submission is recorded"},
+    {id:"ai_ap4",src:"email",title:"Reply about your scholarship interview",desc:"Counselor asked for your availability next week.",due:"Flagged 2d ago",action:{label:"Open in email",target:"your IU email thread"},confirm:"self"},
+    {id:"ai_ap5",src:"reminder",title:"Ask Mr. Lee for a recommendation letter",desc:"You added this reminder.",due:"No date",confirm:"self"},
+  ],
+  notifCount:2,
+  notifications:[
+    {icon:"📬",unread:true,title:"Your transcript was received",sub:"Bloomington High School South transcript has been added to your application.",time:"2h ago"},
+    {icon:"🎟️",unread:true,title:"Red Carpet Day is nearly full",sub:"The Oct 10 visit day is at 80% capacity. Reserve a spot soon if you plan to attend.",time:"Yesterday"},
+    {icon:"💸",unread:false,title:"FAFSA opens October 1",sub:"Filing early maximizes aid eligibility. IU's priority deadline is April 15.",time:"3d ago"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"application",label:"My Application",icon:"📄"},
+    {id:"visit",label:"Visit IU",icon:"🚌"},
+    {id:"aid",label:"Cost & Aid",icon:"💰"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Application status",title:"Your application is in review",
+       sub:"Your Kelley School of Business application is complete and with the admissions committee. Decisions will post by March 15.",
+       stats:[{n:"4/4",l:"Items received"},{n:"Mar 15",l:"Decision by"},{n:"2",l:"To-dos open"}]},
+      {type:"steps",title:"📄 Application tracker",items:[
+        {title:"Application submitted",sub:"Received Nov 1 — within the early action window.",state:"done"},
+        {title:"Transcript & test scores in",sub:"All supporting materials verified.",state:"done"},
+        {title:"In committee review",sub:"The admissions committee is reviewing your file.",state:"now"},
+        {title:"Decision released",sub:"You will receive an email and a status update here by March 15.",state:"todo"},
+      ]},
+      {type:"actionitems"},
+      {type:"list",title:"🎟️ Admissions events",items:[
+        {icon:"🚌",bg:"gold",title:"Red Carpet Day",sub:"Full-day visit: tours, Kelley info session, lunch",right:"Oct 10",rightSub:"Bloomington"},
+        {icon:"💻",bg:"blue",title:"Virtual Q&A: Life at IU",sub:"Live session with current students",right:"Sep 24",rightSub:"7pm ET"},
+        {icon:"🏦",bg:"green",title:"Paying for IU 101",sub:"Aid, scholarships & the 21st Century Scholars program",right:"Oct 1",rightSub:"Webinar"},
+      ]},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    campus:[{type:"campusmap"},{type:"campusfeed"}],
+    application:[
+      {type:"steps",title:"📄 Kelley School of Business — Direct Admit",items:[
+        {title:"Application submitted",sub:"Common App received Nov 1, 2026 · Early Action",state:"done"},
+        {title:"Transcript received",sub:"Bloomington HS South · GPA verified",state:"done"},
+        {title:"Test scores received",sub:"SAT 1380 (self-reported, verified)",state:"done"},
+        {title:"In committee review",sub:"Average review time: 4–6 weeks",state:"now"},
+        {title:"Decision by March 15",sub:"Early Action decisions post to this portal",state:"todo"},
+      ]},
+      {type:"list",title:"📎 Submitted materials",items:[
+        {icon:"📄",bg:"green",title:"Common Application",sub:"Received Nov 1",badge:{txt:"Complete",cls:"green"}},
+        {icon:"🏫",bg:"green",title:"High school transcript",sub:"Received Nov 8",badge:{txt:"Complete",cls:"green"}},
+        {icon:"✏️",bg:"green",title:"Essay — \"Why Kelley\"",sub:"Received Nov 1",badge:{txt:"Complete",cls:"green"}},
+        {icon:"📊",bg:"green",title:"SAT scores",sub:"Received Nov 12",badge:{txt:"Complete",cls:"green"}},
+      ]},
+      {type:"notice",tone:"blue",icon:"💡",title:"Nothing else is needed from you right now",
+       sub:"We will email you and post here the moment anything changes. Optional items, like the housing interest form, appear in your to-dos."},
+    ],
+    visit:[
+      {type:"list",title:"🚌 Upcoming visit options",items:[
+        {icon:"🎟️",bg:"gold",title:"Red Carpet Day",sub:"Full-day prospective student experience",right:"Oct 10",badge:{txt:"80% full",cls:"gold"}},
+        {icon:"🚶",bg:"blue",title:"Daily campus tour",sub:"90-minute walking tour with a student ambassador",right:"Weekdays",rightSub:"10am & 2pm"},
+        {icon:"🏛️",bg:"purple",title:"Kelley-specific tour",sub:"Hodge Hall, trading lab & undergraduate advising",right:"Fridays",rightSub:"11am"},
+        {icon:"💻",bg:"green",title:"Virtual tour",sub:"Explore campus online at your own pace",right:"Anytime",rightSub:"Self-paced"},
+      ]},
+      {type:"notice",tone:"gold",icon:"🗺️",title:"Planning your visit",
+       sub:"Morning tours pair well with lunch at the Indiana Memorial Union and a walk through the arboretum. Visit parking is free with registration."},
+    ],
+    aid:[
+      {type:"balances",title:"💰 Estimated cost of attendance (In-state, 2027–28)",items:[
+        {icon:"🎓",label:"Tuition & fees",value:"$12,144",note:"Per year, in-state"},
+        {icon:"🏠",label:"Housing & food",value:"$13,308",note:"Standard res hall + meals"},
+        {icon:"📚",label:"Books & misc",value:"$2,050",note:"Estimate"},
+        {icon:"✨",label:"Avg. freshman award",value:"$11,500",note:"Grants + scholarships"},
+      ]},
+      {type:"tasks",title:"✅ Financial aid to-dos",items:[
+        {id:"aid1",txt:"File FAFSA — IU code 001809",due:"Opens Oct 1 · priority deadline Apr 15",urgent:true},
+        {id:"aid2",txt:"IU Academic Scholarships",due:"Automatically considered with your Nov 1 application"},
+        {id:"aid3",txt:"Check 21st Century Scholars eligibility",due:"Indiana residents only"},
+      ]},
+      {type:"notice",tone:"green",icon:"🤝",title:"Financial aid assistance",
+       sub:"Student Central can walk you and your family through your aid options. Call (812) 855-6500 or chat online, weekdays 9 a.m.–4 p.m."},
+    ],
+  }
+},
+
+/* ---------- 2. FIRST-YEAR STUDENT ---------- */
+firstyear: {
+  name:"Maya Patel", first:"Maya", avatar:"🎒",
+  role:"First-Year · Exploratory", adminDesc:"Freshman living in Teter Quad, exploring majors, working a Federal Work-Study job at Wells Library.",
+  greetSub:"2 classes today · Wells Library shift 2:00–5:00 p.m.",
+  crimsonCard:{holder:"Maya Patel",kind:"Student",id:"6017 88•• •••• 4402",since:"Aug 2026",
+    balances:[
+      {icon:"🍽️",label:"Meal Points",value:"$412.00",note:"~$45/wk remaining · on pace",add:false},
+      {icon:"🥗",label:"Dining Dollars",value:"$76.20",note:"Anywhere on campus",add:true},
+      {icon:"💵",label:"Crimson Cash",value:"$23.50",note:"Laundry, printing & vending",add:true},
+    ],
+    access:["Teter Quad (residential)","Wells Library after-hours","SRSC recreation"]},
+  orgs:{
+    memberships:[
+      {icon:"🌏",name:"Indian Student Association",role:"Member"},
+      {icon:"🥾",name:"Hoosier Outdoor Club",role:"Member"},
+      {icon:"🏠",name:"Teter Hall Council",role:"Floor representative"},
+    ],
+    announcements:[
+      {org:"Teter Hall Council",text:"Floor pizza night moved to Friday 7pm in the Teter MPR.",time:"2h ago"},
+      {org:"Indian Student Association",text:"Diwali showcase auditions open — sign up by Sept 28.",time:"1d ago"},
+    ],
+    events:[
+      {icon:"🍕",title:"Teter floor pizza night",when:"Fri 7:00 p.m.",where:"Teter MPR"},
+      {icon:"🏞️",title:"Hoosier Outdoor: Griffy Lake hike",when:"Sat 9:00 a.m.",where:"Meet at SRSC"},
+      {icon:"🪔",title:"ISA Diwali auditions",when:"Sep 28",where:"IMU Solarium"},
+    ]},
+  library:{
+    onLoan:[
+      {title:"Calculus: Early Transcendentals",author:"Stewart",due:"Sep 30",renew:true},
+      {title:"The Design of Everyday Things",author:"Norman",due:"Oct 4",renew:true},
+      {title:"Educated: A Memoir",author:"Westover",due:"Sep 24",renew:false,soon:true},
+    ],
+    ill:[{title:"Finite Mathematics (7th ed.) — chapter scan",status:"Ready — check your email"}],
+    rooms:[{room:"Wells Library · Room 234",when:"Today 6:00–8:00 p.m.",status:"Reserved"}]},
+  favorites:["canvas","timesheet","dining","bus","grades","payBill"],
+  actionItems:[
+    {id:"ai_fy1",src:"hr",title:"Submit work-study timesheet",desc:"9.5 of 12 hours logged.",due:"Fri 5:00 p.m.",high:true,action:{label:"Open Kuali Time",target:"Kuali Time"},confirm:"approval",approver:"your supervisor"},
+    {id:"ai_fy2",src:"canvas",title:"MATH-M 118 · Problem Set 7",desc:"Finite Math · submit on the assignment page.",due:"Tomorrow 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
+    {id:"ai_fy3",src:"advising",title:"Confirm your advising appointment",desc:"Spring planning · Ferguson 2042.",due:"Thu 3:30 p.m.",action:{label:"Confirm time",target:"the advising scheduler"},confirm:"system",confirmedBy:"the scheduler marks it confirmed"},
+    {id:"ai_fy4",src:"compliance",title:"FERPA refresher training",desc:"Required for student employees · ~15 min.",due:"End of month",action:{label:"Start training",target:"IU Learn"},confirm:"system",confirmedBy:"IU Learn logs your completion"},
+    {id:"ai_fy5",src:"events",title:"RSVP: Teter floor event",desc:"Pizza night, hosted by your RA.",due:"Friday",action:{label:"RSVP",target:"the event page"},confirm:"system",confirmedBy:"your RSVP is recorded"},
+    {id:"ai_fy6",src:"reminder",title:"Buy a graphing calculator",desc:"You added this reminder for stats next term.",due:"No date",confirm:"self"},
+  ],
+  notifCount:3,
+  notifications:[
+    {icon:"⏰",unread:true,title:"Timesheet due Friday",sub:"You have logged 9.5 of your 12 scheduled hours this week.",time:"1h ago"},
+    {icon:"📉",unread:true,title:"Meal point balance update",sub:"$412 remaining with 9 weeks left — about $45/week, on pace for the semester.",time:"Today"},
+    {icon:"🧑‍🏫",unread:true,title:"Advisor confirmed your meeting",sub:"Thu 3:30pm · Ferguson Academic Advising, room 2042.",time:"Yesterday"},
+    {icon:"🏀",unread:false,title:"Student tickets: Hoosier Hysteria",sub:"Free student tickets available starting Monday at 10am.",time:"2d ago"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"classes",label:"Classes",icon:"📚"},
+    {id:"work",label:"Work",icon:"💼"},
+    {id:"money",label:"Money",icon:"💳"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Week 8 · Fall semester",title:"Two classes and a library shift today",
+       sub:"Next: MATH-M 118 at 10:10 a.m. in Ballantine 013. Your Wells Library shift begins at 2:00 p.m.",
+       stats:[{n:"2",l:"Classes today"},{n:"2–5p",l:"Work shift"},{n:"3",l:"Items due this week"}]},
+      {type:"schedule",title:"📅 Today",items:[
+        {t1:"10:10",t2:"11:00",title:"MATH-M 118 · Finite Math",loc:"Ballantine 013 · Dr. Okafor",tag:"Next",color:"crimson",now:true},
+        {t1:"1:00",t2:"2:15",title:"COLL-C 104 · Critical Approaches",loc:"Woodburn 101",color:"blue"},
+        {t1:"2:00",t2:"5:00",title:"Work: Wells Library circ desk",loc:"Clock in at the east desk",tag:"Shift",color:"gold"},
+        {t1:"7:00",t2:"8:00",title:"Intramural volleyball",loc:"SRSC Court 3",color:"green"},
+      ]},
+      {type:"actionitems"},
+      {type:"crimsoncard"},
+      {type:"orgs"},
+      {type:"libraries"},
+      {type:"campusfeed"},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    classes:[
+      {type:"list",title:"📚 Fall schedule · 15 credit hours",items:[
+        {icon:"➗",bg:"red",title:"MATH-M 118 · Finite Mathematics",sub:"MWF 10:10–11:00 · Ballantine 013",right:"B+",rightSub:"current"},
+        {icon:"✍️",bg:"blue",title:"ENG-W 131 · Reading, Writing & Inquiry",sub:"TR 9:30–10:45 · Wells Library 001",right:"A−",rightSub:"current"},
+        {icon:"🧠",bg:"purple",title:"COLL-C 104 · Critical Approaches",sub:"MW 1:00–2:15 · Woodburn 101",right:"A",rightSub:"current"},
+        {icon:"🌎",bg:"green",title:"GEOG-G 110 · Human Geography",sub:"TR 1:00–2:15 · Student Building 150",right:"B",rightSub:"current"},
+        {icon:"🎹",bg:"gold",title:"MUS-Z 111 · Intro to Music Theory",sub:"F 1:25–2:15 · Simon Music Center",right:"A",rightSub:"current"},
+      ]},
+      {type:"tasks",title:"📌 Due this week",items:[
+        {id:"c1",txt:"Finite problem set 7",due:"Tomorrow 11:59pm",urgent:true},
+        {id:"c2",txt:"W131 draft 2 peer review",due:"Thursday in class"},
+        {id:"c3",txt:"Geography map quiz",due:"Friday · Canvas"},
+      ]},
+      {type:"notice",tone:"blue",icon:"🧭",title:"Spring registration opens in 2 weeks",
+       sub:"Your advising hold clears after Thursday's meeting. Consider bringing two or three majors you are interested in — the Majors & Minors Fair on Tuesday is a good starting point."},
+    ],
+    work:[
+      {type:"balances",title:"💼 Work-study at a glance",items:[
+        {icon:"🏛️",label:"Position",value:"Wells Library",note:"Circulation assistant"},
+        {icon:"⏱️",label:"This week",value:"9.5 hrs",note:"of 12 scheduled"},
+        {icon:"💰",label:"Earned so far",value:"$1,118",note:"of $2,800 award"},
+        {icon:"🗓️",label:"Next payday",value:"Jul 24",note:"Direct deposit"},
+      ]},
+      {type:"schedule",title:"🗓️ Shifts this week",items:[
+        {t1:"Mon",t2:"3h",title:"Circ desk · 2:00–5:00pm",loc:"Completed",color:"green"},
+        {t1:"Wed",t2:"3.5h",title:"Circ desk · 2:00–5:30pm",loc:"Completed",color:"green"},
+        {t1:"Today",t2:"3h",title:"Circ desk · 2:00–5:00pm",loc:"East desk · clock in on arrival",tag:"Today",color:"gold",now:true},
+        {t1:"Fri",t2:"3h",title:"Stacks shelving · 10:00–1:00",loc:"4th floor",color:"blue"},
+      ]},
+      {type:"tasks",title:"✅ Work to-dos",items:[
+        {id:"w1",txt:"Submit timesheet for this week",due:"Friday 5pm — supervisors approve Monday",urgent:true},
+        {id:"w2",txt:"Complete FERPA refresher training",due:"Due end of month · 15 min online"},
+      ]},
+      {type:"notice",tone:"green",icon:"📊",title:"Award pacing",
+       sub:"At about 12 hours per week, you will use your full $2,800 work-study award by late April. To request additional spring hours, contact your supervisor by November."},
+    ],
+    money:[
+      {type:"balances",title:"💳 All balances",items:[
+        {icon:"🧾",label:"Bursar",value:"$0.00",note:"Fall paid in full"},
+        {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"View award letter"},
+        {icon:"💼",label:"Work-study earned",value:"$1,118",note:"of $2,800 award"},
+        {icon:"🍽️",label:"Meal points",value:"$412.00",note:"Resets each semester"},
+        {icon:"🥗",label:"Dining Dollars",value:"$76.20",note:"Anywhere on campus"},
+        {icon:"💵",label:"Crimson Cash",value:"$23.50",note:"Reload anytime"},
+      ]},
+      {type:"list",title:"🧾 Recent activity",items:[
+        {icon:"🥗",bg:"green",title:"Woodland Eatery",sub:"Meal points",right:"−$11.25",rightSub:"Today"},
+        {icon:"👕",bg:"blue",title:"Teter laundry",sub:"Crimson Cash",right:"−$3.00",rightSub:"Yesterday"},
+        {icon:"💼",bg:"gold",title:"Payroll · work-study",sub:"Direct deposit",right:"+$142.88",rightSub:"Jul 10"},
+        {icon:"☕",bg:"red",title:"Starbucks (IMU)",sub:"Meal points",right:"−$6.45",rightSub:"Jul 14"},
+      ]},
+      {type:"notice",tone:"gold",icon:"🎯",title:"Scholarship deadlines",
+       sub:"The Hudson & Holland and exploratory-student scholarship cycles open November 1. Filing your FAFSA renewal early keeps you eligible for all award programs."},
+    ],
+    campus:[
+      {type:"campusmap"},
+      {type:"campusfeed"},
+      {type:"list",title:"🌳 This week at IU",items:[
+        {icon:"🏀",bg:"red",title:"Hoosier Hysteria",sub:"Assembly Hall · free student tickets",right:"Fri",rightSub:"8pm"},
+        {icon:"🎃",bg:"gold",title:"Fall Fest",sub:"Dunn Meadow · food trucks & live music",right:"Sat",rightSub:"12–4pm"},
+        {icon:"🧠",bg:"purple",title:"Majors & Minors Fair",sub:"Alumni Hall · 100+ programs",right:"Tue",rightSub:"11–2pm"},
+        {icon:"🎬",bg:"blue",title:"IU Cinema: Studio Ghibli night",sub:"$2 student tickets",right:"Thu",rightSub:"7pm"},
+      ]},
+      {type:"notice",tone:"blue",icon:"🧘",title:"Counseling & support",
+       sub:"CAPS offers free drop-in \"Let's Talk\" sessions at Eigenmann and the Well House — no appointment needed. Standard appointments can be scheduled from the Tasks tab."},
+    ],
+  }
+},
+
+/* ---------- 3. GRADUATING SENIOR ---------- */
+senior: {
+  name:"Devon Williams", first:"Devon", avatar:"🎓",
+  role:"Senior · Informatics", adminDesc:"December graduate completing a capstone, searching for jobs, and working through the graduation checklist.",
+  greetSub:"147 days until December commencement.",
+  crimsonCard:{holder:"Devon Williams",kind:"Student",id:"6017 88•• •••• 1183",since:"Aug 2023",
+    balances:[
+      {icon:"🥗",label:"Dining Dollars",value:"$18.65",note:"Commuter plan",add:true},
+      {icon:"💵",label:"Crimson Cash",value:"$41.10",note:"Printing & Luddy vending",add:true},
+    ],
+    access:["Luddy Hall labs","Wells Library after-hours","SRSC recreation"]},
+  orgs:{
+    memberships:[
+      {icon:"💻",name:"Informatics Student Association",role:"Vice President"},
+      {icon:"🎨",name:"UX Club at IU",role:"Member"},
+      {icon:"🎓",name:"Senior Class Council",role:"Member"},
+    ],
+    announcements:[
+      {org:"Informatics Student Association",text:"Portfolio review night with alumni — RSVP for Oct 1.",time:"5h ago"},
+      {org:"Senior Class Council",text:"Grad photo signups at the Sample Gates open Monday.",time:"2d ago"},
+    ],
+    events:[
+      {icon:"🖥️",title:"ISA portfolio review night",when:"Oct 1, 6:00 p.m.",where:"Luddy Hall 1106"},
+      {icon:"📸",title:"Senior portrait sessions",when:"Oct 20–24",where:"Sample Gates"},
+    ]},
+  library:{
+    onLoan:[
+      {title:"Don't Make Me Think",author:"Krug",due:"Oct 2",renew:true},
+      {title:"Research Methods in HCI",author:"Lazar et al.",due:"Sep 26",renew:false,soon:true},
+    ],
+    ill:[{title:"\"Participatory Design\" (journal article)",status:"Requested — typically 2–4 days"}],
+    rooms:[{room:"Luddy Hall · Group Room 2010",when:"Thu 3:00–5:00 p.m.",status:"Reserved"}]},
+  favorites:["applyGrad","degreeAudit","jobs","transcript","canvas","payBill"],
+  actionItems:[
+    {id:"ai_sr1",src:"registrar",title:"Apply to graduate",desc:"Submit, then your academic unit certifies eligibility.",due:"Sept 15",high:true,action:{label:"Apply now",target:"the Registrar graduation application"},confirm:"approval",approver:"your academic unit"},
+    {id:"ai_sr2",src:"bursar",title:"Pay fall balance ($1,284)",desc:"Or enroll in the no-interest payment plan.",due:"Aug 10",high:true,action:{label:"Pay bill",target:"the Bursar payment page"},confirm:"system",confirmedBy:"the payment posts to your account"},
+    {id:"ai_sr3",src:"registrar",title:"Add your last A&H credit",desc:"Degree audit needs 1 more credit (FINA-A 110 has seats).",due:"Before add/drop",high:true,action:{label:"Register",target:"Student Center registration"},confirm:"system",confirmedBy:"enrollment confirms immediately"},
+    {id:"ai_sr4",src:"canvas",title:"INFO-I 494 · User research report",desc:"Capstone milestone 2.",due:"Next Friday",action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
+    {id:"ai_sr5",src:"finaid",title:"Complete federal loan exit counseling",desc:"Required before you graduate.",due:"Before December",action:{label:"Open studentaid.gov",target:"loan exit counseling"},confirm:"system",confirmedBy:"studentaid.gov reports completion to IU"},
+    {id:"ai_sr6",src:"deptform",title:"Order cap & gown",desc:"IU Bookstore · rental ~$65.",due:"By Nov 14",action:{label:"Order regalia",target:"the IU Bookstore"},confirm:"system",confirmedBy:"your order is confirmed at checkout"},
+    {id:"ai_sr7",src:"reminder",title:"Add capstone to LinkedIn portfolio",desc:"You added this reminder.",due:"No date",confirm:"self"},
+  ],
+  notifCount:3,
+  notifications:[
+    {icon:"🎓",unread:true,title:"Apply-to-graduate window is open",sub:"December graduates must apply by Sept 15. The application takes about 5 minutes.",time:"Today"},
+    {icon:"💼",unread:true,title:"New job match: Associate UX Researcher",sub:"Salesforce (Indianapolis) matches your Handshake profile.",time:"3h ago"},
+    {icon:"📋",unread:true,title:"Degree audit updated",sub:"You are at 94% — one requirement remains open. See the Graduation tab.",time:"Yesterday"},
+    {icon:"📸",unread:false,title:"Senior portraits at the Sample Gates",sub:"Free portrait sessions Oct 20–24. Booking opens soon.",time:"2d ago"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"classes",label:"Classes",icon:"📚"},
+    {id:"graduation",label:"Graduation",icon:"🎓"},
+    {id:"career",label:"Career",icon:"💼"},
+    {id:"money",label:"Money",icon:"💳"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Final semester",title:"Degree progress: 94% — one requirement remaining",
+       sub:"Apply to graduate by September 15 and resolve the open Arts & Humanities credit to stay on track for December commencement.",
+       stats:[{n:"94%",l:"Degree complete"},{n:"12",l:"Credits left"},{n:"Dec 19",l:"Commencement"}]},
+      {type:"actionitems"},
+      {type:"progress",title:"📊 Degree progress · B.S. Informatics",pct:94,label:"114 of 120 credits",
+       note:"All requirements are complete except one Arts & Humanities gen-ed credit. Your advisor flagged two 1-credit options with open seats — see the Graduation tab."},
+      {type:"schedule",title:"📅 Today",items:[
+        {t1:"11:15",t2:"12:30",title:"INFO-I 494 · Capstone studio",loc:"Luddy Hall 1106 · Team standup",tag:"Next",color:"crimson",now:true},
+        {t1:"2:30",t2:"3:00",title:"Career coach check-in",loc:"Virtual · resume review",color:"blue"},
+        {t1:"5:30",t2:"6:30",title:"Informatics Student Assoc.",loc:"Luddy 2nd floor commons",color:"purple"},
+      ]},
+      {type:"list",title:"💼 Recommended for you",items:[
+        {icon:"🏢",bg:"blue",title:"Fall Career Fair — Tech & Data",sub:"90+ employers · bring your QR code",right:"Oct 2",rightSub:"Alumni Hall"},
+        {icon:"⭐",bg:"gold",title:"Salesforce · Associate UX Researcher",sub:"New Handshake match · Indianapolis",right:"Apply",rightSub:"by Oct 15"},
+        {icon:"🎤",bg:"green",title:"Mock interview week",sub:"Practice interviews with employer recruiters",right:"Sep 29",rightSub:"Sign up"},
+      ]},
+      {type:"crimsoncard"},
+      {type:"orgs"},
+      {type:"libraries"},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    campus:[{type:"campusmap"},{type:"campusfeed"}],
+    classes:[
+      {type:"list",title:"📚 Final semester · 12 credit hours",items:[
+        {icon:"🚀",bg:"red",title:"INFO-I 494 · Capstone I",sub:"TR 11:15–12:30 · Luddy 1106",right:"A−",rightSub:"current"},
+        {icon:"🤖",bg:"purple",title:"INFO-I 421 · Applied ML",sub:"MW 2:30–3:45 · Luddy 3166",right:"B+",rightSub:"current"},
+        {icon:"⚖️",bg:"blue",title:"INFO-I 453 · Computer & Info Ethics",sub:"Online asynchronous",right:"A",rightSub:"current"},
+        {icon:"🎨",bg:"gold",title:"FINA-A 110 · 1-cr A&H elective",sub:"Not yet enrolled — required to graduate",badge:{txt:"Action needed",cls:"red"}},
+      ]},
+      {type:"tasks",title:"📌 Due soon",items:[
+        {id:"sc1",txt:"Capstone: user research report",due:"Next Friday",urgent:true},
+        {id:"sc2",txt:"ML assignment 4: model evaluation",due:"Monday 11:59pm"},
+        {id:"sc3",txt:"Ethics discussion post + 2 replies",due:"Sunday"},
+      ]},
+    ],
+    graduation:[
+      {type:"steps",title:"🎓 Graduation checklist · December 2026",items:[
+        {title:"Degree audit review",sub:"Completed with your advisor in April — 94% complete.",state:"done"},
+        {title:"Register for final credits",sub:"12 credits enrolled — 1 A&H credit still to add.",state:"done"},
+        {title:"Apply to graduate",sub:"Window is open now — deadline Sept 15.",state:"now"},
+        {title:"Clear the last audit item",sub:"Add a 1-credit A&H course (FINA-A 110 or MUS-Z 103 have open seats).",state:"now"},
+        {title:"Order cap & gown",sub:"IU Bookstore, by Nov 14. Rental approximately $65.",state:"todo"},
+        {title:"Commencement — Dec 19",sub:"Simon Skjodt Assembly Hall · guest tickets available in Nov.",state:"todo"},
+      ]},
+      {type:"progress",title:"📊 Degree audit",pct:94,label:"114 / 120 credits",
+       note:"Major core complete · Cognate complete · Capstone in progress · 1 credit of Arts & Humanities remaining."},
+      {type:"notice",tone:"gold",icon:"⏰",title:"Key deadlines",
+       sub:"Apply to graduate by September 15, and enroll in the remaining A&H credit before add/drop closes. The remaining items are ceremony logistics."},
+    ],
+    career:[
+      {type:"list",title:"💼 Your job pipeline",items:[
+        {icon:"⭐",bg:"gold",title:"Salesforce · Assoc. UX Researcher",sub:"Indianapolis · new match",badge:{txt:"Apply by Oct 15",cls:"gold"}},
+        {icon:"📨",bg:"blue",title:"Eli Lilly · Digital Health Analyst",sub:"Applied Sep 2",badge:{txt:"In review",cls:"blue"}},
+        {icon:"🗣️",bg:"green",title:"Cummins · UX Engineer I",sub:"Phone screen completed",badge:{txt:"Interview Sep 30",cls:"green"}},
+        {icon:"📭",bg:"red",title:"Epic · Project Manager",sub:"No response in 30 days",badge:{txt:"Follow up",cls:"gray"}},
+      ]},
+      {type:"list",title:"📅 Career events",items:[
+        {icon:"🏢",bg:"blue",title:"Fall Career Fair — Tech & Data",sub:"Alumni Hall · 90+ employers",right:"Oct 2",rightSub:"12–4pm"},
+        {icon:"🎤",bg:"purple",title:"Mock interview week",sub:"30-minute slots with employer recruiters",right:"Sep 29",rightSub:"Book now"},
+        {icon:"✍️",bg:"gold",title:"Resume review drop-in",sub:"Career services · no appointment needed",right:"Sep 25",rightSub:"Luddy lobby"},
+      ]},
+      {type:"notice",tone:"green",icon:"📈",title:"Handshake activity",
+       sub:"Recruiters viewed your profile 14 times this month, three times last month's rate. Adding your capstone project as a portfolio piece may increase visibility further."},
+    ],
+    money:[
+      {type:"balances",title:"💳 Money snapshot",items:[
+        {icon:"🧾",label:"Bursar balance",value:"$1,284.00",note:"Due Aug 10",alert:true},
+        {icon:"🎓",label:"Fed. loans to date",value:"$21,400",note:"Exit counseling required"},
+        {icon:"💰",label:"Payment plan",value:"Available",note:"4 installments, no interest"},
+        {icon:"🧢",label:"Cap & gown",value:"~$65",note:"Order by Nov 14"},
+      ]},
+      {type:"tasks",title:"✅ Financial to-dos",items:[
+        {id:"sm1",txt:"Pay or set up plan for fall balance",due:"$1,284 due Aug 10",urgent:true},
+        {id:"sm2",txt:"Complete federal loan exit counseling",due:"Required for December graduates"},
+        {id:"sm3",txt:"Use remaining printing & Crimson Cash",due:"Balances expire after your final semester"},
+      ]},
+      {type:"notice",tone:"blue",icon:"🧮",title:"Loan repayment estimate",
+       sub:"On a standard 10-year plan, $21,400 is approximately $225/month beginning June 2027. MoneySmarts offers free one-on-one repayment planning sessions."},
+    ],
+  }
+},
+
+/* ---------- 4. STAFF ---------- */
+staff: {
+  name:"Angela Brooks", first:"Angela", avatar:"💼",
+  role:"Staff · Student Affairs", adminDesc:"Full-time Program Coordinator in the Office of First Year Experience. Manages student staff, benefits, and professional development.",
+  greetSub:"3 meetings today · 4 timesheets awaiting approval.",
+  crimsonCard:{holder:"Angela Brooks",kind:"Faculty / Staff",id:"6017 88•• •••• 7735",since:"Sep 2019",
+    balances:[
+      {icon:"💵",label:"Crimson Cash",value:"$64.00",note:"Dining, printing & campus vendors",add:true},
+    ],
+    access:["Eigenmann Hall (office)","IMU staff spaces","Parking garages (EM-S)"]},
+  library:{
+    onLoan:[
+      {title:"The First-Year Experience Handbook",author:"Upcraft et al.",due:"Oct 12",renew:true},
+    ],
+    ill:[],
+    rooms:[{room:"IMU · Meeting Room M07",when:"Aug 12, 1:00–3:00 p.m.",status:"Reserved (orientation planning)"}]},
+  favorites:["approveTime","payslip","pto","benefits","parking","travel"],
+  actionItems:[
+    {id:"ai_st1",src:"hr",title:"Approve 4 student timesheets",desc:"You are the approver — due before Friday payroll.",due:"Mon 10:00 a.m.",high:true,action:{label:"Review in Kuali Time",target:"Kuali Time approvals"},confirm:"system",confirmedBy:"Kuali Time records each approval"},
+    {id:"ai_st2",src:"compliance",title:"Annual data security training",desc:"Required for all staff · ~20 min.",due:"Jul 31",high:true,action:{label:"Start training",target:"Workday Learning"},confirm:"system",confirmedBy:"Workday Learning logs your completion"},
+    {id:"ai_st3",src:"benefits",title:"Apply the employee tuition benefit",desc:"For your fall SPEA-V 506 course.",due:"Aug 1",action:{label:"Apply benefit",target:"the HR benefits portal"},confirm:"approval",approver:"HR Benefits (eligibility review)"},
+    {id:"ai_st4",src:"deptform",title:"Submit Welcome Week final budget",desc:"Route to your director for sign-off.",due:"Friday",action:{label:"Open budget form",target:"the finance form"},confirm:"approval",approver:"your director"},
+    {id:"ai_st5",src:"hr",title:"Performance self-assessment",desc:"Submit your portion of the annual review.",due:"Sept 19",action:{label:"Open self-assessment",target:"the HR review tool"},confirm:"system",confirmedBy:"your submission is recorded (manager review follows)"},
+    {id:"ai_st6",src:"reminder",title:"Reserve Alumni Hall for orientation",desc:"You added this reminder.",due:"No date",confirm:"self"},
+  ],
+  notifCount:3,
+  notifications:[
+    {icon:"🖊️",unread:true,title:"4 student timesheets need approval",sub:"Approvals are due Monday 10am for Friday's payroll run.",time:"1h ago"},
+    {icon:"🏥",unread:true,title:"Open enrollment starts Oct 15",sub:"Two plan changes this year affect HDHP members. Review what's new before enrolling.",time:"Today"},
+    {icon:"🎓",unread:true,title:"Tuition benefit deadline",sub:"The fall deadline to apply the IU employee tuition benefit is Aug 1.",time:"Yesterday"},
+    {icon:"🅿️",unread:false,title:"Parking permit renews Aug 15",sub:"Your EM-S permit auto-renews unless you make a change.",time:"3d ago"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"work",label:"My Work",icon:"📋"},
+    {id:"benefits",label:"Benefits & Pay",icon:"🏥"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Office of First Year Experience",title:"Welcome Week planning is 80% complete",
+       sub:"Four student timesheets are awaiting your approval. Open enrollment begins October 15.",
+       stats:[{n:"3",l:"Meetings today"},{n:"4",l:"Approvals waiting"},{n:"Fri",l:"Payday"}]},
+      {type:"schedule",title:"📅 Today",items:[
+        {t1:"9:30",t2:"10:00",title:"FYE team standup",loc:"Eigenmann 240 · weekly",color:"crimson"},
+        {t1:"11:00",t2:"12:00",title:"Welcome Week vendor walkthrough",loc:"Dunn Meadow",tag:"Next",color:"gold",now:true},
+        {t1:"2:00",t2:"3:00",title:"1:1 with student staff lead",loc:"Zoom",color:"blue"},
+        {t1:"4:00",t2:"4:30",title:"Focus block: budget reconciliation",loc:"Held on your calendar",color:"green"},
+      ]},
+      {type:"actionitems"},
+      {type:"crimsoncard"},
+      {type:"libraries"},
+      {type:"list",title:"📣 For IU staff",items:[
+        {icon:"🏥",bg:"red",title:"Open enrollment 2027",sub:"Oct 15 – Nov 5 · info sessions all month",right:"Oct 15",rightSub:"Starts"},
+        {icon:"🧑‍💻",bg:"blue",title:"LinkedIn Learning day",sub:"Free workshops for staff development",right:"Aug 6",rightSub:"IMU"},
+        {icon:"🚶",bg:"green",title:"Healthy IU walking challenge",sub:"Team registration open",right:"Sep 1",rightSub:"Kickoff"},
+      ]},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    work:[
+      {type:"list",title:"🖊️ Waiting on your approval",items:[
+        {icon:"⏱️",bg:"gold",title:"Timesheet · Marcus J.",sub:"11.5 hrs · Welcome Week crew",badge:{txt:"Approve",cls:"gold"}},
+        {icon:"⏱️",bg:"gold",title:"Timesheet · Priya S.",sub:"9.0 hrs · office assistant",badge:{txt:"Approve",cls:"gold"}},
+        {icon:"⏱️",bg:"gold",title:"Timesheet · Ben T.",sub:"12.0 hrs · Welcome Week crew",badge:{txt:"Approve",cls:"gold"}},
+        {icon:"⏱️",bg:"gold",title:"Timesheet · Alex R.",sub:"7.5 hrs · social media",badge:{txt:"Approve",cls:"gold"}},
+        {icon:"🧾",bg:"blue",title:"Reimbursement · vendor deposit",sub:"$240 · Dunn Meadow stage",badge:{txt:"In review",cls:"blue"}},
+      ]},
+      {type:"tasks",title:"📋 Projects on deck",items:[
+        {id:"sw1",txt:"Welcome Week final budget → director",due:"Friday",urgent:true},
+        {id:"sw2",txt:"Fall student-staff hiring: post 6 roles",due:"This week"},
+        {id:"sw3",txt:"Draft FYE newsletter #1",due:"Aug 4"},
+        {id:"sw4",txt:"Reserve Alumni Hall for family orientation",due:"Aug 12"},
+      ]},
+      {type:"notice",tone:"blue",icon:"🗓️",title:"Performance check-ins open Sept 1",
+       sub:"Annual review self-assessments are due September 19. Your director has shared this year's template."},
+    ],
+    benefits:[
+      {type:"balances",title:"🏖️ Time & pay",items:[
+        {icon:"🌴",label:"Vacation",value:"112 hrs",note:"Accruing 10 hrs/mo"},
+        {icon:"🤒",label:"Sick time",value:"64 hrs",note:"Available now"},
+        {icon:"💵",label:"Next payday",value:"Jul 24",note:"Direct deposit"},
+        {icon:"🎓",label:"Tuition benefit",value:"Eligible",note:"Apply by Aug 1"},
+      ]},
+      {type:"balances",title:"🏥 Benefits snapshot",items:[
+        {icon:"🩺",label:"Medical",value:"Anthem PPO HDHP",note:"Employee + spouse"},
+        {icon:"🏦",label:"HSA balance",value:"$3,940",note:"+$150/mo IU match"},
+        {icon:"📈",label:"Retirement",value:"10% + 10%",note:"IU base + your deferral"},
+        {icon:"🦷",label:"Dental / Vision",value:"Enrolled",note:"Cigna / Anthem"},
+      ]},
+      {type:"list",title:"💵 Recent payslips",items:[
+        {icon:"💵",bg:"green",title:"Jul 10 · Biweekly",sub:"Regular pay",right:"$2,104.17",rightSub:"net"},
+        {icon:"💵",bg:"green",title:"Jun 26 · Biweekly",sub:"Regular pay",right:"$2,104.17",rightSub:"net"},
+        {icon:"💵",bg:"green",title:"Jun 12 · Biweekly",sub:"Regular pay",right:"$2,104.17",rightSub:"net"},
+      ]},
+      {type:"tasks",title:"✅ Benefits to-dos",items:[
+        {id:"sb1",txt:"Review open enrollment changes",due:"Window: Oct 15 – Nov 5",urgent:true},
+        {id:"sb2",txt:"Apply tuition benefit for fall course",due:"By Aug 1 — SPEA-V 506 qualifies"},
+        {id:"sb3",txt:"Update HSA contribution for 2027",due:"During open enrollment"},
+      ]},
+      {type:"notice",tone:"green",icon:"🎓",title:"Tuition benefit deadline",
+       sub:"IU covers a significant portion of tuition for staff, and 50% for dependents at IU campuses. Your fall course qualifies — apply before August 1."},
+    ],
+    campus:[
+      {type:"campusmap"},
+      {type:"campusfeed"},
+      {type:"list",title:"🌳 Around campus",items:[
+        {icon:"🚶",bg:"green",title:"Healthy IU walking challenge",sub:"Team registration open through August",right:"Sep 1",rightSub:"Register"},
+        {icon:"🎨",bg:"purple",title:"Eskenazi Museum: staff preview",sub:"New exhibition preview for employees",right:"Aug 8",rightSub:"8:30am"},
+        {icon:"🏀",bg:"red",title:"Faculty/staff ticket presale",sub:"Basketball season packages",right:"Aug 20",rightSub:"On sale"},
+      ]},
+      {type:"notice",tone:"blue",icon:"🅿️",title:"Parking permit renewal",
+       sub:"EM-S permits auto-renew on August 15 via payroll deduction. Changes to permit type or vehicle information can be made from the Tasks tab through August 8."},
+    ],
+  }
+},
+
+/* ---------- 5. FACULTY ---------- */
+faculty: {
+  name:"Dr. Elena Vasquez", first:"Elena", avatar:"🧑‍🏫",
+  role:"Faculty · Luddy School", adminDesc:"Associate Professor of Informatics. Teaching two courses, advising graduate students, and managing a grant deadline.",
+  greetSub:"Lecture at 10:10 · office hours 2:00–4:00 · grades due Friday.",
+  crimsonCard:{holder:"Elena Vasquez",kind:"Faculty / Staff",id:"6017 88•• •••• 9021",since:"Aug 2015",
+    balances:[
+      {icon:"💵",label:"Crimson Cash",value:"$12.75",note:"Luddy cafe & printing",add:true},
+    ],
+    access:["Luddy Hall (all floors)","Research labs 3040 / 4012","Parking garages (A permit)"]},
+  library:{
+    onLoan:[
+      {title:"Designing with the Mind in Mind",author:"Johnson",due:"Oct 18",renew:true},
+      {title:"Qualitative Research (4th ed.)",author:"Flick",due:"Sep 25",renew:false,soon:true},
+      {title:"The Craft of Research",author:"Booth et al.",due:"Nov 1",renew:true},
+    ],
+    ill:[
+      {title:"\"Reflective HCI\" (ACM proceedings)",status:"Ready — download available"},
+      {title:"Ethnography journal, vol. 24",status:"In transit from Purdue"},
+    ],
+    rooms:[{room:"Wells Library · Scholars' Commons studio",when:"Fri 10:00 a.m.–noon",status:"Reserved (grad workshop)"}]},
+  orgs:{
+    memberships:[
+      {icon:"💻",name:"Informatics Student Association",role:"Faculty advisor"},
+      {icon:"👩‍💻",name:"Women in Computing",role:"Faculty mentor"},
+    ],
+    announcements:[
+      {org:"Informatics Student Association",text:"Advisor sign-off needed on the fall event budget.",time:"1d ago"},
+    ],
+    events:[
+      {icon:"🖥️",title:"ISA portfolio review night",when:"Oct 1, 6:00 p.m.",where:"Luddy Hall 1106"},
+      {icon:"🎓",title:"Women in Computing mentor mixer",when:"Oct 8, 5:00 p.m.",where:"Luddy commons"},
+    ]},
+  favorites:["rosters","canvas","approveTime","grants","roomRes","travel"],
+  actionItems:[
+    {id:"ai_fac1",src:"registrar",title:"Upload I-365 midterm grades",desc:"82 students · enter in the Faculty Center.",due:"Friday",high:true,action:{label:"Open Faculty Center",target:"the Faculty Center grade roster"},confirm:"system",confirmedBy:"the roster records posted grades"},
+    {id:"ai_fac2",src:"advising",title:"Approve 2 advisee course plans",desc:"You are the approver — their registration opens Monday.",due:"By Monday",high:true,action:{label:"Review plans",target:"the advising approvals queue"},confirm:"system",confirmedBy:"each approval is recorded"},
+    {id:"ai_fac3",src:"research",title:"Route NSF CAREER proposal through ORA",desc:"Internal deadline before the Sep 15 sponsor date.",due:"Aug 1",action:{label:"Open Kuali Research",target:"Kuali Research routing"},confirm:"approval",approver:"ORA (reviews & submits to NSF)"},
+    {id:"ai_fac4",src:"deptform",title:"Sign PhD committee form — J. Kim",desc:"Yours is the last signature needed.",due:"This week",action:{label:"Sign form",target:"the Graduate School form"},confirm:"system",confirmedBy:"the form records your signature and closes"},
+    {id:"ai_fac5",src:"compliance",title:"Annual conflict-of-interest disclosure",desc:"Required for all PIs.",due:"Aug 15",action:{label:"Open disclosure",target:"the compliance disclosure form"},confirm:"system",confirmedBy:"the disclosure system logs your filing"},
+    {id:"ai_fac6",src:"registrar",title:"Submit spring textbook orders",desc:"Bookstore adoption deadline.",due:"Aug 15",action:{label:"Open adoptions",target:"the textbook adoption tool"},confirm:"system",confirmedBy:"the adoption tool records your orders"},
+    {id:"ai_fac7",src:"reminder",title:"Email co-PI about revised budget",desc:"You added this reminder.",due:"No date",confirm:"self"},
+  ],
+  notifCount:3,
+  notifications:[
+    {icon:"🧑‍🎓",unread:true,title:"3 advisee requests pending",sub:"Two course-plan approvals and one committee signature.",time:"2h ago"},
+    {icon:"📅",unread:true,title:"Grade upload reminder",sub:"I-365 midterm grades are due to the registrar by Friday.",time:"Today"},
+    {icon:"💰",unread:true,title:"NSF proposal internal deadline",sub:"Route through ORA by Aug 1 for the Sep 15 submission.",time:"Yesterday"},
+    {icon:"🏛️",unread:false,title:"Faculty council agenda posted",sub:"AI-in-coursework policy is up for a first read.",time:"3d ago"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"teaching",label:"Teaching",icon:"📖"},
+    {id:"advising",label:"Advising",icon:"🧑‍🎓"},
+    {id:"research",label:"Research",icon:"🔬"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Luddy School of Informatics",title:"Midterm grades are due Friday",
+       sub:"38 project submissions remain in the I-365 grading queue. Three advisee requests are pending, and the NSF internal deadline is August 1.",
+       stats:[{n:"2",l:"Classes today"},{n:"38",l:"To grade"},{n:"3",l:"Advisee requests"}]},
+      {type:"schedule",title:"📅 Today",items:[
+        {t1:"10:10",t2:"11:25",title:"INFO-I 365 · HCI Design (lecture)",loc:"Luddy 1106 · 82 students",tag:"Next",color:"crimson",now:true},
+        {t1:"1:00",t2:"2:00",title:"Research group meeting",loc:"Luddy 4012 · paper triage",color:"purple"},
+        {t1:"2:00",t2:"4:00",title:"Office hours",loc:"Luddy 3040 · 3 slots booked",color:"gold"},
+        {t1:"4:30",t2:"5:00",title:"Curriculum committee",loc:"Zoom",color:"blue"},
+      ]},
+      {type:"actionitems"},
+      {type:"crimsoncard"},
+      {type:"libraries"},
+      {type:"list",title:"📖 Your courses",items:[
+        {icon:"🎨",bg:"red",title:"INFO-I 365 · HCI Design",sub:"MWF 10:10 · Luddy 1106",right:"82",rightSub:"students"},
+        {icon:"🧪",bg:"purple",title:"INFO-I 590 · Grad UX Methods",sub:"T 4:00–6:30 · Luddy 3166",right:"18",rightSub:"students"},
+      ]},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    campus:[{type:"campusmap"},{type:"campusfeed"}],
+    teaching:[
+      {type:"list",title:"📖 Fall courses",items:[
+        {icon:"🎨",bg:"red",title:"INFO-I 365 · HCI Design",sub:"MWF 10:10–11:25 · Luddy 1106 · 82 enrolled",badge:{txt:"Grades due Fri",cls:"red"}},
+        {icon:"🧪",bg:"purple",title:"INFO-I 590 · Grad UX Methods",sub:"T 4:00–6:30 · Luddy 3166 · 18 enrolled",badge:{txt:"On track",cls:"green"}},
+      ]},
+      {type:"tasks",title:"📝 Grading queue",items:[
+        {id:"ft1",txt:"I-365 midterm projects — 38 remaining",due:"Grades due Friday",urgent:true},
+        {id:"ft2",txt:"I-590 annotated bibliographies — 18",due:"Return by next Tuesday"},
+        {id:"ft3",txt:"Regrade requests (2)",due:"Respond within one week per syllabus"},
+      ]},
+      {type:"list",title:"📊 Course pulse",items:[
+        {icon:"📈",bg:"green",title:"I-365 attendance",sub:"Averaging 91% — up from 84% last term",right:"91%"},
+        {icon:"⚠️",bg:"gold",title:"Early alerts",sub:"4 students flagged for missed work — notifications sent",right:"4",rightSub:"students"},
+        {icon:"💬",bg:"blue",title:"Mid-course feedback",sub:"Open until Friday · 47 responses so far",right:"57%",rightSub:"response"},
+      ]},
+      {type:"notice",tone:"blue",icon:"🤖",title:"AI-assisted grading pilot",
+       sub:"UITS is piloting rubric-first AI grading assistance for large sections. I-365 qualifies — opt in by August 1 to use it for the final project."},
+    ],
+    advising:[
+      {type:"list",title:"🧑‍🎓 Needs your sign-off",items:[
+        {icon:"📋",bg:"gold",title:"Course plan · Sarah Okafor",sub:"MS-HCI, spring semester plan",badge:{txt:"Approve",cls:"gold"}},
+        {icon:"📋",bg:"gold",title:"Course plan · Miguel Torres",sub:"MS-HCI, spring + internship credit",badge:{txt:"Approve",cls:"gold"}},
+        {icon:"🖊️",bg:"blue",title:"PhD committee form · Jamie Kim",sub:"Quals committee — your signature is the last needed",badge:{txt:"Sign",cls:"blue"}},
+      ]},
+      {type:"list",title:"👥 Your advisees (8)",items:[
+        {icon:"🎓",bg:"purple",title:"Jamie Kim · PhD, 3rd yr",sub:"Quals scheduled Oct 12",right:"On track"},
+        {icon:"🎓",bg:"purple",title:"Sarah Okafor · MS, 2nd yr",sub:"Graduating May · thesis track",right:"On track"},
+        {icon:"🎓",bg:"gold",title:"Miguel Torres · MS, 1st yr",sub:"Considering internship credit",right:"Check in"},
+        {icon:"🎓",bg:"purple",title:"+ 5 more",sub:"No pending items",right:"—"},
+      ]},
+      {type:"notice",tone:"gold",icon:"🗓️",title:"Graduate registration opens Monday",
+       sub:"Unapproved course plans will block your advisees from registering. The two pending approvals take about 3 minutes each."},
+    ],
+    research:[
+      {type:"steps",title:"🔬 NSF CAREER proposal — status",items:[
+        {title:"Draft complete",sub:"Project description v4 finalized with co-PI.",state:"done"},
+        {title:"Budget approved by department",sub:"$642K over 5 years · signed off Jul 8.",state:"done"},
+        {title:"Route through ORA",sub:"Internal deadline Aug 1 — routing should begin now.",state:"now"},
+        {title:"NSF submission",sub:"Sponsor deadline Sep 15.",state:"todo"},
+      ]},
+      {type:"balances",title:"💰 Active awards",items:[
+        {icon:"🏛️",label:"NSF HCC (active)",value:"$318K",note:"$121K remaining · ends 2027"},
+        {icon:"🏥",label:"NIH R21 (sub)",value:"$96K",note:"Year 2 of 2"},
+        {icon:"🧑‍🎓",label:"Funded students",value:"3 RAs",note:"2 PhD, 1 MS"},
+        {icon:"📄",label:"Under review",value:"2 papers",note:"CHI '27, CSCW"},
+      ]},
+      {type:"notice",tone:"green",icon:"✈️",title:"Travel funds available",
+       sub:"You have $2,400 in unspent conference travel on the NSF award, expiring at the end of the project year. CHI registration opens next month."},
+    ],
+  }
+},
+
+/* ---------- 6. PARENT ---------- */
+parent: {
+  name:"Susan Miller", first:"Susan", avatar:"👤",
+  role:"Parent & Family · Proxy access", adminDesc:"Parent of a sophomore. Has delegated (proxy) access to billing and shared records, plus family event information.",
+  greetSub:"Billing, records, and family events for Jake's semester.",
+  favorites:["payBill","payPlan","proxy","famWeekend","alerts"],
+  actionItems:[
+    {id:"ai_pa1",src:"bursar",title:"Pay Jake's fall bill ($6,240)",desc:"Proxy access · or enroll in the payment plan.",due:"Aug 10",high:true,action:{label:"Pay bill",target:"the Bursar proxy payment page"},confirm:"system",confirmedBy:"the payment posts to Jake's account"},
+    {id:"ai_pa2",src:"events",title:"Register for Family Weekend",desc:"Oct 17–19 · includes the Homecoming game.",due:"Hotels limited",action:{label:"Register",target:"Family Weekend registration"},confirm:"system",confirmedBy:"your registration is confirmed at checkout"},
+    {id:"ai_pa3",src:"deptform",title:"Verify emergency contact info",desc:"Annual verification · ~2 min.",due:"This month",action:{label:"Review contacts",target:"the emergency contact form"},confirm:"system",confirmedBy:"the form saves your confirmation"},
+    {id:"ai_pa4",src:"email",title:"Reply to the move-in logistics email",desc:"Residential Programs asked which arrival window you prefer.",due:"Flagged 4d ago",action:{label:"Open in email",target:"your IU email thread"},confirm:"self"},
+    {id:"ai_pa5",src:"reminder",title:"Book a Bloomington hotel",desc:"You added this reminder for Family Weekend.",due:"No date",confirm:"self"},
+  ],
+  notifCount:2,
+  notifications:[
+    {icon:"🧾",unread:true,title:"Fall bill is ready",sub:"Jake's fall statement of $6,240 is due Aug 10. A payment plan is available.",time:"Today"},
+    {icon:"🏈",unread:true,title:"Family Weekend registration open",sub:"Oct 17–19 · packages include the Homecoming game.",time:"Yesterday"},
+    {icon:"📦",unread:false,title:"Move-in guide published",sub:"Fall move-in runs Aug 19–21. Jake's slot: Aug 20, 10am.",time:"4d ago"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"student",label:"My Student",icon:"🧑‍🎓"},
+    {id:"billing",label:"Billing",icon:"🧾"},
+    {id:"events",label:"Family Events",icon:"🏈"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Parent & family portal",title:"The fall statement is ready",
+       sub:"Jake's fall bill of $6,240 is due August 10, and Family Weekend registration is open. You have proxy access to billing and the records Jake has chosen to share.",
+       stats:[{n:"$6,240",l:"Due Aug 10"},{n:"Aug 20",l:"Move-in day"},{n:"Oct 17",l:"Family Weekend"}]},
+      {type:"actionitems"},
+      {type:"list",title:"🧑‍🎓 Shared by Jake",items:[
+        {icon:"📚",bg:"blue",title:"Enrolled: 15 credit hours",sub:"Fall schedule confirmed · Kelley sophomore",badge:{txt:"Shared",cls:"blue"}},
+        {icon:"🧾",bg:"green",title:"Billing & payments",sub:"Full proxy access",badge:{txt:"Shared",cls:"green"}},
+        {icon:"🔒",bg:"red",title:"Grades",sub:"Not shared. Students control academic record sharing under FERPA.",badge:{txt:"Not shared",cls:"gray"}},
+      ]},
+      {type:"list",title:"🏈 For IU families",items:[
+        {icon:"🏈",bg:"red",title:"Family Weekend",sub:"Homecoming game, tailgate & campus open houses",right:"Oct 17–19",rightSub:"Register"},
+        {icon:"📦",bg:"gold",title:"Move-in 2026",sub:"Guides, packing lists & parking maps",right:"Aug 19–21",rightSub:"Read guide"},
+        {icon:"💻",bg:"blue",title:"Webinar: Supporting your sophomore",sub:"Advising, majors & the second-year transition",right:"Sep 9",rightSub:"7pm ET"},
+      ]},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    campus:[{type:"campusmap"},{type:"campusfeed"}],
+    student:[
+      {type:"list",title:"🧑‍🎓 Jake Miller · Sophomore, Kelley",items:[
+        {icon:"📚",bg:"blue",title:"Enrollment status",sub:"Full-time · 15 credit hours · Fall 2026",badge:{txt:"Confirmed",cls:"green"}},
+        {icon:"🏠",bg:"gold",title:"Housing",sub:"Briscoe Quad · double room · move-in Aug 20, 10am",badge:{txt:"Assigned",cls:"green"}},
+        {icon:"🍽️",bg:"green",title:"Meal plan",sub:"Standard plan · renews with fall bill",badge:{txt:"Active",cls:"green"}},
+        {icon:"🔒",bg:"red",title:"Grades & academic record",sub:"Not shared. Students control this under FERPA; sharing can be updated in Jake's One.IU settings.",badge:{txt:"Not shared",cls:"gray"}},
+      ]},
+      {type:"notice",tone:"blue",icon:"🔗",title:"How proxy access works",
+       sub:"Jake determines what is shared and can update it at any time in his settings. Billing is fully shared; grades are not. To request additional access, he can update his sharing preferences under \"Manage third-party access.\""},
+      {type:"list",title:"🚨 Safety & wellbeing resources",items:[
+        {icon:"🚨",bg:"red",title:"IU-Notify alerts",sub:"You are subscribed to Bloomington campus alerts",badge:{txt:"Active",cls:"green"}},
+        {icon:"🩺",bg:"green",title:"Student Health Center",sub:"How care works, insurance & after-hours options",right:"Learn more"},
+        {icon:"🧘",bg:"purple",title:"CAPS (counseling)",sub:"Sessions included in student fees",right:"Learn more"},
+      ]},
+    ],
+    billing:[
+      {type:"balances",title:"🧾 Fall 2026 statement",items:[
+        {icon:"💰",label:"Amount due",value:"$6,240.00",note:"Due Aug 10",alert:true},
+        {icon:"🎓",label:"Tuition & fees",value:"$6,072",note:"In-state, 15 cr"},
+        {icon:"🏠",label:"Housing & meals",value:"$6,654",note:"Briscoe + standard plan"},
+        {icon:"✨",label:"Aid applied",value:"−$6,486",note:"Scholarship + grant"},
+      ]},
+      {type:"list",title:"💳 Payment options",items:[
+        {icon:"⚡",bg:"green",title:"Pay in full",sub:"eCheck (free) or card (2.85% fee)",right:"$6,240"},
+        {icon:"📅",bg:"blue",title:"4-installment plan",sub:"No interest · $25 enrollment fee",right:"$1,560",rightSub:"/month"},
+        {icon:"🏦",bg:"purple",title:"529 / third-party",sub:"Send directly from your plan provider",right:"Guide"},
+      ]},
+      {type:"list",title:"🧾 Payment history",items:[
+        {icon:"✅",bg:"green",title:"Spring 2026 · paid in full",sub:"eCheck · Jan 8, 2026",right:"$6,180"},
+        {icon:"✅",bg:"green",title:"Fall 2025 · payment plan",sub:"4 installments, completed",right:"$6,090"},
+      ]},
+      {type:"notice",tone:"gold",icon:"⏰",title:"Payment deadline",
+       sub:"Balances unpaid after August 10 incur a late fee and a registration hold. Enrolling in the payment plan by August 10 counts as on-time payment."},
+    ],
+    events:[
+      {type:"list",title:"🏈 Family events this year",items:[
+        {icon:"🏈",bg:"red",title:"Family Weekend + Homecoming",sub:"Tailgate, game tickets, open houses & brunch",right:"Oct 17–19",rightSub:"Register now"},
+        {icon:"📦",bg:"gold",title:"Fall move-in",sub:"Jake's slot: Aug 20, 10am · Briscoe",right:"Aug 19–21"},
+        {icon:"💻",bg:"blue",title:"Family webinar series",sub:"Monthly · sophomore year topics",right:"Sep 9",rightSub:"First session"},
+        {icon:"🎓",bg:"purple",title:"Commencement (projected)",sub:"Based on Jake's current four-year track",right:"May 2029"},
+      ]},
+      {type:"notice",tone:"green",icon:"🏨",title:"Hotel availability",
+       sub:"Bloomington hotels fill months in advance for Family Weekend and Homecoming. The Office of Parent & Family Programs maintains a list of reserved room blocks."},
+    ],
+  }
+},
+};
+
+/* =====================================================
+   State & rendering
+===================================================== */
+let state = { persona:"firstyear", tab:"home", checked:{}, favs:new Set(), q:"", cat:"All", mapFilter:"buildings", mapQ:"", moving:null };
+state.favs = new Set(DATA[state.persona].favorites);
+state.ai = { filter:"all", explain:false };
+state.omniQ = "";
+state.feedTab = "events";
+state.feedSport = "All";
+state.theme = "light";
+state.settings = { notifs:true, digest:false, reduceMotion:false };
+try{ const th=localStorage.getItem("oneiu_theme"); if(th) state.theme=th;
+     const st=localStorage.getItem("oneiu_settings"); if(st) state.settings=Object.assign(state.settings,JSON.parse(st)); }catch(e){}
+state.aiProgress = {}; state.aiDismissed = {};
+Object.keys(DATA).forEach(k=>{ state.aiProgress[k]={}; state.aiDismissed[k]=new Set(); });
+
+const $ = id => document.getElementById(id);
+const P = () => DATA[state.persona];
+
+function greeting(){
+  const h = new Date().getHours();
+  return h<12 ? "Good morning" : h<17 ? "Good afternoon" : "Good evening";
+}
+function todayStr(){
+  return new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
+}
+
+/* ---------- task-catalog helpers ---------- */
+function taskById(id){ return TASKS.find(t=>t.id===id); }
+function personaTasks(){
+  // Guests browse the full One.IU catalog (like one.iu.edu when signed out)
+  if(P().guest) return TASKS.slice();
+  return TASKS.filter(t=>t.personas.includes("all")||t.personas.includes(state.persona));
+}
+function taskCategories(){
+  return ["All",...new Set(personaTasks().map(t=>t.cat))];
+}
+function launchTask(id){
+  const t = taskById(id);
+  if(P().guest && !t.personas.includes("all")){
+    toast(`Sign in with your IU username to use “${t.name}”.`); return;
+  }
+  toast(`"${t.name}" opens the One.IU task — not connected in this prototype.`);
+}
+function toggleFav(ev,id){
+  ev.stopPropagation();
+  state.favs.has(id) ? state.favs.delete(id) : state.favs.add(id);
+  if(state.tab==="tasks"){ refreshTaskResults(); } else { renderMain(); }
+}
+
+/* ---------- card renderers ---------- */
+function esc(s){return String(s??"")}
+
+function renderCard(c){
+  switch(c.type){
+    case "hero": return `
+      <div class="hero">
+        <span class="kicker">${esc(c.kicker)}</span>
+        <h2>${esc(c.title)}</h2>
+        <p>${esc(c.sub)}</p>
+        <div class="hero-stats">${c.stats.map(s=>`<div class="hstat"><div class="n">${esc(s.n)}</div><div class="l">${esc(s.l)}</div></div>`).join("")}</div>
+      </div>`;
+    case "schedule": return card(c.title, `<div class="sched">${c.items.map(i=>`
+      <div class="sched-item ${i.now?"sched-now":""}">
+        <div class="sched-time"><div class="t1">${esc(i.t1)}</div><div class="t2">${esc(i.t2)}</div></div>
+        <div class="sched-body ${esc(i.color||"")}">
+          ${i.tag?`<span class="sched-tag">${esc(i.tag)}</span>`:""}
+          <div class="st">${esc(i.title)}</div><div class="sl">${esc(i.loc)}</div>
+        </div>
+      </div>`).join("")}</div>`);
+    case "tasks": return card(c.title, c.items.map(i=>{
+      const done = !!state.checked[i.id];
+      return `<div class="task ${done?"done":""}" onclick="toggleTask('${i.id}')">
+        <div class="box">${done?"✓":""}</div>
+        <div><div class="tt">${esc(i.txt)}</div><div class="td ${i.urgent?"urgent":""}">${esc(i.due)}</div></div>
+      </div>`;}).join(""));
+    case "balances": return card(c.title, `<div class="bal-grid">${c.items.map(i=>`
+      <div class="bal ${i.alert?"alert":""}"><div class="bi">${esc(i.icon)}</div>
+        <div class="bv">${esc(i.value)}</div><div class="bl">${esc(i.label)}</div><div class="bn">${esc(i.note)}</div>
+      </div>`).join("")}</div>`);
+    case "list": return card(c.title, c.items.map(i=>`
+      <div class="li">
+        <div class="lic ${esc(i.bg||"")}">${esc(i.icon)}</div>
+        <div style="min-width:0"><div class="lit">${esc(i.title)}</div><div class="lis">${esc(i.sub)}</div></div>
+        <div class="lir">
+          ${i.badge?`<span class="badge ${esc(i.badge.cls)}">${esc(i.badge.txt)}</span>`:""}
+          ${i.right?`<div class="lirt">${esc(i.right)}</div>`:""}
+          ${i.rightSub?`<div class="lirs">${esc(i.rightSub)}</div>`:""}
+        </div>
+      </div>`).join(""));
+    case "launch": return renderLaunchCard();
+    case "tasklauncher": return renderTaskLauncher();
+    case "campusmap": return renderCampusMap();
+    case "actionitems": return renderActionItems();
+    case "crimsoncard": return renderCrimsonCard();
+    case "orgs": return renderOrgs();
+    case "libraries": return renderLibraries();
+    case "campusfeed": return renderCampusFeed();
+    case "signin": return renderSignin();
+    case "progress": return card(c.title, `
+      <div class="prog-label"><span>${esc(c.label)}</span><span>${c.pct}%</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${c.pct}%"></div></div>
+      <div class="prog-note">${esc(c.note)}</div>`);
+    case "steps": return card(c.title, c.items.map((s,i)=>`
+      <div class="step ${s.state}">
+        <div class="rail"><div class="knob">${s.state==="done"?"✓":i+1}</div>${i<c.items.length-1?'<div class="wire"></div>':""}</div>
+        <div class="sbody"><div class="stt">${esc(s.title)}</div><div class="sts">${esc(s.sub)}</div></div>
+      </div>`).join(""));
+    case "notice": return `
+      <div class="notice ${esc(c.tone)}"><div class="ni">${esc(c.icon)}</div>
+        <div><div class="nt">${esc(c.title)}</div><div class="ns">${esc(c.sub)}</div></div>
+      </div>`;
+  }
+  return "";
+}
+function card(title, body, extraClass="", headLink=""){
+  return `<div class="card ${extraClass}"><div class="card-head"><h3>${title}</h3>${headLink}</div>${body}</div>`;
+}
+
+/* Favorites + popular tasks (home) */
+function renderLaunchCard(){
+  if(P().guest){
+    const pop = personaTasks().filter(t=>t.popular).slice(0,8);
+    const popHtml = `<div class="qa-grid">${pop.map(t=>`
+      <button class="qa" onclick="launchTask('${t.id}')"><div class="qi">${t.icon}</div>${esc(t.name)}</button>`).join("")}</div>`;
+    return card("🔥 Popular on One.IU", popHtml, "span2",
+      `<span class="link" onclick="setTab('tasks')">All tasks →</span>`);
+  }
+  const favs = [...state.favs].map(taskById).filter(Boolean);
+  const favHtml = favs.length
+    ? `<div class="qa-grid">${favs.slice(0,8).map(t=>`
+        <button class="qa" onclick="launchTask('${t.id}')"><div class="qi">${t.icon}</div>${esc(t.name)}</button>`).join("")}</div>`
+    : `<div class="empty">No favorites yet. Star tasks in the Tasks tab to pin them here.</div>`;
+  const pop = personaTasks().filter(t=>t.popular && !state.favs.has(t.id)).slice(0,5);
+  const popHtml = pop.length
+    ? `<div class="launch-divider">Popular on One.IU</div>
+       <div class="pop-row">${pop.map(t=>`
+         <button class="pop-chip" onclick="launchTask('${t.id}')">${t.icon} ${esc(t.name)}</button>`).join("")}</div>`
+    : "";
+  return card("⭐ Favorite tasks", favHtml + popHtml, "span2",
+    `<span class="link" onclick="setTab('tasks')">All tasks →</span>`);
+}
+
+/* Full searchable One.IU task directory */
+function renderTaskLauncher(){
+  const cats = taskCategories();
+  return `<div class="card span2">
+    <div class="card-head"><h3>⊞ One.IU tasks</h3>
+      <span class="link" style="cursor:default;color:var(--muted)">${personaTasks().length} tasks${P().guest?"":" for your role"}</span></div>
+    <input class="tsearch" id="taskSearchInput" type="text" placeholder="Search all One.IU tasks (e.g., transcript, parking, W-2)…"
+      value="${esc(state.q).replace(/"/g,"&quot;")}" oninput="onTaskSearch(this.value)">
+    <div class="chips" id="taskChips">${cats.map(c=>`
+      <button class="chip ${state.cat===c?"active":""}" onclick="setCat('${c}')">${c}</button>`).join("")}</div>
+    <div id="taskResults">${taskResultsHTML()}</div>
+  </div>`;
+}
+function taskResultsHTML(){
+  const q = state.q.trim().toLowerCase();
+  let list, note = "";
+  if(q){
+    list = TASKS.filter(t => (t.name+" "+t.desc+" "+t.cat).toLowerCase().includes(q));
+    note = `<div class="launch-divider">Search results across all of One.IU</div>`;
+  } else {
+    list = personaTasks();
+    if(state.cat!=="All") list = list.filter(t=>t.cat===state.cat);
+  }
+  if(!list.length) return `<div class="empty">No tasks match "${esc(state.q)}".</div>`;
+  return note + list.map(t=>`
+    <div class="li" style="cursor:pointer" onclick="launchTask('${t.id}')">
+      <div class="lic">${t.icon}</div>
+      <div style="min-width:0"><div class="lit">${esc(t.name)}</div><div class="lis">${esc(t.desc)}</div></div>
+      <div class="lir" style="display:flex;align-items:center;gap:8px">
+        <span class="cat-tag">${esc(t.cat)}</span>
+        ${P().guest?"":`<button class="star ${state.favs.has(t.id)?"on":""}" title="Favorite"
+          onclick="toggleFav(event,'${t.id}')">${state.favs.has(t.id)?"★":"☆"}</button>`}
+      </div>
+    </div>`).join("");
+}
+function onTaskSearch(v){ state.q = v; refreshTaskResults(); }
+function setCat(c){ state.cat = c; state.q=""; const i=$("taskSearchInput"); if(i) i.value="";
+  refreshTaskResults();
+  document.querySelectorAll("#taskChips .chip").forEach(ch=>ch.classList.toggle("active",ch.textContent===c));
+}
+function refreshTaskResults(){ const r=$("taskResults"); if(r) r.innerHTML = taskResultsHTML(); }
+
+/* ---------- campus map ---------- */
+function renderCampusMap(){
+  const chips=[["buildings","🏛️ Buildings"],["buses","🚌 Buses"],["parking","🅿️ Parking"],["food","🍽️ Food"]];
+  return `<div class="map-wrap">
+    <div class="map-topbar">
+      <input class="msearch" id="mapSearch" type="text" placeholder="Search IUB places…"
+        value="${esc(state.mapQ).replace(/"/g,"&quot;")}" oninput="onMapSearch(this.value)">
+      <button class="campus-pill" onclick="toast('Campus switching is not connected in this prototype.')">IUB ▾</button>
+    </div>
+    <div class="map-chips" id="mapChips">${chips.map(([k,l])=>`
+      <button class="mchip ${state.mapFilter===k?"active":""}" data-f="${k}" onclick="setMapFilter('${k}')">${l}</button>`).join("")}</div>
+    <div id="leafletMap" class="map-box"></div>
+    <div class="map-note">📍 ${USER_LOC.label} — distances and availability are simulated.</div>
+    <div class="card" style="margin-top:14px">
+      <div class="card-head"><h3 id="placeListTitle">${placeListTitle()}</h3>
+        <span class="link" style="cursor:default;color:var(--muted)">Sorted by distance</span></div>
+      <div id="placeList">${placeListHTML()}</div>
+    </div>
+  </div>`;
+}
+function placeListTitle(){
+  if(state.mapQ.trim()) return "Search results";
+  return {buildings:"Buildings",buses:"Bus stops",parking:"Parking",food:"Food"}[state.mapFilter];
+}
+function placeSub(p){
+  if(p.type==="building"){
+    const feats=[];
+    if(p.food&&p.food.length) feats.push("🍽️"); if(p.accessible&&p.accessible.length) feats.push("♿");
+    if(p.printers) feats.push("🖨️");
+    return `${esc(p.addr)}${feats.length?" · "+feats.join(" "):""}`;
+  }
+  if(p.type==="parking") return `${esc(p.rate)} · ${esc(p.spots)}`;
+  if(p.type==="bus") return `Next: ${esc(p.routes[0].r)} in ${p.routes[0].mins} min`;
+  if(p.type==="food") return esc(p.addr||p.services||"");
+  return "";
+}
+function placeListHTML(){
+  const list = visiblePlaces();
+  if(!list.length) return `<div class="empty">No places match "${esc(state.mapQ)}".</div>`;
+  return list.map(p=>`
+    <div class="li" style="cursor:pointer" onclick="openPlace('${p.id}')">
+      <div class="pdot ${p.type}">${TYPE_ICONS[p.type]}</div>
+      <div style="min-width:0">
+        <div class="lis" style="margin:0 0 2px">${distLabel(p)}</div>
+        <div class="lit">${esc(p.name)}</div>
+        <div class="lis">${placeSub(p)}</div>
+      </div>
+      <div class="lir">${p.type==="food"?openBadge(p):(p.abbr?`<span class="cat-tag">${esc(p.abbr)}</span>`:"")}</div>
+    </div>`).join("");
+}
+function onMapSearch(v){ state.mapQ=v; refreshCampusUI(); }
+function setMapFilter(f){
+  state.mapFilter=f; state.mapQ="";
+  const i=$("mapSearch"); if(i) i.value="";
+  refreshCampusUI();
+}
+function refreshCampusUI(){
+  const l=$("placeList"); if(l) l.innerHTML=placeListHTML();
+  const t=$("placeListTitle"); if(t) t.innerHTML=placeListTitle();
+  document.querySelectorAll("#mapChips .mchip").forEach(ch=>
+    ch.classList.toggle("active", ch.dataset && ch.dataset.f===state.mapFilter));
+  updateMapMarkers();
+}
+function setupCampusMap(){
+  const el=document.getElementById("leafletMap");
+  if(!el) return;
+  if(window._campusMap){ try{window._campusMap.remove();}catch(e){} window._campusMap=null; }
+  if(typeof L==="undefined"){
+    el.innerHTML='<div class="empty" style="padding-top:130px">🗺️ Map tiles unavailable (offline). The place list below still works.</div>';
+    return;
+  }
+  const map=L.map(el,{scrollWheelZoom:false}).setView([39.1700,-86.5195],15);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+    {maxZoom:19, attribution:"&copy; OpenStreetMap &copy; CARTO"}).addTo(map);
+  window._campusMap=map;
+  L.circleMarker([USER_LOC.lat,USER_LOC.lng],{radius:8,color:"#fff",weight:3,fillColor:"#2b6cb0",fillOpacity:1})
+    .addTo(map).bindTooltip("You (simulated)");
+  window._markerLayer=L.layerGroup().addTo(map);
+  updateMapMarkers();
+}
+function updateMapMarkers(){
+  if(!window._campusMap || !window._markerLayer) return;
+  window._markerLayer.clearLayers();
+  for(const p of visiblePlaces()){
+    L.circleMarker([p.lat,p.lng],{radius:9,color:"#fff",weight:2.5,fillColor:MARKER_COLORS[p.type],fillOpacity:.95})
+      .on("click",()=>openPlace(p.id)).bindTooltip(p.name).addTo(window._markerLayer);
+  }
+}
+function gmapsLink(p){ return `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`; }
+function openPlace(id){
+  const p = allMapPlaces().find(x=>x.id===id);
+  if(!p) return;
+  if(window._campusMap) window._campusMap.panTo([p.lat,p.lng]);
+  let html = `
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <div class="dhead-dist">${distLabel(p)}</div>
+    ${p.abbr?`<span class="abbr-chip">${esc(p.abbr)}</span>`:""}
+    <h2>${esc(p.name)}</h2>
+    ${p.addr?`<div class="dhead-addr">${esc(p.addr).toUpperCase()}</div>`:""}
+    <a class="getthere" href="${gmapsLink(p)}" target="_blank" rel="noopener">➔ Getting there</a>`;
+  if(p.type==="building"){
+    if(p.accessible && p.accessible.length) html += `
+      <div class="dsec"><h4>♿ Accessible entrances</h4>
+        ${p.accessible.map(a=>`<div class="drow">${esc(a)}</div>`).join("")}</div>`;
+    if(p.printers) html += `
+      <div class="dsec"><h4>🖨️ Printers</h4>
+        <div class="drow">PawPrints stations <span class="right cat-tag">${p.printers} locations</span></div></div>`;
+    if(p.food && p.food.length) html += `
+      <div class="dsec"><h4>🍽️ Food</h4>
+        ${p.food.map(f=>`<div class="drow"><div>${esc(f.name)}
+          <div class="sub">${esc(f.floor)} · ${hr12(f.hours[0])}–${hr12(f.hours[1])} ${esc(f.days)} · ${esc(f.services)}</div></div>
+          <span class="right">${openBadge(f)}</span></div>`).join("")}</div>`;
+  }
+  if(p.type==="parking") html += `
+    <div class="dsec"><h4>🅿️ Permits & rates</h4>
+      <div class="drow">${p.permits.map(x=>`<span class="permit">${esc(x)}</span>`).join("")}</div>
+      <div class="drow">${esc(p.rate)} <span class="right badge green">${esc(p.spots)}</span></div></div>`;
+  if(p.type==="bus") html += `
+    <div class="dsec"><h4>🚌 Next departures</h4>
+      ${p.routes.map(r=>`<div class="drow">${esc(r.r)} <span class="right badge blue">${r.mins} min</span></div>`).join("")}</div>`;
+  if(p.type==="food") html += `
+    <div class="dsec"><h4>🍽️ Hours & ordering</h4>
+      <div class="drow">${hr12(p.hours[0])}–${hr12(p.hours[1])} ${esc(p.days)} <span class="right">${openBadge(p)}</span></div>
+      <div class="drow"><div class="sub" style="margin:0">${esc(p.services)}</div></div></div>`;
+  if(p.type!=="bus"){
+    const stops = nearestStops(p);
+    if(stops.length) html += `
+      <div class="dsec"><h4>🚌 Nearby bus stops</h4>
+        ${stops.map(({s})=>`<div class="drow" style="cursor:pointer" onclick="openPlace('${s.id}')">
+          <div>${esc(s.name)}<div class="sub">Next: ${esc(s.routes[0].r)} in ${s.routes[0].mins} min</div></div>
+          <span class="right sub" style="margin:0">${distLabel(s)}</span></div>`).join("")}</div>`;
+  }
+  $("drawer").innerHTML = html;
+  $("drawer").classList.add("open"); $("scrim").classList.add("open");
+}
+
+/* =====================================================
+   Action Items widget (aggregated, source-attributed)
+   Completion is source-owned — opening a link only STARTS a task.
+   aiProgress[persona][id] ∈ {"started","resolved"} (absent = not started)
+===================================================== */
+function aiItems(){ return P().actionItems || []; }
+function aiProg(id){ return state.aiProgress[state.persona][id]; }
+function aiResolved(id){ return aiProg(id)==="resolved"; }
+function aiStarted(id){ return aiProg(id)==="started"; }
+function aiLive(){ const d=state.aiDismissed[state.persona]; return aiItems().filter(it=>!d.has(it.id)); }
+function aiFiltered(){
+  let l=aiLive(); const f=state.ai.filter;
+  if(f==="urgent")    l=l.filter(i=>i.high);
+  if(f==="progress")  l=l.filter(i=>aiStarted(i.id));
+  if(f==="reminders") l=l.filter(i=>i.src==="reminder");
+  return l;
+}
+function aiActiveCount(){ return aiLive().filter(i=>!aiResolved(i.id)).length; }
+
+function renderActionItems(){
+  return `<div class="card"><div id="aiRoot">${aiInner()}</div></div>`;
+}
+function aiInner(){
+  const list = aiFiltered().sort((a,b)=>{
+    const ar=aiResolved(a.id)?1:0, br=aiResolved(b.id)?1:0;
+    if(ar!==br) return ar-br;
+    return (b.high?1:0)-(a.high?1:0);
+  });
+  const dismissedCount = state.aiDismissed[state.persona].size;
+  return `
+    <div class="ai-head"><span class="w-title">Action Items</span><span class="count-badge">${aiActiveCount()}</span>
+      <button class="ai-add" onclick="aiToggleCompose()">${state.ai.compose?"✕ Cancel":"＋ Reminder"}</button></div>
+    <div class="ai-sub">Actions from across IU. A link starts a task; its source marks it done.</div>
+    ${state.ai.compose?`<div class="ai-compose">
+      <input id="aiRemTitle" class="ai-rem-input" type="text" placeholder="Add a personal reminder…" autocomplete="off"
+        onkeydown="if(event.key==='Enter')aiAddReminder(); if(event.key==='Escape')aiToggleCompose()">
+      <input id="aiRemDue" class="ai-rem-input" type="text" placeholder="When? (optional — e.g. Friday)" autocomplete="off"
+        onkeydown="if(event.key==='Enter')aiAddReminder()">
+      <button class="act" onclick="aiAddReminder()">Add reminder</button>
+    </div>`:""}
+    <button class="explainer-toggle" onclick="aiToggleExplain()">${state.ai.explain?"▾":"▸"} How “done” works</button>
+    <div class="explainer ${state.ai.explain?"open":""}">
+      <div class="model-row"><span class="model-key">🔗</span><div><b>System-confirmed</b> (default). Clears when the source reports it — Canvas, Bursar, Registrar. Starting isn't finishing.</div></div>
+      <div class="model-row"><span class="model-key">🖊️</span><div><b>Needs approval.</b> You act, then someone else signs off. Shows as awaiting them.</div></div>
+      <div class="model-row"><span class="model-key">🙋</span><div><b>Self-reported.</b> Email, reminders — nothing verifies these. “Mark done” only clears your list.</div></div>
+      <div style="margin-top:9px"><b>Dismiss</b> just hides an item — use it if you've handled something the feed hasn't caught up on. It never notifies the source.</div>
+    </div>
+    <div class="ai-chips">${aiChip("all","All")}${aiChip("urgent","Urgent")}${aiChip("progress","In progress")}${aiChip("reminders","My reminders")}</div>
+    <div class="ai-items">${ list.length ? `<div class="ai-grid">${list.map(aiRenderItem).join("")}</div>` : aiEmpty() }</div>
+    <div class="ai-foot">
+      ${dismissedCount ? `<span class="restore" onclick="aiRestoreAll()">↺ Restore ${dismissedCount} dismissed</span>` : `<span>Nothing dismissed</span>`}
+      <span class="sync">🔄 Synced just now</span>
+    </div>`;
+}
+function aiChip(key,label){ return `<button class="chip ${state.ai.filter===key?"active":""}" onclick="aiSetFilter('${key}')">${label}</button>`; }
+function aiRefresh(){ const r=$("aiRoot"); if(r) r.innerHTML = aiInner(); }
+
+function aiRenderItem(it){
+  const S=SOURCES[it.src], resolved=aiResolved(it.id), started=aiStarted(it.id);
+  return `
+    <div class="item ${it.high&&!resolved?"high":""} ${resolved?"resolved":""}">
+      <div class="it-top">
+        <span class="src-chip ${S.cls}"><span class="src-ic">${S.icon}</span>${esc(S.name)}</span>
+        ${aiModelTag(it)}
+        <span class="due ${it.high?"high":""}">${esc(it.due)}</span>
+      </div>
+      <div class="it-title">${esc(it.title)}</div>
+      <div class="it-desc">${esc(it.desc)}</div>
+      ${aiStatus(it)}
+      <div class="it-actions">${aiActions(it)}</div>
+      ${started?aiSim(it):""}
+    </div>`;
+}
+function aiModelTag(it){
+  if(it.confirm==="approval") return `<span class="model approve" title="You act, then ${esc(it.approver)} signs off.">🖊️ Needs approval</span>`;
+  if(it.confirm==="self")     return `<span class="model self" title="Nothing verifies this — Mark done only clears your list.">🙋 Self-reported</span>`;
+  return "";
+}
+function aiStatus(it){
+  const short=SOURCES[it.src].name.split(" (")[0].split(" · ")[0];
+  if(aiResolved(it.id)){
+    if(it.confirm==="self")     return aiStrip("self","✓","Done · self-reported");
+    if(it.confirm==="approval") return aiStrip("doneS","✓",`Approved by ${esc(it.approver)}`);
+    return aiStrip("doneS","✓",`Confirmed by ${esc(short)}`);
+  }
+  if(aiStarted(it.id)){
+    if(it.confirm==="approval") return aiStrip("approve","🖊️",`Your part done · awaiting ${esc(it.approver)}`);
+    return aiStrip("wait","⏳",`In progress · awaiting ${esc(short)}`,it.confirmedBy);
+  }
+  return "";
+}
+function aiStrip(cls,icon,txt,tip){ return `<div class="status ${cls}"${tip?` title="Clears when ${esc(tip)}"`:""}><span class="si">${icon}</span><span>${txt}</span></div>`; }
+function aiActions(it){
+  const resolved=aiResolved(it.id), started=aiStarted(it.id);
+  let out="";
+  if(resolved){
+    out += `<button class="act ghost" onclick="aiReopen('${it.id}')">↺ ${it.confirm==="self"?"Undo":"Reopen"}</button>`;
+  } else {
+    if(it.action) out += `<button class="act" onclick="aiDoAction('${it.id}')">${started&&it.confirm!=="self"?"↗ Continue":"↗ "+esc(it.action.label)}</button>`;
+    if(it.confirm==="self") out += `<button class="act ghost" onclick="aiMarkDone('${it.id}')">✓ Mark done</button>`;
+  }
+  out += `<button class="dismiss" title="Hide it — doesn't mark complete or notify the source" onclick="aiDismiss('${it.id}')">✕ Dismiss</button>`;
+  return out;
+}
+function aiSim(it){ return `<button class="sim" onclick="aiSimulate('${it.id}')">🛠️ Simulate ${it.confirm==="approval"?"approval":"source confirmation"}</button>`; }
+function aiEmpty(){
+  if(state.ai.filter==="progress")  return `<div class="empty">Nothing in progress right now.</div>`;
+  if(state.ai.filter!=="all")       return `<div class="empty">No ${state.ai.filter==="urgent"?"urgent":"reminder"} items right now.</div>`;
+  return `<div class="empty">You're all caught up. New actions appear as their source systems request them.</div>`;
+}
+function aiSetFilter(f){ state.ai.filter=f; aiRefresh(); }
+function aiToggleExplain(){ state.ai.explain=!state.ai.explain; aiRefresh(); }
+function aiToggleCompose(){
+  state.ai.compose=!state.ai.compose; aiRefresh();
+  if(state.ai.compose) setTimeout(()=>{ const i=$("aiRemTitle"); if(i) i.focus(); },40);
+}
+function aiAddReminder(){
+  const ti=$("aiRemTitle"), di=$("aiRemDue");
+  const title=((ti&&ti.value)||"").trim();
+  if(!title){ toast("Type a reminder first."); if(ti) ti.focus(); return; }
+  const due=((di&&di.value)||"").trim()||"No date";
+  P().actionItems.unshift({id:"rem_"+Date.now(),src:"reminder",title,desc:"You added this reminder.",due,confirm:"self"});
+  state.ai.compose=false;
+  if(state.ai.filter!=="all" && state.ai.filter!=="reminders") state.ai.filter="all";
+  aiRefresh();
+  toast("Reminder added.");
+}
+function aiDoAction(id){
+  const it=aiItems().find(x=>x.id===id);
+  if(!it || !it.action) return;
+  if(it.confirm!=="self" && !aiResolved(id)) state.aiProgress[state.persona][id]="started";
+  aiRefresh();
+  toast(`Prototype: opens ${it.action.target}.`);
+}
+function aiMarkDone(id){ state.aiProgress[state.persona][id]="resolved"; aiRefresh(); toast("Marked done · self-reported."); }
+function aiSimulate(id){
+  const it=aiItems().find(x=>x.id===id);
+  state.aiProgress[state.persona][id]="resolved"; aiRefresh();
+  toast(it.confirm==="approval" ? `${it.approver} approved it.` : `${SOURCES[it.src].name.split(" (")[0]} confirmed it.`);
+}
+function aiReopen(id){ delete state.aiProgress[state.persona][id]; aiRefresh(); }
+function aiDismiss(id){
+  const it=aiItems().find(x=>x.id===id);
+  state.aiDismissed[state.persona].add(id); aiRefresh();
+  toast(it.src==="reminder" ? "Removed." : "Dismissed · not marked complete.");
+}
+function aiRestoreAll(){ state.aiDismissed[state.persona].clear(); aiRefresh(); toast("Restored dismissed items."); }
+
+/* =====================================================
+   CrimsonCard widget (CSGold) — balances live behind it
+===================================================== */
+function ccVisual(cc,lg){
+  return `<div class="cc-card ${lg?'lg':''}">
+    <div class="cc-top"><span>CrimsonCard</span><span class="cc-iu">${TRIDENT}</span></div>
+    <div class="cc-photo">${P().avatar}</div>
+    <div class="cc-name">${esc(cc.holder)}</div>
+    <div class="cc-kind">${esc(cc.kind)}</div>
+    <div class="cc-id">${esc(cc.id)}</div>
+  </div>`;
+}
+function renderCrimsonCard(){
+  const cc=P().crimsonCard;
+  if(!cc) return `<div class="card"><div class="card-head"><h3>💳 CrimsonCard</h3></div>
+    <div class="empty">No CrimsonCard is linked to this account yet.</div></div>`;
+  const n=cc.balances.length;
+  return `<div class="card">
+    <div class="card-head"><h3>💳 CrimsonCard</h3></div>
+    ${ccVisual(cc,false)}
+    <button class="cc-manage" onclick="openCrimsonCard()">Manage card &amp; balances →</button>
+    <div class="cc-hint">${n} account${n>1?'s':''} · digital card · photo</div>
+  </div>`;
+}
+function openCrimsonCard(){
+  const cc=P().crimsonCard;
+  if(!cc){ $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
+    <h2>💳 CrimsonCard</h2><p class="dsub">powered by CSGold</p>
+    <div class="empty">No CrimsonCard is linked to this account.</div>`;
+    $("drawer").classList.add("open"); $("scrim").classList.add("open"); return; }
+  $("drawer").innerHTML = `
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <h2>💳 CrimsonCard</h2>
+    <p class="dsub">Your card, balances and photo · powered by CSGold</p>
+    ${ccVisual(cc,true)}
+    <div class="it-actions" style="margin-top:14px">
+      <button class="act" onclick="toast('Prototype: adds your CrimsonCard to your phone wallet.')">📲 Add to phone</button>
+      <button class="act ghost" onclick="toast('Prototype: opens the photo upload flow.')">📸 Update photo</button>
+    </div>
+    <div class="dsec"><h4>💰 Balances</h4>
+      ${cc.balances.map(b=>`<div class="drow"><div>${b.icon} ${esc(b.label)}
+        <div class="sub">${esc(b.note)}</div></div>
+        <span class="right" style="display:flex;align-items:center;gap:8px">
+          <b style="font-size:15px">${esc(b.value)}</b>
+          ${b.add?`<button class="pill-btn" onclick="toast('Prototype: add funds to ${esc(b.label)} (CSGold).')">Add</button>`:""}
+        </span></div>`).join("")}
+    </div>
+    <div class="dsec"><h4>🚪 Building & meal access</h4>
+      ${cc.access.map(a=>`<div class="drow">${esc(a)}</div>`).join("")}</div>
+    <div class="dsec"><h4>🛟 Card help</h4>
+      <div class="it-actions">
+        <button class="act ghost" onclick="toast('Prototype: freezes your card in CSGold.')">🔒 Freeze card</button>
+        <button class="act ghost" onclick="toast('Prototype: reports your card lost.')">⚠️ Report lost</button>
+      </div></div>`;
+  $("drawer").classList.add("open"); $("scrim").classList.add("open");
+}
+
+/* =====================================================
+   Student Organizations (BeInvolved)
+===================================================== */
+function renderOrgs(){
+  const o=P().orgs;
+  if(!o) return `<div class="card"><div class="card-head"><h3>🧑‍🤝‍🧑 Student Organizations</h3></div>
+    <div class="empty">No organization memberships found.<br><span class="link" style="cursor:pointer" onclick="openOrgs()">Discover on BeInvolved →</span></div></div>`;
+  const ann=o.announcements.length, ev=o.events[0];
+  return `<div class="card">
+    <div class="card-head"><h3>🧑‍🤝‍🧑 Student Organizations</h3><span class="link" onclick="openOrgs()">Open →</span></div>
+    ${o.memberships.slice(0,3).map(m=>`
+      <div class="li"><div class="lic purple">${m.icon}</div>
+        <div style="min-width:0"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div></div>
+      </div>`).join("")}
+    <div class="cc-hint" style="text-align:left;margin-top:10px">
+      ${ann} new announcement${ann>1?'s':''}${ev?` · next: ${esc(ev.title)} (${esc(ev.when)})`:''}</div>
+  </div>`;
+}
+function openOrgs(){
+  const o=P().orgs;
+  if(!o){ $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
+    <h2>🧑‍🤝‍🧑 Student Organizations</h2><p class="dsub">via BeInvolved</p>
+    <div class="empty">No memberships are linked to your account.</div>
+    <a class="getthere" onclick="toast('Prototype: opens BeInvolved to browse organizations.')">➔ Discover organizations</a>
+    <div class="cc-hint" style="margin-top:12px">beinvolved.indiana.edu</div>`;
+    $("drawer").classList.add("open"); $("scrim").classList.add("open"); return; }
+  $("drawer").innerHTML = `
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <h2>🧑‍🤝‍🧑 Student Organizations</h2>
+    <p class="dsub">Your memberships, announcements and events · via BeInvolved</p>
+    <div class="dsec"><h4>👥 My organizations</h4>
+      ${o.memberships.map(m=>`<div class="li"><div class="lic purple">${m.icon}</div>
+        <div style="min-width:0"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div></div>
+        <div class="lir"><span class="badge gray">Active</span></div></div>`).join("")}</div>
+    <div class="dsec"><h4>📣 Announcements</h4>
+      ${o.announcements.map(a=>`<div class="notif">
+        <div class="nic">📣</div>
+        <div><div class="nt">${esc(a.org)}</div><div class="ns">${esc(a.text)}</div><div class="ntime">${esc(a.time)}</div></div>
+      </div>`).join("")}</div>
+    <div class="dsec"><h4>📅 Upcoming events</h4>
+      ${o.events.map(e=>`<div class="li"><div class="lic gold">${e.icon}</div>
+        <div style="min-width:0"><div class="lit">${esc(e.title)}</div><div class="lis">${esc(e.where)}</div></div>
+        <div class="lir"><div class="lirt">${esc(e.when)}</div></div></div>`).join("")}</div>
+    <a class="getthere" onclick="toast('Prototype: opens BeInvolved to discover organizations.')">➔ Discover organizations</a>
+    <div class="cc-hint" style="margin-top:12px">via BeInvolved · beinvolved.indiana.edu</div>`;
+  $("drawer").classList.add("open"); $("scrim").classList.add("open");
+}
+
+/* =====================================================
+   Libraries (libraries.indiana.edu)
+===================================================== */
+function renderLibraries(){
+  const L=P().library;
+  if(!L) return `<div class="card"><div class="card-head"><h3>📚 Libraries</h3></div>
+    <input class="lib-search" type="text" placeholder="Search the catalog…" onclick="openLibraries()">
+    <div class="empty">No library account is linked yet.</div></div>`;
+  const due=L.onLoan.length, illReady=L.ill.filter(i=>/ready|download/i.test(i.status)).length;
+  const soon=L.onLoan.find(i=>i.soon);
+  return `<div class="card">
+    <div class="card-head"><h3>📚 Libraries</h3><span class="link" onclick="openLibraries()">Open →</span></div>
+    <input class="lib-search" type="text" placeholder="Search the catalog…"
+      onkeydown="if(event.key==='Enter')openLibraries(this.value)" onclick="openLibraries()">
+    <div class="li"><div class="lic blue">📕</div><div style="min-width:0">
+      <div class="lit">${due} item${due!==1?'s':''} on loan</div>
+      <div class="lis">${soon?`Due soon: ${esc(soon.title)} (${esc(soon.due)})`:'Nothing due this week'}</div></div></div>
+    ${L.ill.length?`<div class="li"><div class="lic green">🔁</div><div style="min-width:0">
+      <div class="lit">${L.ill.length} interlibrary loan${L.ill.length>1?'s':''}</div>
+      <div class="lis">${illReady?`${illReady} ready for pickup/download`:'In progress'}</div></div></div>`:''}
+    ${L.rooms.length?`<div class="li"><div class="lic gold">🚪</div><div style="min-width:0">
+      <div class="lit">Study room ${L.rooms[0].status.toLowerCase().includes('reserved')?'reserved':'available'}</div>
+      <div class="lis">${esc(L.rooms[0].room)} · ${esc(L.rooms[0].when)}</div></div></div>`:''}
+  </div>`;
+}
+function openLibraries(prefill){
+  const L=P().library;
+  if(!L){ $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
+    <h2>📚 Libraries</h2><p class="dsub">libraries.indiana.edu · IUCAT</p>
+    <input class="lib-search" type="text" placeholder="Search the catalog…"
+      onkeydown="if(event.key==='Enter')toast('Prototype: searches IUCAT for “'+this.value+'”.')">
+    <div class="empty">No library account is linked to this profile.</div>`;
+    $("drawer").classList.add("open"); $("scrim").classList.add("open"); return; }
+  const q = typeof prefill==="string" ? prefill : "";
+  $("drawer").innerHTML = `
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <h2>📚 Libraries</h2>
+    <p class="dsub">Your account · catalog, loans, ILL and study rooms</p>
+    <input class="lib-search" id="libSearch" type="text" placeholder="Search the catalog…" value="${esc(q).replace(/"/g,'&quot;')}"
+      onkeydown="if(event.key==='Enter')toast('Prototype: searches the IUCAT catalog for “'+this.value+'”.')">
+    <div class="dsec"><h4>📕 On loan</h4>
+      ${L.onLoan.map(b=>`<div class="drow"><div>${esc(b.title)}
+        <div class="sub">${esc(b.author)} · due ${esc(b.due)}</div></div>
+        <span class="right" style="display:flex;align-items:center;gap:8px">
+          ${b.soon?'<span class="badge red">Due soon</span>':'<span class="badge green">On time</span>'}
+          ${b.renew?`<button class="pill-btn" onclick="toast('Prototype: renews “${esc(b.title)}”.')">Renew</button>`:''}
+        </span></div>`).join("")}</div>
+    <div class="dsec"><h4>🔁 Interlibrary loan</h4>
+      ${L.ill.length?L.ill.map(i=>`<div class="drow"><div>${esc(i.title)}<div class="sub">${esc(i.status)}</div></div></div>`).join("")
+        :'<div class="drow"><div class="sub" style="margin:0">No active requests.</div></div>'}
+      <button class="act ghost" style="margin-top:8px" onclick="toast('Prototype: opens a new ILL request.')">＋ New request</button></div>
+    <div class="dsec"><h4>🚪 Study rooms</h4>
+      ${L.rooms.map(r=>`<div class="drow"><div>${esc(r.room)}<div class="sub">${esc(r.when)}</div></div>
+        <span class="right badge blue">${esc(r.status)}</span></div>`).join("")}
+      <button class="act ghost" style="margin-top:8px" onclick="toast('Prototype: opens the study-room reservation tool.')">＋ Reserve a room</button></div>
+    <div class="cc-hint" style="margin-top:12px">libraries.indiana.edu · IUCAT</div>`;
+  $("drawer").classList.add("open"); $("scrim").classList.add("open");
+  if(typeof prefill==="string" && prefill){ setTimeout(()=>{const i=$("libSearch"); if(i) i.focus();},60); }
+}
+
+/* =====================================================
+   Campus feed — Athletics / Events / News (tabbed)
+   events.iu.edu · news.iu.edu · iuhoosiers.com
+===================================================== */
+const FEED_SRC = {events:"events.iu.edu", news:"news.iu.edu", athletics:"iuhoosiers.com"};
+function renderCampusFeed(){
+  return `<div class="card"><div id="feedRoot">${feedInner()}</div></div>`;
+}
+/* Sign-in call to action (guest view) */
+function renderSignin(){
+  return `<div class="card signin-card">
+    <div class="signin-ic">🔐</div>
+    <div class="signin-body">
+      <div class="signin-t">Sign in to One.IU</div>
+      <div class="signin-s">Access your classes, Action Items, CrimsonCard, library account, and personalized services.</div>
+    </div>
+    <div class="signin-actions">
+      <button class="signin-btn" onclick="toast('Prototype: opens IU Login (CAS + two-step / Duo).')">Sign in with your IU username</button>
+      <div class="signin-alt">New to IU? <span class="link" onclick="setPersona('applicant')">Explore as an applicant</span></div>
+    </div>
+  </div>`;
+}
+function feedSports(){ return ["All", ...new Set(FEED.athletics.map(g=>g.sport))]; }
+function feedInner(){
+  const tab=state.feedTab;
+  const seg=[["athletics","Athletics"],["events","Events"],["news","News"]];
+  const filter = tab==="athletics"
+    ? `<div class="feed-filter">${feedSports().map((s,i)=>`<button class="chip ${state.feedSport===s?"active":""}" onclick="setFeedSport(${i})">${esc(s)}</button>`).join("")}</div>`
+    : "";
+  return `
+    <div class="card-head"><h3>📰 Campus feed</h3>
+      <span class="link" onclick="toast('Prototype: opens more from ${FEED_SRC[tab]}.')">More ${tab==="athletics"?"athletics":tab==="news"?"news":"events"} →</span></div>
+    <div class="seg">${seg.map(([k,l])=>`<button class="${tab===k?"active":""}" onclick="setFeedTab('${k}')">${l}</button>`).join("")}</div>
+    ${filter}
+    <div class="feed-list">${feedList(tab)}</div>
+    <div class="feed-src">Source: ${FEED_SRC[tab]}</div>`;
+}
+function feedRefresh(){ const r=$("feedRoot"); if(r) r.innerHTML=feedInner(); }
+function setFeedTab(k){ state.feedTab=k; feedRefresh(); }
+function setFeedSport(i){ state.feedSport=feedSports()[i]||"All"; feedRefresh(); }
+function teamLogo(logo){
+  return logo==="IU" ? `<span class="logo">${TRIDENT}</span>` : `<span class="logo">${logo}</span>`;
+}
+function feedList(tab){
+  if(tab==="events") return FEED.events.map(e=>`
+    <div class="feed-item" onclick="openFeedItem('events','${e.id}')">
+      <div class="feed-date"><div class="fd1">${esc(e.date)}</div><div class="fd2">${esc(e.t1)}</div><div class="fd2">${esc(e.t2)}</div></div>
+      <div style="min-width:0"><div class="feed-title">${esc(e.title)}</div><div class="feed-sub">${esc(e.loc)}</div></div>
+    </div>`).join("");
+  if(tab==="news") return FEED.news.map(n=>`
+    <div class="feed-item" style="display:block" onclick="openFeedItem('news','${n.id}')">
+      <div class="feed-cat">${esc(n.date)} &nbsp;·&nbsp; ${esc(n.cat)}</div>
+      <div class="feed-title">${esc(n.title)}</div>
+    </div>`).join("");
+  const games = FEED.athletics.filter(g=> state.feedSport==="All" || g.sport===state.feedSport);
+  if(!games.length) return `<div class="empty">No ${esc(state.feedSport)} games scheduled.</div>`;
+  return games.map(g=>`
+    <div class="game" onclick="openFeedItem('athletics','${g.id}')">
+      <div class="game-date">${esc(g.date)}</div>
+      <div class="game-top"><span>${esc(g.sport)}</span><span>${esc(g.time)}</span></div>
+      <div class="team">${teamLogo(g.away.logo)}<span>${esc(g.away.name)}</span><span class="ha">A</span></div>
+      <div class="team">${teamLogo(g.home.logo)}<span>${esc(g.home.name)}</span><span class="ha">H</span></div>
+    </div>`).join("");
+}
+function openFeedItem(kind,id){
+  let html="";
+  if(kind==="events"){
+    const e=FEED.events.find(x=>x.id===id);
+    html=`<button class="close" onclick="closeDrawer()">✕</button>
+      <div class="dhead-dist">${esc(e.date)} · ${esc(e.t1)} ${esc(e.t2)}</div>
+      <h2>${esc(e.title)}</h2>
+      <div class="dhead-addr">${esc(e.loc)}</div>
+      <div class="dsec"><h4>ℹ️ About</h4><p style="font-size:13.5px;color:var(--body-text);font-weight:600;line-height:1.6">${esc(e.desc)}</p></div>
+      <div class="dsec"><h4>🏛️ Hosted by</h4><div class="drow">${esc(e.host)}</div></div>
+      <a class="getthere" onclick="toast('Prototype: adds this event to your calendar.')">➕ Add to calendar</a>
+      <div class="cc-hint" style="margin-top:12px">events.iu.edu</div>`;
+  } else if(kind==="news"){
+    const n=FEED.news.find(x=>x.id===id);
+    html=`<button class="close" onclick="closeDrawer()">✕</button>
+      <div class="dhead-dist">${esc(n.date)} · ${esc(n.cat)}</div>
+      <h2>${esc(n.title)}</h2>
+      <div class="dsec"><h4>📄 Summary</h4><p style="font-size:13.5px;color:var(--body-text);font-weight:600;line-height:1.6">${esc(n.summary)}</p></div>
+      <a class="getthere" onclick="toast('Prototype: opens the full story on news.iu.edu.')">➔ Read full story</a>
+      <div class="cc-hint" style="margin-top:12px">news.iu.edu</div>`;
+  } else {
+    const g=FEED.athletics.find(x=>x.id===id);
+    html=`<button class="close" onclick="closeDrawer()">✕</button>
+      <div class="dhead-dist">${esc(g.sport)} · ${esc(g.date)}</div>
+      <h2>${esc(g.away.name)} at ${esc(g.home.name)}</h2>
+      <div class="dsec"><h4>🏟️ Matchup</h4>
+        <div class="team" style="font-size:15px">${teamLogo(g.away.logo)}<span>${esc(g.away.name)}</span><span class="ha">A</span></div>
+        <div class="team" style="font-size:15px">${teamLogo(g.home.logo)}<span>${esc(g.home.name)}</span><span class="ha">H</span></div>
+      </div>
+      <div class="dsec"><h4>📍 Details</h4>
+        <div class="drow">Time <span class="right"><b>${esc(g.time)}</b></span></div>
+        <div class="drow">Venue <span class="right">${esc(g.venue)}</span></div>
+        <div class="drow"><div class="sub" style="margin:0">${esc(g.note)}</div></div></div>
+      <a class="getthere" onclick="toast('Prototype: opens tickets on iuhoosiers.com.')">🎟️ Tickets & info</a>
+      <div class="cc-hint" style="margin-top:12px">iuhoosiers.com</div>`;
+  }
+  $("drawer").innerHTML=html;
+  $("drawer").classList.add("open"); $("scrim").classList.add("open");
+}
+
+/* =====================================================
+   Omni-search widget — searches One.IU tasks, this user's
+   personalized portal content, and general campus content.
+   Fixed-width column; results scroll inside a fixed-height panel.
+===================================================== */
+function buildSearchIndex(){
+  const idx=[], seen=new Set();
+  const add=o=>{ const k=o.group+"|"+o.title.toLowerCase(); if(seen.has(k))return; seen.add(k); idx.push(o); };
+  const p=P();
+  // personalized content across this user's tabs
+  p.tabs.forEach(tab=>{
+    const nav=`omniGo('${tab.id}')`, g="Your "+tab.label;
+    (p.views[tab.id]||[]).forEach(w=>{
+      if(w.type==="schedule") w.items.forEach(i=>add({icon:"📅",title:i.title,sub:i.loc,tag:tab.label,group:g,run:nav}));
+      if(w.type==="list")     w.items.forEach(i=>add({icon:i.icon||"•",title:i.title,sub:i.sub,tag:tab.label,group:g,run:nav}));
+      if(w.type==="tasks")    w.items.forEach(i=>add({icon:"✅",title:i.txt,sub:i.due,tag:tab.label,group:g,run:nav}));
+      if(w.type==="steps")    w.items.forEach(i=>add({icon:"◉",title:i.title,sub:i.sub,tag:tab.label,group:g,run:nav}));
+      if(w.type==="balances") w.items.forEach(i=>add({icon:i.icon,title:i.label,sub:i.value,tag:tab.label,group:g,run:nav}));
+    });
+  });
+  // this user's action items
+  (p.actionItems||[]).forEach(i=>add({icon:SOURCES[i.src].icon,title:i.title,sub:i.desc,
+    tag:SOURCES[i.src].name.split(" (")[0].split(" · ")[0],group:"Your action items",run:`omniGo('home')`}));
+  // One.IU tasks (general services + role-specific)
+  TASKS.forEach(t=>add({icon:t.icon,title:t.name,sub:t.desc,tag:t.cat,group:"One.IU tasks",run:`launchTask('${t.id}')`}));
+  // general campus content — buildings, parking, buses, food
+  allMapPlaces().forEach(pl=>add({icon:TYPE_ICONS[pl.type],title:pl.name,sub:pl.addr||placeSub(pl),
+    tag:pl.type,group:"Places & campus",run:`openPlace('${pl.id}')`}));
+  return idx;
+}
+function renderOmnibar(){
+  const has = !!state.omniQ.trim();
+  return `<div class="omnibar">
+    <span class="omnibar-ic">🔍</span>
+    <input class="omnibar-input" id="omniInput" type="text" placeholder="Search all of IU"
+      value="${esc(state.omniQ).replace(/"/g,"&quot;")}" autocomplete="off"
+      oninput="onOmniSearch(this.value)" onkeydown="if(event.key==='Escape')omniClear()">
+    <button class="omnibar-clear" id="omniClear" onclick="omniClear()" style="${has?'':'display:none'}">✕</button>
+    <div class="omnibar-results" id="omniResults" style="${has?'':'display:none'}">${omniResultsHTML()}</div>
+  </div>`;
+}
+function omniResultsHTML(){
+  const q=state.omniQ.trim().toLowerCase();
+  if(!q) return `<div class="omni-empty">Start typing to search across your schedule, to-dos and balances, every One.IU service, and campus buildings.</div>`;
+  const hits=buildSearchIndex().filter(e=>(e.title+" "+(e.sub||"")+" "+e.tag+" "+e.group).toLowerCase().includes(q));
+  if(!hits.length) return `<div class="omni-empty">No matches for “${esc(state.omniQ)}”.</div>`;
+  const rank=g=>g.startsWith("Your")?0:g==="One.IU tasks"?1:2;
+  const groups=[...new Set(hits.map(h=>h.group))].sort((a,b)=>rank(a)-rank(b)||a.localeCompare(b));
+  let out="", total=0;
+  for(const g of groups){
+    const rows=hits.filter(h=>h.group===g).slice(0,6);
+    if(!rows.length || total>=24) continue;
+    out += `<div class="omni-group">${esc(g)}</div>` + rows.map(r=>`
+      <div class="ores" onclick="${r.run}">
+        <div class="oic">${r.icon}</div>
+        <div style="min-width:0"><div class="ot">${esc(r.title)}</div><div class="os">${esc(r.sub||"")}</div></div>
+        <span class="otag">${esc(r.tag)}</span>
+      </div>`).join("");
+    total += rows.length;
+  }
+  return out;
+}
+function onOmniSearch(v){
+  state.omniQ=v;
+  const has=!!v.trim();
+  const r=$("omniResults"); if(r){ r.innerHTML=omniResultsHTML(); r.style.display=has?"block":"none"; }
+  const c=$("omniClear"); if(c) c.style.display=has?"flex":"none";
+}
+function omniClear(){ state.omniQ=""; const i=$("omniInput"); if(i){ i.value=""; i.focus(); } onOmniSearch(""); }
+function omniGo(tab){ state.omniQ=""; setTab(tab); }
+
+/* =====================================================
+   Customizable widget layout
+   Layouts are stored per persona + tab as
+   {order:[defIndices], removed:[defIndices]} and persisted.
+===================================================== */
+let layouts = {};
+(function loadLayouts(){
+  try{ const s = localStorage.getItem("oneiu_layouts"); if(s) layouts = JSON.parse(s)||{}; }catch(e){}
+})();
+function saveLayouts(){
+  try{ localStorage.setItem("oneiu_layouts", JSON.stringify(layouts)); }catch(e){}
+}
+/* Tokens are strings: "0","1"… index a persona's default defs;
+   "cat:orgs" is a catalog widget added by the user. */
+function getLayout(){
+  const p=state.persona, t=state.tab;
+  const defs=DATA[p].views[t]||[]; const n=defs.length;
+  const all=[...Array(n).keys()].map(String);
+  layouts[p]=layouts[p]||{};
+  let lay=layouts[p][t];
+  if(!lay || !Array.isArray(lay.order) || !Array.isArray(lay.removed)){
+    lay={order:[...all],removed:[]};
+  } else {
+    lay.order  = lay.order.map(String).filter(tok=> tok.startsWith("cat:") || all.includes(tok));
+    lay.removed= lay.removed.map(String).filter(tok=> all.includes(tok));
+    all.forEach(i=>{ if(!lay.order.includes(i) && !lay.removed.includes(i)) lay.order.push(i); });
+    lay.order=[...new Set(lay.order)];
+  }
+  layouts[p][t]=lay; return lay;
+}
+function tokenDef(tok){
+  return tok.startsWith("cat:") ? {type:tok.slice(4)} : (DATA[state.persona].views[state.tab]||[])[Number(tok)];
+}
+function visibleTokens(){ const lay=getLayout(); return lay.order.filter(tok=> tok.startsWith("cat:") || !lay.removed.includes(tok)); }
+function visibleTypes(){ return visibleTokens().map(tokenDef).filter(Boolean).map(d=>d.type); }
+
+/* Every widget a user can add, regardless of their default screen. */
+const WIDGET_CATALOG = [
+  {type:"actionitems",label:"✅ Action Items",     desc:"Tasks that need you, from across IU"},
+  {type:"campusfeed", label:"📰 Campus feed",       desc:"Athletics, events & news across IU"},
+  {type:"crimsoncard",label:"💳 CrimsonCard",       desc:"Your card, balances & photo"},
+  {type:"orgs",       label:"🧑‍🤝‍🧑 Student Organizations", desc:"Memberships, announcements & events"},
+  {type:"libraries",  label:"📚 Libraries",          desc:"Loans, ILL, study rooms & catalog"},
+  {type:"campusmap",  label:"🗺️ Campus map",         desc:"Search buildings, buses, parking & food"},
+  {type:"tasklauncher",label:"⊞ One.IU tasks",      desc:"Search & launch any task"},
+  {type:"launch",     label:"⭐ Favorite tasks",      desc:"Your pinned & popular tasks"},
+];
+const FULL_WIDTH_TYPES = ["hero","launch","tasklauncher","campusmap","signin"];
+const WIDE_TYPES = ["actionitems","campusfeed"];   // max 2 columns wide
+function widgetLabel(def){
+  if(def.type==="signin") return "🔐 Sign in";
+  if(def.type==="actionitems") return "✅ Action Items";
+  if(def.type==="crimsoncard") return "💳 CrimsonCard";
+  if(def.type==="orgs") return "🧑‍🤝‍🧑 Student Organizations";
+  if(def.type==="libraries") return "📚 Libraries";
+  if(def.type==="campusfeed") return "📰 Campus feed";
+  if(def.type==="hero") return "📣 Highlights banner";
+  if(def.type==="launch") return "⭐ Favorite tasks";
+  if(def.type==="tasklauncher") return "⊞ One.IU tasks";
+  if(def.type==="campusmap") return "🗺️ Campus map";
+  return def.title || def.type;
+}
+function widgetWrap(tok,def){
+  const span = FULL_WIDTH_TYPES.includes(def.type) ? "full"
+             : WIDE_TYPES.includes(def.type) ? "wide" : "";
+  const sel = state.moving===tok;
+  return `<div class="widget ${span} ${sel?"selected":""}" data-tok="${tok}" draggable="false"
+      ondragstart="wDragStart(event,this)" ondragend="wDragEnd(event,this)"
+      ondragover="wDragOver(event,this)" ondragleave="this.classList.remove('drop-target')"
+      ondrop="wDrop(event,this)">
+    <div class="w-controls">
+      <button class="w-grab" title="Drag to rearrange (or tap, then tap a destination)"
+        onmousedown="armDrag(this)" onclick="grabClick(event,'${tok}')">⠿</button>
+      <button class="w-x" title="Remove widget" onclick="removeWidget(event,'${tok}')">✕</button>
+    </div>
+    ${renderCard(def)}
+  </div>`;
+}
+/* drag & drop (grabber-armed) */
+function armDrag(btn){
+  const w=btn.closest(".widget"); if(!w) return;
+  w.setAttribute("draggable","true");
+  const off=()=>{ w.setAttribute("draggable","false"); document.removeEventListener("mouseup",off); };
+  document.addEventListener("mouseup",off);
+}
+function wDragStart(e,el){
+  window._dragTok = el.dataset.tok;
+  el.classList.add("dragging");
+  if(e.dataTransfer){ e.dataTransfer.effectAllowed="move"; try{e.dataTransfer.setData("text/plain","widget");}catch(_){} }
+}
+function wDragEnd(e,el){
+  el.classList.remove("dragging");
+  document.querySelectorAll(".widget.drop-target").forEach(x=>x.classList.remove("drop-target"));
+  window._dragTok = null;
+}
+function wDragOver(e,el){
+  if(window._dragTok==null || el.dataset.tok===window._dragTok) return;
+  e.preventDefault();
+  if(e.dataTransfer) e.dataTransfer.dropEffect="move";
+  el.classList.add("drop-target");
+}
+function wDrop(e,el){
+  e.preventDefault(); el.classList.remove("drop-target");
+  const from=window._dragTok, to=el.dataset.tok;
+  window._dragTok=null;
+  if(from==null || from===to) return;
+  const r=el.getBoundingClientRect();
+  moveWidget(from, to, (e.clientY - r.top) < r.height/2);
+}
+/* tap-to-move fallback (touch / no drag) */
+function grabClick(ev,tok){
+  ev.stopPropagation();
+  if(state.moving==null){
+    state.moving=tok; renderMain();
+    toast("Widget selected — tap the grabber where it should move to.");
+  } else if(state.moving===tok){
+    state.moving=null; renderMain();
+  } else {
+    const from=state.moving; state.moving=null;
+    moveWidget(from,tok,true);
+  }
+}
+function moveWidget(from,to,before=true){
+  const lay=getLayout();
+  const o=lay.order.filter(x=>x!==from);
+  let idx=o.indexOf(to); if(idx<0) idx=o.length; else if(!before) idx++;
+  o.splice(idx,0,from);
+  lay.order=o; saveLayouts(); renderMain();
+}
+function removeWidget(ev,tok){
+  ev.stopPropagation();
+  const lay=getLayout();
+  if(tok.startsWith("cat:")) lay.order=lay.order.filter(x=>x!==tok);
+  else if(!lay.removed.includes(tok)) lay.removed.push(tok);
+  if(state.moving===tok) state.moving=null;
+  saveLayouts(); renderMain();
+  toast("Widget removed. Add it back from “＋ Add widgets”.");
+}
+function restoreWidget(tok){
+  const lay=getLayout();
+  lay.removed=lay.removed.filter(x=>x!==tok);
+  saveLayouts(); renderMain(); openWidgetPicker();
+}
+/* Add any catalog widget — even one not in this persona's defaults. */
+function addCatalogWidget(type){
+  const lay=getLayout();
+  if(visibleTypes().includes(type)){ toast("That widget is already on this screen."); return; }
+  const defs=DATA[state.persona].views[state.tab]||[];
+  const removedSame=lay.removed.find(tok=>{ const d=defs[Number(tok)]; return d && d.type===type; });
+  if(removedSame!==undefined) lay.removed=lay.removed.filter(x=>x!==removedSame); // restore in place
+  else lay.order.push("cat:"+type);
+  saveLayouts(); renderMain(); openWidgetPicker();
+  toast("Widget added to this screen.");
+}
+function resetLayout(){
+  const p=state.persona, t=state.tab;
+  if(layouts[p]) delete layouts[p][t];
+  state.moving=null;
+  saveLayouts(); renderMain();
+  toast("Screen restored to the default layout.");
+}
+function openWidgetPicker(){
+  const defs=P().views[state.tab]||[];
+  const lay=getLayout();
+  const vis=visibleTypes();
+  const catRows = WIDGET_CATALOG.map(w=>`
+    <div class="wp-row">
+      <div style="flex:1;min-width:0"><div class="wpn">${w.label}</div><div class="lis">${w.desc}</div></div>
+      ${vis.includes(w.type)
+        ? `<span class="badge gray">On screen</span>`
+        : `<button class="wp-add" onclick="addCatalogWidget('${w.type}')">＋ Add</button>`}
+    </div>`).join("");
+  const removedCtx = lay.removed.filter(tok=>{ const d=defs[Number(tok)]; return d && !WIDGET_CATALOG.some(w=>w.type===d.type); });
+  const ctxRows = removedCtx.map(tok=>`
+    <div class="wp-row"><div class="wpn">${widgetLabel(defs[Number(tok)])}</div>
+      <button class="wp-add" onclick="restoreWidget('${tok}')">＋ Add</button></div>`).join("");
+  $("drawer").innerHTML = `
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <h2>＋ Add widgets</h2>
+    <p class="dsub">Add any widget to this screen — even ones not shown by default.</p>
+    <div class="dsec"><h4>🧩 Widget library</h4>${catRows}</div>
+    ${ctxRows ? `<div class="dsec"><h4>↩︎ Removed from this screen</h4>${ctxRows}</div>` : ""}
+    <div class="dsec"><h4>↺ Start over</h4>
+      <button class="lbtn" onclick="resetLayout();closeDrawer()">Reset this screen to default</button></div>`;
+  $("drawer").classList.add("open"); $("scrim").classList.add("open");
+}
+
+/* ---------- shell ---------- */
+/* Official IU trident (Rivet design-system mark, iu.edu), crimson via currentColor */
+const TRIDENT = `<svg class="trident" viewBox="0 0 28 34" fill="currentColor" aria-label="Indiana University" role="img">
+  <path d="M-3.34344e-05 4.70897H8.83308V7.174H7.1897V21.1426H10.6134V2.72321H8.83308V0.121224H18.214V2.65476H16.2283V21.1426H19.7889V7.174H18.214V4.64047H27.0471V7.174H25.0614V23.6761L21.7746 26.8944H16.2967V30.455H18.214V33.8787H8.76463V30.592H10.6819V26.8259H5.20403L1.91726 23.6077V7.174H-3.34344e-05V4.70897Z"/>
+</svg>`;
+function renderSidebar(){
+  const p = P();
+  $("sidebar").innerHTML = `
+    <div class="logo"><div class="logo-mark">${TRIDENT}</div><div class="logo-name">One<span>.IU</span></div></div>
+    <div class="nav">${p.tabs.map(t=>`
+      <button class="${state.tab===t.id?"active":""}" onclick="setTab('${t.id}')">
+        <span class="ic">${t.icon}</span>${t.label}</button>`).join("")}
+    </div>
+    <div class="side-foot">
+      ${p.guest ? `<b>Not signed in</b><br>Public view
+        <button onclick="toast('Prototype: opens IU Login (CAS + two-step / Duo).')">Sign in</button>`
+      : `Signed in as <b>${p.name}</b><br>${p.role}
+        <button onclick="toggleAdmin(true)">Switch persona</button>`}
+    </div>`;
+}
+function renderBottomNav(){
+  const p = P();
+  $("bottomNav").innerHTML = p.tabs.map(t=>`
+    <button class="${state.tab===t.id?"active":""}" onclick="setTab('${t.id}')">
+      <span class="bic">${t.icon}</span>${t.label}</button>`).join("");
+}
+function renderMain(){
+  const p = P();
+  const toks = visibleTokens();
+  const cards = toks.map(tokenDef).filter(Boolean);
+  const tabLabel = p.tabs.find(t=>t.id===state.tab)?.label || "";
+  const isHome = state.tab==="home";
+  const gridHtml = toks.length
+    ? toks.map(tok=>{ const d=tokenDef(tok); return d?widgetWrap(tok,d):""; }).join("")
+    : `<div class="grid-empty">This screen is empty.<br><br>
+        <button onclick="openWidgetPicker()">＋ Add widgets</button> &nbsp;·&nbsp;
+        <button onclick="resetLayout()">↺ Reset to default</button></div>`;
+  $("main").innerHTML = `
+    <div class="topbar">
+      <div class="greeting">
+        <h1>${isHome ? (p.guest ? "Welcome to One.IU" : `${greeting()}, ${p.first}`) : tabLabel}</h1>
+        <p>${isHome ? (p.guest ? p.greetSub : `${todayStr()} · ${p.greetSub}`) : p.role}</p>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" onclick="openNotifs()">🔔${p.notifCount?'<span class="dot"></span>':""}</button>
+        <div class="avatar" onclick="openSettings()" title="Profile & settings">${p.avatar}</div>
+      </div>
+    </div>
+    ${renderOmnibar()}
+    <div class="layout-bar">
+      <span class="hint">⠿ drag to rearrange · ✕ to remove</span>
+      <button class="lbtn" onclick="openWidgetPicker()">＋ Add widgets</button>
+      <button class="lbtn" onclick="resetLayout()">↺ Reset layout</button>
+    </div>
+    <div class="grid">${gridHtml}</div>`;
+  if(cards.some(c=>c.type==="campusmap")) setTimeout(setupCampusMap,0);
+  const inner = $("main"); inner.classList.remove("main-inner"); void inner.offsetWidth; inner.classList.add("main-inner");
+}
+function render(){ renderSidebar(); renderBottomNav(); renderMain(); }
+
+/* ---------- interactions ---------- */
+function setTab(id){ state.tab=id; state.q=""; state.cat="All"; state.moving=null; state.omniQ=""; render(); window.scrollTo({top:0}); }
+function goToTaskSearch(){
+  setTab("tasks");
+  setTimeout(()=>{ const i=$("taskSearchInput"); if(i) i.focus(); },50);
+}
+function setPersona(key){
+  state.persona=key; state.tab="home"; state.checked={}; state.q=""; state.cat="All"; state.moving=null;
+  state.favs = new Set(DATA[key].favorites);
+  state.ai = { filter:"all", explain:false };
+  state.omniQ = "";
+  toggleAdmin(false); closeDrawer(); render(); window.scrollTo({top:0});
+  toast(`Now viewing as ${DATA[key].name} — ${DATA[key].role}`);
+}
+function toggleTask(id){ state.checked[id]=!state.checked[id]; renderMain(); }
+
+function toggleAdmin(open){
+  $("adminModal").classList.toggle("open",open);
+  if(open){
+    $("personaGrid").innerHTML = Object.entries(DATA).map(([k,p])=>`
+      <button class="pcard ${state.persona===k?"sel":""}" onclick="setPersona('${k}')">
+        <div class="pav">${p.avatar}</div>
+        <div class="pr">${p.role}</div>
+        <div class="pn">${p.name}</div>
+        <div class="pd">${p.adminDesc}</div>
+        <div class="sel-tag">✓ Currently viewing</div>
+      </button>`).join("");
+  }
+}
+function openNotifs(){
+  const p = P();
+  $("drawer").innerHTML = `
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <h2>🔔 Notifications</h2>
+    <p class="dsub">${p.notifCount} unread</p>
+    ${p.notifications.map(n=>`
+      <div class="notif ${n.unread?"unread":""}">
+        <div class="nic">${n.icon}</div>
+        <div><div class="nt">${esc(n.title)}</div><div class="ns">${esc(n.sub)}</div><div class="ntime">${esc(n.time)}</div></div>
+      </div>`).join("")}`;
+  $("drawer").classList.add("open"); $("scrim").classList.add("open");
+}
+function closeDrawer(){
+  $("drawer").classList.remove("open"); $("scrim").classList.remove("open");
+}
+
+/* ---------- Profile & settings ---------- */
+function applyPrefs(){
+  document.body.classList.toggle("dark", state.theme==="dark");
+  document.body.classList.toggle("reduce-motion", !!state.settings.reduceMotion);
+}
+function savePrefs(){
+  try{ localStorage.setItem("oneiu_theme",state.theme);
+       localStorage.setItem("oneiu_settings",JSON.stringify(state.settings)); }catch(e){}
+}
+function toggleTheme(){ state.theme = state.theme==="dark"?"light":"dark"; savePrefs(); applyPrefs(); openSettings(); }
+function toggleSetting(k){ state.settings[k]=!state.settings[k]; savePrefs(); applyPrefs(); openSettings(); }
+function signOut(){ closeDrawer(); setPersona("guest"); }
+function sw(on,handler){ return `<button class="switch ${on?"on":""}" onclick="${handler}"></button>`; }
+function setRow(icon,title,sub,right){
+  return `<div class="set-row"><div class="si">${icon}</div>
+    <div style="min-width:0"><div class="st">${title}</div><div class="ss">${sub}</div></div>
+    <div class="set-right">${right}</div></div>`;
+}
+function openSettings(){
+  const p=P(), dark=state.theme==="dark";
+  $("drawer").innerHTML = `
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <h2>Profile &amp; settings</h2>
+    <div class="set-profile">
+      <div class="set-av">${p.avatar}</div>
+      <div style="min-width:0"><div class="set-name">${p.guest?"Not signed in":esc(p.name)}</div>
+        <div class="set-role">${esc(p.role)}</div></div>
+    </div>
+    <div class="dsec"><h4>Account</h4>
+      ${p.guest
+        ? `<button class="act" style="width:100%;justify-content:center" onclick="toast('Prototype: opens IU Login (CAS + two-step / Duo).')">Sign in with your IU username</button>`
+        : `<button class="act ghost" style="width:100%;justify-content:center" onclick="signOut()">↩︎ Sign out</button>`}
+    </div>
+    <div class="dsec"><h4>Appearance</h4>
+      ${setRow(dark?"🌙":"☀️","Dark mode",(dark?"On":"Off")+" · easier on the eyes at night",sw(dark,"toggleTheme()"))}
+    </div>
+    <div class="dsec"><h4>Notifications</h4>
+      ${setRow("🔔","Push notifications","Deadlines, holds & campus alerts",sw(state.settings.notifs,"toggleSetting('notifs')"))}
+      ${setRow("✉️","Weekly email digest","A summary of your Action Items",sw(state.settings.digest,"toggleSetting('digest')"))}
+    </div>
+    <div class="dsec"><h4>Accessibility</h4>
+      ${setRow("🎬","Reduce motion","Minimize animations and transitions",sw(state.settings.reduceMotion,"toggleSetting('reduceMotion')"))}
+    </div>
+    <div class="dsec"><h4>General</h4>
+      <div class="set-row" style="cursor:pointer" onclick="toast('Prototype: language settings.')">${'<div class="si">🌐</div><div style="min-width:0"><div class="st">Language</div><div class="ss">English (US)</div></div><div class="set-right">›</div>'}</div>
+      <div class="set-row" style="cursor:pointer" onclick="toast('Prototype: privacy & data sharing.')">${'<div class="si">🔒</div><div style="min-width:0"><div class="st">Privacy &amp; data sharing</div><div class="ss">Manage what you share</div></div><div class="set-right">›</div>'}</div>
+      <div class="set-row" style="cursor:pointer" onclick="toggleAdmin(true)">${'<div class="si">🛠️</div><div style="min-width:0"><div class="st">Switch persona (demo)</div><div class="ss">Preview One.IU as another member</div></div><div class="set-right">›</div>'}</div>
+    </div>
+    <div class="cc-hint" style="margin-top:8px">One.IU prototype · v0.9</div>`;
+  $("drawer").classList.add("open"); $("scrim").classList.add("open");
+}
+
+let toastTimer;
+function toast(msg){
+  const t=$("toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),2600);
+}
+
+$("adminModal").addEventListener("click",e=>{ if(e.target.id==="adminModal") toggleAdmin(false); });
+
+applyPrefs();
+render();
+</script>
+</body>
+</html>
