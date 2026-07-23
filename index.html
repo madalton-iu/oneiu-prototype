@@ -174,7 +174,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 /* schedule */
 .sched{display:flex;flex-direction:column;gap:10px}
 .sched-item{display:flex;gap:14px;align-items:stretch}
-.sched-time{width:66px;flex-shrink:0;text-align:right;padding-top:2px}
+.sched-time{width:52px;flex-shrink:0;text-align:right;padding-top:2px}
 .sched-time .t1{font-size:14px;font-weight:800}
 .sched-time .t2{font-size:12px;color:var(--muted);font-weight:600}
 .sched-body{
@@ -305,6 +305,15 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .task-star{position:absolute;top:11px;right:11px;font-size:17px;color:#d9cdb6;background:none;border:0;line-height:1;padding:2px}
 .task-star.on{color:var(--gold)}
 .task-star:hover{transform:scale(1.12)}
+/* Today — unified calendar */
+.cal-src{font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:10px;line-height:1.4}
+.cal-tag{display:inline-block;font-size:10px;font-weight:800;border-radius:999px;padding:2px 8px;margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px}
+.cal-tag.blue{background:var(--blue-soft);color:var(--blue)}
+.cal-tag.red{background:var(--red-soft);color:var(--crimson)}
+.cal-tag.gold{background:var(--gold-soft);color:#8a5a00}
+.cal-join{display:inline-block;margin-top:8px;font-size:12px;font-weight:800;color:var(--crimson);background:none;border:0;padding:0;cursor:pointer}
+.cal-join:hover{text-decoration:underline}
+
 /* Kuali Time (timekeeping) */
 .kt-assign{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line);font-size:13px}
 .kt-lbl{color:var(--muted);font-weight:700;flex-shrink:0}
@@ -675,6 +684,27 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   font-size:15px;font-weight:800;box-shadow:var(--shadow);
 }
 .persona-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:14px}
+
+/* Full calendar modal */
+.fc-modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(35,25,15,.45);backdrop-filter:blur(2px)}
+.fc-modal.open{display:flex}
+.fc-box{background:var(--cream);border-radius:28px;max-width:1000px;width:100%;max-height:88vh;overflow-y:auto;padding:28px;box-shadow:var(--shadow-lg);position:relative}
+.fc-box h2{font-size:22px;font-weight:800}
+.fc-box .asub{color:var(--muted);font-size:13.5px;font-weight:600;margin:5px 0 18px;line-height:1.5}
+.fc-box .close{position:absolute;top:20px;right:20px;width:38px;height:38px;border-radius:999px;background:#fff;font-size:15px;font-weight:800;box-shadow:var(--shadow)}
+.fc-grid{display:grid;grid-template-columns:repeat(5,minmax(158px,1fr));gap:10px;overflow-x:auto}
+.fc-col{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;min-width:0}
+.fc-col.today{border-color:var(--crimson);box-shadow:0 0 0 1.5px var(--crimson) inset}
+.fc-head{padding:4px 4px 10px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+.fc-wd{font-weight:800;font-size:14px}
+.fc-col.today .fc-wd{color:var(--crimson)}
+.fc-md{font-size:12px;color:var(--muted);font-weight:700;margin-top:1px}
+.fc-ev{border-left:4px solid var(--crimson);background:var(--cream);border-radius:10px;padding:8px 10px;margin-bottom:8px}
+.fc-ev.blue{border-color:var(--blue)}.fc-ev.gold{border-color:var(--gold)}.fc-ev.green{border-color:var(--green)}.fc-ev.purple{border-color:var(--purple)}
+.fc-time{font-size:11px;font-weight:800;color:var(--muted)}
+.fc-t{font-weight:700;font-size:13px;line-height:1.3;margin:2px 0 5px}
+.fc-none{font-size:12px;color:var(--muted);font-weight:600;padding:8px 4px}
+@media (max-width:768px){ .fc-grid{grid-template-columns:repeat(5,minmax(150px,1fr))} }
 .pcard{
   background:#fff;border-radius:20px;padding:18px;text-align:left;border:2.5px solid transparent;
   box-shadow:var(--shadow);transition:all .15s;display:flex;flex-direction:column;gap:4px;
@@ -762,13 +792,16 @@ body.dark .qa .qi,
 body.dark .omni-group,
 body.dark .model,
 body.dark .task-tile,
-body.dark .admin-box .close{ background:var(--card); }
+body.dark .fc-col,
+body.dark .admin-box .close,
+body.dark .fc-box .close{ background:var(--card); }
 body.dark .qa:hover{ background:#2b251f; }
 body.dark .card{ background:var(--card); }
 /* keep gold-on-gold legible on dark */
 body.dark .status.wait,
 body.dark .badge.gold,
 body.dark .src-chip.gold,
+body.dark .cal-tag.gold,
 body.dark .sim:hover{ color:#e7b74f; }
 /* crimson-as-text → lightened accent so it stays legible on dark surfaces
    (crimson fills, borders, and marks on white keep the deep crimson) */
@@ -786,10 +819,12 @@ body.dark .team .logo .trident,
 body.dark .cc-manage,
 body.dark .prog-label span:last-child,
 body.dark .task-campus,
+body.dark .cal-tag.red,
 body.dark .assign-due.soon,
 body.dark .assign-link,
 body.dark .assign-all,
 body.dark .kt-note,
+body.dark .cal-join,
 body.dark .step-link,
 body.dark .pcard .pr,
 body.dark .w-controls button:hover,
@@ -820,6 +855,7 @@ body.reduce-motion *{animation:none !important; transition:none !important}
   </div>
 </div>
 
+<div class="fc-modal" id="fcModal"></div>
 <button class="admin-fab" onclick="toggleAdmin(true)">🛠️ Personas</button>
 <div class="toast" id="toast"></div>
 
@@ -1215,6 +1251,13 @@ firstyear: {
     rooms:[{room:"Wells Library · Room 234",when:"Today 6:00–8:00 p.m.",status:"Reserved"}]},
   favorites:["canvas","timesheet","dining","bus","grades","payBill"],
   kualitime:{assignment:"Work-Study · Wells Library (circ. desk)",rate:"$15.00/hr",todayMin:0,weekMin:570},
+  calendar:[
+    {t1:"10:10",t2:"11:00",title:"MATH-M 118 · Finite Math",loc:"Ballantine 013 · Dr. Okafor",src:"SIS",color:"crimson",now:true,key:"finite",recurring:true},
+    {t1:"10:10",t2:"11:00",title:"Finite Math",loc:"Ballantine 013",src:"Exchange",color:"crimson",key:"finite",recurring:true},
+    {t1:"1:00",t2:"2:15",title:"COLL-C 104 · Critical Approaches",loc:"Woodburn 101",src:"SIS",color:"blue",recurring:true},
+    {t1:"2:00",t2:"5:00",title:"Wells Library shift",loc:"Blocked on your Outlook",src:"Exchange",color:"gold",recurring:true},
+    {t1:"7:00",t2:"8:00",title:"Intramural volleyball",loc:"SRSC Court 3",src:"Events",color:"green"},
+  ],
   actionItems:[
     {id:"ai_fy1",src:"hr",title:"Submit work-study timesheet",desc:"9.5 of 12 hours logged.",due:"Fri 5:00 p.m.",high:true,action:{label:"Open Kuali Time",target:"Kuali Time"},confirm:"approval",approver:"your supervisor"},
     {id:"ai_fy2",src:"canvas",title:"MATH-M 118 · Problem Set 7",desc:"Finite Math · submit on the assignment page.",due:"Tomorrow 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
@@ -1242,12 +1285,7 @@ firstyear: {
       {type:"hero",kicker:"Week 8 · Fall semester",title:"Two classes and a library shift today",
        sub:"Next: MATH-M 118 at 10:10 a.m. in Ballantine 013. Your Wells Library shift begins at 2:00 p.m.",
        stats:[{n:"2",l:"Classes today"},{n:"2–5p",l:"Work shift"},{n:"3",l:"Items due this week"}]},
-      {type:"schedule",title:"📅 Today",items:[
-        {t1:"10:10",t2:"11:00",title:"MATH-M 118 · Finite Math",loc:"Ballantine 013 · Dr. Okafor",tag:"Next",color:"crimson",now:true},
-        {t1:"1:00",t2:"2:15",title:"COLL-C 104 · Critical Approaches",loc:"Woodburn 101",color:"blue"},
-        {t1:"2:00",t2:"5:00",title:"Work: Wells Library circ desk",loc:"Clock in at the east desk",tag:"Shift",color:"gold"},
-        {t1:"7:00",t2:"8:00",title:"Intramural volleyball",loc:"SRSC Court 3",color:"green"},
-      ]},
+      {type:"calendar"},
       {type:"actionitems"},
       {type:"kualitime"},
       {type:"crimsoncard"},
@@ -1360,6 +1398,11 @@ senior: {
     ill:[{title:"\"Participatory Design\" (journal article)",status:"Requested — typically 2–4 days"}],
     rooms:[{room:"Luddy Hall · Group Room 2010",when:"Thu 3:00–5:00 p.m.",status:"Reserved"}]},
   favorites:["applyGrad","degreeAudit","jobs","transcript","canvas","payBill"],
+  calendar:[
+    {t1:"11:15",t2:"12:30",title:"INFO-I 494 · Capstone studio",loc:"Luddy Hall 1106 · team standup",src:"SIS",color:"crimson",now:true,recurring:true},
+    {t1:"2:30",t2:"3:00",title:"Career coach check-in",loc:"Microsoft Teams · resume review",src:"Exchange",color:"blue",join:"Teams"},
+    {t1:"5:30",t2:"6:30",title:"Informatics Student Assoc.",loc:"Luddy 2nd-floor commons",src:"Events",color:"purple"},
+  ],
   actionItems:[
     {id:"ai_sr1",src:"registrar",title:"Apply to graduate",desc:"Submit, then your academic unit certifies eligibility.",due:"Sept 15",high:true,action:{label:"Apply now",target:"the Registrar graduation application"},confirm:"approval",approver:"your academic unit"},
     {id:"ai_sr2",src:"bursar",title:"Pay fall balance ($1,284)",desc:"Or enroll in the no-interest payment plan.",due:"Aug 10",high:true,action:{label:"Pay bill",target:"the Bursar payment page"},confirm:"system",confirmedBy:"the payment posts to your account"},
@@ -1392,11 +1435,7 @@ senior: {
       {type:"actionitems"},
       {type:"progress",title:"📊 Degree progress · B.S. Informatics",pct:94,label:"114 of 120 credits",
        note:"All requirements are complete except one Arts & Humanities gen-ed credit. Your advisor flagged two 1-credit options with open seats — see the Graduation tab."},
-      {type:"schedule",title:"📅 Today",items:[
-        {t1:"11:15",t2:"12:30",title:"INFO-I 494 · Capstone studio",loc:"Luddy Hall 1106 · Team standup",tag:"Next",color:"crimson",now:true},
-        {t1:"2:30",t2:"3:00",title:"Career coach check-in",loc:"Virtual · resume review",color:"blue"},
-        {t1:"5:30",t2:"6:30",title:"Informatics Student Assoc.",loc:"Luddy 2nd floor commons",color:"purple"},
-      ]},
+      {type:"calendar"},
       {type:"list",title:"💼 Recommended for you",items:[
         {icon:"🏢",bg:"blue",title:"Fall Career Fair — Tech & Data",sub:"90+ employers · bring your QR code",right:"Oct 2",rightSub:"Alumni Hall"},
         {icon:"⭐",bg:"gold",title:"Salesforce · Associate UX Researcher",sub:"New Handshake match · Indianapolis",right:"Apply",rightSub:"by Oct 15"},
@@ -1486,6 +1525,13 @@ staff: {
     ill:[],
     rooms:[{room:"IMU · Meeting Room M07",when:"Aug 12, 1:00–3:00 p.m.",status:"Reserved (orientation planning)"}]},
   favorites:["approveTime","payslip","pto","benefits","parking","travel"],
+  calendar:[
+    {t1:"9:30",t2:"10:00",title:"FYE team standup",loc:"Eigenmann 240 · weekly",src:"Exchange",color:"crimson",recurring:true},
+    {t1:"11:00",t2:"12:00",title:"Welcome Week vendor walkthrough",loc:"Dunn Meadow",src:"Exchange",color:"gold",now:true},
+    {t1:"2:00",t2:"3:00",title:"1:1 with student staff lead",loc:"Microsoft Teams",src:"Exchange",color:"blue",join:"Teams"},
+    {t1:"4:00",t2:"4:30",title:"Focus block: budget reconciliation",loc:"Private · held on your calendar",src:"Exchange",color:"green"},
+    {t1:"5:30",t2:"8:10",title:"SPEA-V 506 · Statistical Analysis",loc:"SPEA 250 · using the tuition benefit",src:"SIS",color:"purple",recurring:true},
+  ],
   actionItems:[
     {id:"ai_st1",src:"hr",title:"Approve 4 student timesheets",desc:"You are the approver — due before Friday payroll.",due:"Mon 10:00 a.m.",high:true,action:{label:"Review in Kuali Time",target:"Kuali Time approvals"},confirm:"system",confirmedBy:"Kuali Time records each approval"},
     {id:"ai_st2",src:"compliance",title:"Annual data security training",desc:"Required for all staff · ~20 min.",due:"Jul 31",high:true,action:{label:"Start training",target:"Workday Learning"},confirm:"system",confirmedBy:"Workday Learning logs your completion"},
@@ -1512,12 +1558,7 @@ staff: {
       {type:"hero",kicker:"Office of First Year Experience",title:"Welcome Week planning is 80% complete",
        sub:"Four student timesheets are awaiting your approval. Open enrollment begins October 15.",
        stats:[{n:"3",l:"Meetings today"},{n:"4",l:"Approvals waiting"},{n:"Fri",l:"Payday"}]},
-      {type:"schedule",title:"📅 Today",items:[
-        {t1:"9:30",t2:"10:00",title:"FYE team standup",loc:"Eigenmann 240 · weekly",color:"crimson"},
-        {t1:"11:00",t2:"12:00",title:"Welcome Week vendor walkthrough",loc:"Dunn Meadow",tag:"Next",color:"gold",now:true},
-        {t1:"2:00",t2:"3:00",title:"1:1 with student staff lead",loc:"Zoom",color:"blue"},
-        {t1:"4:00",t2:"4:30",title:"Focus block: budget reconciliation",loc:"Held on your calendar",color:"green"},
-      ]},
+      {type:"calendar"},
       {type:"actionitems"},
       {type:"crimsoncard"},
       {type:"libraries"},
@@ -1614,6 +1655,13 @@ faculty: {
       {icon:"🎓",title:"Women in Computing mentor mixer",when:"Oct 8, 5:00 p.m.",where:"Luddy commons"},
     ]},
   favorites:["rosters","canvas","approveTime","grants","roomRes","travel"],
+  calendar:[
+    {t1:"10:10",t2:"11:25",title:"INFO-I 365 · HCI Design (lecture)",loc:"Luddy 1106",src:"SIS",color:"crimson",now:true,key:"i365",recurring:true},
+    {t1:"10:10",t2:"11:25",title:"HCI Design lecture",loc:"Luddy 1106",src:"Exchange",color:"crimson",key:"i365",recurring:true},
+    {t1:"1:00",t2:"2:00",title:"Research group meeting",loc:"Luddy 4012 · paper triage",src:"Exchange",color:"purple"},
+    {t1:"2:00",t2:"4:00",title:"Office hours",loc:"Luddy 3040 · 3 slots booked",src:"Exchange",color:"gold",recurring:true},
+    {t1:"4:30",t2:"5:00",title:"Curriculum committee",loc:"Microsoft Teams",src:"Exchange",color:"blue",join:"Teams"},
+  ],
   actionItems:[
     {id:"ai_fac1",src:"registrar",title:"Upload I-365 midterm grades",desc:"82 students · enter in the Faculty Center.",due:"Friday",high:true,action:{label:"Open Faculty Center",target:"the Faculty Center grade roster"},confirm:"system",confirmedBy:"the roster records posted grades"},
     {id:"ai_fac2",src:"advising",title:"Approve 2 advisee course plans",desc:"You are the approver — their registration opens Monday.",due:"By Monday",high:true,action:{label:"Review plans",target:"the advising approvals queue"},confirm:"system",confirmedBy:"each approval is recorded"},
@@ -1642,12 +1690,7 @@ faculty: {
       {type:"hero",kicker:"Luddy School of Informatics",title:"Midterm grades are due Friday",
        sub:"38 project submissions remain in the I-365 grading queue. Three advisee requests are pending, and the NSF internal deadline is August 1.",
        stats:[{n:"2",l:"Classes today"},{n:"38",l:"To grade"},{n:"3",l:"Advisee requests"}]},
-      {type:"schedule",title:"📅 Today",items:[
-        {t1:"10:10",t2:"11:25",title:"INFO-I 365 · HCI Design (lecture)",loc:"Luddy 1106 · 82 students",tag:"Next",color:"crimson",now:true},
-        {t1:"1:00",t2:"2:00",title:"Research group meeting",loc:"Luddy 4012 · paper triage",color:"purple"},
-        {t1:"2:00",t2:"4:00",title:"Office hours",loc:"Luddy 3040 · 3 slots booked",color:"gold"},
-        {t1:"4:30",t2:"5:00",title:"Curriculum committee",loc:"Zoom",color:"blue"},
-      ]},
+      {type:"calendar"},
       {type:"actionitems"},
       {type:"crimsoncard"},
       {type:"libraries"},
@@ -1909,6 +1952,7 @@ function renderCard(c){
     case "campusfeed": return renderCampusFeed();
     case "signin": return renderSignin();
     case "kualitime": return renderKualiTime();
+    case "calendar": return renderCalendar();
     case "assignments": return card(c.title,
       `<div class="assign-note">📘 From Canvas · your enrolled courses</div>` +
       c.items.map(a=>`
@@ -2483,6 +2527,87 @@ function ktClockOut(){
   toast(`Clocked out · logged at ${ktFmtTime(new Date(outTs))} · ${(mins/60).toFixed(1)} h.`);
 }
 
+/* =====================================================
+   Today — unified calendar across all IU users.
+   Aggregates Exchange (Outlook), SIS (scheduled classes) and
+   event RSVPs; de-duplicates, resolving in favor of the
+   authoritative non-Exchange system; tags source; adds a CTA.
+===================================================== */
+const CAL_SRC = {
+  Exchange:{label:"Outlook",     cls:"blue"},
+  SIS:     {label:"Classes · SIS",cls:"red"},
+  Events:  {label:"IU Events",   cls:"gold"},
+};
+function calDedupe(evs){
+  let removed=0;
+  const out=evs.filter(e=>{
+    // drop an Exchange copy when a non-Exchange system has the same item (by key)
+    if(e.src==="Exchange" && e.key && evs.some(o=>o!==e && o.key===e.key && o.src!=="Exchange")){ removed++; return false; }
+    return true;
+  });
+  return {events:out, removed};
+}
+function calCTA(e){
+  if(e.join)            return `<button class="cal-join" onclick="toast('Prototype: joins the ${esc(e.join)} meeting.')">Join ${esc(e.join)} ↗</button>`;
+  if(e.src==="Events")  return `<button class="cal-join" onclick="toast('Prototype: opens the event details / RSVP.')">Event details ↗</button>`;
+  if(e.src==="SIS")     return `<button class="cal-join" onclick="toast('Prototype: opens this course in Canvas.')">Open in Canvas ↗</button>`;
+  return "";
+}
+function renderCalendar(){
+  const {events,removed}=calDedupe(P().calendar||[]);
+  const body=`<div class="cal-src">Aggregated from Outlook, SIS classes &amp; event RSVPs${removed?` · ${removed} Outlook duplicate${removed>1?"s":""} merged`:""}</div>` +
+    (events.length
+      ? `<div class="sched">${events.map(e=>{const m=CAL_SRC[e.src]||CAL_SRC.Exchange;return `
+        <div class="sched-item ${e.now?"sched-now":""}">
+          <div class="sched-time"><div class="t1">${esc(e.t1)}</div><div class="t2">${esc(e.t2)}</div></div>
+          <div class="sched-body ${esc(e.color||"")}">
+            ${e.now?'<span class="sched-tag">Now</span>':""}
+            <span class="cal-tag ${m.cls}">${esc(m.label)}</span>
+            <div class="st">${esc(e.title)}</div><div class="sl">${esc(e.loc)}</div>
+            ${calCTA(e)}
+          </div>
+        </div>`;}).join("")}</div>`
+      : `<div class="empty">Nothing on your calendar today.</div>`);
+  return card("📅 Today", body, "",
+    `<span class="link" onclick="openFullCalendar()">Full calendar ↗</span>`);
+}
+/* Full calendar — today + next 4 days, same aggregation + dedup rules */
+function calDayLabel(offset){
+  const d=new Date(); d.setDate(d.getDate()+offset);
+  return { wd:d.toLocaleDateString("en-US",{weekday:"short"}),
+           md:d.toLocaleDateString("en-US",{month:"short",day:"numeric"}),
+           today:offset===0 };
+}
+function fullCalendarDays(){
+  const base=P().calendar||[];
+  const days=[];
+  for(let i=0;i<5;i++){
+    const raw = i===0 ? base : base.filter(e=>e.recurring);   // day 0 = everything; later days = recurring items
+    const {events}=calDedupe(raw);                            // same dedup rule (prefer non-Exchange)
+    days.push(Object.assign(calDayLabel(i),{events}));
+  }
+  return days;
+}
+function openFullCalendar(){
+  const days=fullCalendarDays();
+  $("fcModal").innerHTML = `<div class="fc-box">
+    <button class="close" onclick="closeFullCalendar()">✕</button>
+    <h2>📅 Full calendar</h2>
+    <p class="asub">Today and the next 4 days · aggregated from Outlook, SIS classes &amp; event RSVPs.</p>
+    <div class="fc-grid">${days.map(d=>`
+      <div class="fc-col ${d.today?"today":""}">
+        <div class="fc-head"><div class="fc-wd">${d.today?"Today":esc(d.wd)}</div><div class="fc-md">${esc(d.md)}</div></div>
+        ${d.events.length ? d.events.map(e=>{const m=CAL_SRC[e.src]||CAL_SRC.Exchange;return `
+          <div class="fc-ev ${esc(e.color||"")}">
+            <div class="fc-time">${esc(e.t1)}–${esc(e.t2)}</div>
+            <div class="fc-t">${esc(e.title)}</div>
+            <span class="cal-tag ${m.cls}">${esc(m.label)}</span>
+          </div>`;}).join("") : `<div class="fc-none">No events</div>`}
+      </div>`).join("")}</div>`;
+  $("fcModal").classList.add("open");
+}
+function closeFullCalendar(){ $("fcModal").classList.remove("open"); }
+
 /* Sign-in call to action (guest view) */
 function renderSignin(){
   return `<div class="card signin-card">
@@ -2689,6 +2814,7 @@ function visibleTypes(){ return visibleTokens().map(tokenDef).filter(Boolean).ma
 /* Every widget a user can add, regardless of their default screen. */
 const WIDGET_CATALOG = [
   {type:"actionitems",label:"✅ Action Items",     desc:"Tasks that need you, from across IU"},
+  {type:"calendar",   label:"📅 Today's calendar",  desc:"Your Outlook / Exchange calendar"},
   {type:"kualitime",  label:"🕐 Kuali Time",        desc:"Clock in/out · timekeeping for hourly jobs"},
   {type:"campusfeed", label:"📰 Campus feed",       desc:"Athletics, events & news across IU"},
   {type:"crimsoncard",label:"💳 CrimsonCard",       desc:"Your card, balances & photo"},
@@ -2703,6 +2829,7 @@ const WIDE_TYPES = ["actionitems","campusfeed"];   // max 2 columns wide
 function widgetLabel(def){
   if(def.type==="signin") return "🔐 Sign in";
   if(def.type==="actionitems") return "✅ Action Items";
+  if(def.type==="calendar") return "📅 Today's calendar";
   if(def.type==="kualitime") return "🕐 Kuali Time";
   if(def.type==="crimsoncard") return "💳 CrimsonCard";
   if(def.type==="orgs") return "🧑‍🤝‍🧑 Student Organizations";
@@ -3007,6 +3134,7 @@ function toast(msg){
 }
 
 $("adminModal").addEventListener("click",e=>{ if(e.target.id==="adminModal") toggleAdmin(false); });
+$("fcModal").addEventListener("click",e=>{ if(e.target.id==="fcModal") closeFullCalendar(); });
 
 applyPrefs();
 render();
