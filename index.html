@@ -1527,7 +1527,7 @@ staff: {
     home:[
       {type:"hero",kicker:"Office of First Year Experience",title:"Four timesheets are waiting on your approval",
        sub:"Approve before Friday payroll. Open enrollment begins October 15.",
-       stats:[{n:"3",l:"Meetings today"},{n:"4",l:"Approvals waiting"},{n:"Fri",l:"Payday"}]},
+       stats:[{n:"3",l:"Meetings today"},{n:"4",l:"Approvals waiting"},{n:"Sep 30",l:"Payday"}]},
       {type:"calendar"},
       {type:"actionitems"},
       {type:"crimsoncard"},
@@ -1542,21 +1542,21 @@ staff: {
     tasks:[{type:"tasklauncher"}],
     money:[
       {type:"balances",title:"🏖️ Time & pay",items:[
-        {icon:"🌴",label:"Vacation",value:"112 hrs",note:"Accruing 10 hrs/mo"},
-        {icon:"🤒",label:"Sick time",value:"64 hrs",note:"Available now"},
-        {icon:"💵",label:"Next payday",value:"Sep 18",note:"Direct deposit"},
+        {icon:"🌴",label:"PTO",value:"156 hrs",note:"Accrues 24 hrs/mo (6+ yrs service)"},
+        {icon:"🤒",label:"Sick (IPT)",value:"88 hrs",note:"Income Protection Time"},
+        {icon:"💵",label:"Next payday",value:"Sep 30",note:"Monthly · direct deposit"},
         {icon:"🎓",label:"Tuition benefit",value:"Eligible",note:"Spring · apply by Nov 15"},
       ]},
       {type:"balances",title:"🏥 Benefits snapshot",items:[
         {icon:"🩺",label:"Medical",value:"Anthem PPO HDHP",note:"Employee + spouse"},
-        {icon:"🏦",label:"HSA balance",value:"$3,940",note:"+$150/mo IU match"},
-        {icon:"📈",label:"Retirement",value:"10% + 10%",note:"IU base + your deferral"},
+        {icon:"🏦",label:"HSA",value:"Enrolled",note:"IU contributes $150/mo · balance at your HSA bank"},
+        {icon:"📈",label:"Retirement",value:"9%",note:"IU base · optional 403(b)/457(b)"},
         {icon:"🦷",label:"Dental / Vision",value:"Enrolled",note:"Cigna / Anthem"},
       ]},
       {type:"list",title:"💵 Recent payslips",items:[
-        {icon:"💵",bg:"green",title:"Sep 4 · Biweekly",sub:"Regular pay",right:"$2,104.17",rightSub:"net"},
-        {icon:"💵",bg:"green",title:"Aug 21 · Biweekly",sub:"Regular pay",right:"$2,104.17",rightSub:"net"},
-        {icon:"💵",bg:"green",title:"Aug 7 · Biweekly",sub:"Regular pay",right:"$2,104.17",rightSub:"net"},
+        {icon:"💵",bg:"green",title:"Aug 31 · Monthly",sub:"Regular pay",right:"$4,558.33",rightSub:"net"},
+        {icon:"💵",bg:"green",title:"Jul 31 · Monthly",sub:"Regular pay",right:"$4,558.33",rightSub:"net"},
+        {icon:"💵",bg:"green",title:"Jun 30 · Monthly",sub:"Regular pay",right:"$4,558.33",rightSub:"net"},
       ]},
       {type:"notice",tone:"green",icon:"🎓",title:"About the tuition benefit",
        sub:"IU covers a significant portion of tuition for staff, and 50% for dependents at IU campuses. Applying and deadlines are handled in your Action Items."},
@@ -1618,7 +1618,7 @@ faculty: {
   ],
   actionItems:[
     {id:"ai_fac1",src:"registrar",title:"Submit I-365 early evaluations",desc:"Beginning students · enter grades in the Student Engagement Roster.",due:"Oct 4",high:true,action:{label:"Open SER",target:"the Student Engagement Roster"},confirm:"system",confirmedBy:"the roster records your submissions"},
-    {id:"ai_fac2",src:"advising",title:"Approve 2 advisee course plans",desc:"You are the approver — their registration opens Monday.",due:"By Monday",high:true,action:{label:"Review plans",target:"the advising approvals queue"},confirm:"system",confirmedBy:"each approval is recorded"},
+    {id:"ai_fac2",src:"advising",title:"Sign off on 2 advisee plans of study",desc:"Approve on the University Graduate School plan-of-study forms.",due:"This week",high:true,action:{label:"Open forms",target:"the Graduate School plan-of-study forms"},confirm:"system",confirmedBy:"the Graduate School records your sign-off"},
     {id:"ai_fac3",src:"research",title:"Route NSF CISE proposal through ORA",desc:"Internal deadline before the Oct 15 sponsor date.",due:"Oct 1",action:{label:"Open Kuali Research",target:"Kuali Research routing"},confirm:"approval",approver:"ORA (reviews & submits to NSF)"},
     {id:"ai_fac4",src:"deptform",title:"Sign PhD committee form — J. Kim",desc:"Yours is the last signature needed.",due:"This week",action:{label:"Sign form",target:"the Graduate School form"},confirm:"system",confirmedBy:"the form records your signature and closes"},
     {id:"ai_fac5",src:"compliance",title:"Annual conflict-of-interest disclosure",desc:"Required for all PIs.",due:"Sep 30",action:{label:"Open disclosure",target:"the compliance disclosure form"},confirm:"system",confirmedBy:"the disclosure system logs your filing"},
@@ -1659,48 +1659,45 @@ faculty: {
     tasks:[{type:"tasklauncher"}],
     campus:[{type:"campusmap"},{type:"campusfeed"}],
     teaching:[
-      {type:"list",title:"📖 Fall courses",items:[
-        {icon:"🎨",bg:"red",title:"INFO-I 365 · HCI Design",sub:"MWF 10:10–11:25 · Luddy 1106 · 82 enrolled",badge:{txt:"Early evals",cls:"red"}},
-        {icon:"🧪",bg:"purple",title:"INFO-I 590 · Grad UX Methods",sub:"T 4:00–6:30 · Luddy 3166 · 18 enrolled",badge:{txt:"On track",cls:"green"}},
+      {type:"list",title:"📖 Your courses · from SIS",items:[
+        {icon:"🎨",bg:"red",title:"INFO-I 365 · HCI Design",sub:"MWF 10:10–11:25 · Luddy 1106 · 82 enrolled"},
+        {icon:"🧪",bg:"purple",title:"INFO-I 590 · Grad UX Methods",sub:"T 4:00–6:30 · Luddy 3166 · 18 enrolled"},
       ]},
-      {type:"list",title:"📝 Grading queue",items:[
-        {icon:"📘",bg:"red",title:"INFO-I 365 · project 2",sub:"38 to grade · return to students by Friday",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
-        {icon:"📗",bg:"blue",title:"INFO-I 590 · annotated bibliographies",sub:"18 to grade · return by Tuesday",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
-        {icon:"↩️",bg:"gold",title:"Regrade requests (2)",sub:"Respond within one week per syllabus",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Open"},
+      {type:"list",title:"📝 Grading · from Canvas",items:[
+        {icon:"📘",bg:"red",title:"INFO-I 365 · project 2",sub:"38 submissions ungraded",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
+        {icon:"📗",bg:"blue",title:"INFO-I 590 · annotated bibliographies",sub:"18 submissions ungraded",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
       ]},
       {type:"list",title:"📊 Rosters & alerts",items:[
         {icon:"📝",bg:"red",title:"Early evaluations — I-365",sub:"Submit early-evaluation grades for beginning students",src:"Student Engagement Roster",link:"the Student Engagement Roster",linkLabel:"Open SER",right:"Due",rightSub:"Oct 4"},
         {icon:"⚠️",bg:"gold",title:"Early alerts",sub:"Students you've flagged for missed work in the roster",src:"Student Engagement Roster",link:"the Student Engagement Roster",linkLabel:"Flag",right:"4",rightSub:"flagged"},
         {icon:"📋",bg:"blue",title:"Class roster — I-365",sub:"Verify enrolled students · 0 pending adds",src:"Faculty Center",link:"the Faculty Center",linkLabel:"Open",right:"82",rightSub:"enrolled"},
       ]},
-      {type:"notice",tone:"blue",icon:"🤖",title:"AI-assisted grading pilot",
-       sub:"UITS is piloting rubric-first AI grading assistance for large sections. I-365 qualifies — opt in by October 1 to use it for the final project."},
-      {type:"list",title:"🧑‍🎓 Advising · needs your sign-off",items:[
-        {icon:"📋",bg:"gold",title:"Course plan · Sarah Okafor",sub:"MS-HCI, spring semester plan",badge:{txt:"Approve",cls:"gold"}},
-        {icon:"📋",bg:"gold",title:"Course plan · Miguel Torres",sub:"MS-HCI, spring + internship credit",badge:{txt:"Approve",cls:"gold"}},
-        {icon:"🖊️",bg:"blue",title:"PhD committee form · Jamie Kim",sub:"Quals committee — your signature is the last needed",badge:{txt:"Sign",cls:"blue"}},
+      {type:"list",title:"👥 Your advisees · from SIS advising",items:[
+        {icon:"🎓",bg:"purple",title:"Jamie Kim",sub:"PhD · 3rd year"},
+        {icon:"🎓",bg:"purple",title:"Sarah Okafor",sub:"MS-HCI · 2nd year"},
+        {icon:"🎓",bg:"gold",title:"Miguel Torres",sub:"MS-HCI · 1st year"},
+        {icon:"🎓",bg:"purple",title:"+ 5 more advisees",sub:"Open your advising roster",link:"the advising roster",linkLabel:"Open"},
       ]},
-      {type:"list",title:"👥 Your advisees (8)",items:[
-        {icon:"🎓",bg:"purple",title:"Jamie Kim · PhD, 3rd yr",sub:"Quals scheduled Oct 12",right:"On track"},
-        {icon:"🎓",bg:"purple",title:"Sarah Okafor · MS, 2nd yr",sub:"Graduating May · thesis track",right:"On track"},
-        {icon:"🎓",bg:"gold",title:"Miguel Torres · MS, 1st yr",sub:"Considering internship credit",right:"Check in"},
-        {icon:"🎓",bg:"purple",title:"+ 5 more",sub:"No pending items",right:"—"},
-      ]},
-      {type:"notice",tone:"gold",icon:"🗓️",title:"Graduate registration opens Monday",
-       sub:"Unapproved course plans will block your advisees from registering. The two pending approvals take about 3 minutes each."},
+      {type:"notice",tone:"blue",icon:"ℹ️",title:"Approvals & committee forms",
+       sub:"Plan-of-study approvals and PhD committee nominations are handled on the University Graduate School's forms — they aren't tracked here. Anything needing your sign-off appears in your Action Items."},
     ],
     money:[
       {type:"balances",title:"🏖️ Pay & time",items:[
         {icon:"💵",label:"Appointment",value:"10-month",note:"Academic-year faculty"},
         {icon:"💵",label:"Next payday",value:"Sep 30",note:"Monthly · direct deposit"},
-        {icon:"📈",label:"Retirement",value:"10% + 10%",note:"IU base + your deferral"},
+        {icon:"📈",label:"Retirement",value:"9%",note:"IU base · optional 403(b)/457(b)"},
         {icon:"🌴",label:"Leave",value:"Sabbatical",note:"Eligible AY 2028–29"},
       ]},
       {type:"balances",title:"🏥 Benefits snapshot",items:[
         {icon:"🩺",label:"Medical",value:"Anthem PPO",note:"Employee + family"},
         {icon:"🦷",label:"Dental / Vision",value:"Enrolled",note:"Cigna / Anthem"},
-        {icon:"🏦",label:"HSA balance",value:"$5,120",note:"+$150/mo IU match"},
+        {icon:"🏦",label:"HSA",value:"Enrolled",note:"IU contributes $150/mo · balance at your HSA bank"},
         {icon:"🎓",label:"Tuition benefit",value:"Eligible",note:"Dependents 50% at IU"},
+      ]},
+      {type:"list",title:"💵 Recent payslips",items:[
+        {icon:"💵",bg:"green",title:"Aug 31 · Monthly",sub:"Regular pay",right:"$6,742.10",rightSub:"net"},
+        {icon:"💵",bg:"green",title:"Jul 31 · Monthly",sub:"Regular pay",right:"$6,742.10",rightSub:"net"},
+        {icon:"💵",bg:"green",title:"Jun 30 · Monthly",sub:"Regular pay",right:"$6,742.10",rightSub:"net"},
       ]},
       {type:"notice",tone:"blue",icon:"🗓️",title:"Open enrollment starts Oct 15",
        sub:"Benefit elections for 2027 are made in Workday during the Oct 15 – Nov 5 window."},
