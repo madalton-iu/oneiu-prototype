@@ -9,17 +9,21 @@
 <style>
 :root{
   --crimson:#990000; --crimson-dark:#6e0000; --crimson-soft:#b3272d;
-  --cream:#FAF5EC; --cream-dark:#F1E9DA;
-  --ink:#231d1a; --muted:#83786f; --line:#eadfce;
-  --card:#ffffff; --gold:#F5B841; --gold-soft:#FDEFD2;
-  --green:#1E7F4F; --green-soft:#DDF2E6;
-  --blue:#2b6cb0; --blue-soft:#DFEBF8;
-  --purple:#6b46c1; --purple-soft:#EBE4F9;
-  --red-soft:#FBE3E3;
-  --body-text:#5c5245; --accent-text:#990000;
+  --cream:#FAF7F1; --cream-dark:#EDE7DC;
+  --ink:#191919; --muted:#6b6b6b; --line:#e4ddd0;
+  --card:#ffffff;
+  --chip:#F0EBE2;                              /* neutral decorative icon chip */
+  /* IU official (Rivet) semantic colors — used ONLY for meaning */
+  --gold:#F5BB17; --gold-soft:#FDF7E7;         /* warning / attention */
+  --green:#178a3e; --green-soft:#DDF4EA;       /* success */
+  --blue:#14708a; --blue-soft:#E9F6FC;         /* info */
+  --purple:#59264D; --purple-soft:#EFE3EC;     /* IU Majestic (secondary) */
+  --red-soft:#FDEEE8;                          /* error / alert */
+  --body-text:#33322f; --accent-text:#990000;
+  --link:#006298; --link-dark:#00507e; --link-soft:#e7f1f7;   /* Rivet action/link blue — interactive only */
   --r-lg:24px; --r-md:16px; --r-sm:10px;
-  --shadow:0 6px 24px rgba(60,35,10,.08);
-  --shadow-lg:0 16px 48px rgba(60,35,10,.18);
+  --shadow:0 6px 24px rgba(20,20,20,.07);
+  --shadow-lg:0 16px 48px rgba(20,20,20,.16);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
@@ -111,9 +115,9 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 }
 .w-grab{cursor:grab;font-size:15px !important;letter-spacing:-1px}
 .w-grab:active{cursor:grabbing}
-.w-controls button:hover{border-color:var(--crimson);color:var(--crimson)}
+.w-controls button:hover{border-color:var(--link);color:var(--link)}
 .widget.dragging{opacity:.45}
-.widget.drop-target{outline:2.5px dashed var(--crimson);outline-offset:5px;border-radius:26px}
+.widget.drop-target{outline:2.5px dashed var(--link);outline-offset:5px;border-radius:26px}
 .widget.selected{outline:3px solid var(--gold);outline-offset:5px;border-radius:26px}
 .widget.selected .w-grab{background:var(--gold);color:#5b3d00;border-color:var(--gold)}
 .layout-bar{display:flex;justify-content:flex-end;gap:8px;margin-bottom:14px;align-items:center;flex-wrap:wrap}
@@ -122,17 +126,17 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   padding:8px 15px;border-radius:999px;background:#fff;border:1.5px solid var(--line);
   font-size:12.5px;font-weight:700;color:var(--ink);box-shadow:var(--shadow);transition:all .12s;
 }
-.lbtn:hover{border-color:var(--crimson);color:var(--crimson)}
+.lbtn:hover{border-color:var(--link);color:var(--link)}
 .grid-empty{
   grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);font-weight:600;
   background:var(--cream-dark);border-radius:24px;border:2px dashed var(--line);
 }
-.grid-empty button{color:var(--crimson);font-weight:800;text-decoration:underline}
+.grid-empty button{color:var(--link);font-weight:800;text-decoration:underline}
 .wp-row{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px dashed var(--line)}
 .wp-row:last-child{border-bottom:none}
 .wp-row .wpn{font-weight:700;font-size:14px;flex:1;min-width:0}
 .wp-add{
-  padding:7px 16px;border-radius:999px;background:var(--crimson);color:#fff;font-weight:800;font-size:12.5px;
+  padding:7px 16px;border-radius:999px;background:var(--link);color:#fff;font-weight:800;font-size:12.5px;
 }
 .card{
   background:var(--card);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow);
@@ -141,7 +145,8 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .span2{grid-column:1/-1}
 .card-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:15px}
 .card-head h3{font-size:16.5px;font-weight:800;letter-spacing:-.2px;display:flex;gap:8px;align-items:center}
-.card-head .link{font-size:13px;font-weight:700;color:var(--crimson);cursor:pointer;flex-shrink:0}
+.card-head .link{font-size:13px;font-weight:700;color:var(--link);cursor:pointer;flex-shrink:0}
+.link{color:var(--link);cursor:pointer}
 
 /* hero */
 .hero{
@@ -226,11 +231,10 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .li:last-child{border-bottom:none}
 .li .lic{
   width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;
-  font-size:19px;flex-shrink:0;background:var(--cream);
+  font-size:19px;flex-shrink:0;background:var(--chip);
 }
-.lic.gold{background:var(--gold-soft)} .lic.green{background:var(--green-soft)}
-.lic.blue{background:var(--blue-soft)} .lic.purple{background:var(--purple-soft)}
-.lic.red{background:var(--red-soft)}
+/* icon chips are decorative — one neutral tone, never the semantic palette */
+.lic.gold,.lic.green,.lic.blue,.lic.purple,.lic.red{background:var(--chip)}
 .li .lit{font-weight:700;font-size:14.5px;line-height:1.3}
 .li .lis{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.4}
 .li .lir{margin-left:auto;text-align:right;flex-shrink:0;padding-left:10px}
@@ -265,14 +269,14 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   color:var(--ink);
 }
 .tsearch::placeholder{color:var(--muted)}
-.tsearch:focus{border-color:var(--crimson);background:#fff}
+.tsearch:focus{border-color:var(--link);background:#fff}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .chip{
   padding:7px 14px;border-radius:999px;background:var(--cream);border:1.5px solid var(--line);
   font-size:12.5px;font-weight:700;color:var(--muted);transition:all .12s;
 }
-.chip:hover{border-color:var(--crimson);color:var(--crimson)}
-.chip.active{background:var(--crimson);border-color:var(--crimson);color:#fff}
+.chip:hover{border-color:var(--link);color:var(--link)}
+.chip.active{background:var(--link);border-color:var(--link);color:#fff}
 .star{
   font-size:19px;color:#d9cdb6;padding:6px 4px;flex-shrink:0;transition:transform .12s;line-height:1;
 }
@@ -285,7 +289,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   background:var(--cream);border:1.5px solid var(--line);font-size:12.5px;font-weight:700;
   transition:all .12s;color:var(--ink);
 }
-.pop-chip:hover{border-color:var(--crimson);background:#fff}
+.pop-chip:hover{border-color:var(--link);background:#fff}
 .launch-divider{
   font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);
   margin:16px 0 8px;
@@ -295,7 +299,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .task-chips{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
 .task-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:12px}
 .task-tile{position:relative;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:15px;display:flex;flex-direction:column;gap:7px;cursor:pointer;transition:transform .12s,box-shadow .12s,border-color .12s;color:var(--ink);min-height:150px}
-.task-tile:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--crimson)}
+.task-tile:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--link)}
 .task-ic{width:44px;height:44px;border-radius:13px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:22px}
 .task-name{font-weight:800;font-size:14px;line-height:1.3}
 .task-desc{font-size:12px;color:var(--muted);font-weight:600;line-height:1.4;flex:1}
@@ -307,11 +311,10 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .task-star:hover{transform:scale(1.12)}
 /* Today — unified calendar */
 .cal-src{font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:10px;line-height:1.4}
-.cal-tag{display:inline-block;font-size:10px;font-weight:800;border-radius:999px;padding:2px 8px;margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px}
-.cal-tag.blue{background:var(--blue-soft);color:var(--blue)}
-.cal-tag.red{background:var(--red-soft);color:var(--crimson)}
-.cal-tag.gold{background:var(--gold-soft);color:#8a5a00}
-.cal-join{display:inline-block;margin-top:8px;font-size:12px;font-weight:800;color:var(--crimson);background:none;border:0;padding:0;cursor:pointer}
+.cal-tag{display:inline-block;font-size:10px;font-weight:800;border-radius:999px;padding:2px 8px;margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px;background:var(--cream-dark);color:var(--muted)}
+/* source tags name a system, not a status — keep them neutral */
+.cal-tag.blue,.cal-tag.red,.cal-tag.gold{background:var(--cream-dark);color:var(--muted)}
+.cal-join{display:inline-block;margin-top:8px;font-size:12px;font-weight:800;color:var(--link);background:none;border:0;padding:0;cursor:pointer}
 .cal-join:hover{text-decoration:underline}
 
 /* Kuali Time (timekeeping) */
@@ -326,10 +329,10 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .kt-clock{display:block;font-size:26px;line-height:1;filter:hue-rotate(0)}
 #ktTimer{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px;margin-top:4px}
 .kt-since{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px}
-.kt-btn{width:100%;padding:14px;border-radius:14px;background:var(--crimson);color:#fff;font-weight:800;font-size:15px;border:0;cursor:pointer}
+.kt-btn{width:100%;padding:14px;border-radius:14px;background:var(--link);color:#fff;font-weight:800;font-size:15px;border:0;cursor:pointer}
 .kt-btn:hover{background:var(--crimson-soft)}
-.kt-note{display:block;width:100%;margin-top:10px;padding:11px;border-radius:12px;background:none;border:1.5px solid var(--line);font-weight:800;font-size:13px;color:var(--crimson);cursor:pointer}
-.kt-note:hover{border-color:var(--crimson)}
+.kt-note{display:block;width:100%;margin-top:10px;padding:11px;border-radius:12px;background:none;border:1.5px solid var(--line);font-weight:800;font-size:13px;color:var(--link);cursor:pointer}
+.kt-note:hover{border-color:var(--link)}
 .kt-foot{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:12px;text-align:center}
 
 /* Canvas assignments list (Classes) */
@@ -341,11 +344,11 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .assign-title{font-weight:700;font-size:14px;margin-top:1px;line-height:1.3}
 .assign-right{margin-left:auto;text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .assign-due{font-size:12px;font-weight:700;color:var(--muted)}
-.assign-due.soon{color:var(--crimson)}
-.assign-link{font-size:12px;font-weight:800;color:var(--crimson);background:none;border:0;padding:0;cursor:pointer;white-space:nowrap}
+.assign-due.soon{color:#8a5a00}
+.assign-link{font-size:12px;font-weight:800;color:var(--link);background:none;border:0;padding:0;cursor:pointer;white-space:nowrap}
 .assign-link:hover{text-decoration:underline}
-.assign-all{margin-top:12px;width:100%;padding:10px;border-radius:12px;background:var(--cream);border:1.5px solid var(--line);font-weight:800;font-size:12.5px;color:var(--crimson)}
-.assign-all:hover{background:#fff;border-color:var(--crimson)}
+.assign-all{margin-top:12px;width:100%;padding:10px;border-radius:12px;background:var(--cream);border:1.5px solid var(--line);font-weight:800;font-size:12.5px;color:var(--link)}
+.assign-all:hover{background:#fff;border-color:var(--link)}
 
 /* campus map */
 .map-wrap{grid-column:1/-1}
@@ -356,9 +359,9 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   color:var(--ink);
 }
 .msearch::placeholder{color:var(--muted)}
-.msearch:focus{border-color:var(--crimson)}
+.msearch:focus{border-color:var(--link)}
 .campus-pill{
-  padding:12px 20px;border-radius:999px;background:var(--crimson);color:#fff;font-weight:800;
+  padding:12px 20px;border-radius:999px;background:var(--link);color:#fff;font-weight:800;
   font-size:14px;box-shadow:var(--shadow);flex-shrink:0;
 }
 .map-chips{display:flex;gap:8px;overflow-x:auto;padding:12px 2px;scrollbar-width:none}
@@ -368,8 +371,8 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   background:#fff;border:1.5px solid var(--line);font-size:13px;font-weight:700;color:var(--ink);
   box-shadow:var(--shadow);transition:all .12s;flex-shrink:0;
 }
-.mchip:hover{border-color:var(--crimson)}
-.mchip.active{background:var(--crimson);border-color:var(--crimson);color:#fff}
+.mchip:hover{border-color:var(--link)}
+.mchip.active{background:var(--link);border-color:var(--link);color:#fff}
 .map-box{
   height:420px;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);
   border:1px solid var(--line);position:relative;z-index:1;background:var(--cream-dark);
@@ -388,7 +391,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .dhead-dist{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:4px}
 .dhead-addr{font-size:13.5px;color:var(--muted);font-weight:600;margin-top:4px}
 .getthere{
-  display:inline-flex;gap:8px;align-items:center;background:var(--crimson);color:#fff;border-radius:999px;
+  display:inline-flex;gap:8px;align-items:center;background:var(--link);color:#fff;border-radius:999px;
   padding:11px 20px;font-weight:800;font-size:13.5px;text-decoration:none;margin-top:16px;
 }
 .dsec{margin-top:20px;border-top:1px dashed var(--line);padding-top:14px}
@@ -416,11 +419,11 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .explainer b{color:var(--ink)}
 .model-row{display:flex;gap:9px;align-items:flex-start;margin-top:9px}
 .model-key{flex-shrink:0;font-size:15px;width:22px;text-align:center}
-.ai-add{margin-left:auto;font-size:12px;font-weight:800;color:var(--crimson);border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;flex-shrink:0}
-.ai-add:hover{border-color:var(--crimson);background:var(--red-soft)}
+.ai-add{margin-left:auto;font-size:12px;font-weight:800;color:var(--link);border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;flex-shrink:0}
+.ai-add:hover{border-color:var(--link);background:var(--link-soft)}
 .ai-compose{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px;padding:12px;border:1.5px dashed var(--line);border-radius:14px;background:var(--cream)}
 .ai-rem-input{flex:1;min-width:150px;padding:10px 13px;border-radius:10px;border:1.5px solid var(--line);background:#fff;font:inherit;font-size:13.5px;font-weight:600;outline:none;color:var(--ink)}
-.ai-rem-input:focus{border-color:var(--crimson)}
+.ai-rem-input:focus{border-color:var(--link)}
 .ai-chips{display:flex;gap:8px;flex-wrap:wrap;margin:13px 0 4px}
 .ai-items{margin-top:8px;max-height:340px;overflow-y:auto;padding-right:6px}
 .ai-items::-webkit-scrollbar{width:8px}
@@ -433,11 +436,9 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .it-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
 .src-chip{display:inline-flex;gap:6px;align-items:center;font-size:11px;font-weight:800;border-radius:999px;padding:4px 10px 4px 5px}
 .src-ic{width:19px;height:19px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px}
-.src-chip.blue{background:var(--blue-soft);color:var(--blue)} .src-chip.blue .src-ic{background:#fff}
-.src-chip.green{background:var(--green-soft);color:var(--green)} .src-chip.green .src-ic{background:#fff}
-.src-chip.gold{background:var(--gold-soft);color:#8a5a00} .src-chip.gold .src-ic{background:#fff}
-.src-chip.purple{background:var(--purple-soft);color:var(--purple)} .src-chip.purple .src-ic{background:#fff}
-.src-chip.red{background:var(--red-soft);color:var(--crimson)} .src-chip.red .src-ic{background:#fff}
+/* source chips name a system, not a status — neutral, not the semantic palette */
+.src-chip.blue,.src-chip.green,.src-chip.gold,.src-chip.purple,.src-chip.red{background:var(--cream-dark);color:var(--muted)}
+.src-chip .src-ic{background:#fff}
 .model{display:inline-flex;gap:4px;align-items:center;font-size:10.5px;font-weight:800;border-radius:999px;padding:3px 8px;border:1.5px solid var(--line);color:var(--muted);background:#fff}
 .model.approve{color:var(--blue);border-color:var(--blue-soft);background:var(--blue-soft)}
 .model.self{color:var(--purple);border-color:var(--purple-soft);background:var(--purple-soft)}
@@ -452,12 +453,12 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .status.doneS{background:var(--green-soft);color:var(--green)}
 .status.self{background:var(--purple-soft);color:var(--purple)}
 .it-actions{display:flex;gap:7px;align-items:center;margin-top:12px;flex-wrap:wrap}
-.act{display:inline-flex;gap:6px;align-items:center;background:var(--crimson);color:#fff;border-radius:999px;padding:8px 15px;font-weight:800;font-size:12px}
-.act:hover{background:var(--crimson-soft)}
+.act{display:inline-flex;gap:6px;align-items:center;background:var(--link);color:#fff;border-radius:999px;padding:8px 15px;font-weight:800;font-size:12px}
+.act:hover{background:var(--link-dark)}
 .act.ghost{background:var(--cream);color:var(--ink);border:1.5px solid var(--line)}
 .act.ghost:hover{border-color:var(--green);color:var(--green)}
 .dismiss{margin-left:auto;font-size:11.5px;font-weight:800;color:var(--muted);padding:7px 9px;border-radius:10px;display:inline-flex;gap:5px;align-items:center}
-.dismiss:hover{color:var(--crimson);background:var(--red-soft)}
+.dismiss:hover{color:var(--muted);background:var(--cream-dark)}
 .sim{width:100%;margin-top:9px;font-size:10.5px;font-weight:700;color:var(--muted);border:1px dashed var(--line);border-radius:10px;padding:6px 10px;background:repeating-linear-gradient(45deg,#fff,#fff 8px,var(--cream) 8px,var(--cream) 16px)}
 .sim:hover{border-color:var(--gold);color:#8a5a00}
 .ai-foot{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;color:var(--muted);flex-wrap:wrap}
@@ -469,7 +470,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .omni h3{font-size:16.5px;font-weight:800;letter-spacing:-.2px;display:flex;gap:8px;align-items:center;margin-bottom:12px}
 .omni-input{width:100%;padding:12px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--cream);font:inherit;font-size:14px;font-weight:600;outline:none;color:var(--ink)}
 .omni-input::placeholder{color:var(--muted)}
-.omni-input:focus{border-color:var(--crimson);background:#fff}
+.omni-input:focus{border-color:var(--link);background:#fff}
 .omni-scope{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:8px;line-height:1.4}
 .omni-results{margin-top:12px;height:300px;overflow-y:auto;border-top:1px dashed var(--line);padding-top:6px}
 .omni-results::-webkit-scrollbar{width:8px}
@@ -488,12 +489,12 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 
 /* search bar (above widgets) */
 .omnibar{position:relative;display:flex;align-items:center;gap:11px;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px 18px;box-shadow:var(--shadow);margin-bottom:18px}
-.omnibar:focus-within{border-color:var(--crimson)}
+.omnibar:focus-within{border-color:var(--link)}
 .omnibar-ic{font-size:18px;color:var(--muted);flex-shrink:0}
 .omnibar-input{flex:1;min-width:0;border:none;outline:none;background:none;font:inherit;font-size:16px;font-weight:600;color:var(--ink)}
 .omnibar-input::placeholder{color:var(--muted);font-weight:600}
 .omnibar-clear{width:26px;height:26px;border-radius:999px;background:var(--cream);color:var(--muted);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.omnibar-clear:hover{color:var(--crimson);background:var(--red-soft)}
+.omnibar-clear:hover{color:var(--muted);background:var(--cream-dark)}
 .omnibar-results{position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);max-height:400px;overflow-y:auto;z-index:25;padding:6px 12px}
 .omnibar-results::-webkit-scrollbar{width:8px}
 .omnibar-results::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
@@ -531,12 +532,12 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 /* Campus feed */
 .seg{display:flex;background:var(--cream);border:1.5px solid var(--line);border-radius:12px;padding:4px;gap:4px;margin-bottom:14px}
 .seg button{flex:1;padding:9px 6px;border-radius:9px;font-weight:800;font-size:13px;color:var(--muted);transition:all .12s}
-.seg button.active{background:#fff;color:var(--crimson);box-shadow:var(--shadow)}
+.seg button.active{background:#fff;color:var(--link);box-shadow:var(--shadow)}
 .feed-filter{display:flex;gap:8px;flex-wrap:wrap;margin:-2px 0 12px}
 .feed-list{max-height:360px;overflow-y:auto;padding-right:5px}
 .feed-list::-webkit-scrollbar{width:8px}.feed-list::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
 .feed-item{display:flex;gap:13px;border:1px solid var(--line);border-radius:14px;padding:12px 13px;margin-bottom:10px;cursor:pointer;background:#fff;transition:border-color .12s}
-.feed-item:hover{border-color:var(--crimson)}
+.feed-item:hover{border-color:var(--link)}
 .feed-date{width:80px;flex-shrink:0;border-right:1px solid var(--line);padding-right:12px}
 .feed-date .fd1{font-weight:800;font-size:14px}
 .feed-date .fd2{font-size:12px;color:var(--muted);font-weight:600;margin-top:1px}
@@ -545,7 +546,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .feed-cat{font-size:12px;font-weight:800;color:var(--blue);margin-bottom:5px}
 .feed-src{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:8px;text-align:right}
 .game{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;cursor:pointer;background:#fff;transition:border-color .12s}
-.game:hover{border-color:var(--crimson)}
+.game:hover{border-color:var(--link)}
 .game-date{font-size:13px;font-weight:800;margin-bottom:7px}
 .game-top{display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:9px}
 .team{display:flex;align-items:center;gap:10px;padding:4px 0;font-weight:800;font-size:14.5px}
@@ -568,14 +569,14 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .cc-card.lg{padding:22px 22px 24px}
 .cc-card.lg .cc-photo{width:62px;height:62px;font-size:32px}
 .cc-card.lg .cc-name{font-size:19px}
-.cc-manage{width:100%;margin-top:12px;padding:11px;border-radius:12px;background:var(--cream);border:1.5px solid var(--line);font-weight:800;font-size:13px;color:var(--crimson)}
-.cc-manage:hover{background:#fff;border-color:var(--crimson)}
+.cc-manage{width:100%;margin-top:12px;padding:11px;border-radius:12px;background:var(--cream);border:1.5px solid var(--line);font-weight:800;font-size:13px;color:var(--link)}
+.cc-manage:hover{background:#fff;border-color:var(--link)}
 .cc-hint{font-size:12px;color:var(--muted);font-weight:600;margin-top:9px;text-align:center}
-.pill-btn{font-size:11.5px;font-weight:800;padding:5px 12px;border-radius:999px;background:var(--crimson);color:#fff}
-.pill-btn:hover{background:var(--crimson-soft)}
+.pill-btn{font-size:11.5px;font-weight:800;padding:5px 12px;border-radius:999px;background:var(--link);color:#fff}
+.pill-btn:hover{background:var(--link-dark)}
 .lib-search{width:100%;padding:11px 15px;border-radius:12px;border:1.5px solid var(--line);background:var(--cream);font:inherit;font-size:14px;font-weight:600;outline:none;color:var(--ink);margin-bottom:12px}
 .lib-search::placeholder{color:var(--muted)}
-.lib-search:focus{border-color:var(--crimson);background:#fff}
+.lib-search:focus{border-color:var(--link);background:#fff}
 
 /* progress */
 .prog-label{display:flex;justify-content:space-between;font-size:13.5px;font-weight:700;margin-bottom:8px}
@@ -605,7 +606,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .step.todo .stt{color:var(--muted)}
 .step .sts{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.45}
 .step-src{display:inline-block;margin-left:8px;font-size:10px;font-weight:800;color:var(--muted);background:var(--cream-dark);border-radius:999px;padding:2px 8px;vertical-align:middle;text-transform:uppercase;letter-spacing:.3px}
-.step-link{font-size:12px;font-weight:800;color:var(--crimson);background:none;border:0;padding:0;cursor:pointer;white-space:nowrap}
+.step-link{font-size:12px;font-weight:800;color:var(--link);background:none;border:0;padding:0;cursor:pointer;white-space:nowrap}
 .step-link:hover{text-decoration:underline}
 
 /* notice */
@@ -710,7 +711,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   box-shadow:var(--shadow);transition:all .15s;display:flex;flex-direction:column;gap:4px;
 }
 .pcard:hover{transform:translateY(-2px)}
-.pcard.sel{border-color:var(--crimson)}
+.pcard.sel{border-color:var(--link)}
 .pcard .pav{
   width:52px;height:52px;border-radius:16px;background:var(--cream);display:flex;align-items:center;
   justify-content:center;font-size:27px;margin-bottom:8px;
@@ -760,16 +761,18 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 /* ============ Dark mode ============ */
 body.dark{
   --crimson:#7d1418; --crimson-dark:#5c0d10; --crimson-soft:#9c2a2f;
-  --cream:#15110e; --cream-dark:#1f1a15;
-  --ink:#f1ebe1; --muted:#b3a89a; --line:#39322b;
+  --cream:#15110e; --cream-dark:#241f19;
+  --ink:#f2ede4; --muted:#a7a29a; --line:#3a342d;
   --card:#221d19;
-  --gold:#F5B841; --gold-soft:#3a2f16;
+  --chip:#2a241d;                              /* neutral decorative icon chip (dark) */
+  --gold:#F5BB17; --gold-soft:#3a2f16;
   --green:#54cf94; --green-soft:#123024;
-  --blue:#61a6e2; --blue-soft:#142a3d;
-  --purple:#b697ec; --purple-soft:#251c3a;
+  --blue:#63b8cf; --blue-soft:#123039;
+  --purple:#c79bbd; --purple-soft:#2c1f2a;
   --red-soft:#3c1c1a;
   --body-text:#d0c6b6;                 /* readable explanatory text on dark */
   --accent-text:#ef6f68;               /* crimson-as-text, lightened for contrast */
+  --link:#6cb6d6; --link-dark:#8fc9e2; --link-soft:#12303b;
 }
 body.dark{background:var(--cream)}
 /* surfaces that were hard-coded white → dark card */
@@ -800,38 +803,37 @@ body.dark .card{ background:var(--card); }
 /* keep gold-on-gold legible on dark */
 body.dark .status.wait,
 body.dark .badge.gold,
-body.dark .src-chip.gold,
-body.dark .cal-tag.gold,
 body.dark .sim:hover{ color:#e7b74f; }
 /* crimson-as-text → lightened accent so it stays legible on dark surfaces
    (crimson fills, borders, and marks on white keep the deep crimson) */
 body.dark .card-head .link,
+body.dark .link,
 body.dark .ai-add,
 body.dark .grid-empty button,
-body.dark .bal.alert .bv,
-body.dark .badge.red,
-body.dark .src-chip.red,
-body.dark .due.high,
-body.dark .dismiss:hover,
-body.dark .omnibar-clear:hover,
 body.dark .seg button.active,
-body.dark .team .logo .trident,
 body.dark .cc-manage,
-body.dark .prog-label span:last-child,
-body.dark .task-campus,
-body.dark .cal-tag.red,
-body.dark .assign-due.soon,
 body.dark .assign-link,
 body.dark .assign-all,
 body.dark .kt-note,
 body.dark .cal-join,
 body.dark .step-link,
-body.dark .pcard .pr,
 body.dark .w-controls button:hover,
 body.dark .lbtn:hover,
-body.dark .chip:hover{ color:var(--accent-text); }
+body.dark .chip:hover{ color:var(--link); }
+body.dark .bal.alert .bv,
+body.dark .badge.red,
+body.dark .due.high,
+body.dark .team .logo .trident,
+body.dark .prog-label span:last-child,
+body.dark .task-campus,
+body.dark .pcard .pr{ color:var(--accent-text); }
+body.dark .assign-due.soon{ color:#e7b74f; }
 body.dark .switch::after{ background:#efe9df; }
 body.reduce-motion *{animation:none !important; transition:none !important}
+
+/* ---- icon declutter: hide tiny, generic icons that add no meaning ---- */
+.li .lic,.bal .bi,.assign-ic,.src-ic{display:none !important}
+.src-chip{padding-left:10px}
 </style>
 </head>
 <body>
@@ -900,7 +902,7 @@ const TASKS = [
 
   {id:"bus",icon:"🚌",name:"Bus routes & tracker",desc:"Campus and Bloomington Transit, live",cat:"Campus Life",personas:["all"],popular:true},
   {id:"map",icon:"🗺️",name:"Campus map",desc:"Buildings, parking, and accessibility",cat:"Campus Life",personas:["all"]},
-  {id:"dining",icon:"🍽️",name:"Dining menus & balances",desc:"Menus, hours, and meal points",cat:"Campus Life",personas:["firstyear","senior"]},
+  {id:"dining",icon:"🍽️",name:"Dining menus & balances",desc:"Menus, hours, and dining balances",cat:"Campus Life",personas:["firstyear","senior"]},
   {id:"crimsonCard",icon:"💳",name:"CrimsonCard",desc:"Manage your campus ID and funds",cat:"Campus Life",personas:["all"]},
   {id:"events",icon:"🎟️",name:"Events calendar",desc:"Everything happening across IU",cat:"Campus Life",personas:["all"]},
   {id:"recreation",icon:"🏋️",name:"Recreation & fitness",desc:"SRSC hours, classes, and intramurals",cat:"Campus Life",personas:["firstyear","senior","staff","faculty"]},
@@ -957,13 +959,13 @@ const PLACES = [
    accessible:["Main Entrance"],printers:2},
   /* parking */
   {id:"atwater",type:"parking",name:"Atwater Parking Garage",addr:"1100 E Atwater Ave",lat:39.1645,lng:-86.5197,
-   permits:["EMP","SV"],rate:"Starting at $0.00",spots:"142 spaces open"},
+   permits:["EMP","SV"],rate:"Permit required"},
   {id:"henderson",type:"parking",name:"Henderson Parking Garage",addr:"310 S Henderson St",lat:39.1652,lng:-86.5258,
-   permits:["ST","EMP","Visitor"],rate:"$2/hr visitor",spots:"88 spaces open"},
+   permits:["ST","EMP","Visitor"],rate:"Visitor: ParkMobile hourly"},
   {id:"feelane",type:"parking",name:"Fee Lane Parking Garage",addr:"1310 N Fee Ln",lat:39.1770,lng:-86.5218,
-   permits:["ST","EMP"],rate:"Starting at $0.00",spots:"260 spaces open"},
+   permits:["ST","EMP"],rate:"Permit required"},
   {id:"poplars",type:"parking",name:"Poplars Parking Garage",addr:"400 E 7th St",lat:39.1670,lng:-86.5290,
-   permits:["EMP","Visitor"],rate:"$2/hr visitor",spots:"51 spaces open"},
+   permits:["EMP","Visitor"],rate:"Visitor: ParkMobile hourly"},
   /* bus stops */
   {id:"bus3rd",type:"bus",name:"3rd St. / Biology",lat:39.1647,lng:-86.5222,
    routes:[{r:"B Route",mins:4},{r:"6 Limited (BT)",mins:11}]},
@@ -1061,7 +1063,7 @@ const FEED = {
      desc:"A fall screening series spotlighting award-winning international cinema. Student tickets $3 with a valid CrimsonCard.",host:"IU Cinema"},
     {id:"ev4",date:"Sep 18",t1:"9:00am",t2:"to 1:00pm",title:"Farmers' Market at Dunn Meadow",
      loc:"Dunn Meadow",
-     desc:"Local growers and makers bring produce, baked goods, and crafts to campus. Meal points and Crimson Cash accepted at participating stands.",host:"Student Life"},
+     desc:"Local growers and makers bring produce, baked goods, and crafts to campus. Dining Dollars and Crimson Cash accepted at participating stands.",host:"Student Life"},
     {id:"ev5",date:"Sep 19",t1:"11:00am",t2:"to 2:00pm",title:"Student Involvement Fair",
      loc:"Dunn Meadow",
      desc:"Meet more than 200 student organizations and find your community this fall. Drop in any time.",host:"Student Life · BeInvolved"},
@@ -1136,7 +1138,7 @@ applicant: {
   ],
   notifCount:2,
   notifications:[
-    {icon:"📬",unread:true,title:"Your transcript was received",sub:"Bloomington High School South transcript has been added to your application.",time:"2h ago"},
+    {icon:"📬",unread:true,title:"Your SAT scores were received",sub:"Your SAT scores have been added to your Kelley application.",time:"2h ago"},
     {icon:"🎟️",unread:true,title:"Red Carpet Day is nearly full",sub:"The Oct 10 visit day is at 80% capacity. Reserve a spot soon if you plan to attend.",time:"Yesterday"},
     {icon:"💸",unread:false,title:"FAFSA opens October 1",sub:"Filing early maximizes aid eligibility. IU's priority deadline is April 15.",time:"3d ago"},
   ],
@@ -1144,7 +1146,7 @@ applicant: {
     {id:"home",label:"Home",icon:"🏠"},
     {id:"tasks",label:"Tasks",icon:"⊞"},
     {id:"application",label:"Application",icon:"📄"},
-    {id:"aid",label:"Money",icon:"💳"},
+    {id:"aid",label:"Finances",icon:"💳"},
     {id:"campus",label:"Campus",icon:"🗺️"},
   ],
   views:{
@@ -1194,7 +1196,7 @@ applicant: {
        sub:"Morning tours pair well with lunch at the Indiana Memorial Union and a walk through the arboretum. Visit parking is free with registration."},
     ],
     aid:[
-      {type:"balances",title:"💰 Estimated cost of attendance (In-state, 2027–28)",items:[
+      {type:"balances",title:"💰 Cost of attendance · published estimate (In-state, 2027–28)",items:[
         {icon:"🎓",label:"Tuition & fees",value:"$12,144",note:"Per year, in-state"},
         {icon:"🏠",label:"Housing & food",value:"$13,308",note:"Standard res hall + meals"},
         {icon:"📚",label:"Books & misc",value:"$2,050",note:"Estimate"},
@@ -1218,9 +1220,9 @@ firstyear: {
   greetSub:"2 classes today · 3 items due this week.",
   crimsonCard:{holder:"Maya Patel",kind:"Student",id:"6017 88•• •••• 4402",since:"Aug 2026",
     balances:[
-      {icon:"🍽️",label:"Meal Points",value:"$412.00",note:"~$45/wk remaining · on pace",add:false},
-      {icon:"🥗",label:"Dining Dollars",value:"$76.20",note:"Anywhere on campus",add:true},
-      {icon:"💵",label:"Crimson Cash",value:"$23.50",note:"Laundry, printing & vending",add:true},
+      {icon:"🍽️",label:"Meal swipes",value:"11 left",note:"This week · resets Sunday",add:false},
+      {icon:"🥗",label:"Dining Dollars",value:"$412.00",note:"Cafés, C-stores & dining halls",add:true},
+      {icon:"💵",label:"Crimson Cash",value:"$23.50",note:"Laundry, printing & off-campus",add:true},
     ],
     access:["Teter Quad (residential)","Wells Library after-hours","SRSC recreation"]},
   orgs:{
@@ -1256,7 +1258,7 @@ firstyear: {
     {t1:"7:00",t2:"8:00",title:"Intramural volleyball",loc:"SRSC Court 3",src:"Events",color:"green"},
   ],
   actionItems:[
-    {id:"ai_fy1",src:"hr",title:"Submit work-study timesheet",desc:"9.5 of 12 hours logged.",due:"Fri 5:00 p.m.",high:true,action:{label:"Open Kuali Time",target:"Kuali Time"},confirm:"approval",approver:"your supervisor"},
+    {id:"ai_fy1",src:"hr",title:"Submit work-study timesheet",desc:"9.5 hours logged this week.",due:"Fri 5:00 p.m.",high:true,action:{label:"Open Kuali Time",target:"Kuali Time"},confirm:"approval",approver:"your supervisor"},
     {id:"ai_fy2",src:"canvas",title:"MATH-M 118 · Problem Set 7",desc:"Finite Math · submit on the assignment page.",due:"Tomorrow 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
     {id:"ai_fy3",src:"advising",title:"Confirm your advising appointment",desc:"Spring planning · Ferguson 2042.",due:"Thu 3:30 p.m.",action:{label:"Confirm time",target:"the advising scheduler"},confirm:"system",confirmedBy:"the scheduler marks it confirmed"},
     {id:"ai_fy4",src:"compliance",title:"FERPA refresher training",desc:"Required for student employees · ~15 min.",due:"End of month",action:{label:"Start training",target:"IU Learn"},confirm:"system",confirmedBy:"IU Learn logs your completion"},
@@ -1264,8 +1266,8 @@ firstyear: {
   ],
   notifCount:3,
   notifications:[
-    {icon:"⏰",unread:true,title:"Timesheet due Friday",sub:"You have logged 9.5 of your 12 scheduled hours this week.",time:"1h ago"},
-    {icon:"📉",unread:true,title:"Meal point balance update",sub:"$412 remaining with 13 weeks left — about $31/week, on pace for the semester.",time:"Today"},
+    {icon:"⏰",unread:true,title:"Timesheet due Friday",sub:"You've logged 9.5 hours this week. Submit in Kuali Time by Friday 5 p.m.",time:"1h ago"},
+    {icon:"📉",unread:true,title:"Dining Dollars balance update",sub:"$412 remaining with 13 weeks left — about $31/week, on pace for the semester.",time:"Today"},
     {icon:"🧑‍🏫",unread:true,title:"Advisor confirmed your meeting",sub:"Thu 3:30pm · Ferguson Academic Advising, room 2042.",time:"Yesterday"},
     {icon:"🏀",unread:false,title:"Student tickets: Hoosier Hysteria",sub:"Free student tickets available starting Monday at 10am.",time:"2d ago"},
   ],
@@ -1273,8 +1275,7 @@ firstyear: {
     {id:"home",label:"Home",icon:"🏠"},
     {id:"tasks",label:"Tasks",icon:"⊞"},
     {id:"classes",label:"Academics",icon:"📖"},
-    {id:"work",label:"Work",icon:"💼"},
-    {id:"money",label:"Money",icon:"💳"},
+    {id:"money",label:"Finances",icon:"💳"},
     {id:"campus",label:"Campus",icon:"🗺️"},
   ],
   views:{
@@ -1293,12 +1294,12 @@ firstyear: {
     ],
     tasks:[{type:"tasklauncher"}],
     classes:[
-      {type:"list",title:"📚 Fall schedule · 15 credit hours",items:[
-        {icon:"➗",bg:"red",title:"MATH-M 118 · Finite Mathematics",sub:"MWF 10:10–11:00 · Ballantine 013",right:"B+",rightSub:"current"},
-        {icon:"✍️",bg:"blue",title:"ENG-W 131 · Reading, Writing & Inquiry",sub:"TR 9:30–10:45 · Wells Library 001",right:"A−",rightSub:"current"},
-        {icon:"🧠",bg:"purple",title:"COLL-C 104 · Critical Approaches",sub:"MW 1:00–2:15 · Woodburn 101",right:"A",rightSub:"current"},
-        {icon:"🌎",bg:"green",title:"GEOG-G 110 · Human Geography",sub:"TR 1:00–2:15 · Student Building 150",right:"B",rightSub:"current"},
-        {icon:"🎹",bg:"gold",title:"MUS-Z 111 · Intro to Music Theory",sub:"F 1:25–2:15 · Simon Music Center",right:"A",rightSub:"current"},
+      {type:"list",title:"📚 Fall schedule · 15 credit hours · from SIS",items:[
+        {icon:"➗",bg:"red",title:"MATH-M 118 · Finite Mathematics",sub:"MWF 10:10–11:00 · Ballantine 013",right:"3 cr",rightSub:"enrolled"},
+        {icon:"✍️",bg:"blue",title:"ENG-W 131 · Reading, Writing & Inquiry",sub:"TR 9:30–10:45 · Wells Library 001",right:"3 cr",rightSub:"enrolled"},
+        {icon:"🧠",bg:"purple",title:"COLL-C 104 · Critical Approaches",sub:"MW 1:00–2:15 · Woodburn 101",right:"3 cr",rightSub:"enrolled"},
+        {icon:"🌎",bg:"green",title:"GEOG-G 110 · Human Geography",sub:"TR 1:00–2:15 · Student Building 150",right:"3 cr",rightSub:"enrolled"},
+        {icon:"🎹",bg:"gold",title:"MUS-Z 111 · Intro to Music Theory",sub:"F 1:25–2:15 · Simon Music Center",right:"3 cr",rightSub:"enrolled"},
       ]},
       {type:"assignments",title:"📚 Assignments due this week",items:[
         {course:"MATH-M 118",title:"Problem Set 7",due:"Tomorrow · 11:59 p.m.",soon:true},
@@ -1306,38 +1307,32 @@ firstyear: {
         {course:"GEOG-G 110",title:"Map quiz",due:"Friday · 11:59 p.m."},
         {course:"MUS-Z 111",title:"Listening journal 4",due:"Sunday · 11:59 p.m."},
       ]},
-      {type:"notice",tone:"blue",icon:"🧭",title:"Spring registration opens in 2 weeks",
+      {type:"notice",tone:"blue",icon:"🧭",title:"Spring registration opens next month",
        sub:"Your advising hold clears after Thursday's meeting. Consider bringing two or three majors you are interested in — the Majors & Minors Fair on Tuesday is a good starting point."},
     ],
-    work:[
+    money:[
       {type:"balances",title:"💼 Work-study at a glance",items:[
         {icon:"🏛️",label:"Position",value:"Wells Library",note:"Circulation assistant"},
-        {icon:"⏱️",label:"This week",value:"9.5 hrs",note:"of 12 scheduled"},
+        {icon:"⏱️",label:"This week",value:"9.5 hrs",note:"logged in Kuali Time"},
         {icon:"💰",label:"Earned so far",value:"$1,118",note:"of $2,800 award"},
         {icon:"🗓️",label:"Next payday",value:"Sep 18",note:"Direct deposit"},
       ]},
-      {type:"list",title:"💼 Work — what's outstanding",items:[
-        {icon:"⏱️",bg:"purple",title:"Submit this week's timesheet",sub:"Friday 5pm · supervisor approves Monday",src:"Kuali Time",link:"Kuali Time",linkLabel:"Open"},
-        {icon:"🛡️",bg:"red",title:"FERPA refresher training",sub:"Due end of month · ~15 min",src:"IU Learn",link:"IU Learn",linkLabel:"Start"},
+      {type:"balances",title:"💳 All balances",items:[
+        {icon:"🧾",label:"Bursar",value:"$0.00",note:"Bursar · fall paid in full"},
+        {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"Financial Aid · award letter"},
+        {icon:"💼",label:"Work-study earned",value:"$1,118",note:"Payroll · of $2,800 award"},
+        {icon:"🍽️",label:"Meal swipes",value:"11 left",note:"CrimsonCard · this week"},
+        {icon:"🥗",label:"Dining Dollars",value:"$412.00",note:"CrimsonCard · this semester"},
+        {icon:"💵",label:"Crimson Cash",value:"$23.50",note:"CrimsonCard · reload anytime"},
+      ]},
+      {type:"list",title:"🧾 Recent activity",items:[
+        {icon:"🥗",bg:"green",title:"Woodland Eatery",sub:"Dining Dollars",src:"CrimsonCard",right:"−$11.25",rightSub:"Today"},
+        {icon:"👕",bg:"blue",title:"Teter laundry",sub:"Crimson Cash",src:"CrimsonCard",right:"−$3.00",rightSub:"Yesterday"},
+        {icon:"💼",bg:"gold",title:"Work-study direct deposit",sub:"Biweekly pay",src:"Payroll",right:"+$142.88",rightSub:"Sep 4"},
+        {icon:"☕",bg:"red",title:"Starbucks (IMU)",sub:"Dining Dollars",src:"CrimsonCard",right:"−$6.45",rightSub:"Sep 11"},
       ]},
       {type:"notice",tone:"green",icon:"📊",title:"Award pacing",
        sub:"At about 12 hours per week, you will use your full $2,800 work-study award by late April. To request additional spring hours, contact your supervisor by November."},
-    ],
-    money:[
-      {type:"balances",title:"💳 All balances",items:[
-        {icon:"🧾",label:"Bursar",value:"$0.00",note:"Fall paid in full"},
-        {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"View award letter"},
-        {icon:"💼",label:"Work-study earned",value:"$1,118",note:"of $2,800 award"},
-        {icon:"🍽️",label:"Meal points",value:"$412.00",note:"Resets each semester"},
-        {icon:"🥗",label:"Dining Dollars",value:"$76.20",note:"Anywhere on campus"},
-        {icon:"💵",label:"Crimson Cash",value:"$23.50",note:"Reload anytime"},
-      ]},
-      {type:"list",title:"🧾 Recent activity",items:[
-        {icon:"🥗",bg:"green",title:"Woodland Eatery",sub:"Meal points",right:"−$11.25",rightSub:"Today"},
-        {icon:"👕",bg:"blue",title:"Teter laundry",sub:"Crimson Cash",right:"−$3.00",rightSub:"Yesterday"},
-        {icon:"💼",bg:"gold",title:"Payroll · work-study",sub:"Direct deposit",right:"+$142.88",rightSub:"Sep 4"},
-        {icon:"☕",bg:"red",title:"Starbucks (IMU)",sub:"Meal points",right:"−$6.45",rightSub:"Sep 11"},
-      ]},
       {type:"notice",tone:"gold",icon:"🎯",title:"Scholarship deadlines",
        sub:"The Hudson & Holland and exploratory-student scholarship cycles open November 1. Filing your FAFSA renewal early keeps you eligible for all award programs."},
     ],
@@ -1388,6 +1383,14 @@ senior: {
     ],
     ill:[{title:"\"Participatory Design\" (journal article)",status:"Requested — typically 2–4 days"}],
     rooms:[{room:"Luddy Hall · Group Room 2010",when:"Thu 3:00–5:00 p.m.",status:"Reserved"}]},
+  careers:{
+    appt:{when:"Tue 2:00 p.m.",who:"Luddy Career Services"},
+    applied:6, saved:12,
+    events:[
+      {icon:"🏢",title:"Luddy Career Fair",where:"Alumni Hall · 100+ employers · Tech & Data",when:"Sep 24"},
+      {icon:"🎤",title:"Mock interview week",where:"30-min slots with recruiters",when:"Sep 29"},
+      {icon:"✍️",title:"Résumé review drop-in",where:"Luddy lobby · no appointment",when:"Sep 25"},
+    ]},
   favorites:["applyGrad","degreeAudit","jobs","transcript","canvas","payBill"],
   calendar:[
     {t1:"11:15",t2:"12:30",title:"INFO-I 494 · Capstone studio",loc:"Luddy Hall 1106 · team standup",src:"SIS",color:"crimson",now:true,recurring:true},
@@ -1405,7 +1408,7 @@ senior: {
   notifCount:3,
   notifications:[
     {icon:"🎓",unread:true,title:"Apply-to-graduate window is open",sub:"December graduates must apply by Sept 15. The application takes about 5 minutes.",time:"Today"},
-    {icon:"💼",unread:true,title:"New job match: Associate UX Researcher",sub:"Salesforce (Indianapolis) matches your Handshake profile.",time:"3h ago"},
+    {icon:"💼",unread:true,title:"New Handshake recommendations",sub:"Roles matched to your profile were added in Handshake.",time:"3h ago"},
     {icon:"📋",unread:true,title:"Degree audit updated",sub:"You are at 94% — one requirement remains open. See the Graduation tab.",time:"Yesterday"},
     {icon:"📸",unread:false,title:"Senior portraits at the Sample Gates",sub:"Free portrait sessions Oct 20–24. Booking opens soon.",time:"2d ago"},
   ],
@@ -1413,8 +1416,7 @@ senior: {
     {id:"home",label:"Home",icon:"🏠"},
     {id:"tasks",label:"Tasks",icon:"⊞"},
     {id:"classes",label:"Academics",icon:"📖"},
-    {id:"career",label:"Career",icon:"🎯"},
-    {id:"money",label:"Money",icon:"💳"},
+    {id:"money",label:"Finances",icon:"💳"},
     {id:"campus",label:"Campus",icon:"🗺️"},
   ],
   views:{
@@ -1426,11 +1428,7 @@ senior: {
       {type:"progress",title:"📊 Degree progress · B.S. Informatics",pct:94,label:"114 of 120 credits",
        note:"All requirements are complete except one Arts & Humanities gen-ed credit. Your advisor flagged two 1-credit options with open seats — see the Graduation tab."},
       {type:"calendar"},
-      {type:"list",title:"💼 Recommended for you",items:[
-        {icon:"🏢",bg:"blue",title:"Fall Career Fair — Tech & Data",sub:"90+ employers · bring your QR code",right:"Oct 2",rightSub:"Alumni Hall"},
-        {icon:"⭐",bg:"gold",title:"Salesforce · Associate UX Researcher",sub:"New Handshake match · Indianapolis",right:"Apply",rightSub:"by Oct 15"},
-        {icon:"🎤",bg:"green",title:"Mock interview week",sub:"Practice interviews with employer recruiters",right:"Sep 29",rightSub:"Sign up"},
-      ]},
+      {type:"careers"},
       {type:"crimsoncard"},
       {type:"orgs"},
       {type:"libraries"},
@@ -1439,10 +1437,10 @@ senior: {
     tasks:[{type:"tasklauncher"}],
     campus:[{type:"campusmap"},{type:"campusfeed"}],
     classes:[
-      {type:"list",title:"📚 Final semester · 12 credit hours",items:[
-        {icon:"🚀",bg:"red",title:"INFO-I 494 · Capstone I",sub:"TR 11:15–12:30 · Luddy 1106",right:"A−",rightSub:"current"},
-        {icon:"🤖",bg:"purple",title:"INFO-I 421 · Applied ML",sub:"MW 2:30–3:45 · Luddy 3166",right:"B+",rightSub:"current"},
-        {icon:"⚖️",bg:"blue",title:"INFO-I 453 · Computer & Info Ethics",sub:"Online asynchronous",right:"A",rightSub:"current"},
+      {type:"list",title:"📚 Final semester · enrolled courses · from SIS",items:[
+        {icon:"🚀",bg:"red",title:"INFO-I 494 · Capstone I",sub:"TR 11:15–12:30 · Luddy 1106",right:"3 cr",rightSub:"enrolled"},
+        {icon:"🤖",bg:"purple",title:"INFO-I 421 · Applied ML",sub:"MW 2:30–3:45 · Luddy 3166",right:"3 cr",rightSub:"enrolled"},
+        {icon:"⚖️",bg:"blue",title:"INFO-I 453 · Computer & Info Ethics",sub:"Online asynchronous",right:"3 cr",rightSub:"enrolled"},
         {icon:"🎨",bg:"gold",title:"FINA-A 110 · 1-cr A&H elective",sub:"Not yet enrolled — required to graduate",badge:{txt:"Action needed",cls:"red"}},
       ]},
       {type:"assignments",title:"📚 Assignments due soon",items:[
@@ -1463,35 +1461,19 @@ senior: {
       {type:"notice",tone:"gold",icon:"⏰",title:"Key deadlines",
        sub:"Apply to graduate by September 15, and enroll in the remaining A&H credit before the second-eight-week session begins (Oct 12). The remaining items are ceremony logistics."},
     ],
-    career:[
-      {type:"list",title:"💼 Your job pipeline",items:[
-        {icon:"⭐",bg:"gold",title:"Salesforce · Assoc. UX Researcher",sub:"Indianapolis · new match",badge:{txt:"Apply by Oct 15",cls:"gold"}},
-        {icon:"📨",bg:"blue",title:"Eli Lilly · Digital Health Analyst",sub:"Applied Sep 2",badge:{txt:"In review",cls:"blue"}},
-        {icon:"🗣️",bg:"green",title:"Cummins · UX Engineer I",sub:"Phone screen completed",badge:{txt:"Interview Sep 30",cls:"green"}},
-        {icon:"📭",bg:"red",title:"Epic · Project Manager",sub:"No response in 30 days",badge:{txt:"Follow up",cls:"gray"}},
-      ]},
-      {type:"list",title:"📅 Career events",items:[
-        {icon:"🏢",bg:"blue",title:"Fall Career Fair — Tech & Data",sub:"Alumni Hall · 90+ employers",right:"Oct 2",rightSub:"12–4pm"},
-        {icon:"🎤",bg:"purple",title:"Mock interview week",sub:"30-minute slots with employer recruiters",right:"Sep 29",rightSub:"Book now"},
-        {icon:"✍️",bg:"gold",title:"Resume review drop-in",sub:"Career services · no appointment needed",right:"Sep 25",rightSub:"Luddy lobby"},
-      ]},
-      {type:"notice",tone:"green",icon:"📈",title:"Handshake activity",
-       sub:"Recruiters viewed your profile 14 times this month, three times last month's rate. Adding your capstone project as a portfolio piece may increase visibility further."},
-    ],
     money:[
       {type:"balances",title:"💳 Money snapshot",items:[
-        {icon:"🧾",label:"Bursar balance",value:"$1,284.00",note:"Due Sep 25",alert:true},
-        {icon:"🎓",label:"Fed. loans to date",value:"$21,400",note:"Exit counseling required"},
-        {icon:"💰",label:"Payment plan",value:"Available",note:"4 installments, no interest"},
-        {icon:"🧢",label:"Cap & gown",value:"~$65",note:"Order by Nov 14"},
+        {icon:"🧾",label:"Bursar balance",value:"$1,284.00",note:"Bursar · due Sep 25",alert:true},
+        {icon:"💰",label:"Payment plan",value:"Available",note:"Bursar · 4 installments, no interest"},
+        {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"Financial Aid · fall award applied"},
       ]},
       {type:"list",title:"💳 Account — what's outstanding",items:[
         {icon:"🧾",bg:"red",title:"Pay fall balance ($1,284)",sub:"Due Sep 25 · or enroll in the payment plan",src:"Bursar",link:"the Bursar payment page",linkLabel:"Pay"},
         {icon:"🎓",bg:"gold",title:"Federal loan exit counseling",sub:"Required before December graduation",src:"Financial Aid",link:"studentaid.gov",linkLabel:"Start"},
         {icon:"💵",bg:"blue",title:"Use remaining printing & Crimson Cash",sub:"Balances expire after your final semester",src:"CrimsonCard"},
       ]},
-      {type:"notice",tone:"blue",icon:"🧮",title:"Loan repayment estimate",
-       sub:"On a standard 10-year plan, $21,400 is approximately $225/month beginning June 2027. MoneySmarts offers free one-on-one repayment planning sessions."},
+      {type:"notice",tone:"blue",icon:"🧮",title:"Federal loan repayment",
+       sub:"Your federal loan balance and repayment estimates live on studentaid.gov — IU can't see or store them. IU's MoneySmarts offers free one-on-one repayment-planning sessions before you graduate."},
     ],
   }
 },
@@ -1526,6 +1508,7 @@ staff: {
     {id:"ai_st3",src:"benefits",title:"Apply the employee tuition benefit",desc:"For your spring SPEA-V 506 course.",due:"Nov 15",action:{label:"Apply benefit",target:"the HR benefits portal"},confirm:"approval",approver:"HR Benefits (eligibility review)"},
     {id:"ai_st4",src:"deptform",title:"Submit Welcome Week final budget",desc:"Route to your director for sign-off.",due:"Friday",action:{label:"Open budget form",target:"the finance form"},confirm:"approval",approver:"your director"},
     {id:"ai_st5",src:"hr",title:"Performance self-assessment",desc:"Submit your portion of the annual review.",due:"Sept 19",action:{label:"Open self-assessment",target:"the HR review tool"},confirm:"system",confirmedBy:"your submission is recorded (manager review follows)"},
+    {id:"ai_st6",src:"benefits",title:"Review open enrollment changes",desc:"Confirm or update your 2027 elections, including HSA contribution.",due:"Oct 15 – Nov 5",action:{label:"Open benefits",target:"the HR benefits portal"},confirm:"self"},
   ],
   notifCount:3,
   notifications:[
@@ -1537,7 +1520,7 @@ staff: {
   tabs:[
     {id:"home",label:"Home",icon:"🏠"},
     {id:"tasks",label:"Tasks",icon:"⊞"},
-    {id:"work",label:"Work",icon:"💼"},
+    {id:"money",label:"Finances",icon:"💳"},
     {id:"campus",label:"Campus",icon:"🗺️"},
   ],
   views:{
@@ -1557,16 +1540,7 @@ staff: {
       {type:"launch"},
     ],
     tasks:[{type:"tasklauncher"}],
-    work:[
-      {type:"list",title:"🖊️ Waiting on your approval",items:[
-        {icon:"⏱️",bg:"gold",title:"Timesheet · Marcus J.",sub:"11.5 hrs · First-Year programs crew",badge:{txt:"Approve",cls:"gold"}},
-        {icon:"⏱️",bg:"gold",title:"Timesheet · Priya S.",sub:"9.0 hrs · office assistant",badge:{txt:"Approve",cls:"gold"}},
-        {icon:"⏱️",bg:"gold",title:"Timesheet · Ben T.",sub:"12.0 hrs · First-Year programs crew",badge:{txt:"Approve",cls:"gold"}},
-        {icon:"⏱️",bg:"gold",title:"Timesheet · Alex R.",sub:"7.5 hrs · social media",badge:{txt:"Approve",cls:"gold"}},
-        {icon:"🧾",bg:"blue",title:"Reimbursement · vendor deposit",sub:"$240 · Dunn Meadow stage",badge:{txt:"In review",cls:"blue"}},
-      ]},
-      {type:"notice",tone:"blue",icon:"🗓️",title:"Performance check-ins open Sept 1",
-       sub:"Annual review self-assessments are due September 19. Your director has shared this year's template."},
+    money:[
       {type:"balances",title:"🏖️ Time & pay",items:[
         {icon:"🌴",label:"Vacation",value:"112 hrs",note:"Accruing 10 hrs/mo"},
         {icon:"🤒",label:"Sick time",value:"64 hrs",note:"Available now"},
@@ -1584,13 +1558,8 @@ staff: {
         {icon:"💵",bg:"green",title:"Aug 21 · Biweekly",sub:"Regular pay",right:"$2,104.17",rightSub:"net"},
         {icon:"💵",bg:"green",title:"Aug 7 · Biweekly",sub:"Regular pay",right:"$2,104.17",rightSub:"net"},
       ]},
-      {type:"list",title:"🏥 Benefits — what's outstanding",items:[
-        {icon:"🏥",bg:"red",title:"Review open enrollment changes",sub:"Window Oct 15 – Nov 5",src:"HR Benefits",link:"the benefits portal",linkLabel:"Review"},
-        {icon:"🎓",bg:"green",title:"Apply tuition benefit for spring course",sub:"By Nov 15 · SPEA-V 506 qualifies",src:"HR Benefits",link:"the benefits portal",linkLabel:"Apply"},
-        {icon:"🏦",bg:"blue",title:"Update HSA contribution for 2027",sub:"During open enrollment",src:"HR Benefits"},
-      ]},
-      {type:"notice",tone:"green",icon:"🎓",title:"Tuition benefit deadline",
-       sub:"IU covers a significant portion of tuition for staff, and 50% for dependents at IU campuses. Your spring course qualifies — apply before November 15."},
+      {type:"notice",tone:"green",icon:"🎓",title:"About the tuition benefit",
+       sub:"IU covers a significant portion of tuition for staff, and 50% for dependents at IU campuses. Applying and deadlines are handled in your Action Items."},
     ],
     campus:[
       {type:"campusmap"},
@@ -1648,17 +1617,19 @@ faculty: {
     {t1:"4:30",t2:"5:00",title:"Curriculum committee",loc:"Microsoft Teams",src:"Exchange",color:"blue",join:"Teams"},
   ],
   actionItems:[
-    {id:"ai_fac1",src:"registrar",title:"Upload I-365 midterm grades",desc:"82 students · enter in the Faculty Center.",due:"Friday",high:true,action:{label:"Open Faculty Center",target:"the Faculty Center grade roster"},confirm:"system",confirmedBy:"the roster records posted grades"},
+    {id:"ai_fac1",src:"registrar",title:"Submit I-365 early evaluations",desc:"Beginning students · enter grades in the Student Engagement Roster.",due:"Oct 4",high:true,action:{label:"Open SER",target:"the Student Engagement Roster"},confirm:"system",confirmedBy:"the roster records your submissions"},
     {id:"ai_fac2",src:"advising",title:"Approve 2 advisee course plans",desc:"You are the approver — their registration opens Monday.",due:"By Monday",high:true,action:{label:"Review plans",target:"the advising approvals queue"},confirm:"system",confirmedBy:"each approval is recorded"},
     {id:"ai_fac3",src:"research",title:"Route NSF CISE proposal through ORA",desc:"Internal deadline before the Oct 15 sponsor date.",due:"Oct 1",action:{label:"Open Kuali Research",target:"Kuali Research routing"},confirm:"approval",approver:"ORA (reviews & submits to NSF)"},
     {id:"ai_fac4",src:"deptform",title:"Sign PhD committee form — J. Kim",desc:"Yours is the last signature needed.",due:"This week",action:{label:"Sign form",target:"the Graduate School form"},confirm:"system",confirmedBy:"the form records your signature and closes"},
     {id:"ai_fac5",src:"compliance",title:"Annual conflict-of-interest disclosure",desc:"Required for all PIs.",due:"Sep 30",action:{label:"Open disclosure",target:"the compliance disclosure form"},confirm:"system",confirmedBy:"the disclosure system logs your filing"},
     {id:"ai_fac6",src:"registrar",title:"Submit spring textbook orders",desc:"Bookstore adoption deadline.",due:"Oct 9",action:{label:"Open adoptions",target:"the textbook adoption tool"},confirm:"system",confirmedBy:"the adoption tool records your orders"},
+    {id:"ai_fac7",src:"benefits",title:"Review open enrollment changes",desc:"Confirm or update your 2027 benefit elections.",due:"Oct 15 – Nov 5",action:{label:"Open benefits",target:"the HR benefits portal"},confirm:"self"},
+    {id:"ai_fac8",src:"benefits",title:"Apply tuition benefit for a dependent",desc:"Spring term · dependents receive 50% at IU campuses.",due:"Nov 15",action:{label:"Apply benefit",target:"the HR benefits portal"},confirm:"approval",approver:"HR Benefits (eligibility review)"},
   ],
   notifCount:3,
   notifications:[
     {icon:"🧑‍🎓",unread:true,title:"3 advisee requests pending",sub:"Two course-plan approvals and one committee signature.",time:"2h ago"},
-    {icon:"📅",unread:true,title:"Grade upload reminder",sub:"I-365 midterm grades are due to the registrar by Friday.",time:"Today"},
+    {icon:"📅",unread:true,title:"Early evaluations are open",sub:"Submit I-365 early-evaluation grades in the Student Engagement Roster by Oct 4.",time:"Today"},
     {icon:"💰",unread:true,title:"NSF proposal internal deadline",sub:"Route through ORA by Oct 1 for the Oct 15 submission.",time:"Yesterday"},
     {icon:"🏛️",unread:false,title:"Faculty council agenda posted",sub:"AI-in-coursework policy is up for a first read.",time:"3d ago"},
   ],
@@ -1666,14 +1637,14 @@ faculty: {
     {id:"home",label:"Home",icon:"🏠"},
     {id:"tasks",label:"Tasks",icon:"⊞"},
     {id:"teaching",label:"Academics",icon:"📖"},
-    {id:"work",label:"Work",icon:"💼"},
+    {id:"money",label:"Finances",icon:"💳"},
     {id:"research",label:"Research",icon:"🔬"},
     {id:"campus",label:"Campus",icon:"🗺️"},
   ],
   views:{
     home:[
-      {type:"hero",kicker:"Luddy School of Informatics",title:"Midterm grades are due Friday",
-       sub:"38 project submissions remain in the I-365 grading queue. Three advisee requests are pending, and the NSF internal deadline is October 1.",
+      {type:"hero",kicker:"Luddy School of Informatics",title:"38 I-365 projects are waiting to be graded",
+       sub:"Early evaluations are also open in the Student Engagement Roster (due Oct 4). Three advisee requests are pending, and the NSF internal deadline is October 1.",
        stats:[{n:"2",l:"Classes today"},{n:"38",l:"To grade"},{n:"3",l:"Advisee requests"}]},
       {type:"calendar"},
       {type:"actionitems"},
@@ -1689,18 +1660,18 @@ faculty: {
     campus:[{type:"campusmap"},{type:"campusfeed"}],
     teaching:[
       {type:"list",title:"📖 Fall courses",items:[
-        {icon:"🎨",bg:"red",title:"INFO-I 365 · HCI Design",sub:"MWF 10:10–11:25 · Luddy 1106 · 82 enrolled",badge:{txt:"Grades due Fri",cls:"red"}},
+        {icon:"🎨",bg:"red",title:"INFO-I 365 · HCI Design",sub:"MWF 10:10–11:25 · Luddy 1106 · 82 enrolled",badge:{txt:"Early evals",cls:"red"}},
         {icon:"🧪",bg:"purple",title:"INFO-I 590 · Grad UX Methods",sub:"T 4:00–6:30 · Luddy 3166 · 18 enrolled",badge:{txt:"On track",cls:"green"}},
       ]},
       {type:"list",title:"📝 Grading queue",items:[
-        {icon:"📘",bg:"red",title:"INFO-I 365 · midterm projects",sub:"38 to grade · grades due Friday",src:"Canvas",link:"the Faculty Center roster",linkLabel:"Grade"},
+        {icon:"📘",bg:"red",title:"INFO-I 365 · project 2",sub:"38 to grade · return to students by Friday",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
         {icon:"📗",bg:"blue",title:"INFO-I 590 · annotated bibliographies",sub:"18 to grade · return by Tuesday",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
         {icon:"↩️",bg:"gold",title:"Regrade requests (2)",sub:"Respond within one week per syllabus",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Open"},
       ]},
-      {type:"list",title:"📊 Course pulse",items:[
-        {icon:"📈",bg:"green",title:"I-365 attendance",sub:"Averaging 91% — up from 84% last term",right:"91%"},
-        {icon:"⚠️",bg:"gold",title:"Early alerts",sub:"4 students flagged for missed work — notifications sent",right:"4",rightSub:"students"},
-        {icon:"💬",bg:"blue",title:"Mid-course feedback",sub:"Open until Friday · 47 responses so far",right:"57%",rightSub:"response"},
+      {type:"list",title:"📊 Rosters & alerts",items:[
+        {icon:"📝",bg:"red",title:"Early evaluations — I-365",sub:"Submit early-evaluation grades for beginning students",src:"Student Engagement Roster",link:"the Student Engagement Roster",linkLabel:"Open SER",right:"Due",rightSub:"Oct 4"},
+        {icon:"⚠️",bg:"gold",title:"Early alerts",sub:"Students you've flagged for missed work in the roster",src:"Student Engagement Roster",link:"the Student Engagement Roster",linkLabel:"Flag",right:"4",rightSub:"flagged"},
+        {icon:"📋",bg:"blue",title:"Class roster — I-365",sub:"Verify enrolled students · 0 pending adds",src:"Faculty Center",link:"the Faculty Center",linkLabel:"Open",right:"82",rightSub:"enrolled"},
       ]},
       {type:"notice",tone:"blue",icon:"🤖",title:"AI-assisted grading pilot",
        sub:"UITS is piloting rubric-first AI grading assistance for large sections. I-365 qualifies — opt in by October 1 to use it for the final project."},
@@ -1718,7 +1689,7 @@ faculty: {
       {type:"notice",tone:"gold",icon:"🗓️",title:"Graduate registration opens Monday",
        sub:"Unapproved course plans will block your advisees from registering. The two pending approvals take about 3 minutes each."},
     ],
-    work:[
+    money:[
       {type:"balances",title:"🏖️ Pay & time",items:[
         {icon:"💵",label:"Appointment",value:"10-month",note:"Academic-year faculty"},
         {icon:"💵",label:"Next payday",value:"Sep 30",note:"Monthly · direct deposit"},
@@ -1730,11 +1701,6 @@ faculty: {
         {icon:"🦷",label:"Dental / Vision",value:"Enrolled",note:"Cigna / Anthem"},
         {icon:"🏦",label:"HSA balance",value:"$5,120",note:"+$150/mo IU match"},
         {icon:"🎓",label:"Tuition benefit",value:"Eligible",note:"Dependents 50% at IU"},
-      ]},
-      {type:"list",title:"💼 Employment — what's outstanding",items:[
-        {icon:"🛡️",bg:"red",title:"Annual conflict-of-interest disclosure",sub:"Due Sep 30 · required for all PIs",src:"Compliance",link:"the disclosure form",linkLabel:"Open"},
-        {icon:"🏥",bg:"gold",title:"Review open enrollment changes",sub:"Window Oct 15 – Nov 5",src:"HR Benefits",link:"the benefits portal",linkLabel:"Review"},
-        {icon:"🎓",bg:"blue",title:"Apply tuition benefit for a dependent",sub:"Spring term · by Nov 15",src:"HR Benefits",link:"the benefits portal",linkLabel:"Apply"},
       ]},
       {type:"notice",tone:"blue",icon:"🗓️",title:"Open enrollment starts Oct 15",
        sub:"Benefit elections for 2027 are made in Workday during the Oct 15 – Nov 5 window."},
@@ -1783,7 +1749,7 @@ parent: {
     {id:"home",label:"Home",icon:"🏠"},
     {id:"tasks",label:"Tasks",icon:"⊞"},
     {id:"student",label:"My Student",icon:"🧑‍🎓"},
-    {id:"billing",label:"Money",icon:"💳"},
+    {id:"billing",label:"Finances",icon:"💳"},
     {id:"events",label:"Family Events",icon:"🏈"},
     {id:"campus",label:"Campus",icon:"🗺️"},
   ],
@@ -1823,7 +1789,7 @@ parent: {
       ]},
     ],
     billing:[
-      {type:"balances",title:"🧾 Fall 2026 statement",items:[
+      {type:"balances",title:"🧾 Fall 2026 statement · from Bursar",items:[
         {icon:"💰",label:"Amount due",value:"$6,240.00",note:"Due Sep 25",alert:true},
         {icon:"🎓",label:"Tuition & fees",value:"$6,072",note:"In-state, 15 cr"},
         {icon:"🏠",label:"Housing & meals",value:"$6,654",note:"Briscoe + standard plan"},
@@ -1908,6 +1874,7 @@ function toggleFav(ev,id){
 
 /* ---------- card renderers ---------- */
 function esc(s){return String(s??"")}
+function stripLead(s){return String(s??"").replace(/^[^\p{L}\p{N}]+/u,"")}
 
 function renderCard(c){
   switch(c.type){
@@ -1955,6 +1922,7 @@ function renderCard(c){
     case "actionitems": return renderActionItems();
     case "crimsoncard": return renderCrimsonCard();
     case "orgs": return renderOrgs();
+    case "careers": return renderCareers();
     case "libraries": return renderLibraries();
     case "campusfeed": return renderCampusFeed();
     case "signin": return renderSignin();
@@ -1992,7 +1960,7 @@ function renderCard(c){
   return "";
 }
 function card(title, body, extraClass="", headLink=""){
-  return `<div class="card ${extraClass}"><div class="card-head"><h3>${title}</h3>${headLink}</div>${body}</div>`;
+  return `<div class="card ${extraClass}"><div class="card-head"><h3>${stripLead(title)}</h3>${headLink}</div>${body}</div>`;
 }
 
 /* Favorites + popular tasks (home) */
@@ -2023,7 +1991,7 @@ function renderLaunchCard(){
 function renderTaskLauncher(){
   const cats = taskCategories();
   return `<div class="card span2">
-    <div class="card-head"><h3>⊞ One.IU tasks</h3>
+    <div class="card-head"><h3>One.IU tasks</h3>
       <span class="link" style="cursor:default;color:var(--muted)">${personaTasks().length} tasks${P().guest?"":" for your role"}</span></div>
     <div class="task-chips" id="taskChips">${cats.map(c=>`
       <button class="chip ${state.cat===c?"active":""}" onclick="setCat('${c}')">${c}</button>`).join("")}</div>
@@ -2082,7 +2050,7 @@ function placeSub(p){
     if(p.printers) feats.push("🖨️");
     return `${esc(p.addr)}${feats.length?" · "+feats.join(" "):""}`;
   }
-  if(p.type==="parking") return `${esc(p.rate)} · ${esc(p.spots)}`;
+  if(p.type==="parking") return `${esc(p.rate)}`;
   if(p.type==="bus") return `Next: ${esc(p.routes[0].r)} in ${p.routes[0].mins} min`;
   if(p.type==="food") return esc(p.addr||p.services||"");
   return "";
@@ -2165,9 +2133,10 @@ function openPlace(id){
           <span class="right">${openBadge(f)}</span></div>`).join("")}</div>`;
   }
   if(p.type==="parking") html += `
-    <div class="dsec"><h4>🅿️ Permits & rates</h4>
+    <div class="dsec"><h4>Permits & rates · IU Parking Operations</h4>
       <div class="drow">${p.permits.map(x=>`<span class="permit">${esc(x)}</span>`).join("")}</div>
-      <div class="drow">${esc(p.rate)} <span class="right badge green">${esc(p.spots)}</span></div></div>`;
+      <div class="drow">${esc(p.rate)}</div>
+      <div class="drow"><span class="sub" style="margin:0">Live space availability isn't published by IU — check ParkMobile.</span></div></div>`;
   if(p.type==="bus") html += `
     <div class="dsec"><h4>🚌 Next departures</h4>
       ${p.routes.map(r=>`<div class="drow">${esc(r.r)} <span class="right badge blue">${r.mins} min</span></div>`).join("")}</div>`;
@@ -2325,11 +2294,11 @@ function ccVisual(cc,lg){
 }
 function renderCrimsonCard(){
   const cc=P().crimsonCard;
-  if(!cc) return `<div class="card"><div class="card-head"><h3>💳 CrimsonCard</h3></div>
+  if(!cc) return `<div class="card"><div class="card-head"><h3>CrimsonCard</h3></div>
     <div class="empty">No CrimsonCard is linked to this account yet.</div></div>`;
   const n=cc.balances.length;
   return `<div class="card">
-    <div class="card-head"><h3>💳 CrimsonCard</h3></div>
+    <div class="card-head"><h3>CrimsonCard</h3></div>
     ${ccVisual(cc,false)}
     <button class="cc-manage" onclick="openCrimsonCard()">Manage card &amp; balances →</button>
     <div class="cc-hint">${n} account${n>1?'s':''} · digital card · photo</div>
@@ -2373,11 +2342,11 @@ function openCrimsonCard(){
 ===================================================== */
 function renderOrgs(){
   const o=P().orgs;
-  if(!o) return `<div class="card"><div class="card-head"><h3>🧑‍🤝‍🧑 Student Organizations</h3></div>
+  if(!o) return `<div class="card"><div class="card-head"><h3>Student Organizations</h3></div>
     <div class="empty">No organization memberships found.<br><span class="link" style="cursor:pointer" onclick="openOrgs()">Discover on BeInvolved →</span></div></div>`;
   const ann=o.announcements.length, ev=o.events[0];
   return `<div class="card">
-    <div class="card-head"><h3>🧑‍🤝‍🧑 Student Organizations</h3><span class="link" onclick="openOrgs()">Open →</span></div>
+    <div class="card-head"><h3>Student Organizations</h3><span class="link" onclick="openOrgs()">Open →</span></div>
     ${o.memberships.slice(0,3).map(m=>`
       <div class="li"><div class="lic purple">${m.icon}</div>
         <div style="min-width:0"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div></div>
@@ -2417,17 +2386,59 @@ function openOrgs(){
 }
 
 /* =====================================================
+   Careers (Handshake) — IU's career platform
+===================================================== */
+function renderCareers(){
+  const c=P().careers;
+  if(!c) return `<div class="card"><div class="card-head"><h3>Careers</h3></div>
+    <div class="empty">Handshake isn't linked to this account yet.<br><span class="link" style="cursor:pointer" onclick="openCareers()">Open Handshake →</span></div></div>`;
+  const ev=c.events[0];
+  return `<div class="card">
+    <div class="card-head"><h3>Careers</h3><span class="link" onclick="openCareers()">Open →</span></div>
+    <div class="li"><div class="lic green">🗣️</div><div style="min-width:0">
+      <div class="lit">Career coach appointment</div><div class="lis">${esc(c.appt.when)} · ${esc(c.appt.who)}</div></div></div>
+    <div class="li"><div class="lic gold">⭐</div><div style="min-width:0">
+      <div class="lit">${c.saved} saved · ${c.applied} applied</div><div class="lis">Tracked in Handshake</div></div></div>
+    <div class="cc-hint" style="text-align:left;margin-top:10px">
+      Next: ${esc(ev.title)} (${esc(ev.when)}) · via Handshake</div>
+  </div>`;
+}
+function openCareers(){
+  const c=P().careers;
+  if(!c){ $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
+    <h2>🎯 Careers</h2><p class="dsub">powered by Handshake</p>
+    <div class="empty">Handshake isn't linked to this account.</div>
+    <a class="getthere" onclick="toast('Prototype: opens Handshake.')">➔ Open Handshake</a>`;
+    $("drawer").classList.add("open"); $("scrim").classList.add("open"); return; }
+  $("drawer").innerHTML = `
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <h2>🎯 Careers</h2>
+    <p class="dsub">Your Handshake activity, appointments and events</p>
+    <div class="dsec"><h4>🗓️ Your activity</h4>
+      <div class="drow"><div>🗣️ Career coach appointment<div class="sub">${esc(c.appt.when)} · ${esc(c.appt.who)} · booked in Handshake</div></div><span class="right badge green">Upcoming</span></div>
+      <div class="drow"><div>📨 Applications in Handshake<div class="sub">Statuses update only when employers post them</div></div><span class="right"><b>${c.applied}</b></span></div>
+      <div class="drow"><div>⭐ Saved &amp; recommended jobs<div class="sub">Refresh weekly from your profile</div></div><span class="right"><b>${c.saved}</b></span></div></div>
+    <div class="dsec"><h4>📅 Career events</h4>
+      ${c.events.map(e=>`<div class="li"><div class="lic gold">${e.icon}</div>
+        <div style="min-width:0"><div class="lit">${esc(e.title)}</div><div class="lis">${esc(e.where)}</div></div>
+        <div class="lir"><div class="lirt">${esc(e.when)}</div></div></div>`).join("")}</div>
+    <a class="getthere" onclick="toast('Prototype: opens Handshake.')">➔ Open Handshake</a>
+    <div class="cc-hint" style="margin-top:12px">Handshake shows what you access through IU. Jobs you apply to directly on a company's own site won't appear here.</div>`;
+  $("drawer").classList.add("open"); $("scrim").classList.add("open");
+}
+
+/* =====================================================
    Libraries (libraries.indiana.edu)
 ===================================================== */
 function renderLibraries(){
   const L=P().library;
-  if(!L) return `<div class="card"><div class="card-head"><h3>📚 Libraries</h3></div>
+  if(!L) return `<div class="card"><div class="card-head"><h3>Libraries</h3></div>
     <input class="lib-search" type="text" placeholder="Search the catalog…" onclick="openLibraries()">
     <div class="empty">No library account is linked yet.</div></div>`;
   const due=L.onLoan.length, illReady=L.ill.filter(i=>/ready|download/i.test(i.status)).length;
   const soon=L.onLoan.find(i=>i.soon);
   return `<div class="card">
-    <div class="card-head"><h3>📚 Libraries</h3><span class="link" onclick="openLibraries()">Open →</span></div>
+    <div class="card-head"><h3>Libraries</h3><span class="link" onclick="openLibraries()">Open →</span></div>
     <input class="lib-search" type="text" placeholder="Search the catalog…"
       onkeydown="if(event.key==='Enter')openLibraries(this.value)" onclick="openLibraries()">
     <div class="li"><div class="lic blue">📕</div><div style="min-width:0">
@@ -2494,11 +2505,11 @@ function ktFmtElapsed(ms){ const s=Math.max(0,Math.floor(ms/1000)); const p=n=>S
 function renderKualiTime(){ return `<div class="card"><div id="ktRoot">${ktInner()}</div></div>`; }
 function ktInner(){
   const k=P().kualitime;
-  if(!k) return `<div class="card-head"><h3>🕐 Kuali Time</h3></div>
+  if(!k) return `<div class="card-head"><h3>Kuali Time</h3></div>
     <div class="empty">No hourly (or work-study) job is linked to this account.</div>`;
   const todayH=(k.todayMin/60).toFixed(1), weekH=(k.weekMin/60).toFixed(1);
   return `
-    <div class="card-head"><h3>🕐 Kuali Time</h3>
+    <div class="card-head"><h3>Kuali Time</h3>
       <span class="link" onclick="toast('Prototype: opens your detailed time view in Kuali Time.')">Open ↗</span></div>
     <div class="kt-assign"><span class="kt-lbl">Assignment</span><span class="kt-val">${esc(k.assignment)} · ${esc(k.rate)}</span></div>
     <div class="kt-hours">
@@ -2637,7 +2648,7 @@ function feedInner(){
     ? `<div class="feed-filter">${feedSports().map((s,i)=>`<button class="chip ${state.feedSport===s?"active":""}" onclick="setFeedSport(${i})">${esc(s)}</button>`).join("")}</div>`
     : "";
   return `
-    <div class="card-head"><h3>📰 Campus feed</h3>
+    <div class="card-head"><h3>Campus feed</h3>
       <span class="link" onclick="toast('Prototype: opens more from ${FEED_SRC[tab]}.')">More ${tab==="athletics"?"athletics":tab==="news"?"news":"events"} →</span></div>
     <div class="seg">${seg.map(([k,l])=>`<button class="${tab===k?"active":""}" onclick="setFeedTab('${k}')">${l}</button>`).join("")}</div>
     ${filter}
@@ -2826,6 +2837,7 @@ const WIDGET_CATALOG = [
   {type:"campusfeed", label:"📰 Campus feed",       desc:"Athletics, events & news across IU"},
   {type:"crimsoncard",label:"💳 CrimsonCard",       desc:"Your card, balances & photo"},
   {type:"orgs",       label:"🧑‍🤝‍🧑 Student Organizations", desc:"Memberships, announcements & events"},
+  {type:"careers",    label:"🎯 Careers",            desc:"Handshake activity, coaching & events"},
   {type:"libraries",  label:"📚 Libraries",          desc:"Loans, ILL, study rooms & catalog"},
   {type:"campusmap",  label:"🗺️ Campus map",         desc:"Search buildings, buses, parking & food"},
   {type:"tasklauncher",label:"⊞ One.IU tasks",      desc:"Search & launch any task"},
@@ -3017,7 +3029,7 @@ function renderMain(){
         <p>${isHome ? (p.guest ? p.greetSub : `${todayStr()} · ${p.greetSub}`) : p.role}</p>
       </div>
       <div class="top-actions">
-        <button class="icon-btn" onclick="openNotifs()">🔔${p.notifCount?'<span class="dot"></span>':""}</button>
+        ${p.guest ? "" : `<button class="icon-btn" onclick="openNotifs()">🔔${p.notifCount?'<span class="dot"></span>':""}</button>`}
         <div class="avatar" onclick="openSettings()" title="Profile & settings">${p.avatar}</div>
       </div>
     </div>
