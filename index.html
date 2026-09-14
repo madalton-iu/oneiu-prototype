@@ -1143,9 +1143,8 @@ applicant: {
   tabs:[
     {id:"home",label:"Home",icon:"🏠"},
     {id:"tasks",label:"Tasks",icon:"⊞"},
-    {id:"application",label:"My Application",icon:"📄"},
-    {id:"visit",label:"Visit IU",icon:"🚌"},
-    {id:"aid",label:"Cost & Aid",icon:"💰"},
+    {id:"application",label:"Application",icon:"📄"},
+    {id:"aid",label:"Money",icon:"💳"},
     {id:"campus",label:"Campus",icon:"🗺️"},
   ],
   views:{
@@ -1185,9 +1184,7 @@ applicant: {
       ]},
       {type:"notice",tone:"gold",icon:"⏰",title:"Submit by November 1 for Early Action",
        sub:"Finish your essay and confirm your transcript is in, then submit. Early Action decisions post here in late December."},
-    ],
-    visit:[
-      {type:"list",title:"🚌 Upcoming visit options",items:[
+      {type:"list",title:"🚌 Visit IU",items:[
         {icon:"🎟️",bg:"gold",title:"Red Carpet Day",sub:"Full-day prospective student experience",right:"Oct 10",badge:{txt:"80% full",cls:"gold"}},
         {icon:"🚶",bg:"blue",title:"Daily campus tour",sub:"90-minute walking tour with a student ambassador",right:"Weekdays",rightSub:"10am & 2pm"},
         {icon:"🏛️",bg:"purple",title:"Kelley-specific tour",sub:"Hodge Hall, trading lab & undergraduate advising",right:"Fridays",rightSub:"11am"},
@@ -1275,7 +1272,7 @@ firstyear: {
   tabs:[
     {id:"home",label:"Home",icon:"🏠"},
     {id:"tasks",label:"Tasks",icon:"⊞"},
-    {id:"classes",label:"Classes",icon:"📚"},
+    {id:"classes",label:"Academics",icon:"📖"},
     {id:"work",label:"Work",icon:"💼"},
     {id:"money",label:"Money",icon:"💳"},
     {id:"campus",label:"Campus",icon:"🗺️"},
@@ -1415,9 +1412,8 @@ senior: {
   tabs:[
     {id:"home",label:"Home",icon:"🏠"},
     {id:"tasks",label:"Tasks",icon:"⊞"},
-    {id:"classes",label:"Classes",icon:"📚"},
-    {id:"graduation",label:"Graduation",icon:"🎓"},
-    {id:"career",label:"Career",icon:"💼"},
+    {id:"classes",label:"Academics",icon:"📖"},
+    {id:"career",label:"Career",icon:"🎯"},
     {id:"money",label:"Money",icon:"💳"},
     {id:"campus",label:"Campus",icon:"🗺️"},
   ],
@@ -1454,8 +1450,6 @@ senior: {
         {course:"INFO-I 421",title:"Assignment 4 — model evaluation",due:"Monday · 11:59 p.m."},
         {course:"INFO-I 453",title:"Ethics discussion post + 2 replies",due:"Sunday · 11:59 p.m."},
       ]},
-    ],
-    graduation:[
       {type:"steps",title:"🎓 Graduation checklist · December 2026",items:[
         {title:"Degree audit review",sub:"94% complete — reviewed with your advisor in April.",state:"done",src:"iGPS",link:"your iGPS degree audit",linkLabel:"View audit"},
         {title:"Register for final credits",sub:"12 credits enrolled — 1 A&H credit still to add.",state:"done",src:"SIS"},
@@ -1543,8 +1537,7 @@ staff: {
   tabs:[
     {id:"home",label:"Home",icon:"🏠"},
     {id:"tasks",label:"Tasks",icon:"⊞"},
-    {id:"work",label:"My Work",icon:"📋"},
-    {id:"benefits",label:"Benefits & Pay",icon:"🏥"},
+    {id:"work",label:"Work",icon:"💼"},
     {id:"campus",label:"Campus",icon:"🗺️"},
   ],
   views:{
@@ -1574,8 +1567,6 @@ staff: {
       ]},
       {type:"notice",tone:"blue",icon:"🗓️",title:"Performance check-ins open Sept 1",
        sub:"Annual review self-assessments are due September 19. Your director has shared this year's template."},
-    ],
-    benefits:[
       {type:"balances",title:"🏖️ Time & pay",items:[
         {icon:"🌴",label:"Vacation",value:"112 hrs",note:"Accruing 10 hrs/mo"},
         {icon:"🤒",label:"Sick time",value:"64 hrs",note:"Available now"},
@@ -1674,8 +1665,8 @@ faculty: {
   tabs:[
     {id:"home",label:"Home",icon:"🏠"},
     {id:"tasks",label:"Tasks",icon:"⊞"},
-    {id:"teaching",label:"Teaching",icon:"📖"},
-    {id:"advising",label:"Advising",icon:"🧑‍🎓"},
+    {id:"teaching",label:"Academics",icon:"📖"},
+    {id:"work",label:"Work",icon:"💼"},
     {id:"research",label:"Research",icon:"🔬"},
     {id:"campus",label:"Campus",icon:"🗺️"},
   ],
@@ -1713,9 +1704,7 @@ faculty: {
       ]},
       {type:"notice",tone:"blue",icon:"🤖",title:"AI-assisted grading pilot",
        sub:"UITS is piloting rubric-first AI grading assistance for large sections. I-365 qualifies — opt in by October 1 to use it for the final project."},
-    ],
-    advising:[
-      {type:"list",title:"🧑‍🎓 Needs your sign-off",items:[
+      {type:"list",title:"🧑‍🎓 Advising · needs your sign-off",items:[
         {icon:"📋",bg:"gold",title:"Course plan · Sarah Okafor",sub:"MS-HCI, spring semester plan",badge:{txt:"Approve",cls:"gold"}},
         {icon:"📋",bg:"gold",title:"Course plan · Miguel Torres",sub:"MS-HCI, spring + internship credit",badge:{txt:"Approve",cls:"gold"}},
         {icon:"🖊️",bg:"blue",title:"PhD committee form · Jamie Kim",sub:"Quals committee — your signature is the last needed",badge:{txt:"Sign",cls:"blue"}},
@@ -1729,21 +1718,45 @@ faculty: {
       {type:"notice",tone:"gold",icon:"🗓️",title:"Graduate registration opens Monday",
        sub:"Unapproved course plans will block your advisees from registering. The two pending approvals take about 3 minutes each."},
     ],
+    work:[
+      {type:"balances",title:"🏖️ Pay & time",items:[
+        {icon:"💵",label:"Appointment",value:"10-month",note:"Academic-year faculty"},
+        {icon:"💵",label:"Next payday",value:"Sep 30",note:"Monthly · direct deposit"},
+        {icon:"📈",label:"Retirement",value:"10% + 10%",note:"IU base + your deferral"},
+        {icon:"🌴",label:"Leave",value:"Sabbatical",note:"Eligible AY 2028–29"},
+      ]},
+      {type:"balances",title:"🏥 Benefits snapshot",items:[
+        {icon:"🩺",label:"Medical",value:"Anthem PPO",note:"Employee + family"},
+        {icon:"🦷",label:"Dental / Vision",value:"Enrolled",note:"Cigna / Anthem"},
+        {icon:"🏦",label:"HSA balance",value:"$5,120",note:"+$150/mo IU match"},
+        {icon:"🎓",label:"Tuition benefit",value:"Eligible",note:"Dependents 50% at IU"},
+      ]},
+      {type:"list",title:"💼 Employment — what's outstanding",items:[
+        {icon:"🛡️",bg:"red",title:"Annual conflict-of-interest disclosure",sub:"Due Sep 30 · required for all PIs",src:"Compliance",link:"the disclosure form",linkLabel:"Open"},
+        {icon:"🏥",bg:"gold",title:"Review open enrollment changes",sub:"Window Oct 15 – Nov 5",src:"HR Benefits",link:"the benefits portal",linkLabel:"Review"},
+        {icon:"🎓",bg:"blue",title:"Apply tuition benefit for a dependent",sub:"Spring term · by Nov 15",src:"HR Benefits",link:"the benefits portal",linkLabel:"Apply"},
+      ]},
+      {type:"notice",tone:"blue",icon:"🗓️",title:"Open enrollment starts Oct 15",
+       sub:"Benefit elections for 2027 are made in Workday during the Oct 15 – Nov 5 window."},
+    ],
     research:[
-      {type:"steps",title:"🔬 NSF CISE proposal — status · from Kuali Research/ORA",items:[
-        {title:"Draft complete",sub:"Project description v4 finalized with co-PI.",state:"done"},
-        {title:"Budget approved by department",sub:"$642K over 5 years · signed off Sep 4.",state:"done"},
-        {title:"Route through ORA",sub:"Internal deadline Oct 1 — routing should begin now.",state:"now",src:"Kuali/ORA",link:"Kuali Research routing",linkLabel:"Route"},
-        {title:"NSF submission",sub:"Sponsor deadline Oct 15.",state:"todo"},
+      {type:"steps",title:"🔬 Proposal routing · from Kuali Coeus (KC)",items:[
+        {title:"Proposal built in Kuali Coeus",sub:"CISE core · $642K over 5 years · budget finalized with co-PI.",state:"done",src:"Kuali Coeus"},
+        {title:"Routing for institutional approval",sub:"Department approved Sep 4 · now with ORA for sign-off.",state:"now",src:"Kuali Coeus",link:"your KC routing queue",linkLabel:"Open KC"},
+        {title:"ORA submits to NSF via Grants.gov",sub:"Sent once routing clears · internal deadline Oct 1.",state:"todo",src:"Kuali Coeus"},
+        {title:"Sponsor review",sub:"NSF status posts on Research.gov (external) · sponsor deadline Oct 15.",state:"todo",src:"Research.gov (external)",link:"Research.gov",linkLabel:"Check"},
       ]},
-      {type:"balances",title:"💰 Active awards",items:[
-        {icon:"🏛️",label:"NSF HCC (active)",value:"$318K",note:"$121K remaining · ends 2027"},
-        {icon:"🏥",label:"NIH R21 (sub)",value:"$96K",note:"Year 2 of 2"},
-        {icon:"🧑‍🎓",label:"Funded students",value:"3 RAs",note:"2 PhD, 1 MS"},
-        {icon:"📄",label:"Under review",value:"2 papers",note:"CHI '27, CSCW"},
+      {type:"list",title:"💰 Sponsored accounts · from Kuali Financial System",items:[
+        {icon:"🏛️",bg:"blue",title:"NSF HCC — award account",sub:"Acct 4471902 · you (PI) · ends Aug 2027",src:"KFS",link:"the KFS account",linkLabel:"View",right:"$121K",rightSub:"remaining"},
+        {icon:"🏥",bg:"purple",title:"NIH R21 — subaward account",sub:"Acct 4471955 · year 2 of 2",src:"KFS",link:"the KFS account",linkLabel:"View",right:"$38K",rightSub:"remaining"},
+        {icon:"🧾",bg:"gold",title:"Expenditures to certify",sub:"3 transactions posted this period need your review",src:"KFS",link:"the KFS balances",linkLabel:"Review",badge:{txt:"Action",cls:"gold"}},
       ]},
-      {type:"notice",tone:"green",icon:"✈️",title:"Travel funds available",
-       sub:"You have $2,400 in unspent conference travel on the NSF award, expiring at the end of the project year. CHI registration opens next month."},
+      {type:"list",title:"🧪 Human-subjects protocols · from Kuali Protocols",items:[
+        {icon:"✅",bg:"green",title:"#2306-2291 · Accessible interfaces study",sub:"Approved · annual continuing review",src:"Kuali Protocols",link:"Kuali Protocols",linkLabel:"Open",right:"Expires",rightSub:"Feb 2027"},
+        {icon:"⏳",bg:"gold",title:"Amendment · add two RAs to the study",sub:"Submitted Sep 8 · with the IRB analyst",src:"Kuali Protocols",link:"Kuali Protocols",linkLabel:"Track",badge:{txt:"In review",cls:"gold"}},
+      ]},
+      {type:"notice",tone:"blue",icon:"🔗",title:"Where this data comes from",
+       sub:"Proposals and awards are records in Kuali Coeus; account balances and expenditures come from the Kuali Financial System; IRB status is from Kuali Protocols — all IU systems behind your IU login. Sponsor-side status lives outside IU: NSF on Research.gov, NIH in eRA Commons."},
     ],
   }
 },
@@ -1770,7 +1783,7 @@ parent: {
     {id:"home",label:"Home",icon:"🏠"},
     {id:"tasks",label:"Tasks",icon:"⊞"},
     {id:"student",label:"My Student",icon:"🧑‍🎓"},
-    {id:"billing",label:"Billing",icon:"🧾"},
+    {id:"billing",label:"Money",icon:"💳"},
     {id:"events",label:"Family Events",icon:"🏈"},
     {id:"campus",label:"Campus",icon:"🗺️"},
   ],
