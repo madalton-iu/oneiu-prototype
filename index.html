@@ -763,6 +763,8 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   .grid{grid-template-columns:1fr}
   .widget.wide, .widget.searchw, .widget.full{grid-column:1/-1}
   .search{display:none}
+  .signin-actions{flex:1 0 100%;text-align:left;margin-top:6px}
+  .signin-btn{width:100%}
 }
 @media (max-width:768px){
   .sidebar{display:none}
@@ -2699,7 +2701,7 @@ function renderSignin(){
     </div>
     <div class="signin-actions">
       <button class="signin-btn" onclick="toast('Prototype: opens IU Login (CAS + two-step / Duo).')">Sign in with your IU username</button>
-      <div class="signin-alt">New to IU? <span class="link" onclick="setPersona('applicant')">Explore as an applicant</span></div>
+      <div class="signin-alt">New to IU? <a class="link" href="https://iu.edu/academics/degrees/" target="_blank" rel="noopener">Explore IU programs</a> or <a class="link" href="https://iu.edu/admissions/" target="_blank" rel="noopener">apply now</a>.</div>
     </div>
   </div>`;
 }
