@@ -648,6 +648,16 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   background:linear-gradient(90deg,var(--crimson),var(--crimson-soft) 70%,var(--gold));
 }
 .prog-note{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:9px;line-height:1.5}
+/* academic calendar (Key Dates) widget */
+.acad-term{display:inline-flex;align-items:center;gap:6px;background:none;border:0;padding:0 0 12px;color:var(--link);font-weight:800;font-size:16px;letter-spacing:-.2px;cursor:pointer}
+.acad-term:hover{color:var(--link-dark,var(--link))}
+.acad-caret{font-size:12px}
+.acad-progress{margin-bottom:6px}
+.acad-ends{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);font-weight:700;margin-bottom:6px}
+.acad-list{display:flex;flex-direction:column;margin-top:4px}
+.acad-row{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:14px}
+.acad-row .ak{color:var(--ink);font-weight:600;line-height:1.35}
+.acad-row .av{color:var(--ink);font-weight:800;white-space:nowrap;text-align:right}
 
 /* steps tracker */
 .step{display:flex;gap:14px}
@@ -1508,6 +1518,15 @@ const CAMPUS_FEED = {
 };
 function curFeed(){ return CAMPUS_FEED[state.campus] || FEED; }
 
+/* ---------- Academic calendar (Key Dates) ----------
+   Compiled from IU registrar pages (Fall 2026 + Spring 2027, all 9 campuses).
+   Dates are ISO; "exB"/"exE" null = no separate final-exam period published.  */
+const ACAD = {"iub":{"Fall 2026":{"terms":{"Full term":{"first":"2026-08-24","last":"2026-12-12","exB":"2026-12-14","exE":"2026-12-18"},"First 8 weeks":{"first":"2026-08-24","last":"2026-10-16","exB":null,"exE":null},"Second 8 weeks":{"first":"2026-10-19","last":"2026-12-12","exB":"2026-12-14","exE":"2026-12-18"},"Intersession":{"first":"2026-08-01","last":"2026-08-23","exB":null,"exE":null},"3-week":{"first":"2026-11-30","last":"2026-12-18","exB":null,"exE":null},"13-week":{"first":"2026-08-24","last":"2026-11-20","exB":null,"exE":null}},"breaks":[{"name":"Labor Day","b":"2026-09-07","e":"2026-09-07"},{"name":"Fall Break","b":"2026-10-09","e":"2026-10-11"},{"name":"Thanksgiving Break","b":"2026-11-22","e":"2026-11-29"}]},"Spring 2027":{"terms":{"Full term":{"first":"2027-01-11","last":"2027-05-01","exB":"2027-05-03","exE":"2027-05-07"},"First 8 weeks":{"first":"2027-01-11","last":"2027-03-05","exB":null,"exE":null},"Second 8 weeks":{"first":"2027-03-08","last":"2027-05-01","exB":"2027-05-03","exE":"2027-05-07"},"Winter session":{"first":"2026-12-21","last":"2027-02-05","exB":null,"exE":null},"3-week":{"first":"2027-01-11","last":"2027-01-29","exB":null,"exE":null},"13-week":{"first":"2027-02-01","last":"2027-05-01","exB":"2027-05-03","exE":"2027-05-07"}},"breaks":[{"name":"Winter Session Break","b":"2026-12-25","e":"2027-01-03"},{"name":"Martin Luther King Jr. Day","b":"2027-01-18","e":"2027-01-18"},{"name":"Spring Break","b":"2027-03-14","e":"2027-03-21"}]}},"iui":{"Fall 2026":{"terms":{"Full term":{"first":"2026-08-24","last":"2026-12-14","exB":"2026-12-11","exE":"2026-12-20"},"First 8 weeks":{"first":"2026-08-24","last":"2026-10-18","exB":null,"exE":null},"Second 8 weeks":{"first":"2026-10-21","last":"2026-12-20","exB":null,"exE":null},"10-week":{"first":"2026-08-24","last":"2026-11-03","exB":null,"exE":null},"12-week":{"first":"2026-09-22","last":"2026-12-20","exB":null,"exE":null},"Dental Education":{"first":"2026-08-17","last":"2026-12-13","exB":null,"exE":null}},"breaks":[{"name":"Labor Day","b":"2026-09-07","e":"2026-09-07"},{"name":"Fall Break","b":"2026-10-19","e":"2026-10-20"},{"name":"Thanksgiving Break","b":"2026-11-25","e":"2026-11-29"}]},"Spring 2027":{"terms":{"Full term":{"first":"2027-01-11","last":"2027-05-03","exB":"2027-04-30","exE":"2027-05-07"},"First 8 weeks":{"first":"2027-01-11","last":"2027-03-08","exB":null,"exE":null},"Second 8 weeks":{"first":"2027-03-09","last":"2027-05-07","exB":null,"exE":null},"Intersession":{"first":"2026-12-21","last":"2027-02-07","exB":null,"exE":null},"10-week":{"first":"2027-01-11","last":"2027-03-29","exB":null,"exE":null},"12-week":{"first":"2027-02-08","last":"2027-05-07","exB":null,"exE":null},"Dental Education":{"first":"2027-01-11","last":"2027-05-07","exB":null,"exE":null}},"breaks":[{"name":"Intercession Break","b":"2026-12-25","e":"2027-01-01"},{"name":"Martin Luther King Jr. Day","b":"2027-01-18","e":"2027-01-18"},{"name":"Spring break","b":"2027-03-14","e":"2027-03-20"}]}},"iuc":{"Fall 2026":{"terms":{"Full term":{"first":"2026-08-24","last":"2026-12-14","exB":"2026-12-15","exE":"2026-12-18"},"First 8 weeks":{"first":"2026-08-24","last":"2026-10-18","exB":null,"exE":null},"Second 8 weeks":{"first":"2026-10-21","last":"2026-12-20","exB":null,"exE":null}},"breaks":[{"name":"Labor Day Holiday","b":"2026-09-07","e":"2026-09-07"},{"name":"Fall Break","b":"2026-10-19","e":"2026-10-20"},{"name":"Thanksgiving Break","b":"2026-11-25","e":"2026-11-29"},{"name":"Winter Holiday - campus closed","b":"2026-12-25","e":"2027-01-01"}]},"Spring 2027":{"terms":{"Full term":{"first":"2027-01-11","last":"2027-04-29","exB":"2027-04-30","exE":"2027-05-07"},"First 8 weeks":{"first":"2027-01-11","last":"2027-03-08","exB":null,"exE":null},"Second 8 weeks":{"first":"2027-03-09","last":"2027-05-07","exB":null,"exE":null}},"breaks":[{"name":"Martin Luther King Jr. Day","b":"2027-01-18","e":"2027-01-18"},{"name":"Spring Break","b":"2027-03-14","e":"2027-03-20"}]}},"iue":{"Fall 2026":{"terms":{"Full term":{"first":"2026-08-24","last":"2026-12-11","exB":"2026-12-14","exE":"2026-12-18"},"First 8 weeks":{"first":"2026-08-24","last":"2026-10-16","exB":null,"exE":null},"Second 8 weeks":{"first":"2026-10-21","last":"2026-12-18","exB":null,"exE":null}},"breaks":[{"name":"Labor Day","b":"2026-09-07","e":"2026-09-07"},{"name":"Fall Break","b":"2026-10-19","e":"2026-10-20"},{"name":"Thanksgiving Break","b":"2026-11-25","e":"2026-11-29"}]},"Spring 2027":{"terms":{"Full term":{"first":"2027-01-11","last":"2027-04-30","exB":"2027-05-03","exE":"2027-05-07"},"First 8 weeks":{"first":"2027-01-11","last":"2027-03-05","exB":null,"exE":null},"Second 8 weeks":{"first":"2027-03-08","last":"2027-05-07","exB":null,"exE":null}},"breaks":[{"name":"Martin Luther King Jr. Holiday","b":"2027-01-18","e":"2027-01-18"},{"name":"Spring break","b":"2027-03-14","e":"2027-03-21"}]}},"iufw":{"Fall 2026":{"terms":{"Full term":{"first":"2026-08-24","last":"2026-12-20","exB":null,"exE":null},"First 8 weeks":{"first":"2026-08-24","last":"2026-10-18","exB":null,"exE":null},"Second 8 weeks":{"first":"2026-10-21","last":"2026-12-20","exB":null,"exE":null}},"breaks":[{"name":"Labor Day","b":"2026-09-07","e":"2026-09-07"},{"name":"Fall Break","b":"2026-10-19","e":"2026-10-20"},{"name":"Thanksgiving Break","b":"2026-11-25","e":"2026-11-29"}]},"Spring 2027":{"terms":{"Full term":{"first":"2027-01-11","last":"2027-05-09","exB":null,"exE":null},"First 8 weeks":{"first":"2027-01-11","last":"2027-03-07","exB":null,"exE":null},"Second 8 weeks":{"first":"2027-03-15","last":"2027-05-09","exB":null,"exE":null}},"breaks":[{"name":"Martin Luther King Jr. Day","b":"2027-01-18","e":"2027-01-18"},{"name":"Spring Break","b":"2027-03-08","e":"2027-03-14"}]}},"iuk":{"Fall 2026":{"terms":{"Full term":{"first":"2026-08-24","last":"2026-12-11","exB":"2026-12-14","exE":"2026-12-18"},"First 8 weeks":{"first":"2026-08-24","last":"2026-10-16","exB":null,"exE":null},"Second 8 weeks":{"first":"2026-10-21","last":"2026-12-18","exB":null,"exE":null}},"breaks":[{"name":"Labor Day Holiday","b":"2026-09-07","e":"2026-09-07"},{"name":"Fall Break","b":"2026-10-19","e":"2026-10-20"},{"name":"Thanksgiving Break","b":"2026-11-25","e":"2026-11-29"}]},"Spring 2027":{"terms":{"Full term":{"first":"2027-01-11","last":"2027-04-30","exB":"2027-05-03","exE":"2027-05-07"},"First 8 weeks":{"first":"2027-01-11","last":"2027-03-05","exB":null,"exE":null},"Second 8 weeks":{"first":"2027-03-08","last":"2027-05-07","exB":null,"exE":null},"Intersession":{"first":"2026-12-21","last":"2027-01-08","exB":null,"exE":null}},"breaks":[{"name":"Martin Luther King Jr. Day Holiday","b":"2027-01-18","e":"2027-01-18"},{"name":"Spring Break","b":"2027-03-14","e":"2027-03-21"}]}},"iun":{"Fall 2026":{"terms":{"Full term":{"first":"2026-08-24","last":"2026-12-11","exB":"2026-12-14","exE":"2026-12-18"},"First 8 weeks":{"first":"2026-08-24","last":"2026-10-16","exB":null,"exE":null},"Second 8 weeks":{"first":"2026-10-21","last":"2026-12-18","exB":null,"exE":null}},"breaks":[{"name":"Labor Day Holiday","b":"2026-09-07","e":"2026-09-07"},{"name":"Fall Break","b":"2026-10-19","e":"2026-10-20"},{"name":"Thanksgiving Break","b":"2026-11-25","e":"2026-11-29"}]},"Spring 2027":{"terms":{"Full term":{"first":"2027-01-11","last":"2027-04-30","exB":"2027-05-03","exE":"2027-05-07"},"First 8 weeks":{"first":"2027-01-11","last":"2027-03-05","exB":null,"exE":null},"Second 8 weeks":{"first":"2027-03-08","last":"2027-05-07","exB":null,"exE":null},"Intersession":{"first":"2026-12-21","last":"2027-01-08","exB":null,"exE":null}},"breaks":[{"name":"Martin Luther King Jr. Day Holiday","b":"2027-01-18","e":"2027-01-18"},{"name":"Spring Break","b":"2027-03-14","e":"2027-03-21"}]}},"iusb":{"Fall 2026":{"terms":{"Full term":{"first":"2026-08-24","last":"2026-12-11","exB":"2026-12-14","exE":"2026-12-18"},"First 8 weeks":{"first":"2026-08-24","last":"2026-10-16","exB":null,"exE":null},"Second 8 weeks":{"first":"2026-10-21","last":"2026-12-18","exB":null,"exE":null}},"breaks":[{"name":"Labor Day","b":"2026-09-07","e":"2026-09-07"},{"name":"Fall Break","b":"2026-10-19","e":"2026-10-20"},{"name":"Thanksgiving Break","b":"2026-11-25","e":"2026-11-29"}]},"Spring 2027":{"terms":{"Full term":{"first":"2027-01-11","last":"2027-04-30","exB":"2027-05-03","exE":"2027-05-07"},"First 8 weeks":{"first":"2027-01-11","last":"2027-03-05","exB":null,"exE":null},"Second 8 weeks":{"first":"2027-03-08","last":"2027-05-07","exB":null,"exE":null}},"breaks":[{"name":"Martin Luther King Jr. Day","b":"2027-01-18","e":"2027-01-18"},{"name":"Spring break","b":"2027-03-14","e":"2027-03-21"}]}},"ius":{"Fall 2026":{"terms":{"Full term":{"first":"2026-08-24","last":"2026-12-11","exB":"2026-12-14","exE":"2026-12-18"},"First 8 weeks":{"first":"2026-08-24","last":"2026-10-16","exB":null,"exE":null},"Second 8 weeks":{"first":"2026-10-21","last":"2026-12-18","exB":null,"exE":null}},"breaks":[{"name":"Labor Day Holiday","b":"2026-09-07","e":"2026-09-07"},{"name":"Fall Break","b":"2026-10-19","e":"2026-10-20"},{"name":"Thanksgiving Break","b":"2026-11-25","e":"2026-11-29"}]},"Spring 2027":{"terms":{"Full term":{"first":"2027-01-11","last":"2027-04-30","exB":"2027-05-03","exE":"2027-05-07"},"First 8 weeks":{"first":"2027-01-11","last":"2027-03-05","exB":null,"exE":null},"Second 8 weeks":{"first":"2027-03-08","last":"2027-05-07","exB":null,"exE":null},"Intersession":{"first":"2026-12-21","last":"2027-01-08","exB":null,"exE":null}},"breaks":[{"name":"Martin Luther King Jr. Day Holiday","b":"2027-01-18","e":"2027-01-18"},{"name":"Spring Break","b":"2027-03-14","e":"2027-03-21"}]}}};
+const ACAD_TODAY = new Date(2026,8,15);   // prototype's simulated "today" (Sep 15, 2026)
+function acadParse(s){ if(!s) return null; const [y,m,d]=s.split("-").map(Number); return new Date(y,m-1,d); }
+function acadFmt(s){ const d=acadParse(s); if(!d) return ""; return d.toLocaleDateString("en-US",{month:"short",day:"numeric"}); }
+function acadRange(a,b){ return (!b||a===b)?acadFmt(a):`${acadFmt(a)}–${acadFmt(b)}`; }
+
 /* =====================================================
    Personas (simulated data)
 ===================================================== */
@@ -1704,6 +1723,7 @@ firstyear: {
     tasks:[{type:"tasklauncher"}],
     classes:[
       {type:"degree"},
+      {type:"acad"},
       {type:"list",title:"📚 Fall schedule · 15 credit hours · from SIS",items:[
         {icon:"➗",bg:"red",title:"MATH-M 118 · Finite Mathematics",sub:"MWF 10:10–11:00 · Ballantine 013",right:"3 cr",rightSub:"enrolled"},
         {icon:"✍️",bg:"blue",title:"ENG-W 131 · Reading, Writing & Inquiry",sub:"TR 9:30–10:45 · Wells Library 001",right:"3 cr",rightSub:"enrolled"},
@@ -1834,7 +1854,6 @@ senior: {
         {cat:"status",n:"94%",l:"degree complete",src:"iGPS"},
       ]},
       {type:"actionitems"},
-      {type:"degree"},
       {type:"calendar"},
       {type:"careers"},
       {type:"crimsoncard"},
@@ -1865,6 +1884,7 @@ senior: {
         {title:"Commencement — Dec 19",sub:"Simon Skjodt Assembly Hall · guest tickets open in Nov.",state:"todo",src:"Info"},
       ]},
       {type:"degree"},
+      {type:"acad"},
       {type:"notice",tone:"gold",icon:"⏰",title:"Key deadlines",
        sub:"Apply to graduate by September 15, and enroll in the remaining A&H credit before the second-eight-week session begins (Oct 12). The remaining items are ceremony logistics."},
     ],
@@ -2310,6 +2330,7 @@ law: {
     tasks:[{type:"tasklauncher"}],
     classes:[
       {type:"degree"},
+      {type:"acad"},
       {type:"list",title:"📚 Fall schedule · 14 credit hours · from SIS",items:[
         {icon:"🏛️",bg:"red",title:"LAW-D 100 · Constitutional Law",sub:"MW 9:00–10:15 · Inlow Hall 121",right:"4 cr",rightSub:"enrolled"},
         {icon:"⚖️",bg:"blue",title:"LAW-B 200 · Evidence",sub:"MW 10:30–11:45 · Inlow Hall 118",right:"3 cr",rightSub:"enrolled"},
@@ -2442,6 +2463,7 @@ northwest: {
     tasks:[{type:"tasklauncher"}],
     classes:[
       {type:"degree"},
+      {type:"acad"},
       {type:"list",title:"📚 Fall schedule · 14 credit hours · from SIS",items:[
         {icon:"🩺",bg:"red",title:"NURS-B 244 · Community Nursing",sub:"MW 9:30–10:45 · Dunes Medical 108",right:"3 cr",rightSub:"enrolled"},
         {icon:"🧬",bg:"blue",title:"PHSL-P 261 · Anatomy & Physiology",sub:"MW 11:00–12:15 · Marram Hall 210",right:"5 cr",rightSub:"enrolled"},
@@ -2512,6 +2534,8 @@ function loadCampusFor(persona){
   return homeCampus(persona);
 }
 state.campus = loadCampusFor(state.persona);
+state.acadSem = "Fall 2026";   // current semester (prototype "today" = Sep 2026)
+state.acadTerm = "Full term";
 
 const $ = id => document.getElementById(id);
 const P = () => DATA[state.persona];
@@ -2641,6 +2665,7 @@ function renderCard(c){
     case "careers": return renderCareers();
     case "libraries": return renderLibraries();
     case "campusfeed": return renderCampusFeed();
+    case "acad": return renderAcad();
     case "signin": return renderSignin();
     case "kualitime": return renderKualiTime();
     case "calendar": return renderCalendar();
@@ -3251,6 +3276,62 @@ function openLibraries(prefill){
    events.iu.edu · news.iu.edu · iuhoosiers.com
 ===================================================== */
 const FEED_SRC = {events:"events.iu.edu", news:"news.iu.edu", athletics:"iuhoosiers.com"};
+function renderAcad(){
+  const c=curCampus();
+  if(!c) return card("📅 Academic calendar", `<div class="empty">Select a campus to see its key dates.</div>`);
+  const data=ACAD[c.id];
+  if(!data) return card("📅 Academic calendar", `<div class="empty">No published calendar for ${esc(c.name)}.</div>`);
+  let sem=state.acadSem; if(!data[sem]) sem=state.acadSem=Object.keys(data)[0];
+  let term=state.acadTerm; if(!data[sem].terms[term]) term=state.acadTerm=Object.keys(data[sem].terms)[0];
+  const t=data[sem].terms[term];
+  const start=acadParse(t.first), end=acadParse(t.exE||t.last);
+  let pct=0; if(start&&end&&end>start) pct=Math.max(0,Math.min(100,Math.round((ACAD_TODAY-start)/(end-start)*100)));
+  const rows=[];
+  rows.push(["Classes begin", acadFmt(t.first)]);
+  (data[sem].breaks||[]).forEach(bk=>{
+    const bb=acadParse(bk.b);
+    if(bb&&start&&end&&bb>=start&&bb<=end){
+      const label=/closed/i.test(bk.name)?bk.name:`${bk.name.replace(/\s+Holiday$/i,"")} — no classes`;
+      rows.push([label, acadRange(bk.b,bk.e)]);
+    }
+  });
+  if(t.exB){
+    rows.push(["Classes end", acadFmt(t.last)]);
+    rows.push(["Final exams", acadRange(t.exB,t.exE)]);
+  } else {
+    rows.push(["Classes and exams end", acadFmt(t.last)]);
+  }
+  return card("📅 Academic calendar", `
+    <button class="acad-term" onclick="openAcadPicker()">${esc(sem)} · ${esc(term)} <span class="acad-caret">▾</span></button>
+    <div class="acad-progress">
+      <div class="acad-ends"><span>${acadFmt(t.first)}</span><span>${acadFmt(t.exE||t.last)}</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="acad-list">
+      ${rows.map(([k,v])=>`<div class="acad-row"><span class="ak">${esc(k)}</span><span class="av">${esc(v)}</span></div>`).join("")}
+    </div>
+    <div class="cc-hint" style="text-align:left;margin-top:8px">${esc(c.name)} · official dates, subject to change</div>`);
+}
+function openAcadPicker(){
+  const c=curCampus(); if(!c) return; const data=ACAD[c.id]; if(!data) return;
+  const sems=Object.keys(data);
+  const terms=Object.keys(data[state.acadSem]?data[state.acadSem].terms:data[sems[0]].terms);
+  const opt=(v,on,kind)=>`<button class="camp-opt ${on?"sel":""}" onclick="setAcad('${kind}','${v.replace(/'/g,"\\'")}')">
+    <span class="camp-radio"></span><span class="co-name">${esc(v)}</span></button>`;
+  $("drawer").innerHTML=`
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <h2>📅 Academic calendar</h2>
+    <p class="dsub">${esc(c.name)} — choose a semester and term.</p>
+    <div class="dsec"><h4>Semester</h4><div class="camp-list">${sems.map(s=>opt(s,state.acadSem===s,"sem")).join("")}</div></div>
+    <div class="dsec"><h4>Term</h4><div class="camp-list">${terms.map(tm=>opt(tm,state.acadTerm===tm,"term")).join("")}</div></div>`;
+  $("drawer").classList.add("open"); $("scrim").classList.add("open");
+}
+function setAcad(kind,v){
+  const c=curCampus(); if(!c) return; const data=ACAD[c.id];
+  if(kind==="sem"){ state.acadSem=v; if(!data[v].terms[state.acadTerm]) state.acadTerm=Object.keys(data[v].terms)[0]; }
+  else state.acadTerm=v;
+  renderMain(); openAcadPicker();
+}
 function renderCampusFeed(){
   return `<div class="card"><div id="feedRoot">${feedInner()}</div></div>`;
 }
@@ -3610,6 +3691,7 @@ const WIDGET_CATALOG = [
   {type:"careers",    label:"🎯 Careers",            desc:"Handshake activity, coaching & events"},
   {type:"libraries",  label:"📚 Libraries",          desc:"Loans, ILL, study rooms & catalog"},
   {type:"degree",     label:"📊 Degree progress",     desc:"Credits & requirements from your degree audit", need:"degree"},
+  {type:"acad",       label:"📅 Academic calendar",   desc:"Key dates & term progress for your campus"},
   {type:"launch",     label:"♥ Favorite tasks",      desc:"Your pinned & popular tasks"},
 ];
 const FULL_WIDTH_TYPES = ["hero","launch","tasklauncher","campusmap","signin"];
@@ -3621,6 +3703,7 @@ function widgetInfo(def){
     orgs:"Memberships and events from BeInvolved.",careers:"Your activity from Handshake.",
     libraries:"Loans, holds and rooms from IUCAT / your library account.",kualitime:"IU timekeeping for hourly and work-study jobs.",
     degree:"Credits earned and requirements remaining, from your degree audit (iGPS for undergraduates; your school's registrar for professional programs).",
+    acad:"Official term start/end, breaks, and finals for the selected campus, compiled from IU registrar calendars. Tap the term to switch semester or session; it follows the campus you've selected. Dates are subject to change.",
     actionitems:'Actions from across IU — a link starts a task; its source marks it done.<br><br><b>🔗 System-confirmed</b> (default): clears when the source reports it (Canvas, Bursar, Registrar).<br><b>🖊️ Needs approval</b>: you act, then someone signs off.<br><b>Dismiss</b> hides an item without notifying the source.'};
   if(m[def.type]) return m[def.type];
   const p=(def.title||"").match(/·\s*(from .+|published estimate.*)$/i);
@@ -3637,6 +3720,7 @@ function widgetLabel(def){
   if(def.type==="orgs") return "🧑‍🤝‍🧑 Student Organizations";
   if(def.type==="libraries") return "📚 Libraries";
   if(def.type==="campusfeed") return "📰 Campus feed";
+  if(def.type==="acad") return "📅 Academic calendar";
   if(def.type==="degree") return "📊 Degree progress";
   if(def.type==="hero") return "📣 Highlights banner";
   if(def.type==="launch") return "♥ Favorite tasks";
