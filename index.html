@@ -2245,13 +2245,6 @@ law: {
     ],
     ill:[{title:"Law review article — PDF scan",status:"Ready — check your email"}],
     rooms:[{room:"Ruth Lilly Law Library · Study Room 3",when:"Today 4:00–6:00 p.m.",status:"Reserved"}]},
-  careers:{
-    appt:{when:"Wed 1:00 p.m.",who:"Professional Development Office"},
-    applied:8, saved:15,
-    events:[
-      {icon:"🏛️",title:"Summer associate OCI",where:"Inlow Hall · employer interviews",when:"Sep 22"},
-      {icon:"✍️",title:"Résumé & writing-sample review",where:"Professional Development Office",when:"Sep 25"},
-    ]},
   favorites:["canvas","payBill","transcript","grades","dining","duo"],
   calendar:[
     {t1:"9:00",t2:"10:15",title:"LAW-D 100 · Constitutional Law",loc:"Inlow Hall 121 · Prof. Reed",src:"SIS",color:"crimson",now:true,recurring:true},
@@ -2268,7 +2261,7 @@ law: {
   ],
   notifCount:3,
   notifications:[
-    {icon:"⚖️",unread:true,title:"OCI interview scheduled",sub:"Summer associate screening Friday in Inlow Hall. Bring a writing sample.",time:"2h ago"},
+    {icon:"🗓️",unread:true,title:"Spring registration window opens Oct 6",sub:"Your enrollment appointment is set in the Student Center — plan your spring courses.",time:"2h ago"},
     {icon:"🧾",unread:true,title:"Fall bill due Sep 25",sub:"Balance of $8,930. A no-interest payment plan is available through the Bursar.",time:"Today"},
     {icon:"📚",unread:true,title:"Law Review edits due Friday",sub:"Return note edits to your line editor by 5 p.m.",time:"Yesterday"},
     {icon:"🏛️",unread:false,title:"Guest lecture: appellate practice",sub:"Judge-in-residence · Inlow Hall Moot Court Room.",time:"2d ago"},
@@ -2284,14 +2277,15 @@ law: {
     home:[
       {type:"hero",kicker:"Week 4 · Fall semester",title:"Two classes today, journal edits Friday",
        sub:"Next: Constitutional Law at 9:00 a.m. in Inlow Hall 121.",
-       stats:[{n:"2",l:"Classes today"},{n:"8",l:"OCI applications"},{n:"$8,930",l:"Due Sep 25"}]},
+       stats:[{n:"2",l:"Classes today"},{n:"14",l:"Credit hours"},{n:"$8,930",l:"Due Sep 25"}]},
       {type:"calendar"},
       {type:"actionitems"},
-      {type:"careers"},
       {type:"crimsoncard"},
       {type:"orgs"},
       {type:"libraries"},
       {type:"campusfeed"},
+      {type:"notice",tone:"blue",icon:"🎯",title:"Career & professional development",
+       sub:"Summer-associate and OCI recruiting is run by the McKinney Professional Development Office through its own recruiting system — One.IU links you there but does not read your applications, interviews, or appointments from it."},
       {type:"launch"},
     ],
     tasks:[{type:"tasklauncher"}],
@@ -2397,7 +2391,7 @@ northwest: {
   notifications:[
     {icon:"🩺",unread:true,title:"Clinicals orientation Thursday",sub:"4 p.m. in the Dunes Medical/Professional Building. Bring your health clearance.",time:"3h ago"},
     {icon:"🧾",unread:true,title:"Fall bill due Sep 25",sub:"Balance of $1,410. A no-interest payment plan is available through the Bursar.",time:"Today"},
-    {icon:"🚆",unread:false,title:"South Shore Line schedule change",sub:"Weekday evening trains adjusted — check before your commute.",time:"2d ago"},
+    {icon:"📕",unread:false,title:"Library book due Sep 25",sub:"“Anatomy & Physiology” is due soon — renew online if you still need it.",time:"2d ago"},
   ],
   tabs:[
     {id:"home",label:"Home",icon:"🏠"},
@@ -3081,14 +3075,17 @@ function renderCareers(){
   if(!c) return `<div class="card"><div class="card-head"><h3>Careers</h3></div>
     <div class="empty">Handshake isn't linked to this account yet.<br><span class="link" style="cursor:pointer" onclick="openCareers()">Open Handshake →</span></div></div>`;
   const ev=c.events[0];
+  const plat=c.platform||"Handshake";
+  const hasCounts=(c.applied!=null && c.saved!=null);
   return `<div class="card">
     <div class="card-head"><h3>Careers</h3><span class="link" onclick="openCareers()">Open →</span></div>
     <div class="li"><div class="lic green">🗣️</div><div style="min-width:0">
-      <div class="lit">Career coach appointment</div><div class="lis">${esc(c.appt.when)} · ${esc(c.appt.who)}</div></div></div>
-    <div class="li"><div class="lic gold">⭐</div><div style="min-width:0">
-      <div class="lit">${c.saved} saved · ${c.applied} applied</div><div class="lis">Tracked in Handshake</div></div></div>
+      <div class="lit">${esc(c.apptLabel||"Career coach appointment")}</div><div class="lis">${esc(c.appt.when)} · ${esc(c.appt.who)}</div></div></div>
+    <div class="li"><div class="lic gold">${hasCounts?"⭐":"↗"}</div><div style="min-width:0">
+      <div class="lit">${hasCounts?`${c.saved} saved · ${c.applied} applied`:"Applications & interviews"}</div>
+      <div class="lis">${hasCounts?`Tracked in ${esc(plat)}`:`Managed in ${esc(plat)}`}</div></div></div>
     <div class="cc-hint" style="text-align:left;margin-top:10px">
-      Next: ${esc(ev.title)} (${esc(ev.when)}) · via Handshake</div>
+      Next: ${esc(ev.title)} (${esc(ev.when)}) · via ${esc(plat)}</div>
   </div>`;
 }
 function openCareers(){
@@ -3098,20 +3095,22 @@ function openCareers(){
     <div class="empty">Handshake isn't linked to this account.</div>
     <a class="getthere" onclick="toast('Prototype: opens Handshake.')">➔ Open Handshake</a>`;
     $("drawer").classList.add("open"); $("scrim").classList.add("open"); return; }
+  const plat=c.platform||"Handshake";
+  const hasCounts=(c.applied!=null && c.saved!=null);
   $("drawer").innerHTML = `
     <button class="close" onclick="closeDrawer()">✕</button>
     <h2>🎯 Careers</h2>
-    <p class="dsub">Your Handshake activity, appointments and events</p>
+    <p class="dsub">Your ${esc(plat)} activity, appointments and events</p>
     <div class="dsec"><h4>🗓️ Your activity</h4>
-      <div class="drow"><div>🗣️ Career coach appointment<div class="sub">${esc(c.appt.when)} · ${esc(c.appt.who)} · booked in Handshake</div></div><span class="right badge green">Upcoming</span></div>
-      <div class="drow"><div>📨 Applications in Handshake<div class="sub">Statuses update only when employers post them</div></div><span class="right"><b>${c.applied}</b></span></div>
-      <div class="drow"><div>⭐ Saved &amp; recommended jobs<div class="sub">Refresh weekly from your profile</div></div><span class="right"><b>${c.saved}</b></span></div></div>
+      <div class="drow"><div>🗣️ ${esc(c.apptLabel||"Career coach appointment")}<div class="sub">${esc(c.appt.when)} · ${esc(c.appt.who)}</div></div><span class="right badge green">Upcoming</span></div>
+      ${hasCounts?`<div class="drow"><div>📨 Applications in ${esc(plat)}<div class="sub">Statuses update only when employers post them</div></div><span class="right"><b>${c.applied}</b></span></div>
+      <div class="drow"><div>⭐ Saved &amp; recommended jobs<div class="sub">Refresh weekly from your profile</div></div><span class="right"><b>${c.saved}</b></span></div>`:`<div class="drow"><div>📨 Applications &amp; interviews<div class="sub">Managed in ${esc(plat)} — One.IU links you there but does not show counts</div></div><span class="right">↗</span></div>`}</div>
     <div class="dsec"><h4>📅 Career events</h4>
       ${c.events.map(e=>`<div class="li"><div class="lic gold">${e.icon}</div>
         <div style="min-width:0"><div class="lit">${esc(e.title)}</div><div class="lis">${esc(e.where)}</div></div>
         <div class="lir"><div class="lirt">${esc(e.when)}</div></div></div>`).join("")}</div>
-    <a class="getthere" onclick="toast('Prototype: opens Handshake.')">➔ Open Handshake</a>
-    <div class="cc-hint" style="margin-top:12px">Handshake shows what you access through IU. Jobs you apply to directly on a company's own site won't appear here.</div>`;
+    <a class="getthere" onclick="toast('Prototype: opens ${esc(plat)}.')">➔ Open ${esc(plat)}</a>
+    <div class="cc-hint" style="margin-top:12px">${esc(c.platNote||plat+" shows what you access through IU. Jobs you apply to directly on a company's own site won't appear here.")}</div>`;
   $("drawer").classList.add("open"); $("scrim").classList.add("open");
 }
 
