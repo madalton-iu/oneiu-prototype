@@ -834,6 +834,11 @@ body.reduce-motion *{animation:none !important; transition:none !important}
 /* ---- icon declutter: hide tiny, generic icons that add no meaning ---- */
 .li .lic,.bal .bi,.assign-ic,.src-ic{display:none !important}
 .src-chip{padding-left:10px}
+/* widget info popover + fixed (non-rearrangeable) blocks */
+.w-note{display:none;position:absolute;top:46px;right:12px;max-width:260px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);padding:11px 13px;font-size:12px;color:var(--muted);line-height:1.5;z-index:6}
+.widget.info-open .w-note{display:block}
+.w-info{font-style:normal}
+.fixed-block{margin-bottom:18px}
 </style>
 </head>
 <body>
@@ -1134,7 +1139,6 @@ applicant: {
     {id:"ai_ap1",src:"finaid",title:"File your FAFSA",desc:"The 2027–28 form opens Oct 1. Add IU (code 001809) so your aid can be packaged.",due:"Opens Oct 1",high:true,action:{label:"Open studentaid.gov",target:"FAFSA at studentaid.gov"},confirm:"system",confirmedBy:"IU receives your processed FAFSA (a few days)"},
     {id:"ai_ap2",src:"admissions",title:"Reserve a Red Carpet Day visit",desc:"Oct 10 session is 80% full.",due:"Optional",action:{label:"Reserve visit",target:"the Admissions visit scheduler"},confirm:"system",confirmedBy:"the scheduler records your reservation"},
     {id:"ai_ap3",src:"housing",title:"Submit housing interest form",desc:"Improves your room-selection order later.",due:"Optional",action:{label:"Open form",target:"the Residential Programs form"},confirm:"system",confirmedBy:"the submission is recorded"},
-    {id:"ai_ap4",src:"email",title:"Reply about your scholarship interview",desc:"Counselor asked for your availability next week.",due:"Flagged 2d ago",action:{label:"Open in email",target:"your IU email thread"},confirm:"self"},
   ],
   notifCount:2,
   notifications:[
@@ -1261,7 +1265,7 @@ firstyear: {
     {id:"ai_fy1",src:"hr",title:"Submit work-study timesheet",desc:"9.5 hours logged this week.",due:"Fri 5:00 p.m.",high:true,action:{label:"Open Kuali Time",target:"Kuali Time"},confirm:"approval",approver:"your supervisor"},
     {id:"ai_fy2",src:"canvas",title:"MATH-M 118 · Problem Set 7",desc:"Finite Math · submit on the assignment page.",due:"Tomorrow 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
     {id:"ai_fy3",src:"advising",title:"Confirm your advising appointment",desc:"Spring planning · Ferguson 2042.",due:"Thu 3:30 p.m.",action:{label:"Confirm time",target:"the advising scheduler"},confirm:"system",confirmedBy:"the scheduler marks it confirmed"},
-    {id:"ai_fy4",src:"compliance",title:"FERPA refresher training",desc:"Required for student employees · ~15 min.",due:"End of month",action:{label:"Start training",target:"IU Learn"},confirm:"system",confirmedBy:"IU Learn logs your completion"},
+    {id:"ai_fy4",src:"compliance",title:"FERPA refresher training",desc:"Required for student employees · ~15 min.",due:"End of month",action:{label:"Start training",target:"the IU FERPA Tutorial"},confirm:"system",confirmedBy:"the FERPA Tutorial records your completion"},
     {id:"ai_fy5",src:"events",title:"RSVP: Teter floor event",desc:"Pizza night, hosted by your RA.",due:"Friday",action:{label:"RSVP",target:"the event page"},confirm:"system",confirmedBy:"your RSVP is recorded"},
   ],
   notifCount:3,
@@ -1339,12 +1343,6 @@ firstyear: {
     campus:[
       {type:"campusmap"},
       {type:"campusfeed"},
-      {type:"list",title:"🌳 This week at IU",items:[
-        {icon:"🏀",bg:"red",title:"Hoosier Hysteria",sub:"Assembly Hall · free student tickets",right:"Fri",rightSub:"8pm"},
-        {icon:"🎃",bg:"gold",title:"Fall Fest",sub:"Dunn Meadow · food trucks & live music",right:"Sat",rightSub:"12–4pm"},
-        {icon:"🧠",bg:"purple",title:"Majors & Minors Fair",sub:"Alumni Hall · 100+ programs",right:"Tue",rightSub:"11–2pm"},
-        {icon:"🎬",bg:"blue",title:"IU Cinema: Studio Ghibli night",sub:"$2 student tickets",right:"Thu",rightSub:"7pm"},
-      ]},
       {type:"notice",tone:"blue",icon:"🧘",title:"Counseling & support",
        sub:"CAPS offers free drop-in \"Let's Talk\" sessions at Eigenmann and the Well House — no appointment needed. Standard appointments can be scheduled from the Tasks tab."},
     ],
@@ -1504,11 +1502,10 @@ staff: {
   ],
   actionItems:[
     {id:"ai_st1",src:"hr",title:"Approve 4 student timesheets",desc:"You are the approver — due before Friday payroll.",due:"Mon 10:00 a.m.",high:true,action:{label:"Review in Kuali Time",target:"Kuali Time approvals"},confirm:"system",confirmedBy:"Kuali Time records each approval"},
-    {id:"ai_st2",src:"compliance",title:"Annual data security training",desc:"Required for all staff · ~20 min.",due:"Sep 30",high:true,action:{label:"Start training",target:"Workday Learning"},confirm:"system",confirmedBy:"Workday Learning logs your completion"},
-    {id:"ai_st3",src:"benefits",title:"Apply the employee tuition benefit",desc:"For your spring SPEA-V 506 course.",due:"Nov 15",action:{label:"Apply benefit",target:"the HR benefits portal"},confirm:"approval",approver:"HR Benefits (eligibility review)"},
+    {id:"ai_st2",src:"compliance",title:"Annual data security training",desc:"Required for all staff · ~20 min.",due:"Sep 30",high:true,action:{label:"Start training",target:"the IU information security training (Protect IU)"},confirm:"system",confirmedBy:"your completion is recorded to your training record"},
+    {id:"ai_st3",src:"benefits",title:"Apply the employee tuition benefit",desc:"For your spring SPEA-V 506 course.",due:"Nov 15",action:{label:"Apply benefit",target:"the Employee Center (IU HR)"},confirm:"approval",approver:"HR Benefits (eligibility review)"},
     {id:"ai_st4",src:"deptform",title:"Submit Welcome Week final budget",desc:"Route to your director for sign-off.",due:"Friday",action:{label:"Open budget form",target:"the finance form"},confirm:"approval",approver:"your director"},
     {id:"ai_st5",src:"hr",title:"Performance self-assessment",desc:"Submit your portion of the annual review.",due:"Sept 19",action:{label:"Open self-assessment",target:"the HR review tool"},confirm:"system",confirmedBy:"your submission is recorded (manager review follows)"},
-    {id:"ai_st6",src:"benefits",title:"Review open enrollment changes",desc:"Confirm or update your 2027 elections, including HSA contribution.",due:"Oct 15 – Nov 5",action:{label:"Open benefits",target:"the HR benefits portal"},confirm:"self"},
   ],
   notifCount:3,
   notifications:[
@@ -1564,11 +1561,6 @@ staff: {
     campus:[
       {type:"campusmap"},
       {type:"campusfeed"},
-      {type:"list",title:"🌳 Around campus",items:[
-        {icon:"🚶",bg:"green",title:"Healthy IU walking challenge",sub:"Team registration open through September",right:"Now",rightSub:"Register"},
-        {icon:"🎨",bg:"purple",title:"Eskenazi Museum: staff preview",sub:"New exhibition preview for employees",right:"Oct 2",rightSub:"8:30am"},
-        {icon:"🏀",bg:"red",title:"Faculty/staff ticket presale",sub:"Basketball season packages",right:"Sep 22",rightSub:"On sale"},
-      ]},
       {type:"notice",tone:"blue",icon:"🅿️",title:"Home football gameday parking",
        sub:"EM-S lots near Memorial Stadium have restrictions for the Sep 19 home game. Plan alternate parking or use campus transit; details are on the Tasks tab."},
     ],
@@ -1623,8 +1615,7 @@ faculty: {
     {id:"ai_fac4",src:"deptform",title:"Sign PhD committee form — J. Kim",desc:"Yours is the last signature needed.",due:"This week",action:{label:"Sign form",target:"the Graduate School form"},confirm:"system",confirmedBy:"the form records your signature and closes"},
     {id:"ai_fac5",src:"compliance",title:"Annual conflict-of-interest disclosure",desc:"Required for all PIs.",due:"Sep 30",action:{label:"Open disclosure",target:"the compliance disclosure form"},confirm:"system",confirmedBy:"the disclosure system logs your filing"},
     {id:"ai_fac6",src:"registrar",title:"Submit spring textbook orders",desc:"Bookstore adoption deadline.",due:"Oct 9",action:{label:"Open adoptions",target:"the textbook adoption tool"},confirm:"system",confirmedBy:"the adoption tool records your orders"},
-    {id:"ai_fac7",src:"benefits",title:"Review open enrollment changes",desc:"Confirm or update your 2027 benefit elections.",due:"Oct 15 – Nov 5",action:{label:"Open benefits",target:"the HR benefits portal"},confirm:"self"},
-    {id:"ai_fac8",src:"benefits",title:"Apply tuition benefit for a dependent",desc:"Spring term · dependents receive 50% at IU campuses.",due:"Nov 15",action:{label:"Apply benefit",target:"the HR benefits portal"},confirm:"approval",approver:"HR Benefits (eligibility review)"},
+    {id:"ai_fac8",src:"benefits",title:"Apply tuition benefit for a dependent",desc:"Spring term · dependents receive 50% at IU campuses.",due:"Nov 15",action:{label:"Apply benefit",target:"the Employee Center (IU HR)"},confirm:"approval",approver:"HR Benefits (eligibility review)"},
   ],
   notifCount:3,
   notifications:[
@@ -1700,7 +1691,7 @@ faculty: {
         {icon:"💵",bg:"green",title:"Jun 30 · Monthly",sub:"Regular pay",right:"$6,742.10",rightSub:"net"},
       ]},
       {type:"notice",tone:"blue",icon:"🗓️",title:"Open enrollment starts Oct 15",
-       sub:"Benefit elections for 2027 are made in Workday during the Oct 15 – Nov 5 window."},
+       sub:"Benefit elections for 2027 are made in the Employee Center (IU HR) during the Oct 15 – Nov 5 window."},
     ],
     research:[
       {type:"steps",title:"🔬 Proposal routing · from Kuali Coeus (KC)",items:[
@@ -1734,7 +1725,6 @@ parent: {
     {id:"ai_pa1",src:"bursar",title:"Pay Jake's fall bill ($6,240)",desc:"Proxy access · or enroll in the payment plan.",due:"Sep 25",high:true,action:{label:"Pay bill",target:"the Bursar proxy payment page"},confirm:"system",confirmedBy:"the payment posts to Jake's account"},
     {id:"ai_pa2",src:"events",title:"Register for Family Weekend",desc:"Oct 17–19 · includes the Homecoming game.",due:"Hotels limited",action:{label:"Register",target:"Family Weekend registration"},confirm:"system",confirmedBy:"your registration is confirmed at checkout"},
     {id:"ai_pa3",src:"deptform",title:"Verify emergency contact info",desc:"Annual verification · ~2 min.",due:"This month",action:{label:"Review contacts",target:"the emergency contact form"},confirm:"system",confirmedBy:"the form saves your confirmation"},
-    {id:"ai_pa4",src:"email",title:"Reply to the Family Weekend email",desc:"Family Programs asked whether you'll join the Saturday brunch.",due:"Flagged 2d ago",action:{label:"Open in email",target:"your IU email thread"},confirm:"self"},
   ],
   notifCount:2,
   notifications:[
@@ -1872,6 +1862,7 @@ function toggleFav(ev,id){
 /* ---------- card renderers ---------- */
 function esc(s){return String(s??"")}
 function stripLead(s){return String(s??"").replace(/^[^\p{L}\p{N}]+/u,"")}
+function stripProv(s){return String(s??"").replace(/\s*·\s*(from .+|published estimate.*)$/i,"")}
 
 function renderCard(c){
   switch(c.type){
@@ -1926,7 +1917,6 @@ function renderCard(c){
     case "kualitime": return renderKualiTime();
     case "calendar": return renderCalendar();
     case "assignments": return card(c.title,
-      `<div class="assign-note">📘 From Canvas · your enrolled courses</div>` +
       c.items.map(a=>`
       <div class="assign">
         <div class="assign-ic">📘</div>
@@ -1957,7 +1947,7 @@ function renderCard(c){
   return "";
 }
 function card(title, body, extraClass="", headLink=""){
-  return `<div class="card ${extraClass}"><div class="card-head"><h3>${stripLead(title)}</h3>${headLink}</div>${body}</div>`;
+  return `<div class="card ${extraClass}"><div class="card-head"><h3>${stripLead(stripProv(title))}</h3>${headLink}</div>${body}</div>`;
 }
 
 /* Favorites + popular tasks (home) */
@@ -2183,14 +2173,6 @@ function aiInner(){
   const dismissedCount = state.aiDismissed[state.persona].size;
   return `
     <div class="ai-head"><span class="w-title">Action Items</span><span class="count-badge">${aiActiveCount()}</span></div>
-    <div class="ai-sub">Actions from across IU. A link starts a task; its source marks it done.</div>
-    <button class="explainer-toggle" onclick="aiToggleExplain()">${state.ai.explain?"▾":"▸"} How “done” works</button>
-    <div class="explainer ${state.ai.explain?"open":""}">
-      <div class="model-row"><span class="model-key">🔗</span><div><b>System-confirmed</b> (default). Clears when the source reports it — Canvas, Bursar, Registrar. Starting isn't finishing.</div></div>
-      <div class="model-row"><span class="model-key">🖊️</span><div><b>Needs approval.</b> You act, then someone else signs off. Shows as awaiting them.</div></div>
-      <div class="model-row"><span class="model-key">🙋</span><div><b>Self-reported.</b> Email requests — nothing verifies these. “Mark done” only clears your list.</div></div>
-      <div style="margin-top:9px"><b>Dismiss</b> just hides an item — use it if you've handled something the feed hasn't caught up on. It never notifies the source.</div>
-    </div>
     <div class="ai-chips">${aiChip("all","All")}${aiChip("urgent","Urgent")}${aiChip("progress","In progress")}</div>
     <div class="ai-items">${ list.length ? `<div class="ai-grid">${list.map(aiRenderItem).join("")}</div>` : aiEmpty() }</div>
     <div class="ai-foot">
@@ -2570,7 +2552,7 @@ function calCTA(e){
 }
 function renderCalendar(){
   const {events,removed}=calDedupe(P().calendar||[]);
-  const body=`<div class="cal-src">Aggregated from Outlook, SIS classes &amp; event RSVPs${removed?` · ${removed} Outlook duplicate${removed>1?"s":""} merged`:""}</div>` +
+  const body=
     (events.length
       ? `<div class="sched">${events.map(e=>{const m=CAL_SRC[e.src]||CAL_SRC.Exchange;return `
         <div class="sched-item ${e.now?"sched-now":""}">
@@ -2806,8 +2788,8 @@ function saveLayouts(){
    "cat:orgs" is a catalog widget added by the user. */
 function getLayout(){
   const p=state.persona, t=state.tab;
-  const defs=DATA[p].views[t]||[]; const n=defs.length;
-  const all=[...Array(n).keys()].map(String);
+  const defs=DATA[p].views[t]||[];
+  const all=[...defs.keys()].filter(i=>!FIXED_TYPES.includes(defs[i].type)).map(String);
   layouts[p]=layouts[p]||{};
   let lay=layouts[p][t];
   if(!lay || !Array.isArray(lay.order) || !Array.isArray(lay.removed)){
@@ -2836,11 +2818,22 @@ const WIDGET_CATALOG = [
   {type:"orgs",       label:"🧑‍🤝‍🧑 Student Organizations", desc:"Memberships, announcements & events"},
   {type:"careers",    label:"🎯 Careers",            desc:"Handshake activity, coaching & events"},
   {type:"libraries",  label:"📚 Libraries",          desc:"Loans, ILL, study rooms & catalog"},
-  {type:"campusmap",  label:"🗺️ Campus map",         desc:"Search buildings, buses, parking & food"},
-  {type:"tasklauncher",label:"⊞ One.IU tasks",      desc:"Search & launch any task"},
   {type:"launch",     label:"⭐ Favorite tasks",      desc:"Your pinned & popular tasks"},
 ];
 const FULL_WIDTH_TYPES = ["hero","launch","tasklauncher","campusmap","signin"];
+const FIXED_TYPES = ["tasklauncher","campusmap"];   // too large to rearrange — rendered fixed, not as widgets
+function widgetInfo(def){
+  if(def.info) return def.info;
+  const m={calendar:"Aggregated from Outlook (Exchange), SIS class meetings and event RSVPs; duplicate Outlook entries are merged in favor of the source system.",
+    assignments:"From Canvas — your enrolled courses.",crimsoncard:"Card and balances from CSGold.",
+    orgs:"Memberships and events from BeInvolved.",careers:"Your activity from Handshake.",
+    libraries:"Loans, holds and rooms from IUCAT / your library account.",kualitime:"IU timekeeping for hourly and work-study jobs.",
+    actionitems:'Actions from across IU — a link starts a task; its source marks it done.<br><br><b>🔗 System-confirmed</b> (default): clears when the source reports it (Canvas, Bursar, Registrar).<br><b>🖊️ Needs approval</b>: you act, then someone signs off.<br><b>Dismiss</b> hides an item without notifying the source.'};
+  if(m[def.type]) return m[def.type];
+  const p=(def.title||"").match(/·\s*(from .+|published estimate.*)$/i);
+  return p ? p[1].charAt(0).toUpperCase()+p[1].slice(1) : "";
+}
+function toggleWidgetInfo(ev,btn){ ev.stopPropagation(); const w=btn.closest(".widget"); if(w) w.classList.toggle("info-open"); }
 const WIDE_TYPES = ["actionitems","campusfeed"];   // max 2 columns wide
 function widgetLabel(def){
   if(def.type==="signin") return "🔐 Sign in";
@@ -2861,15 +2854,18 @@ function widgetWrap(tok,def){
   const span = FULL_WIDTH_TYPES.includes(def.type) ? "full"
              : WIDE_TYPES.includes(def.type) ? "wide" : "";
   const sel = state.moving===tok;
+  const info = widgetInfo(def);
   return `<div class="widget ${span} ${sel?"selected":""}" data-tok="${tok}" draggable="false"
       ondragstart="wDragStart(event,this)" ondragend="wDragEnd(event,this)"
       ondragover="wDragOver(event,this)" ondragleave="this.classList.remove('drop-target')"
       ondrop="wDrop(event,this)">
     <div class="w-controls">
+      ${info?`<button class="w-info" title="About this widget & its data source" onclick="toggleWidgetInfo(event,this)">ⓘ</button>`:""}
       <button class="w-grab" title="Drag to rearrange (or tap, then tap a destination)"
         onmousedown="armDrag(this)" onclick="grabClick(event,'${tok}')">⠿</button>
       <button class="w-x" title="Remove widget" onclick="removeWidget(event,'${tok}')">✕</button>
     </div>
+    ${info?`<div class="w-note">${info}</div>`:""}
     ${renderCard(def)}
   </div>`;
 }
@@ -3014,6 +3010,9 @@ function renderMain(){
   const cards = toks.map(tokenDef).filter(Boolean);
   const tabLabel = p.tabs.find(t=>t.id===state.tab)?.label || "";
   const isHome = state.tab==="home";
+  const allDefs = P().views[state.tab]||[];
+  const fixedHtml = allDefs.filter(d=>FIXED_TYPES.includes(d.type)).map(d=>`<div class="fixed-block">${renderCard(d)}</div>`).join("");
+  const hasCustom = allDefs.some(d=>!FIXED_TYPES.includes(d.type));
   const gridHtml = toks.length
     ? toks.map(tok=>{ const d=tokenDef(tok); return d?widgetWrap(tok,d):""; }).join("")
     : `<div class="grid-empty">This screen is empty.<br><br>
@@ -3031,13 +3030,13 @@ function renderMain(){
       </div>
     </div>
     ${renderOmnibar()}
-    <div class="layout-bar">
-      <span class="hint">⠿ drag to rearrange · ✕ to remove</span>
+    ${fixedHtml}
+    ${hasCustom ? `<div class="layout-bar">
       <button class="lbtn" onclick="openWidgetPicker()">＋ Add widgets</button>
       <button class="lbtn" onclick="resetLayout()">↺ Reset layout</button>
     </div>
-    <div class="grid">${gridHtml}</div>`;
-  if(cards.some(c=>c.type==="campusmap")) setTimeout(setupCampusMap,0);
+    <div class="grid">${gridHtml}</div>` : ``}`;
+  if(allDefs.some(d=>d.type==="campusmap")) setTimeout(setupCampusMap,0);
   if(cards.some(c=>c.type==="kualitime") && state.ktIn) setTimeout(ktStartTick,0); else if(!cards.some(c=>c.type==="kualitime")) ktStopTick();
   const inner = $("main"); inner.classList.remove("main-inner"); void inner.offsetWidth; inner.classList.add("main-inner");
 }
