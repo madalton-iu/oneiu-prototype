@@ -37,7 +37,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .app{display:flex;min-height:100vh}
 .sidebar{
   width:232px;flex-shrink:0;position:sticky;top:0;height:100vh;
-  background:var(--crimson);color:#fff;display:flex;flex-direction:column;
+  background:#006298;color:#fff;display:flex;flex-direction:column;
   padding:22px 14px;z-index:30;
 }
 .logo{display:flex;align-items:center;gap:11px;padding:4px 10px 22px}
@@ -56,7 +56,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   transition:background .15s;
 }
 .nav button:hover{background:rgba(255,255,255,.12)}
-.nav button.active{background:#fff;color:var(--crimson)}
+.nav button.active{background:#fff;color:#006298}
 .nav .ic{font-size:18px;width:22px;text-align:center}
 .side-foot{
   margin-top:auto;padding:14px 12px;border-radius:16px;background:rgba(0,0,0,.18);
@@ -65,7 +65,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .side-foot b{color:var(--gold)}
 .side-foot button{
   margin-top:9px;width:100%;padding:9px;border-radius:10px;background:#fff;
-  color:var(--crimson);font-weight:700;font-size:13px;
+  color:#006298;font-weight:700;font-size:13px;
 }
 
 /* ---------- Main ---------- */
@@ -151,7 +151,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 /* hero */
 .hero{
   grid-column:1/-1;border-radius:var(--r-lg);padding:26px 28px;color:#fff;
-  background:linear-gradient(112deg,var(--crimson) 0%,var(--crimson-soft) 60%,#c94b30 100%);
+  background:linear-gradient(112deg,#006298 0%,#0a72ab 55%,#1f9bc4 100%);
   box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
 }
 .hero::after{
@@ -1603,7 +1603,8 @@ applicant: {
     tasks:[{type:"tasklauncher"}],
     campus:[{type:"campusmap"},{type:"campusfeed"}],
     application:[
-      {type:"list",title:"📄 Kelley Direct Admit · from the IU Admissions Portal",items:[
+      {type:"list",title:"📄 Application checklist · from the IU Admissions Portal",items:[
+        {icon:"🎓",bg:"blue",title:"Kelley School of Business · Direct Admit",sub:"First-year · Early Action · Fall 2027",badge:{txt:"Applied",cls:"blue"}},
         {icon:"📄",bg:"green",title:"Application",sub:"Submitted Sep 10 · Common App · Early Action",badge:{txt:"Received",cls:"green"}},
         {icon:"🏫",bg:"green",title:"Official transcript",sub:"Bloomington High School South",badge:{txt:"Received",cls:"green"}},
         {icon:"📊",bg:"green",title:"SAT scores",sub:"Official · via College Board",badge:{txt:"Received",cls:"green"}},
@@ -2175,7 +2176,6 @@ parent: {
     {id:"tasks",label:"Tasks",icon:"⊞"},
     {id:"student",label:"My Student",icon:"🧑‍🎓"},
     {id:"billing",label:"Finances",icon:"💳"},
-    {id:"events",label:"Family Events",icon:"🏈"},
     {id:"campus",label:"Campus",icon:"🗺️"},
   ],
   views:{
@@ -2199,7 +2199,18 @@ parent: {
       {type:"launch"},
     ],
     tasks:[{type:"tasklauncher"}],
-    campus:[{type:"campusmap"},{type:"campusfeed"}],
+    campus:[
+      {type:"campusmap"},
+      {type:"campusfeed"},
+      {type:"list",title:"🏈 Family events this year",items:[
+        {icon:"🏈",bg:"red",title:"Family Weekend + Homecoming",sub:"Tailgate, game tickets, open houses & brunch",right:"Oct 17–19",rightSub:"Register now"},
+        {icon:"📦",bg:"gold",title:"Fall move-in",sub:"Completed in August · Briscoe Quad",right:"Done",rightSub:"Aug 20"},
+        {icon:"💻",bg:"blue",title:"Family webinar series",sub:"Monthly · sophomore year topics",right:"Oct 7",rightSub:"Next session"},
+        {icon:"🎓",bg:"purple",title:"Commencement (projected)",sub:"Based on Jake's current four-year track",right:"May 2029"},
+      ]},
+      {type:"notice",tone:"green",icon:"🏨",title:"Hotel availability",
+       sub:"Bloomington hotels fill months in advance for Family Weekend and Homecoming. The Office of Parent & Family Programs maintains a list of reserved room blocks."},
+    ],
     student:[
       {type:"list",title:"🧑‍🎓 Jake Miller · Sophomore, Kelley",items:[
         {icon:"📚",bg:"blue",title:"Enrollment status",sub:"Full-time · 15 credit hours · Fall 2026",badge:{txt:"Confirmed",cls:"green"}},
@@ -2211,8 +2222,8 @@ parent: {
        sub:"Jake determines what is shared and can update it at any time in his settings. Billing is fully shared; grades are not. To request additional access, he can update his sharing preferences under \"Manage third-party access.\""},
       {type:"list",title:"🚨 Safety & wellbeing resources",items:[
         {icon:"🚨",bg:"red",title:"IU-Notify alerts",sub:"You are subscribed to Bloomington campus alerts",badge:{txt:"Active",cls:"green"}},
-        {icon:"🩺",bg:"green",title:"Student Health Center",sub:"How care works, insurance & after-hours options",right:"Learn more"},
-        {icon:"🧘",bg:"purple",title:"CAPS (counseling)",sub:"Sessions included in student fees",right:"Learn more"},
+        {icon:"🩺",bg:"green",title:"Student Health Center",sub:"How care works, insurance & after-hours options",href:"https://healthcenter.indiana.edu",linkLabel:"Learn more"},
+        {icon:"🧘",bg:"purple",title:"CAPS (counseling)",sub:"Sessions included in student fees",href:"https://healthcenter.indiana.edu/counseling/",linkLabel:"Learn more"},
       ]},
     ],
     billing:[
@@ -2233,16 +2244,6 @@ parent: {
       ]},
       {type:"notice",tone:"gold",icon:"⏰",title:"Payment deadline",
        sub:"Balances unpaid after September 25 incur a late fee and a registration hold. Enrolling in the payment plan by September 25 counts as on-time payment."},
-    ],
-    events:[
-      {type:"list",title:"🏈 Family events this year",items:[
-        {icon:"🏈",bg:"red",title:"Family Weekend + Homecoming",sub:"Tailgate, game tickets, open houses & brunch",right:"Oct 17–19",rightSub:"Register now"},
-        {icon:"📦",bg:"gold",title:"Fall move-in",sub:"Completed in August · Briscoe Quad",right:"Done",rightSub:"Aug 20"},
-        {icon:"💻",bg:"blue",title:"Family webinar series",sub:"Monthly · sophomore year topics",right:"Oct 7",rightSub:"Next session"},
-        {icon:"🎓",bg:"purple",title:"Commencement (projected)",sub:"Based on Jake's current four-year track",right:"May 2029"},
-      ]},
-      {type:"notice",tone:"green",icon:"🏨",title:"Hotel availability",
-       sub:"Bloomington hotels fill months in advance for Family Weekend and Homecoming. The Office of Parent & Family Programs maintains a list of reserved room blocks."},
     ],
   }
 },
@@ -2549,18 +2550,21 @@ function heroNext(){
 /* ---- Hero selection rule (deterministic) ----
    The headline is chosen from the user's current signals by a fixed priority:
      1 blocking  — approvals you owe / grading others wait on
-     2 urgent    — anything due within 2 days
-     3 money     — a balance due
-     4 deadline  — your other dated items (soonest first)
-     5 today     — today's schedule
+     2 urgent    — anything due within 2 days (incl. a bill due now)
+     3 deadline  — your other dated items (soonest first)
+     4 today     — today's schedule
+     5 money     — a balance due that isn't imminent (kept low so a routine
+                   bursar bill never headlines over classes/deadlines and become
+                   an unnecessary source of stress; parents still surface it
+                   because their pool has nothing higher)
      6 status    — standing indicators (degree %, application status, hours)
    Ties: soonest due date, then largest count. Rank 1 = headline; next 3 = chips. */
 function heroTier(s){
   if(s.cat==="approval"||s.cat==="grading") return 1;
   if(s.days!=null && s.days<=2) return 2;
-  if(s.cat==="money") return 3;
-  if(s.cat==="deadline"||s.cat==="submission") return 4;
-  if(s.cat==="today") return 5;
+  if(s.cat==="deadline"||s.cat==="submission") return 3;
+  if(s.cat==="today") return 4;
+  if(s.cat==="money") return 5;
   return 6;
 }
 function pickHero(sigs){
@@ -2648,7 +2652,10 @@ function renderCard(c){
         <div class="lic ${esc(i.bg||"")}">${esc(i.icon)}</div>
         <div style="min-width:0">
           <div class="lit">${esc(i.title)}${i.src?`<span class="step-src">${esc(i.src)}</span>`:""}</div>
-          <div class="lis">${esc(i.sub)}${i.link?` <button class="step-link" onclick="toast('Prototype: opens ${esc(i.link)}.')">${esc(i.linkLabel||"Open")} ↗</button>`:""}</div>
+          <div class="lis">${esc(i.sub)}${
+            i.href?` <a class="step-link" href="${esc(i.href)}" target="_blank" rel="noopener">${esc(i.linkLabel||"Learn more")} ↗</a>`
+            : i.link?` <button class="step-link" onclick="toast('Prototype: opens ${esc(i.link)}.')">${esc(i.linkLabel||"Open")} ↗</button>`
+            : ""}</div>
         </div>
         <div class="lir">
           ${i.badge?`<span class="badge ${esc(i.badge.cls)}">${esc(i.badge.txt)}</span>`:""}
@@ -2908,7 +2915,7 @@ function openPlace(id){
         ${p.accessible.map(a=>`<div class="drow">${esc(a)}</div>`).join("")}</div>`;
     if(p.printers) html += `
       <div class="dsec"><h4>🖨️ Printers</h4>
-        <div class="drow">PawPrints stations <span class="right cat-tag">${p.printers} locations</span></div></div>`;
+        <div class="drow">IU Print stations <span class="right cat-tag">${p.printers} locations</span></div></div>`;
     if(p.food && p.food.length) html += `
       <div class="dsec"><h4>🍽️ Food</h4>
         ${p.food.map(f=>`<div class="drow"><div>${esc(f.name)}
