@@ -282,7 +282,7 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   font-size:19px;color:#d9cdb6;padding:6px 4px;flex-shrink:0;transition:transform .12s;line-height:1;
 }
 .star:hover{transform:scale(1.15)}
-.star.on{color:var(--gold)}
+.star.on{color:var(--crimson)}
 .cat-tag{font-size:11px;font-weight:800;color:var(--muted);background:var(--cream-dark);padding:3px 9px;border-radius:999px}
 .pop-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .pop-chip .tico{vertical-align:-.15em;margin-right:3px}
@@ -322,9 +322,9 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .task-meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .task-tag{font-size:10px;font-weight:800;color:var(--muted);background:var(--cream-dark);border-radius:999px;padding:3px 9px;text-transform:uppercase;letter-spacing:.4px}
 .task-campus{font-size:10.5px;font-weight:800;color:var(--crimson);background:var(--red-soft);border-radius:999px;padding:3px 9px}
-.task-star{position:absolute;top:11px;right:11px;font-size:17px;color:#d9cdb6;background:none;border:0;line-height:1;padding:2px}
-.task-star.on{color:var(--gold)}
-.task-star:hover{transform:scale(1.12)}
+.task-star{position:absolute;top:11px;right:11px;font-size:19px;color:#cdb9b9;background:none;border:0;line-height:1;padding:2px;transition:transform .12s,color .12s}
+.task-star.on{color:var(--crimson)}
+.task-star:hover{transform:scale(1.15)}
 /* Today — unified calendar */
 .cal-src{font-size:11.5px;color:var(--muted);font-weight:600;margin-bottom:10px;line-height:1.4}
 .cal-tag{display:inline-block;font-size:10px;font-weight:800;border-radius:999px;padding:2px 8px;margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px;background:var(--cream-dark);color:var(--muted)}
@@ -1923,7 +1923,9 @@ function personaTasks(){
   return TASKS.filter(t=>t.personas.includes("all")||t.personas.includes(state.persona));
 }
 function taskCategories(){
-  return ["All",...new Set(personaTasks().map(t=>t.cat))];
+  const cats = ["All",...new Set(personaTasks().map(t=>t.cat))];
+  if(!P().guest) cats.splice(1,0,"Favorites");
+  return cats;
 }
 function launchTask(id){
   const t = taskById(id);
@@ -2042,14 +2044,14 @@ function renderLaunchCard(){
   const favHtml = favs.length
     ? `<div class="qa-grid">${favs.slice(0,8).map(t=>`
         <button class="qa" onclick="launchTask('${t.id}')"><div class="qi">${taskIcon(t)}</div>${esc(t.name)}</button>`).join("")}</div>`
-    : `<div class="empty">No favorites yet. Star tasks in the Tasks tab to pin them here.</div>`;
+    : `<div class="empty">No favorites yet. Tap the ♥ on a task in the Tasks tab to pin it here.</div>`;
   const pop = personaTasks().filter(t=>t.popular && !state.favs.has(t.id)).slice(0,5);
   const popHtml = pop.length
     ? `<div class="launch-divider">Popular on One.IU</div>
        <div class="pop-row">${pop.map(t=>`
          <button class="pop-chip" onclick="launchTask('${t.id}')">${taskIcon(t)} ${esc(t.name)}</button>`).join("")}</div>`
     : "";
-  return card("⭐ Favorite tasks", favHtml + popHtml, "span2",
+  return card("♥ Favorite tasks", favHtml + popHtml, "span2",
     `<span class="link" onclick="setTab('tasks')">All tasks →</span>`);
 }
 
@@ -2066,12 +2068,15 @@ function renderTaskLauncher(){
 }
 function taskResultsHTML(){
   let list = personaTasks();
-  if(state.cat!=="All") list = list.filter(t=>t.cat===state.cat);
-  if(!list.length) return `<div class="empty">No tasks in ${esc(state.cat)}.</div>`;
+  if(state.cat==="Favorites") list = list.filter(t=>state.favs.has(t.id));
+  else if(state.cat!=="All") list = list.filter(t=>t.cat===state.cat);
+  if(!list.length) return `<div class="empty">${state.cat==="Favorites"
+    ?"No favorites yet. Tap the ♥ on any task to pin it here and on your home screen."
+    :"No tasks in "+esc(state.cat)+"."}</div>`;
   return `<div class="task-grid">${list.map(t=>`
     <div class="task-tile" onclick="launchTask('${t.id}')">
       ${P().guest?"":`<button class="task-star ${state.favs.has(t.id)?"on":""}" title="Favorite"
-        onclick="toggleFav(event,'${t.id}')">${state.favs.has(t.id)?"★":"☆"}</button>`}
+        onclick="toggleFav(event,'${t.id}')">${state.favs.has(t.id)?"♥":"♡"}</button>`}
       <div class="task-ic">${taskIcon(t)}</div>
       <div class="task-name">${esc(t.name)}</div>
       <div class="task-desc">${esc(t.desc)}</div>
@@ -2897,7 +2902,7 @@ const WIDGET_CATALOG = [
   {type:"orgs",       label:"🧑‍🤝‍🧑 Student Organizations", desc:"Memberships, announcements & events"},
   {type:"careers",    label:"🎯 Careers",            desc:"Handshake activity, coaching & events"},
   {type:"libraries",  label:"📚 Libraries",          desc:"Loans, ILL, study rooms & catalog"},
-  {type:"launch",     label:"⭐ Favorite tasks",      desc:"Your pinned & popular tasks"},
+  {type:"launch",     label:"♥ Favorite tasks",      desc:"Your pinned & popular tasks"},
 ];
 const FULL_WIDTH_TYPES = ["hero","launch","tasklauncher","campusmap","signin"];
 const FIXED_TYPES = ["tasklauncher","campusmap"];   // too large to rearrange — rendered fixed, not as widgets
@@ -2924,7 +2929,7 @@ function widgetLabel(def){
   if(def.type==="libraries") return "📚 Libraries";
   if(def.type==="campusfeed") return "📰 Campus feed";
   if(def.type==="hero") return "📣 Highlights banner";
-  if(def.type==="launch") return "⭐ Favorite tasks";
+  if(def.type==="launch") return "♥ Favorite tasks";
   if(def.type==="tasklauncher") return "⊞ One.IU tasks";
   if(def.type==="campusmap") return "🗺️ Campus map";
   return def.title || def.type;
