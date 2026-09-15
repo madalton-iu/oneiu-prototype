@@ -380,6 +380,47 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
   padding:12px 20px;border-radius:999px;background:var(--link);color:#fff;font-weight:800;
   font-size:14px;box-shadow:var(--shadow);flex-shrink:0;
 }
+/* header campus control */
+.campus-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:999px;
+  background:var(--card);border:1.5px solid var(--line);font-weight:800;font-size:13px;color:var(--ink);
+  cursor:pointer;transition:all .12s;white-space:nowrap;
+}
+.campus-btn:hover{border-color:var(--link);color:var(--link)}
+.campus-btn .cb-ic{font-size:14px;line-height:1}
+.campus-btn.none{color:var(--link);border-color:var(--link);border-style:dashed}
+/* campus picker (radio list, IU Mobile style) */
+.camp-list{display:flex;flex-direction:column;gap:2px;margin-top:6px}
+.camp-opt{display:flex;align-items:center;gap:12px;width:100%;padding:13px 12px;border-radius:12px;
+  background:none;border:0;cursor:pointer;text-align:left;transition:background .12s;color:var(--ink)}
+.camp-opt:hover{background:var(--cream-dark)}
+.camp-radio{width:22px;height:22px;border-radius:50%;border:2px solid var(--link);flex-shrink:0;position:relative}
+.camp-opt.sel .camp-radio{border-color:var(--link)}
+.camp-opt.sel .camp-radio::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--link)}
+.camp-opt .co-name{font-weight:700;font-size:15px}
+.camp-opt .co-city{font-size:12.5px;color:var(--muted);font-weight:600}
+.camp-opt.none-opt{margin-top:4px;border-top:1px solid var(--line);border-radius:0;padding-top:16px}
+/* empty-state "Select a campus" */
+.campus-empty{padding:8px 2px 20px}
+.ce-head{text-align:center;margin:14px 0 22px}
+.ce-head h2{font-size:24px;font-weight:800;letter-spacing:-.4px}
+.ce-head p{color:var(--muted);font-weight:600;margin-top:6px;font-size:15px}
+.ce-grid{display:flex;flex-direction:column;gap:12px;max-width:520px;margin:0 auto}
+.ce-card{display:flex;align-items:center;gap:16px;width:100%;padding:18px 18px;border-radius:16px;
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);cursor:pointer;
+  transition:transform .12s,border-color .12s,box-shadow .12s;color:var(--ink);text-align:left}
+.ce-card:hover{transform:translateY(-2px);border-color:var(--link);box-shadow:var(--shadow-lg)}
+.ce-abbr{flex-shrink:0;width:56px;height:56px;border-radius:14px;background:var(--red-soft);color:var(--crimson);
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;letter-spacing:-.3px}
+.ce-txt{display:flex;flex-direction:column;min-width:0;flex:1}
+.ce-name{font-weight:800;font-size:16px}
+.ce-city{color:var(--muted);font-weight:600;font-size:13.5px}
+.ce-go{color:var(--muted);font-size:22px;font-weight:400}
+.dhead-desc{font-size:13.5px;color:var(--body-text,var(--muted));line-height:1.5;font-weight:500;margin:10px 0 2px}
+/* onboarding campus modal */
+.onb-body{text-align:center;padding:4px 2px}
+.onb-body h3{font-size:19px;font-weight:800;margin-bottom:4px}
+.onb-body .onb-sub{color:var(--muted);font-weight:600;font-size:13px;margin:10px 0 4px}
 .map-chips{display:flex;gap:8px;overflow-x:auto;padding:12px 2px;scrollbar-width:none}
 .map-chips::-webkit-scrollbar{display:none}
 .mchip{
@@ -589,6 +630,9 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .cc-manage{width:100%;margin-top:12px;padding:11px;border-radius:12px;background:var(--cream);border:1.5px solid var(--line);font-weight:800;font-size:13px;color:var(--link)}
 .cc-manage:hover{background:#fff;border-color:var(--link)}
 .cc-hint{font-size:12px;color:var(--muted);font-weight:600;margin-top:9px;text-align:center}
+.org-ann{display:flex;gap:7px;margin-top:6px;font-size:12px;color:var(--body-text,var(--muted));font-weight:500;line-height:1.45}
+.org-ann::before{content:"";flex:0 0 auto;width:6px;height:6px;border-radius:50%;background:var(--purple);margin-top:5px}
+.org-ann .org-ann-time{color:var(--muted);font-weight:600;white-space:nowrap}
 .pill-btn{font-size:11.5px;font-weight:800;padding:5px 12px;border-radius:999px;background:var(--link);color:#fff}
 .pill-btn:hover{background:var(--link-dark)}
 .lib-search{width:100%;padding:11px 15px;border-radius:12px;border:1.5px solid var(--line);background:var(--cream);font:inherit;font-size:14px;font-weight:600;outline:none;color:var(--ink);margin-bottom:12px}
@@ -881,6 +925,17 @@ body.reduce-motion *{animation:none !important; transition:none !important}
   </div>
 </div>
 
+<div class="admin-modal" id="onbModal">
+  <div class="admin-box" style="max-width:460px">
+    <div class="onb-body">
+      <h3>Welcome to One.IU</h3>
+      <p class="onb-sub">Please select your campus</p>
+      <div class="camp-list" id="onbList"></div>
+      <div class="cc-hint" style="margin-top:10px">You can always change this later.</div>
+    </div>
+  </div>
+</div>
+
 <div class="fc-modal" id="fcModal"></div>
 <button class="admin-fab" onclick="toggleAdmin(true)">🛠️ Personas</button>
 <div class="toast" id="toast"></div>
@@ -1033,6 +1088,22 @@ const TASKS = [
 ===================================================== */
 const USER_LOC = {lat:39.1701, lng:-86.5155, label:"Simulated location: Teter Quad"};
 
+/* ---------- Campuses (all 9 IU campuses) ----------
+   Real names, cities, and official interactive maps at map.iu.edu.
+   center = approximate campus centroid (for map framing).           */
+const CAMPUSES = [
+  {id:"iub",  abbr:"IUB",  name:"IU Bloomington",  city:"Bloomington",       center:{lat:39.1700,lng:-86.5195}, mapUrl:"https://map.iu.edu/iub/index.html",          transit:{hasBus:true,  name:"IU Bloomington Campus Bus"}},
+  {id:"iui",  abbr:"IUI",  name:"IU Indianapolis", city:"Indianapolis",      center:{lat:39.7740,lng:-86.1780}, mapUrl:"https://map.iu.edu/indianapolis/index.html", transit:{hasBus:true,  name:"JagLine shuttle", note:"Free campus shuttle · Route 5 (Purple) connects to the IndyGo Red Line."}},
+  {id:"iuc",  abbr:"IUC",  name:"IU Columbus",     city:"Columbus",          center:{lat:39.2060,lng:-85.9215}, mapUrl:"https://map.iu.edu/columbus/index.html",     transit:{hasBus:false, note:"Small commuter campus — no campus bus system."}},
+  {id:"iue",  abbr:"IUE",  name:"IU East",         city:"Richmond",          center:{lat:39.8290,lng:-84.9270}, mapUrl:"https://map.iu.edu/iue/index.html",          transit:{hasBus:false, note:"Commuter campus — no campus bus system."}},
+  {id:"iufw", abbr:"IUFW", name:"IU Fort Wayne",   city:"Fort Wayne",        center:{lat:41.1205,lng:-85.1075}, mapUrl:"https://map.iu.edu/iufw/index.html",         transit:{hasBus:false, note:"Shares a campus with Purdue Fort Wayne (PFW)."}},
+  {id:"iuk",  abbr:"IUK",  name:"IU Kokomo",       city:"Kokomo",            center:{lat:40.4615,lng:-86.1300}, mapUrl:"https://map.iu.edu/iuk/index.html",          transit:{hasBus:false, note:"Commuter campus — no campus bus system."}},
+  {id:"iun",  abbr:"IUN",  name:"IU Northwest",    city:"Gary",              center:{lat:41.5765,lng:-87.3395}, mapUrl:"https://map.iu.edu/iun/index.html",          transit:{hasBus:false, note:"Commuter campus — South Shore Line rail is nearby."}},
+  {id:"iusb", abbr:"IUSB", name:"IU South Bend",   city:"South Bend",        center:{lat:41.6655,lng:-86.2195}, mapUrl:"https://map.iu.edu/iusb/index.html",         transit:{hasBus:false, note:"Served by South Bend Transpo (city bus)."}},
+  {id:"ius",  abbr:"IUS",  name:"IU Southeast",    city:"New Albany",        center:{lat:38.3365,lng:-85.8250}, mapUrl:"https://map.iu.edu/ius/index.html",          transit:{hasBus:false, note:"Commuter campus — no campus bus system."}},
+];
+const campusById = id => CAMPUSES.find(c=>c.id===id) || null;
+
 const PLACES = [
   /* buildings */
   {id:"ballantine",type:"building",name:"Ballantine Hall",abbr:"BH",addr:"1020 E Kirkwood Ave",lat:39.1653,lng:-86.5232,
@@ -1086,12 +1157,115 @@ const PLACES = [
 const MARKER_COLORS = {building:"#c8930c", parking:"#8a5fc9", bus:"#2b6cb0", food:"#b3272d"};
 const TYPE_ICONS = {building:"🏛️", parking:"🅿️", bus:"🚌", food:"🍽️"};
 
+/* ---------- Representative place data for the regional campuses ----------
+   Building NAMES and roles are real; pin positions are approximate (offset
+   around the campus centroid) and availability is illustrative — the Campus
+   tab links to each campus's official interactive map for exact wayfinding.
+   IU Bloomington uses the detailed PLACES set above.                        */
+function mkPlaces(cid, defs){
+  const c = campusById(cid); if(!c) return [];
+  return defs.map((d,i)=>{
+    const row=Math.floor(i/3)-1, col=(i%3)-1;             // spread pins in a light grid
+    return {...d, sample:true,
+      lat: c.center.lat + row*0.0016 + (d.type==="parking"?0.0008:0),
+      lng: c.center.lng + col*0.0020};
+  });
+}
+const CAMPUS_PLACES = {
+  iub: PLACES,
+  iui: mkPlaces("iui",[
+    {id:"iui_cc",  type:"building",name:"Campus Center",abbr:"CE",addr:"420 University Blvd",desc:"Student center — dining, Jaguar Campus Recreation, Cultural Arts Gallery."},
+    {id:"iui_ul",  type:"building",name:"University Library",abbr:"UL",addr:"755 W Michigan St",desc:"Main library and student learning commons."},
+    {id:"iui_inlow",type:"building",name:"Lawrence W. Inlow Hall",abbr:"IH",addr:"530 W New York St",desc:"IU Robert H. McKinney School of Law · Ruth Lilly Law Library."},
+    {id:"iui_cavan",type:"building",name:"Cavanaugh Hall",abbr:"CA",addr:"425 University Blvd",desc:"Liberal arts classrooms and offices."},
+    {id:"iui_taylor",type:"building",name:"Taylor Hall",abbr:"UC",addr:"815 W Michigan St",desc:"University College — advising and first-year programs."},
+    {id:"iui_tower",type:"food",name:"The Tower Dining",addr:"North Hall",hours:[7,20],days:"Daily",services:"In Person, meal plan"},
+    {id:"iui_ccfood",type:"food",name:"Campus Center food court",addr:"Campus Center, Level 2",hours:[8,19],days:"Mon–Fri",services:"In Person, Grubhub"},
+    {id:"iui_vermont",type:"parking",name:"Vermont Street Garage",permits:["ST","EMP","Visitor"],rate:"Visitor: hourly"},
+    {id:"iui_gateway",type:"parking",name:"Gateway Garage",permits:["ST","EMP"],rate:"Permit required"},
+    {id:"iui_jag1",type:"bus",name:"Campus Center / Vermont St",routes:[{r:"JagLine · Rte 5 Purple",mins:5},{r:"JagLine · Rte 2 Blue",mins:9}]},
+    {id:"iui_jag2",type:"bus",name:"University Library",routes:[{r:"JagLine · Rte 1 Red",mins:4},{r:"JagLine · Rte 3 Green",mins:12}]},
+  ]),
+  iun: mkPlaces("iun",[
+    {id:"iun_haw",  type:"building",name:"Hawthorn Hall",abbr:"HH",addr:"3400 Broadway",desc:"Admissions, Registrar, Financial Aid, Student Accounts and UITS."},
+    {id:"iun_sav",  type:"building",name:"Savannah Center",abbr:"SC",desc:"Bookstore, gymnasium, 320-seat Bergland Auditorium, fitness center and art gallery."},
+    {id:"iun_mor",  type:"building",name:"Moraine Student Center",abbr:"MSC",desc:"Student union — dining and student life."},
+    {id:"iun_lib",  type:"building",name:"John W. Anderson Library",abbr:"LIB",desc:"Campus library and conference center."},
+    {id:"iun_mar",  type:"building",name:"Marram Hall",abbr:"MH",desc:"Science teaching labs."},
+    {id:"iun_asb",  type:"building",name:"Arts & Sciences Building",abbr:"ASB",desc:"Theatres, gallery, classrooms and faculty offices."},
+    {id:"iun_dunes",type:"building",name:"Dunes Medical / Professional Building",abbr:"DMP",desc:"Nursing and health professions."},
+    {id:"iun_food", type:"food",name:"Moraine Student Center dining",addr:"Moraine Student Center",hours:[8,15],days:"Mon–Fri",services:"In Person"},
+    {id:"iun_lot1", type:"parking",name:"Student lots (Broadway)",permits:["ST","Visitor"],rate:"Permit required"},
+    {id:"iun_lot2", type:"parking",name:"Visitor lot",permits:["Visitor"],rate:"Hourly / daily"},
+  ]),
+  iue: mkPlaces("iue",[
+    {id:"iue_ww", type:"building",name:"Whitewater Hall",abbr:"WW",desc:"Admissions, student services and classrooms — the campus's first building."},
+    {id:"iue_sw", type:"building",name:"Springwood Hall",abbr:"SW",desc:"Classrooms, tutoring center and wellness services."},
+    {id:"iue_hy", type:"building",name:"Hayes Hall",abbr:"HY",desc:"Sciences and the campus library."},
+    {id:"iue_tr", type:"building",name:"Tom Raper Hall",abbr:"TR",desc:"Classrooms and offices."},
+    {id:"iue_seac",type:"building",name:"Student Events & Activities Center",abbr:"SEAC",desc:"Gymnasium, recreation and campus events (Red Wolves)."},
+    {id:"iue_food",type:"food",name:"Whitewater Hall dining",addr:"Whitewater Hall",hours:[8,14],days:"Mon–Fri",services:"In Person"},
+    {id:"iue_lot", type:"parking",name:"Student & visitor lots",permits:["ST","Visitor"],rate:"Permit required"},
+  ]),
+  iuk: mkPlaces("iuk",[
+    {id:"iuk_main",type:"building",name:"Main Building",abbr:"MB",addr:"2300 S Washington St",desc:"Classrooms, labs and a food & nutrition lab (renovated 2016)."},
+    {id:"iuk_ksc", type:"building",name:"Kelley Student Center",abbr:"KSC",desc:"Cafeteria, bookstore, student lounge and career library."},
+    {id:"iuk_hunt",type:"building",name:"Hunt Hall",abbr:"HU",desc:"Nursing, allied health and sciences."},
+    {id:"iuk_obs", type:"building",name:"Observatory",abbr:"OB",desc:"Astronomy observatory."},
+    {id:"iuk_food",type:"food",name:"Kelley Student Center cafeteria",addr:"Kelley Student Center",hours:[7,15],days:"Mon–Fri",services:"In Person"},
+    {id:"iuk_lot", type:"parking",name:"Student & visitor lots",permits:["ST","Visitor"],rate:"Permit required"},
+  ]),
+  iusb: mkPlaces("iusb",[
+    {id:"iusb_wie",type:"building",name:"Wiekamp Hall",abbr:"DW",desc:"Primary academic building — Language Resource Center and CLAS offices."},
+    {id:"iusb_ns", type:"building",name:"Northside Hall",abbr:"NS",desc:"Sciences and laboratories."},
+    {id:"iusb_lib",type:"building",name:"Franklin D. Schurz Library",abbr:"LIB",desc:"Campus library."},
+    {id:"iusb_sac",type:"building",name:"Student Activities Center",abbr:"SAC",desc:"Recreation, dining and student life."},
+    {id:"iusb_ea", type:"building",name:"Education & Arts Building",abbr:"EA",desc:"Education, fine arts and performance spaces."},
+    {id:"iusb_admin",type:"building",name:"Administration Building",abbr:"AD",desc:"Administrative and student-service offices."},
+    {id:"iusb_food",type:"food",name:"Student Activities Center dining",addr:"Student Activities Center",hours:[8,18],days:"Daily",services:"In Person"},
+    {id:"iusb_lot",type:"parking",name:"Student & visitor lots",permits:["ST","Visitor"],rate:"Permit required"},
+  ]),
+  ius: mkPlaces("ius",[
+    {id:"ius_uc", type:"building",name:"University Center",abbr:"UC",addr:"4201 Grant Line Rd",desc:"Student services, dining, bookstore and gathering space."},
+    {id:"ius_lib",type:"building",name:"Library",abbr:"LB",desc:"Campus library."},
+    {id:"ius_hill",type:"building",name:"Hillside Hall",abbr:"HS",desc:"Classrooms and offices."},
+    {id:"ius_ls", type:"building",name:"Life Sciences Building",abbr:"LS",desc:"Biology and health sciences labs."},
+    {id:"ius_ogle",type:"building",name:"Ogle Center",abbr:"OG",desc:"Performing arts center."},
+    {id:"ius_act",type:"building",name:"Activities Building",abbr:"AC",desc:"Gymnasium and recreation (Grenadiers)."},
+    {id:"ius_food",type:"food",name:"University Center food court",addr:"University Center",hours:[8,18],days:"Daily",services:"In Person"},
+    {id:"ius_lot",type:"parking",name:"Student & visitor lots",permits:["ST","Visitor"],rate:"Permit required"},
+  ]),
+  iuc: mkPlaces("iuc",[
+    {id:"iuc_clc",type:"building",name:"Columbus Learning Center",abbr:"CLC",addr:"4555 Central Ave",desc:"Shared library, classrooms and student services (arc-shaped landmark)."},
+    {id:"iuc_cc", type:"building",name:"Campus Center",abbr:"CC",addr:"4601 Central Ave",desc:"Classrooms and administrative offices."},
+    {id:"iuc_arch",type:"building",name:"J. Irwin Miller Architecture Program",abbr:"MARCH",addr:"Downtown Columbus",desc:"Graduate architecture studios."},
+    {id:"iuc_food",type:"food",name:"Columbus Learning Center café",addr:"Columbus Learning Center",hours:[8,15],days:"Mon–Fri",services:"In Person"},
+    {id:"iuc_lot",type:"parking",name:"Campus lots",permits:["ST","Visitor"],rate:"Permit required"},
+  ]),
+  iufw: mkPlaces("iufw",[
+    {id:"iufw_neff",type:"building",name:"Neff Hall",abbr:"NF",desc:"IU Fort Wayne Student Central and Student Success Center."},
+    {id:"iufw_kett",type:"building",name:"Kettler Hall",abbr:"KT",desc:"Classrooms and computing labs."},
+    {id:"iufw_walb",type:"building",name:"Walb Student Union",abbr:"WU",desc:"Stomping Grounds cafeteria, coffee shop and dining."},
+    {id:"iufw_food",type:"food",name:"Stomping Grounds cafeteria",addr:"Walb Student Union",hours:[8,18],days:"Mon–Fri",services:"In Person"},
+    {id:"iufw_lot",type:"parking",name:"Shared PFW garages & lots",permits:["ST","Visitor"],rate:"Permit required"},
+  ]),
+};
+
+/* current campus helpers */
+function curCampus(){ return campusById(state.campus) || null; }
+function hereLoc(){
+  if(state.campus==="iub") return USER_LOC;
+  const c=curCampus(); return c ? {lat:c.center.lat, lng:c.center.lng, label:`${c.name} campus`} : USER_LOC;
+}
+function rawPlaces(){ return CAMPUS_PLACES[state.campus] || []; }
+
 function allMapPlaces(){
-  const out = [...PLACES];
-  for(const b of PLACES.filter(p=>p.type==="building" && p.food)){
+  const src = rawPlaces();
+  const out = [...src];
+  for(const b of src.filter(p=>p.type==="building" && p.food)){
     b.food.forEach((f,i)=>out.push({
       id:`${b.id}_food${i}`, type:"food", name:f.name, addr:`${b.name} · ${f.floor}`,
-      lat:b.lat, lng:b.lng, hours:f.hours, days:f.days, services:f.services, parent:b.id
+      lat:b.lat, lng:b.lng, hours:f.hours, days:f.days, services:f.services, parent:b.id, sample:b.sample
     }));
   }
   return out;
@@ -1103,7 +1277,8 @@ function distMi(a,b){
   return 2*R*Math.asin(Math.sqrt(h));
 }
 function distLabel(p){
-  const d = distMi(USER_LOC,p);
+  if(p.sample){ const c=curCampus(); return c ? `${c.name} · ${c.city}` : "On campus"; }
+  const d = distMi(hereLoc(),p);
   return d < 0.19 ? `${Math.round(d*5280/10)*10} feet away` : `${d.toFixed(1)} miles away`;
 }
 function isOpen(hours){ const h=new Date().getHours(); return h>=hours[0] && h<hours[1]; }
@@ -1113,16 +1288,17 @@ function openBadge(p){
   return `<span class="badge ${o?"green":"red"}">${o?"Open":"Closed"}</span>`;
 }
 function nearestStops(p,n=2){
-  return PLACES.filter(x=>x.type==="bus" && x.id!==p.id)
+  return rawPlaces().filter(x=>x.type==="bus" && x.id!==p.id)
     .map(s=>({s,d:distMi(p,s)})).sort((a,b)=>a.d-b.d).slice(0,n);
 }
 function visiblePlaces(){
   const q = state.mapQ.trim().toLowerCase();
   const list = allMapPlaces();
+  const here = hereLoc();
   if(q) return list.filter(p=>(p.name+" "+(p.addr||"")).toLowerCase().includes(q))
-                   .sort((a,b)=>distMi(USER_LOC,a)-distMi(USER_LOC,b));
+                   .sort((a,b)=>distMi(here,a)-distMi(here,b));
   const t = {buildings:"building", buses:"bus", parking:"parking", food:"food"}[state.mapFilter];
-  return list.filter(p=>p.type===t).sort((a,b)=>distMi(USER_LOC,a)-distMi(USER_LOC,b));
+  return list.filter(p=>p.type===t).sort((a,b)=>distMi(here,a)-distMi(here,b));
 }
 
 /* =====================================================
@@ -1199,6 +1375,7 @@ const DATA = {
 /* ---------- 0. GUEST (unauthenticated) ---------- */
 guest: {
   name:"Guest", first:"Guest", avatar:"🔓", guest:true,
+  campus:null,
   role:"Not signed in · Public view",
   adminDesc:"A visitor who hasn't signed in. Sees only public content — campus feed, map, and public services — with a prompt to sign in.",
   greetSub:"You're browsing public information. Sign in for your personalized One.IU.",
@@ -1228,6 +1405,7 @@ guest: {
 /* ---------- 1. APPLICANT ---------- */
 applicant: {
   name:"Jordan Reyes", first:"Jordan", avatar:"🌟",
+  campus:"iub",
   role:"Applicant · Fall 2027", adminDesc:"High-school senior who applied to the Kelley School of Business. Tracking their application and planning a campus visit.",
   greetSub:"Application status, campus visits, and financial aid in one place.",
   favorites:["appStatus","visitReg","fafsa","housingApp","duo"],
@@ -1301,6 +1479,7 @@ applicant: {
 /* ---------- 2. FIRST-YEAR STUDENT ---------- */
 firstyear: {
   name:"Maya Patel", first:"Maya", avatar:"🎒",
+  campus:"iub",
   role:"First-Year · Exploratory", adminDesc:"Freshman living in Teter Quad, exploring majors, working a Federal Work-Study job at Wells Library.",
   greetSub:"2 classes today · 3 items due this week.",
   crimsonCard:{holder:"Maya Patel",kind:"Student",id:"6017 88•• •••• 4402",since:"Aug 2026",
@@ -1433,6 +1612,7 @@ firstyear: {
 /* ---------- 3. GRADUATING SENIOR ---------- */
 senior: {
   name:"Devon Williams", first:"Devon", avatar:"🎓",
+  campus:"iub",
   role:"Senior · Informatics", adminDesc:"December graduate completing a capstone, searching for jobs, and working through the graduation checklist.",
   greetSub:"96 days until December commencement.",
   crimsonCard:{holder:"Devon Williams",kind:"Student",id:"6017 88•• •••• 1183",since:"Aug 2023",
@@ -1560,6 +1740,7 @@ senior: {
 /* ---------- 4. STAFF ---------- */
 staff: {
   name:"Angela Brooks", first:"Angela", avatar:"💼",
+  campus:"iub",
   role:"Staff · Student Affairs", adminDesc:"Full-time Program Coordinator in the Office of First Year Experience. Manages student staff, benefits, and professional development.",
   greetSub:"3 meetings today · 4 timesheets awaiting approval.",
   crimsonCard:{holder:"Angela Brooks",kind:"Faculty / Staff",id:"6017 88•• •••• 7735",since:"Sep 2019",
@@ -1651,6 +1832,7 @@ staff: {
 /* ---------- 5. FACULTY ---------- */
 faculty: {
   name:"Dr. Elena Vasquez", first:"Elena", avatar:"🧑‍🏫",
+  campus:"iub",
   role:"Faculty · Luddy School", adminDesc:"Associate Professor of Informatics. Teaching two courses, advising graduate students, and managing a grant deadline.",
   greetSub:"Lecture at 10:10 · office hours 2:00–4:00 · grades due Friday.",
   crimsonCard:{holder:"Elena Vasquez",kind:"Faculty / Staff",id:"6017 88•• •••• 9021",since:"Aug 2015",
@@ -1799,6 +1981,7 @@ faculty: {
 /* ---------- 6. PARENT ---------- */
 parent: {
   name:"Susan Miller", first:"Susan", avatar:"👤",
+  campus:"iub",
   role:"Parent & Family · Proxy access", adminDesc:"Parent of a sophomore. Has delegated (proxy) access to billing and shared records, plus family event information.",
   greetSub:"Billing, records, and family events for Jake's semester.",
   favorites:["payBill","payPlan","proxy","famWeekend","alerts"],
@@ -1887,6 +2070,261 @@ parent: {
     ],
   }
 },
+
+/* ---------- 7. LAW STUDENT (2L) · IU Indianapolis ---------- */
+law: {
+  name:"Marcus Ellison", first:"Marcus", avatar:"⚖️",
+  campus:"iui",
+  role:"2L · McKinney School of Law", adminDesc:"Second-year law student at the IU Robert H. McKinney School of Law on the IU Indianapolis campus; on the law journal and recruiting for a summer associate position.",
+  greetSub:"2 classes today · journal edits due Friday.",
+  crimsonCard:{holder:"Marcus Ellison",kind:"Student",id:"6017 88•• •••• 7729",since:"Aug 2024",
+    balances:[
+      {icon:"🥗",label:"Dining Dollars",value:"$96.40",note:"Cafés & campus dining",add:true},
+      {icon:"💵",label:"Crimson Cash",value:"$41.15",note:"Printing & off-campus",add:true},
+    ],
+    access:["Inlow Hall after-hours","Ruth Lilly Law Library","Campus Center recreation"]},
+  orgs:{
+    memberships:[
+      {icon:"📚",name:"Indiana Law Review",role:"Associate member"},
+      {icon:"⚖️",name:"Moot Court Society",role:"Competitor"},
+      {icon:"🏛️",name:"Student Bar Association",role:"Member"},
+    ],
+    announcements:[
+      {org:"Indiana Law Review",text:"Note edits due to your line editor by Friday 5 p.m.",time:"3h ago"},
+      {org:"Moot Court Society",text:"Regional problem released — brief teams are posted.",time:"1d ago"},
+    ],
+    events:[
+      {icon:"⚖️",title:"Moot Court practice round",when:"Thu 6:00 p.m.",where:"Inlow Hall Moot Court Room"},
+      {icon:"🤝",title:"1L/2L mentoring mixer",when:"Fri 5:00 p.m.",where:"Inlow Hall Atrium"},
+    ]},
+  library:{
+    onLoan:[
+      {title:"Chemerinsky, Constitutional Law",author:"Chemerinsky",due:"Oct 2",renew:true},
+      {title:"Federal Rules of Evidence (2026)",author:"West",due:"Sep 26",renew:false,soon:true},
+    ],
+    ill:[{title:"Law review article — PDF scan",status:"Ready — check your email"}],
+    rooms:[{room:"Ruth Lilly Law Library · Study Room 3",when:"Today 4:00–6:00 p.m.",status:"Reserved"}]},
+  careers:{
+    appt:{when:"Wed 1:00 p.m.",who:"Professional Development Office"},
+    applied:8, saved:15,
+    events:[
+      {icon:"🏛️",title:"Summer associate OCI",where:"Inlow Hall · employer interviews",when:"Sep 22"},
+      {icon:"✍️",title:"Résumé & writing-sample review",where:"Professional Development Office",when:"Sep 25"},
+    ]},
+  favorites:["canvas","payBill","transcript","grades","dining","duo"],
+  calendar:[
+    {t1:"9:00",t2:"10:15",title:"LAW-D 100 · Constitutional Law",loc:"Inlow Hall 121 · Prof. Reed",src:"SIS",color:"crimson",now:true,recurring:true},
+    {t1:"10:30",t2:"11:45",title:"LAW-B 200 · Evidence",loc:"Inlow Hall 118",src:"SIS",color:"blue",recurring:true},
+    {t1:"1:00",t2:"2:00",title:"Indiana Law Review — edits",loc:"Ruth Lilly Law Library",src:"Exchange",color:"gold",recurring:true},
+    {t1:"6:00",t2:"7:30",title:"Moot Court practice",loc:"Inlow Hall Moot Court Room",src:"Events",color:"purple"},
+  ],
+  actionItems:[
+    {id:"ai_law1",src:"canvas",title:"Evidence · problem set 4",desc:"Submit on the Canvas assignment page.",due:"Tomorrow 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
+    {id:"ai_law2",src:"registrar",title:"Register for spring courses",desc:"Enroll when your registration window opens.",due:"Oct 6",action:{label:"Open Student Center",target:"Student Center registration"},confirm:"system",confirmedBy:"enrollment confirms immediately"},
+    {id:"ai_law3",src:"bursar",title:"Pay fall balance ($8,930)",desc:"Or enroll in the no-interest payment plan.",due:"Sep 25",high:true,action:{label:"Pay bill",target:"the Bursar payment page"},confirm:"system",confirmedBy:"the payment posts to your account"},
+    {id:"ai_law4",src:"finaid",title:"Complete Grad PLUS loan steps",desc:"Federal steps are on studentaid.gov, outside IU.",due:"Before disbursement",action:{label:"Open studentaid.gov",target:"federal loan tasks"},confirm:"system",confirmedBy:"studentaid.gov reports completion to IU"},
+    {id:"ai_law5",src:"compliance",title:"Data security training",desc:"Required annually · ~20 min.",due:"Sep 30",action:{label:"Start training",target:"the IU information security training (Protect IU)"},confirm:"system",confirmedBy:"your completion is recorded"},
+  ],
+  notifCount:3,
+  notifications:[
+    {icon:"⚖️",unread:true,title:"OCI interview scheduled",sub:"Summer associate screening Friday in Inlow Hall. Bring a writing sample.",time:"2h ago"},
+    {icon:"🧾",unread:true,title:"Fall bill due Sep 25",sub:"Balance of $8,930. A no-interest payment plan is available through the Bursar.",time:"Today"},
+    {icon:"📚",unread:true,title:"Law Review edits due Friday",sub:"Return note edits to your line editor by 5 p.m.",time:"Yesterday"},
+    {icon:"🏛️",unread:false,title:"Guest lecture: appellate practice",sub:"Judge-in-residence · Inlow Hall Moot Court Room.",time:"2d ago"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"classes",label:"Academics",icon:"📖"},
+    {id:"money",label:"Finances",icon:"💳"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Week 4 · Fall semester",title:"Two classes today, journal edits Friday",
+       sub:"Next: Constitutional Law at 9:00 a.m. in Inlow Hall 121.",
+       stats:[{n:"2",l:"Classes today"},{n:"8",l:"OCI applications"},{n:"$8,930",l:"Due Sep 25"}]},
+      {type:"calendar"},
+      {type:"actionitems"},
+      {type:"careers"},
+      {type:"crimsoncard"},
+      {type:"orgs"},
+      {type:"libraries"},
+      {type:"campusfeed"},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    classes:[
+      {type:"list",title:"📚 Fall schedule · 14 credit hours · from SIS",items:[
+        {icon:"🏛️",bg:"red",title:"LAW-D 100 · Constitutional Law",sub:"MW 9:00–10:15 · Inlow Hall 121",right:"4 cr",rightSub:"enrolled"},
+        {icon:"⚖️",bg:"blue",title:"LAW-B 200 · Evidence",sub:"MW 10:30–11:45 · Inlow Hall 118",right:"3 cr",rightSub:"enrolled"},
+        {icon:"🏢",bg:"purple",title:"LAW-B 250 · Business Associations",sub:"TR 1:00–2:15 · Inlow Hall 245",right:"4 cr",rightSub:"enrolled"},
+        {icon:"🧭",bg:"green",title:"LAW-L 710 · Legal Profession",sub:"F 9:00–10:50 · Inlow Hall 116",right:"3 cr",rightSub:"enrolled"},
+      ]},
+      {type:"assignments",title:"📚 Coming due",items:[
+        {course:"Evidence",title:"Problem set 4",due:"Tomorrow · 11:59 p.m.",soon:true},
+        {course:"Con Law",title:"Reading response 5",due:"Wednesday, in class"},
+        {course:"Law Review",title:"Note edits — round 1",due:"Friday · 5:00 p.m."},
+      ]},
+      {type:"notice",tone:"blue",icon:"⚖️",title:"Registration & the Registrar",
+       sub:"Your class schedule, grades, and transcript are official records in the Student Information System (SIS); assignments and course materials are in Canvas. Bar-exam registration and character-and-fitness steps are handled outside IU through your state board of law examiners."},
+    ],
+    money:[
+      {type:"balances",title:"🧾 Fall 2026 statement · from Bursar",items:[
+        {icon:"💰",label:"Amount due",value:"$8,930.00",note:"Due Sep 25",alert:true},
+        {icon:"🎓",label:"Tuition & fees",value:"$15,930",note:"McKinney · resident"},
+        {icon:"✨",label:"Aid applied",value:"−$7,000",note:"Scholarship + loans"},
+        {icon:"📅",label:"Payment plan",value:"Available",note:"4 installments · no interest"},
+      ]},
+      {type:"balances",title:"💳 All balances",items:[
+        {icon:"🧾",label:"Bursar",value:"$8,930.00",note:"Bursar · due Sep 25"},
+        {icon:"🎓",label:"Financial aid",value:"Awarded",note:"Financial Aid · award letter"},
+        {icon:"🥗",label:"Dining Dollars",value:"$96.40",note:"CrimsonCard"},
+        {icon:"💵",label:"Crimson Cash",value:"$41.15",note:"CrimsonCard · reload anytime"},
+      ]},
+      {type:"list",title:"🧾 Recent activity",items:[
+        {icon:"☕",bg:"red",title:"Campus Center café",sub:"Dining Dollars",src:"CrimsonCard",right:"−$5.75",rightSub:"Today"},
+        {icon:"🖨️",bg:"blue",title:"Law library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$2.40",rightSub:"Yesterday"},
+        {icon:"🎓",bg:"green",title:"Scholarship disbursement",sub:"Merit award",src:"Financial Aid",right:"+$3,500",rightSub:"Aug 22"},
+      ]},
+      {type:"notice",tone:"gold",icon:"🏦",title:"Grad PLUS & federal loans live outside IU",
+       sub:"Your federal loan balances and Grad PLUS steps are handled on studentaid.gov, not by IU. One.IU shows what the Bursar bills and what Financial Aid has awarded and disbursed — it does not pull your federal loan balance."},
+    ],
+    campus:[
+      {type:"campusmap"},
+      {type:"campusfeed"},
+      {type:"notice",tone:"blue",icon:"🚌",title:"Getting around IU Indianapolis",
+       sub:"The free JagLine shuttle connects campus, parking, and the nearby medical district; Route 5 (Purple) links to the IndyGo Red Line. Live routes are on the campus map above."},
+    ],
+  }
+},
+
+/* ---------- 8. SOPHOMORE · IU Northwest ---------- */
+northwest: {
+  name:"Destiny Carter", first:"Destiny", avatar:"🎒",
+  campus:"iun",
+  role:"Sophomore · Nursing · IU Northwest", adminDesc:"Second-year nursing student commuting to IU Northwest in Gary; works a part-time campus job and rides the South Shore Line.",
+  greetSub:"2 classes today · clinicals orientation Thursday.",
+  crimsonCard:{holder:"Destiny Carter",kind:"Student",id:"6017 88•• •••• 5540",since:"Aug 2025",
+    balances:[
+      {icon:"🥗",label:"Dining Dollars",value:"$65.20",note:"Commuter — dining & cafés",add:true},
+      {icon:"💵",label:"Crimson Cash",value:"$12.75",note:"Printing & bookstore",add:true},
+    ],
+    access:["Savannah Fitness Center","John W. Anderson Library","Student parking lots"]},
+  orgs:{
+    memberships:[
+      {icon:"🩺",name:"Student Nurses Association",role:"Member"},
+      {icon:"🏛️",name:"Student Government Association",role:"Senator"},
+    ],
+    announcements:[
+      {org:"Student Nurses Association",text:"Clinicals orientation Thursday 4 p.m. in Dunes Medical.",time:"5h ago"},
+      {org:"Student Government Association",text:"Commuter lounge hours extended during midterms.",time:"2d ago"},
+    ],
+    events:[
+      {icon:"🩺",title:"SNA clinicals orientation",when:"Thu 4:00 p.m.",where:"Dunes Medical/Professional Bldg"},
+      {icon:"🎭",title:"Theatre night",when:"Fri 7:30 p.m.",where:"Arts & Sciences Building"},
+    ]},
+  library:{
+    onLoan:[
+      {title:"Fundamentals of Nursing",author:"Potter & Perry",due:"Oct 1",renew:true},
+      {title:"Anatomy & Physiology",author:"Marieb",due:"Sep 25",renew:false,soon:true},
+    ],
+    ill:[{title:"Journal article — nursing ethics",status:"In progress"}],
+    rooms:[{room:"John W. Anderson Library · Group Room B",when:"Today 2:00–4:00 p.m.",status:"Reserved"}]},
+  careers:{
+    appt:{when:"Mon 11:00 a.m.",who:"IU Northwest Career Services"},
+    applied:3, saved:9,
+    events:[
+      {icon:"🏥",title:"Health careers fair",where:"Savannah Center gym · NW Indiana employers",when:"Sep 30"},
+      {icon:"✍️",title:"Résumé drop-in",where:"Hawthorn Hall · Career Services",when:"Sep 24"},
+    ]},
+  favorites:["canvas","dining","payBill","grades","timesheet","duo"],
+  kualitime:{assignment:"Front desk · Savannah Center",rate:"$13.00/hr",todayMin:0,weekMin:480},
+  calendar:[
+    {t1:"9:30",t2:"10:45",title:"NURS-B 244 · Community Nursing",loc:"Dunes Medical 108 · Prof. Hill",src:"SIS",color:"crimson",now:true,recurring:true},
+    {t1:"11:00",t2:"12:15",title:"PHSL-P 261 · Anatomy & Physiology",loc:"Marram Hall 210",src:"SIS",color:"blue",recurring:true},
+    {t1:"1:00",t2:"4:00",title:"Savannah Center shift",loc:"Blocked on your Outlook",src:"Exchange",color:"gold",recurring:true},
+  ],
+  actionItems:[
+    {id:"ai_nw1",src:"hr",title:"Submit work-study timesheet",desc:"8 hours logged this week.",due:"Fri 5:00 p.m.",high:true,action:{label:"Open Kuali Time",target:"Kuali Time"},confirm:"approval",approver:"your supervisor"},
+    {id:"ai_nw2",src:"canvas",title:"A&P · Lab report 3",desc:"Submit on the Canvas assignment page.",due:"Tomorrow 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
+    {id:"ai_nw3",src:"advising",title:"Confirm advising for the nursing sequence",desc:"Hawthorn Hall · plan spring clinicals.",due:"Thu 2:00 p.m.",action:{label:"Confirm time",target:"the advising scheduler"},confirm:"system",confirmedBy:"the scheduler marks it confirmed"},
+    {id:"ai_nw4",src:"bursar",title:"Pay fall balance ($1,410)",desc:"Or enroll in the no-interest payment plan.",due:"Sep 25",high:true,action:{label:"Pay bill",target:"the Bursar payment page"},confirm:"system",confirmedBy:"the payment posts to your account"},
+    {id:"ai_nw5",src:"compliance",title:"FERPA refresher training",desc:"Required for student employees · ~15 min.",due:"End of month",action:{label:"Start training",target:"the IU FERPA Tutorial"},confirm:"system",confirmedBy:"the FERPA Tutorial records your completion"},
+  ],
+  notifCount:2,
+  notifications:[
+    {icon:"🩺",unread:true,title:"Clinicals orientation Thursday",sub:"4 p.m. in the Dunes Medical/Professional Building. Bring your health clearance.",time:"3h ago"},
+    {icon:"🧾",unread:true,title:"Fall bill due Sep 25",sub:"Balance of $1,410. A no-interest payment plan is available through the Bursar.",time:"Today"},
+    {icon:"🚆",unread:false,title:"South Shore Line schedule change",sub:"Weekday evening trains adjusted — check before your commute.",time:"2d ago"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"classes",label:"Academics",icon:"📖"},
+    {id:"money",label:"Finances",icon:"💳"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Week 4 · Fall semester",title:"Two classes today · clinicals orientation Thursday",
+       sub:"Next: Community Nursing at 9:30 a.m. in Dunes Medical 108.",
+       stats:[{n:"2",l:"Classes today"},{n:"8h",l:"Worked this week"},{n:"$1,410",l:"Due Sep 25"}]},
+      {type:"calendar"},
+      {type:"actionitems"},
+      {type:"kualitime"},
+      {type:"crimsoncard"},
+      {type:"orgs"},
+      {type:"libraries"},
+      {type:"campusfeed"},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    classes:[
+      {type:"list",title:"📚 Fall schedule · 14 credit hours · from SIS",items:[
+        {icon:"🩺",bg:"red",title:"NURS-B 244 · Community Nursing",sub:"MW 9:30–10:45 · Dunes Medical 108",right:"3 cr",rightSub:"enrolled"},
+        {icon:"🧬",bg:"blue",title:"PHSL-P 261 · Anatomy & Physiology",sub:"MW 11:00–12:15 · Marram Hall 210",right:"5 cr",rightSub:"enrolled"},
+        {icon:"🧠",bg:"purple",title:"PSY-P 103 · General Psychology",sub:"TR 1:00–2:15 · Hawthorn Hall 104",right:"3 cr",rightSub:"enrolled"},
+        {icon:"✍️",bg:"green",title:"ENG-W 131 · Writing & Inquiry",sub:"TR 9:30–10:45 · Raintree Hall 12",right:"3 cr",rightSub:"enrolled"},
+      ]},
+      {type:"assignments",title:"📚 Assignments due this week",items:[
+        {course:"A&P",title:"Lab report 3",due:"Tomorrow · 11:59 p.m.",soon:true},
+        {course:"Community Nursing",title:"Care-plan draft",due:"Thursday, in class"},
+        {course:"PSY-P 103",title:"Chapter quiz 4",due:"Friday · 11:59 p.m."},
+      ]},
+      {type:"notice",tone:"blue",icon:"🩺",title:"Nursing sequence & advising",
+       sub:"Your schedule and grades are official records in SIS; assignments are in Canvas. Progression into clinical courses is tracked by the College of Health & Human Services — confirm each step with your nursing advisor in Hawthorn Hall."},
+    ],
+    money:[
+      {type:"balances",title:"💼 Work-study at a glance",items:[
+        {icon:"🏛️",label:"Position",value:"Savannah Center",note:"Front-desk assistant"},
+        {icon:"⏱️",label:"This week",value:"8 hrs",note:"logged in Kuali Time"},
+        {icon:"💰",label:"Earned so far",value:"$612",note:"of $2,000 award"},
+        {icon:"🗓️",label:"Next payday",value:"Sep 18",note:"Direct deposit"},
+      ]},
+      {type:"balances",title:"💳 All balances",items:[
+        {icon:"🧾",label:"Bursar",value:"$1,410.00",note:"Bursar · due Sep 25"},
+        {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"Financial Aid · award letter"},
+        {icon:"💼",label:"Work-study earned",value:"$612",note:"Payroll · of $2,000 award"},
+        {icon:"🥗",label:"Dining Dollars",value:"$65.20",note:"CrimsonCard"},
+        {icon:"💵",label:"Crimson Cash",value:"$12.75",note:"CrimsonCard · reload anytime"},
+      ]},
+      {type:"list",title:"🧾 Recent activity",items:[
+        {icon:"🥗",bg:"green",title:"Moraine Student Center dining",sub:"Dining Dollars",src:"CrimsonCard",right:"−$8.10",rightSub:"Today"},
+        {icon:"🖨️",bg:"blue",title:"Library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$1.50",rightSub:"Yesterday"},
+        {icon:"💼",bg:"gold",title:"Work-study direct deposit",sub:"Biweekly pay",src:"Payroll",right:"+$104.00",rightSub:"Sep 4"},
+      ]},
+      {type:"notice",tone:"gold",icon:"🎯",title:"Scholarships & FAFSA",
+       sub:"Filing your FAFSA renewal early keeps you eligible for IU Northwest and state (Frank O'Bannon / 21st Century Scholar) aid. Campus scholarship cycles open in the spring."},
+    ],
+    campus:[
+      {type:"campusmap"},
+      {type:"campusfeed"},
+      {type:"notice",tone:"blue",icon:"🚆",title:"Commuting to IU Northwest",
+       sub:"IU Northwest is a commuter campus in Gary. The South Shore Line rail and regional buses serve the area, and student parking lots are shown on the campus map above."},
+    ],
+  }
+},
 };
 
 /* =====================================================
@@ -1905,6 +2343,14 @@ try{ const th=localStorage.getItem("oneiu_theme"); if(th) state.theme=th;
      const st=localStorage.getItem("oneiu_settings"); if(st) state.settings=Object.assign(state.settings,JSON.parse(st)); }catch(e){}
 state.aiProgress = {}; state.aiDismissed = {};
 Object.keys(DATA).forEach(k=>{ state.aiProgress[k]={}; state.aiDismissed[k]=new Set(); });
+
+/* ---- campus selection (persisted per persona; defaults to home campus) ---- */
+function homeCampus(persona){ return (DATA[persona] && DATA[persona].campus) || null; }
+function loadCampusFor(persona){
+  try{ const s=localStorage.getItem("oneiu_campus_"+persona); if(s!==null) return s==="none"?null:s; }catch(e){}
+  return homeCampus(persona);
+}
+state.campus = loadCampusFor(state.persona);
 
 const $ = id => document.getElementById(id);
 const P = () => DATA[state.persona];
@@ -2094,21 +2540,46 @@ function refreshTaskResults(){ const r=$("taskResults"); if(r) r.innerHTML = tas
 
 /* ---------- campus map ---------- */
 function renderCampusMap(){
-  const chips=[["buildings","🏛️ Buildings"],["buses","🚌 Buses"],["parking","🅿️ Parking"],["food","🍽️ Food"]];
+  const c = curCampus();
+  if(!c) return renderCampusEmpty();
+  // available filters for this campus (buses only where a campus bus exists)
+  let chips=[["buildings","🏛️ Buildings"],["parking","🅿️ Parking"],["food","🍽️ Food"]];
+  if(c.transit.hasBus) chips.splice(1,0,["buses","🚌 Buses"]);
+  if(!chips.some(ch=>ch[0]===state.mapFilter)) state.mapFilter="buildings";
+  const noteRight = c.transit.hasBus ? "Sorted by distance"
+                    : (c.transit.note || "Sorted by distance");
   return `<div class="map-wrap">
     <div class="map-topbar">
-      <input class="msearch" id="mapSearch" type="text" placeholder="Search IUB places…"
+      <input class="msearch" id="mapSearch" type="text" placeholder="Search ${esc(c.abbr)} places…"
         value="${esc(state.mapQ).replace(/"/g,"&quot;")}" oninput="onMapSearch(this.value)">
-      <button class="campus-pill" onclick="toast('Campus switching is not connected in this prototype.')">IUB ▾</button>
+      <button class="campus-pill" onclick="openCampusPicker()">${esc(c.abbr)} ▾</button>
     </div>
     <div class="map-chips" id="mapChips">${chips.map(([k,l])=>`
       <button class="mchip ${state.mapFilter===k?"active":""}" data-f="${k}" onclick="setMapFilter('${k}')">${l}</button>`).join("")}</div>
     <div id="leafletMap" class="map-box"></div>
-    <div class="map-note">📍 ${USER_LOC.label} — distances and availability are simulated.</div>
+    <div class="map-note">📍 ${c.id==="iub"?esc(USER_LOC.label):esc(c.name)+" · "+esc(c.city)} — ${c.id==="iub"?"distances and availability are simulated":"pin positions are approximate; availability is illustrative"}.
+      <a class="link" href="${c.mapUrl}" target="_blank" rel="noopener" style="display:inline-block;margin-top:4px">Open the official ${esc(c.abbr)} interactive map ↗</a></div>
     <div class="card" style="margin-top:14px">
       <div class="card-head"><h3 id="placeListTitle">${placeListTitle()}</h3>
         <span class="link" style="cursor:default;color:var(--muted)">Sorted by distance</span></div>
       <div id="placeList">${placeListHTML()}</div>
+    </div>
+  </div>`;
+}
+/* "None selected" — Select-a-campus screen (modeled on IU Mobile) */
+function renderCampusEmpty(){
+  return `<div class="campus-empty">
+    <div class="ce-head">
+      <h2>Select a campus</h2>
+      <p>To explore buildings, buses, and food</p>
+    </div>
+    <div class="ce-grid">
+      ${CAMPUSES.map(c=>`
+        <button class="ce-card" onclick="setCampus('${c.id}')">
+          <span class="ce-abbr">${esc(c.abbr)}</span>
+          <span class="ce-txt"><span class="ce-name">${esc(c.name)}</span><span class="ce-city">${esc(c.city)}</span></span>
+          <span class="ce-go">›</span>
+        </button>`).join("")}
     </div>
   </div>`;
 }
@@ -2163,12 +2634,18 @@ function setupCampusMap(){
     el.innerHTML='<div class="empty" style="padding-top:130px">🗺️ Map tiles unavailable (offline). The place list below still works.</div>';
     return;
   }
-  const map=L.map(el,{scrollWheelZoom:false}).setView([39.1700,-86.5195],15);
+  const c=curCampus(); const here=hereLoc();
+  const map=L.map(el,{scrollWheelZoom:false}).setView([here.lat,here.lng], c&&c.id==="iub"?15:16);
   L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
     {maxZoom:19, attribution:"&copy; OpenStreetMap &copy; CARTO"}).addTo(map);
   window._campusMap=map;
-  L.circleMarker([USER_LOC.lat,USER_LOC.lng],{radius:8,color:"#fff",weight:3,fillColor:"#2b6cb0",fillOpacity:1})
-    .addTo(map).bindTooltip("You (simulated)");
+  if(c && c.id==="iub"){
+    L.circleMarker([USER_LOC.lat,USER_LOC.lng],{radius:8,color:"#fff",weight:3,fillColor:"#2b6cb0",fillOpacity:1})
+      .addTo(map).bindTooltip("You (simulated)");
+  } else if(c){
+    L.circleMarker([here.lat,here.lng],{radius:8,color:"#fff",weight:3,fillColor:"#990000",fillOpacity:1})
+      .addTo(map).bindTooltip(c.name+" (center)");
+  }
   window._markerLayer=L.layerGroup().addTo(map);
   updateMapMarkers();
 }
@@ -2191,6 +2668,7 @@ function openPlace(id){
     ${p.abbr?`<span class="abbr-chip">${esc(p.abbr)}</span>`:""}
     <h2>${esc(p.name)}</h2>
     ${p.addr?`<div class="dhead-addr">${esc(p.addr).toUpperCase()}</div>`:""}
+    ${p.desc?`<p class="dhead-desc">${esc(p.desc)}</p>`:""}
     <a class="getthere" href="${gmapsLink(p)}" target="_blank" rel="noopener">➔ Getting there</a>`;
   if(p.type==="building"){
     if(p.accessible && p.accessible.length) html += `
@@ -2409,15 +2887,19 @@ function renderOrgs(){
   const o=P().orgs;
   if(!o) return `<div class="card"><div class="card-head"><h3>Student Organizations</h3></div>
     <div class="empty">No organization memberships found.<br><span class="link" style="cursor:pointer" onclick="openOrgs()">Discover on BeInvolved →</span></div></div>`;
-  const ann=o.announcements.length, ev=o.events[0];
+  const annByOrg={};
+  (o.announcements||[]).forEach(a=>{(annByOrg[a.org]=annByOrg[a.org]||[]).push(a);});
+  const ev=o.events&&o.events[0];
   return `<div class="card">
     <div class="card-head"><h3>Student Organizations</h3><span class="link" onclick="openOrgs()">Open →</span></div>
-    ${o.memberships.slice(0,3).map(m=>`
-      <div class="li"><div class="lic purple">${m.icon}</div>
-        <div style="min-width:0"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div></div>
-      </div>`).join("")}
-    <div class="cc-hint" style="text-align:left;margin-top:10px">
-      ${ann} new announcement${ann>1?'s':''}${ev?` · next: ${esc(ev.title)} (${esc(ev.when)})`:''}</div>
+    ${o.memberships.slice(0,3).map(m=>{
+      const anns=annByOrg[m.name]||[];
+      return `<div class="li"><div class="lic purple">${m.icon}</div>
+        <div style="min-width:0;flex:1"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div>
+          ${anns.map(a=>`<div class="org-ann"><span>${esc(a.text)} <span class="org-ann-time">· ${esc(a.time)}</span></span></div>`).join("")}
+        </div>
+      </div>`;}).join("")}
+    ${ev?`<div class="cc-hint" style="text-align:left;margin-top:10px">Next event: ${esc(ev.title)} (${esc(ev.when)})</div>`:''}
   </div>`;
 }
 function openOrgs(){
@@ -3111,6 +3593,8 @@ function renderMain(){
         <p>${isHome ? (p.guest ? p.greetSub : `${todayStr()} · ${p.greetSub}`) : p.role}</p>
       </div>
       <div class="top-actions">
+        <button class="campus-btn ${curCampus()?'':'none'}" onclick="openCampusPicker()" title="Campus">
+          <span class="cb-ic">📍</span>${curCampus()?esc(curCampus().abbr):"Set campus"}</button>
         ${p.guest ? "" : `<button class="icon-btn" onclick="openNotifs()">🔔${p.notifCount?'<span class="dot"></span>':""}</button>`}
         <div class="avatar" onclick="openSettings()" title="Profile & settings">${p.avatar}</div>
       </div>
@@ -3134,8 +3618,35 @@ function goToTaskSearch(){
   setTab("tasks");
   setTimeout(()=>{ const i=$("taskSearchInput"); if(i) i.focus(); },50);
 }
+function setCampus(id){
+  state.campus = id || null;
+  try{ localStorage.setItem("oneiu_campus_"+state.persona, id||"none"); }catch(e){}
+  closeDrawer();
+  render();
+  const c=curCampus();
+  toast(c ? `Campus set to ${c.name}` : "No campus selected");
+}
+function openCampusPicker(){
+  const opt = c => `
+    <button class="camp-opt ${state.campus===c.id?"sel":""}" onclick="setCampus('${c.id}')">
+      <span class="camp-radio"></span>
+      <span style="min-width:0"><span class="co-name">${esc(c.name)}</span><br><span class="co-city">${esc(c.city)}</span></span>
+    </button>`;
+  $("drawer").innerHTML = `
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <h2>Choose your campus</h2>
+    <p class="dsub">Switch anytime to explore another IU campus. Your classes and account stay with your home campus.</p>
+    <div class="camp-list">
+      ${CAMPUSES.map(opt).join("")}
+      <button class="camp-opt none-opt ${!state.campus?"sel":""}" onclick="setCampus('')">
+        <span class="camp-radio"></span><span class="co-name">None selected</span>
+      </button>
+    </div>`;
+  $("drawer").classList.add("open"); $("scrim").classList.add("open");
+}
 function setPersona(key){
   state.persona=key; state.tab="home"; state.checked={}; state.q=""; state.cat="All"; state.moving=null;
+  state.campus = loadCampusFor(key);
   state.favs = new Set(DATA[key].favorites);
   state.ai = { filter:"all", explain:false };
   state.omniQ = "";
@@ -3209,6 +3720,13 @@ function openSettings(){
         ? `<button class="act" style="width:100%;justify-content:center" onclick="toast('Prototype: opens IU Login (CAS + two-step / Duo).')">Sign in with your IU username</button>`
         : `<button class="act ghost" style="width:100%;justify-content:center" onclick="signOut()">↩︎ Sign out</button>`}
     </div>
+    <div class="dsec"><h4>Campus</h4>
+      <div class="set-row" style="cursor:pointer" onclick="openCampusPicker()">
+        <div class="si">📍</div>
+        <div style="min-width:0"><div class="st">Campus</div>
+          <div class="ss">${curCampus()?esc(curCampus().name):"None selected"}</div></div>
+        <div class="set-right">›</div></div>
+    </div>
     <div class="dsec"><h4>Appearance</h4>
       ${setRow(dark?"🌙":"☀️","Dark mode",(dark?"On":"Off")+" · easier on the eyes at night",sw(dark,"toggleTheme()"))}
     </div>
@@ -3236,9 +3754,26 @@ function toast(msg){
 
 $("adminModal").addEventListener("click",e=>{ if(e.target.id==="adminModal") toggleAdmin(false); });
 $("fcModal").addEventListener("click",e=>{ if(e.target.id==="fcModal") closeFullCalendar(); });
+$("onbModal").addEventListener("click",e=>{ if(e.target.id==="onbModal") dismissOnboarding(); });
+
+/* first-run campus onboarding (IU Mobile style) */
+function maybeOnboard(){
+  let done=false; try{ done=localStorage.getItem("oneiu_onboarded")==="1"; }catch(e){}
+  if(done || state.campus) return;
+  $("onbList").innerHTML = CAMPUSES.map(c=>`
+    <button class="camp-opt" onclick="onbPick('${c.id}')">
+      <span class="camp-radio"></span>
+      <span style="min-width:0"><span class="co-name">${esc(c.name)}</span><br><span class="co-city">${esc(c.city)}</span></span>
+    </button>`).join("") + `
+    <button class="camp-opt none-opt" onclick="onbPick('')"><span class="camp-radio"></span><span class="co-name">None selected</span></button>`;
+  $("onbModal").classList.add("open");
+}
+function dismissOnboarding(){ try{localStorage.setItem("oneiu_onboarded","1");}catch(e){} $("onbModal").classList.remove("open"); }
+function onbPick(id){ dismissOnboarding(); setCampus(id); }
 
 applyPrefs();
 render();
+maybeOnboard();
 </script>
 </body>
 </html>
