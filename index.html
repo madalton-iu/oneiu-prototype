@@ -1367,6 +1367,147 @@ const FEED = {
   ],
 };
 
+/* ---------- Campus-specific feeds (events.iu.edu / news.iu.edu / campus athletics) ----------
+   Representative and illustrative: event venues and team identities/conferences are real;
+   specific dates, opponents, and headlines are sample content for the prototype. Opponent
+   markers are neutral initials (no third-party logos). Campuses without an athletics program
+   (Columbus, Fort Wayne) omit the Athletics tab.                                              */
+const CAMPUS_FEED = {
+  iub: FEED,
+  iui: {
+    athDomain:"iuindyjags.com", teamName:"Jaguars",
+    events:[
+      {id:"iui_e1",date:"Sep 15",t1:"11:00am",t2:"to 2:00pm",title:"Student Involvement Fair",loc:"Campus Center",desc:"Meet student organizations, campus rec, and service groups across IU Indianapolis. Drop in any time.",host:"Division of Student Affairs"},
+      {id:"iui_e2",date:"Sep 17",t1:"12:00pm",t2:"to 1:00pm",title:"Ruth Lilly Law Library research workshop",loc:"Inlow Hall",desc:"Hands-on legal research session for law students. Bring a laptop.",host:"McKinney School of Law"},
+      {id:"iui_e3",date:"Sep 19",t1:"6:00pm",t2:"to 8:00pm",title:"Jaguars Men's Soccer home match",loc:"Michael A. Carroll Stadium",desc:"Horizon League play. Student tickets free with a valid CrimsonCard.",host:"IU Indy Athletics"},
+    ],
+    news:[
+      {id:"iui_n1",date:"Sep 11, 2026",cat:"Health",title:"IU Indianapolis expands downtown health-sciences partnerships",summary:"New clinical placements across the Indianapolis medical district give students expanded hands-on training opportunities this year."},
+      {id:"iui_n2",date:"Sep 12, 2026",cat:"Law",title:"McKinney law students advance in regional moot court competition",summary:"Teams from the Robert H. McKinney School of Law earned recognition at a regional appellate advocacy competition."},
+    ],
+    athletics:[
+      {id:"iui_g1",date:"September 19, 2026",sport:"Men's Soccer",time:"6 P.M.",venue:"Michael A. Carroll Stadium",away:{name:"Northern Kentucky",logo:"N"},home:{name:"Jaguars",logo:"IU"},note:"Horizon League · student tickets via CrimsonCard"},
+      {id:"iui_g2",date:"September 21, 2026",sport:"Volleyball",time:"7 P.M.",venue:"The Jungle",away:{name:"Milwaukee",logo:"M"},home:{name:"Jaguars",logo:"IU"},note:"Horizon League home match"},
+      {id:"iui_g3",date:"September 24, 2026",sport:"Women's Soccer",time:"3 P.M.",venue:"Michael A. Carroll Stadium",away:{name:"Cleveland State",logo:"C"},home:{name:"Jaguars",logo:"IU"},note:"Horizon League play"},
+    ],
+  },
+  iun: {
+    athDomain:"iunathletics.com", teamName:"RedHawks",
+    events:[
+      {id:"iun_e1",date:"Sep 16",t1:"4:00pm",t2:"to 5:30pm",title:"Student Nurses Association clinicals orientation",loc:"Dunes Medical/Professional Building",desc:"Orientation for the fall clinical placements. Bring your health clearance documentation.",host:"College of Health & Human Services"},
+      {id:"iun_e2",date:"Sep 18",t1:"11:00am",t2:"to 1:00pm",title:"Health Careers Fair",loc:"Savannah Center gymnasium",desc:"Northwest Indiana health employers recruit for internships and jobs. Bring résumés.",host:"Career Services"},
+      {id:"iun_e3",date:"Sep 19",t1:"7:30pm",t2:"to 9:00pm",title:"Fall theatre production",loc:"Arts & Sciences Building",desc:"Student and faculty performers open the fall season. Tickets at the door.",host:"Department of Performing & Visual Arts"},
+    ],
+    news:[
+      {id:"iun_n1",date:"Sep 10, 2026",cat:"Health",title:"IU Northwest nursing students complete community clinical placements",summary:"Students in the nursing program partnered with regional health providers across Northwest Indiana this fall."},
+      {id:"iun_n2",date:"Sep 13, 2026",cat:"Arts and Humanities",title:"Arts & Sciences Building hosts regional theatre festival",summary:"The campus welcomed performers and audiences from across the region for a weekend of student and community theatre."},
+    ],
+    athletics:[
+      {id:"iun_g1",date:"September 18, 2026",sport:"Volleyball",time:"7 P.M.",venue:"Savannah Center",away:{name:"Calumet College of St. Joseph",logo:"C"},home:{name:"RedHawks",logo:"IU"},note:"CCAC · student tickets via CrimsonCard"},
+      {id:"iun_g2",date:"September 20, 2026",sport:"Men's Soccer",time:"1 P.M.",venue:"RedHawks Field",away:{name:"Governors State",logo:"G"},home:{name:"RedHawks",logo:"IU"},note:"CCAC conference play"},
+    ],
+  },
+  iue: {
+    athDomain:"iueredwolves.com", teamName:"Red Wolves",
+    events:[
+      {id:"iue_e1",date:"Sep 16",t1:"12:00pm",t2:"to 1:00pm",title:"Whitewater Hall guest lecture",loc:"Whitewater Hall",desc:"A faculty-hosted talk open to all students. Light refreshments provided.",host:"School of Humanities & Social Sciences"},
+      {id:"iue_e2",date:"Sep 18",t1:"6:00pm",t2:"to 8:00pm",title:"Red Wolves home match",loc:"Student Events & Activities Center",desc:"River States Conference play. Free with a valid CrimsonCard.",host:"IU East Athletics"},
+      {id:"iue_e3",date:"Sep 20",t1:"10:00am",t2:"to 1:00pm",title:"Campus open house",loc:"Springwood Hall",desc:"Tours, advising, and program information for prospective and current students.",host:"Office of Admissions"},
+    ],
+    news:[
+      {id:"iue_n1",date:"Sep 11, 2026",cat:"Academics",title:"IU East online degree programs earn national recognition",summary:"The campus's online offerings were highlighted for accessibility and student outcomes."},
+      {id:"iue_n2",date:"Sep 13, 2026",cat:"Athletics",title:"Red Wolves student-athletes earn conference academic honors",summary:"Several IU East teams were recognized for classroom performance during the past year."},
+    ],
+    athletics:[
+      {id:"iue_g1",date:"September 18, 2026",sport:"Men's Soccer",time:"6 P.M.",venue:"IU East field",away:{name:"Oakland City",logo:"O"},home:{name:"Red Wolves",logo:"IU"},note:"River States Conference"},
+      {id:"iue_g2",date:"September 21, 2026",sport:"Volleyball",time:"7 P.M.",venue:"Student Events & Activities Center",away:{name:"Brescia",logo:"B"},home:{name:"Red Wolves",logo:"IU"},note:"RSC home match"},
+    ],
+  },
+  iuk: {
+    athDomain:"iukcougars.com", teamName:"Cougars",
+    events:[
+      {id:"iuk_e1",date:"Sep 16",t1:"11:30am",t2:"to 1:00pm",title:"Kelley Student Center resource fair",loc:"Kelley Student Center",desc:"Campus services, clubs, and support offices in one place.",host:"Student Life"},
+      {id:"iuk_e2",date:"Sep 18",t1:"7:00pm",t2:"to 8:30pm",title:"Cougars home match",loc:"Cougar Gymnasium",desc:"River States Conference play. Free with a valid CrimsonCard.",host:"IU Kokomo Athletics"},
+      {id:"iuk_e3",date:"Sep 20",t1:"1:00pm",t2:"to 3:00pm",title:"Observatory public viewing",loc:"IU Kokomo Observatory",desc:"Weather permitting. Open to students and the community.",host:"Department of Science, Math & Informatics"},
+    ],
+    news:[
+      {id:"iuk_n1",date:"Sep 10, 2026",cat:"Health",title:"IU Kokomo nursing cohort celebrates fall pinning",summary:"Graduating nursing students marked their transition to practice at a campus ceremony."},
+      {id:"iuk_n2",date:"Sep 12, 2026",cat:"Campus",title:"Main Building renovations enhance student spaces",summary:"Updated classrooms and gathering areas continue to modernize the campus's central building."},
+    ],
+    athletics:[
+      {id:"iuk_g1",date:"September 18, 2026",sport:"Volleyball",time:"7 P.M.",venue:"Cougar Gymnasium",away:{name:"Midway",logo:"M"},home:{name:"Cougars",logo:"IU"},note:"River States Conference"},
+      {id:"iuk_g2",date:"September 21, 2026",sport:"Men's Soccer",time:"4 P.M.",venue:"IU Kokomo field",away:{name:"Oakland City",logo:"O"},home:{name:"Cougars",logo:"IU"},note:"RSC conference play"},
+    ],
+  },
+  iusb: {
+    athDomain:"iusbtitans.com", teamName:"Titans",
+    events:[
+      {id:"iusb_e1",date:"Sep 16",t1:"12:00pm",t2:"to 1:30pm",title:"Student Activities Center welcome fair",loc:"Student Activities Center",desc:"Meet clubs, rec, and student organizations for the fall.",host:"Student Life"},
+      {id:"iusb_e2",date:"Sep 18",t1:"2:00pm",t2:"to 3:00pm",title:"Schurz Library research talk",loc:"Franklin D. Schurz Library",desc:"Tips for finding sources and citing them well. Open to all students.",host:"IU South Bend Libraries"},
+      {id:"iusb_e3",date:"Sep 19",t1:"7:00pm",t2:"to 8:30pm",title:"Titans home match",loc:"Student Activities Center",desc:"CCAC conference play. Free with a valid CrimsonCard.",host:"IU South Bend Athletics"},
+    ],
+    news:[
+      {id:"iusb_n1",date:"Sep 11, 2026",cat:"Research",title:"Wiekamp Hall exhibit spotlights student research",summary:"Undergraduate and graduate projects from across the campus were on display this month."},
+      {id:"iusb_n2",date:"Sep 13, 2026",cat:"Athletics",title:"IU South Bend Titans open conference play",summary:"Fall teams began their CCAC schedules with home matches at the Student Activities Center."},
+    ],
+    athletics:[
+      {id:"iusb_g1",date:"September 19, 2026",sport:"Men's Soccer",time:"7 P.M.",venue:"IU South Bend field",away:{name:"Roosevelt",logo:"R"},home:{name:"Titans",logo:"IU"},note:"CCAC conference play"},
+      {id:"iusb_g2",date:"September 22, 2026",sport:"Volleyball",time:"7 P.M.",venue:"Student Activities Center",away:{name:"Judson",logo:"J"},home:{name:"Titans",logo:"IU"},note:"CCAC home match"},
+    ],
+  },
+  ius: {
+    athDomain:"iusgrenadiers.com", teamName:"Grenadiers",
+    events:[
+      {id:"ius_e1",date:"Sep 16",t1:"11:00am",t2:"to 1:00pm",title:"Student involvement fair",loc:"University Center",desc:"Connect with clubs, service groups, and campus resources.",host:"Student Life"},
+      {id:"ius_e2",date:"Sep 18",t1:"7:30pm",t2:"to 9:30pm",title:"Ogle Center fall performance",loc:"Ogle Center",desc:"The performing-arts season opens with a student and guest ensemble.",host:"Ogle Center for the Performing Arts"},
+      {id:"ius_e3",date:"Sep 20",t1:"1:00pm",t2:"to 3:00pm",title:"Grenadiers home match",loc:"Activities Building",desc:"River States Conference play. Free with a valid CrimsonCard.",host:"IU Southeast Athletics"},
+    ],
+    news:[
+      {id:"ius_n1",date:"Sep 11, 2026",cat:"Arts and Humanities",title:"IU Southeast Ogle Center announces performing-arts season",summary:"The campus arts center unveiled a lineup of student productions and guest performances."},
+      {id:"ius_n2",date:"Sep 13, 2026",cat:"Athletics",title:"Grenadiers earn River States Conference recognition",summary:"IU Southeast teams and student-athletes were honored for competition and academics."},
+    ],
+    athletics:[
+      {id:"ius_g1",date:"September 20, 2026",sport:"Men's Soccer",time:"1 P.M.",venue:"IU Southeast field",away:{name:"Oakland City",logo:"O"},home:{name:"Grenadiers",logo:"IU"},note:"River States Conference"},
+      {id:"ius_g2",date:"September 23, 2026",sport:"Volleyball",time:"7 P.M.",venue:"Activities Building",away:{name:"Brescia",logo:"B"},home:{name:"Grenadiers",logo:"IU"},note:"RSC home match"},
+    ],
+  },
+  iuc: {
+    athDomain:"iuccrimsonpride.com", teamName:"Crimson Pride",
+    events:[
+      {id:"iuc_e1",date:"Sep 16",t1:"12:00pm",t2:"to 1:00pm",title:"Columbus Learning Center workshop",loc:"Columbus Learning Center",desc:"Academic support and study-skills session open to all students.",host:"Student Services"},
+      {id:"iuc_e2",date:"Sep 18",t1:"5:30pm",t2:"to 7:00pm",title:"Architecture studio showcase",loc:"J. Irwin Miller Architecture Program",desc:"Graduate students present studio work in downtown Columbus.",host:"J. Irwin Miller Architecture Program"},
+      {id:"iuc_e3",date:"Sep 20",t1:"1:00pm",t2:"to 3:00pm",title:"Crimson Pride home match",loc:"Cera Sports Park",desc:"River States Conference play. Free with a valid CrimsonCard.",host:"IU Columbus Athletics"},
+    ],
+    news:[
+      {id:"iuc_n1",date:"Sep 11, 2026",cat:"Academics",title:"IU Columbus and Ivy Tech expand transfer pathways",summary:"New agreements make it easier for regional students to complete a bachelor's degree in Columbus."},
+      {id:"iuc_n2",date:"Sep 12, 2026",cat:"Athletics",title:"Crimson Pride earns NAIA Champions of Character recognition",summary:"IU Columbus athletics was again honored by the NAIA for sportsmanship and community standards."},
+      {id:"iuc_n3",date:"Sep 13, 2026",cat:"Arts and Humanities",title:"Miller Architecture Program showcases student studios",summary:"The graduate program highlighted student work rooted in Columbus's renowned design heritage."},
+    ],
+    athletics:[
+      {id:"iuc_g1",date:"September 18, 2026",sport:"Men's Soccer",time:"5 P.M.",venue:"Cera Sports Park",away:{name:"Oakland City",logo:"O"},home:{name:"Crimson Pride",logo:"IU"},note:"River States Conference (NAIA)"},
+      {id:"iuc_g2",date:"September 20, 2026",sport:"Volleyball",time:"1 P.M.",venue:"Circle K Fieldhouse at NexusPark",away:{name:"Brescia",logo:"B"},home:{name:"Crimson Pride",logo:"IU"},note:"RSC home match · free with CrimsonCard"},
+      {id:"iuc_g3",date:"September 23, 2026",sport:"Women's Soccer",time:"4 P.M.",venue:"Cera Sports Park",away:{name:"Midway",logo:"M"},home:{name:"Crimson Pride",logo:"IU"},note:"River States Conference play"},
+    ],
+  },
+  iufw: {
+    athDomain:"gomastodons.com", teamName:"Mastodons", athShared:"Purdue Fort Wayne",
+    events:[
+      {id:"iufw_e1",date:"Sep 16",t1:"11:00am",t2:"to 1:00pm",title:"Walb Student Union welcome fair",loc:"Walb Student Union",desc:"Meet student services and organizations over coffee at Stomping Grounds.",host:"Student Life"},
+      {id:"iufw_e2",date:"Sep 18",t1:"12:00pm",t2:"to 1:00pm",title:"Health-sciences information session",loc:"Neff Hall",desc:"Learn about nursing, dental, and allied-health programs at IU Fort Wayne.",host:"IU Fort Wayne"},
+      {id:"iufw_e3",date:"Sep 20",t1:"2:00pm",t2:"to 4:00pm",title:"Student Central open hours",loc:"Neff Hall",desc:"Drop in for help with registration, billing, and financial aid.",host:"IU Fort Wayne Student Central"},
+    ],
+    news:[
+      {id:"iufw_n1",date:"Sep 11, 2026",cat:"Health",title:"IU Fort Wayne expands nursing and health-sciences programs",summary:"The campus continues to grow its health-professions offerings in northeast Indiana."},
+      {id:"iufw_n2",date:"Sep 13, 2026",cat:"Campus",title:"Neff Hall Student Central streamlines student services",summary:"Registration, billing, and financial-aid help are now consolidated on the first floor of Neff Hall."},
+    ],
+    athletics:[
+      {id:"iufw_g1",date:"September 19, 2026",sport:"Men's Soccer",time:"7 P.M.",venue:"Hefner Fields",away:{name:"Northern Kentucky",logo:"N"},home:{name:"Mastodons",logo:"PFW"},note:"Horizon League (NCAA D-I) · shared with Purdue Fort Wayne"},
+      {id:"iufw_g2",date:"September 21, 2026",sport:"Volleyball",time:"6 P.M.",venue:"Gates Sports Center",away:{name:"Milwaukee",logo:"M"},home:{name:"Mastodons",logo:"PFW"},note:"Horizon League home match · Purdue Fort Wayne"},
+    ],
+  },
+};
+function curFeed(){ return CAMPUS_FEED[state.campus] || FEED; }
+
 /* =====================================================
    Personas (simulated data)
 ===================================================== */
@@ -3187,20 +3328,29 @@ function renderSignin(){
     </div>
   </div>`;
 }
-function feedSports(){ return ["All", ...new Set(FEED.athletics.map(g=>g.sport))]; }
+function feedSports(){ const f=curFeed(); return ["All", ...new Set((f.athletics||[]).map(g=>g.sport))]; }
+function feedSrc(tab){
+  const f=curFeed();
+  if(tab==="athletics") return f.athDomain || "iuhoosiers.com";
+  return FEED_SRC[tab];
+}
 function feedInner(){
-  const tab=state.feedTab;
-  const seg=[["athletics","Athletics"],["events","Events"],["news","News"]];
+  const f=curFeed();
+  const hasAth = !!(f.athletics && f.athletics.length);
+  let tab=state.feedTab;
+  if(tab==="athletics" && !hasAth){ tab=state.feedTab="events"; }
+  const c=curCampus();
+  const seg=[...(hasAth?[["athletics","Athletics"]]:[]),["events","Events"],["news","News"]];
   const filter = tab==="athletics"
     ? `<div class="feed-filter">${feedSports().map((s,i)=>`<button class="chip ${state.feedSport===s?"active":""}" onclick="setFeedSport(${i})">${esc(s)}</button>`).join("")}</div>`
     : "";
   return `
-    <div class="card-head"><h3>Campus feed</h3>
-      <span class="link" onclick="toast('Prototype: opens more from ${FEED_SRC[tab]}.')">More ${tab==="athletics"?"athletics":tab==="news"?"news":"events"} →</span></div>
+    <div class="card-head"><h3>Campus feed${c?` · ${esc(c.abbr)}`:""}</h3>
+      <span class="link" onclick="toast('Prototype: opens more from ${feedSrc(tab)}.')">More ${tab==="athletics"?"athletics":tab==="news"?"news":"events"} →</span></div>
     <div class="seg">${seg.map(([k,l])=>`<button class="${tab===k?"active":""}" onclick="setFeedTab('${k}')">${l}</button>`).join("")}</div>
     ${filter}
     <div class="feed-list">${feedList(tab)}</div>
-    <div class="feed-src">Source: ${FEED_SRC[tab]}</div>`;
+    <div class="feed-src">Source: ${feedSrc(tab)}${c&&c.id!=="iub"?" · "+esc(c.name)+" (illustrative)":""}</div>`;
 }
 function feedRefresh(){ const r=$("feedRoot"); if(r) r.innerHTML=feedInner(); }
 function setFeedTab(k){ state.feedTab=k; feedRefresh(); }
@@ -3209,17 +3359,18 @@ function teamLogo(logo){
   return logo==="IU" ? `<span class="logo">${TRIDENT}</span>` : `<span class="logo">${logo}</span>`;
 }
 function feedList(tab){
-  if(tab==="events") return FEED.events.map(e=>`
+  const f=curFeed();
+  if(tab==="events") return (f.events||[]).map(e=>`
     <div class="feed-item" onclick="openFeedItem('events','${e.id}')">
       <div class="feed-date"><div class="fd1">${esc(e.date)}</div><div class="fd2">${esc(e.t1)}</div><div class="fd2">${esc(e.t2)}</div></div>
       <div style="min-width:0"><div class="feed-title">${esc(e.title)}</div><div class="feed-sub">${esc(e.loc)}</div></div>
     </div>`).join("");
-  if(tab==="news") return FEED.news.map(n=>`
+  if(tab==="news") return (f.news||[]).map(n=>`
     <div class="feed-item" style="display:block" onclick="openFeedItem('news','${n.id}')">
       <div class="feed-cat">${esc(n.date)} &nbsp;·&nbsp; ${esc(n.cat)}</div>
       <div class="feed-title">${esc(n.title)}</div>
     </div>`).join("");
-  const games = FEED.athletics.filter(g=> state.feedSport==="All" || g.sport===state.feedSport);
+  const games = (f.athletics||[]).filter(g=> state.feedSport==="All" || g.sport===state.feedSport);
   if(!games.length) return `<div class="empty">No ${esc(state.feedSport)} games scheduled.</div>`;
   return games.map(g=>`
     <div class="game" onclick="openFeedItem('athletics','${g.id}')">
@@ -3230,9 +3381,10 @@ function feedList(tab){
     </div>`).join("");
 }
 function openFeedItem(kind,id){
+  const f=curFeed();
   let html="";
   if(kind==="events"){
-    const e=FEED.events.find(x=>x.id===id);
+    const e=f.events.find(x=>x.id===id);
     html=`<button class="close" onclick="closeDrawer()">✕</button>
       <div class="dhead-dist">${esc(e.date)} · ${esc(e.t1)} ${esc(e.t2)}</div>
       <h2>${esc(e.title)}</h2>
@@ -3242,7 +3394,7 @@ function openFeedItem(kind,id){
       <a class="getthere" onclick="toast('Prototype: adds this event to your calendar.')">➕ Add to calendar</a>
       <div class="cc-hint" style="margin-top:12px">events.iu.edu</div>`;
   } else if(kind==="news"){
-    const n=FEED.news.find(x=>x.id===id);
+    const n=f.news.find(x=>x.id===id);
     html=`<button class="close" onclick="closeDrawer()">✕</button>
       <div class="dhead-dist">${esc(n.date)} · ${esc(n.cat)}</div>
       <h2>${esc(n.title)}</h2>
@@ -3250,7 +3402,7 @@ function openFeedItem(kind,id){
       <a class="getthere" onclick="toast('Prototype: opens the full story on news.iu.edu.')">➔ Read full story</a>
       <div class="cc-hint" style="margin-top:12px">news.iu.edu</div>`;
   } else {
-    const g=FEED.athletics.find(x=>x.id===id);
+    const g=f.athletics.find(x=>x.id===id);
     html=`<button class="close" onclick="closeDrawer()">✕</button>
       <div class="dhead-dist">${esc(g.sport)} · ${esc(g.date)}</div>
       <h2>${esc(g.away.name)} at ${esc(g.home.name)}</h2>
