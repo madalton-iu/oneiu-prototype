@@ -3745,8 +3745,6 @@ function renderMain(){
         <p>${isHome ? (p.guest ? p.greetSub : `${todayStr()} · ${p.greetSub}`) : p.role}</p>
       </div>
       <div class="top-actions">
-        <button class="campus-btn ${curCampus()?'':'none'}" onclick="openCampusPicker()" title="Campus">
-          <span class="cb-ic">📍</span>${curCampus()?esc(curCampus().abbr):"Set campus"}</button>
         ${p.guest ? "" : `<button class="icon-btn" onclick="openNotifs()">🔔${p.notifCount?'<span class="dot"></span>':""}</button>`}
         <div class="avatar" onclick="openSettings()" title="Profile & settings">${p.avatar}</div>
       </div>
