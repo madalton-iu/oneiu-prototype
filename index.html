@@ -1531,8 +1531,7 @@ guest: {
   ],
   views:{
     home:[
-      {type:"hero",kicker:"Welcome to One.IU",title:"Explore Indiana University",
-       sub:"You're viewing public information. Sign in with your IU username to see your classes, Action Items, CrimsonCard, and personalized services.",
+      {type:"hero",kicker:"Welcome to One.IU",lead:{n:"3",l:"ways to explore IU"},
        stats:[{n:"🎟️",l:"Events & news"},{n:"🗺️",l:"Campus map"},{n:"🔎",l:"Search IU"}]},
       {type:"signin"},
       {type:"campusfeed"},
@@ -1569,9 +1568,11 @@ applicant: {
   ],
   views:{
     home:[
-      {type:"hero",kicker:"Application submitted",title:"Your application is complete — decision by January 15",
-       sub:"IU received your Kelley Direct Admit application and all required materials. Watch here and your email for the decision.",
-       stats:[{n:"Jan 15",l:"Decision by"},{n:"Complete",l:"Admissions checklist"},{n:"2",l:"Open to-dos"}]},
+      {type:"hero",kicker:"Application submitted",signals:[
+        {cat:"deadline",n:"2",l:"open application to-dos",src:"IU Admissions",days:6,count:2},
+        {cat:"status",n:"Jan 15",l:"decision expected",src:"IU Admissions"},
+        {cat:"status",n:"Complete",l:"admissions checklist",src:"IU Admissions"},
+      ]},
       {type:"actionitems"},
       {type:"list",title:"🎟️ Admissions events",items:[
         {icon:"🚌",bg:"gold",title:"Red Carpet Day",sub:"Full-day visit: tours, Kelley info session, lunch",right:"Oct 10",rightSub:"Bloomington"},
@@ -1654,6 +1655,7 @@ firstyear: {
     ill:[{title:"Finite Mathematics (7th ed.) — chapter scan",status:"Ready — check your email"}],
     rooms:[{room:"Wells Library · Room 234",when:"Today 6:00–8:00 p.m.",status:"Reserved"}]},
   favorites:["canvas","timesheet","dining","bus","grades","payBill"],
+  degree:{program:"Exploratory (pre-major)",creditsDone:15,creditsReq:120,reqsDone:5,reqsTotal:42,src:"iGPS"},
   kualitime:{assignment:"Work-Study · Wells Library (circ. desk)",rate:"$15.00/hr",todayMin:0,weekMin:570},
   calendar:[
     {t1:"10:10",t2:"11:00",title:"MATH-M 118 · Finite Math",loc:"Ballantine 013 · Dr. Okafor",src:"SIS",color:"crimson",now:true,key:"finite",recurring:true},
@@ -1685,9 +1687,11 @@ firstyear: {
   ],
   views:{
     home:[
-      {type:"hero",kicker:"Week 4 · Fall semester",title:"Two classes on your schedule today",
-       sub:"Next: MATH-M 118 at 10:10 a.m. in Ballantine 013.",
-       stats:[{n:"2",l:"Classes today"},{n:"9.5h",l:"Worked this week"},{n:"3",l:"Items due this week"}]},
+      {type:"hero",kicker:"Week 4 · Fall semester",signals:[
+        {cat:"deadline",n:"3",l:"items due this week",src:"Canvas / Action Items",days:1,count:3},
+        {cat:"today",n:"2",l:"classes today",src:"SIS"},
+        {cat:"status",n:"9.5h",l:"worked this week",src:"Kuali Time"},
+      ]},
       {type:"calendar"},
       {type:"actionitems"},
       {type:"kualitime"},
@@ -1699,6 +1703,7 @@ firstyear: {
     ],
     tasks:[{type:"tasklauncher"}],
     classes:[
+      {type:"degree"},
       {type:"list",title:"📚 Fall schedule · 15 credit hours · from SIS",items:[
         {icon:"➗",bg:"red",title:"MATH-M 118 · Finite Mathematics",sub:"MWF 10:10–11:00 · Ballantine 013",right:"3 cr",rightSub:"enrolled"},
         {icon:"✍️",bg:"blue",title:"ENG-W 131 · Reading, Writing & Inquiry",sub:"TR 9:30–10:45 · Wells Library 001",right:"3 cr",rightSub:"enrolled"},
@@ -1792,6 +1797,7 @@ senior: {
       {icon:"✍️",title:"Résumé review drop-in",where:"Luddy lobby · no appointment",when:"Sep 25"},
     ]},
   favorites:["applyGrad","degreeAudit","jobs","transcript","canvas","payBill"],
+  degree:{program:"B.S. Informatics",creditsDone:113,creditsReq:120,reqsDone:23,reqsTotal:24,src:"iGPS"},
   calendar:[
     {t1:"11:15",t2:"12:30",title:"INFO-I 494 · Capstone studio",loc:"Luddy Hall 1106 · team standup",src:"SIS",color:"crimson",now:true,recurring:true},
     {t1:"2:30",t2:"3:00",title:"Career coach check-in",loc:"Microsoft Teams · resume review",src:"Exchange",color:"blue",join:"Teams"},
@@ -1821,12 +1827,14 @@ senior: {
   ],
   views:{
     home:[
-      {type:"hero",kicker:"Final semester",title:"Degree progress: 94% — one requirement remaining",
-       sub:"Apply to graduate by September 15 and resolve the open Arts & Humanities credit to stay on track for December commencement.",
-       stats:[{n:"94%",l:"Degree complete"},{n:"12",l:"Credits left"},{n:"Dec 19",l:"Commencement"}]},
+      {type:"hero",kicker:"Final semester",signals:[
+        {cat:"deadline",n:"Apply to graduate",l:"— due today",src:"Registrar",days:0},
+        {cat:"money",n:"$1,284",l:"balance due Sep 25",src:"Bursar",days:10},
+        {cat:"today",n:"2",l:"classes today",src:"SIS"},
+        {cat:"status",n:"94%",l:"degree complete",src:"iGPS"},
+      ]},
       {type:"actionitems"},
-      {type:"progress",title:"📊 Degree progress · B.S. Informatics",pct:94,label:"114 of 120 credits",
-       note:"All requirements are complete except one Arts & Humanities gen-ed credit. Your advisor flagged two 1-credit options with open seats — see the Graduation tab."},
+      {type:"degree"},
       {type:"calendar"},
       {type:"careers"},
       {type:"crimsoncard"},
@@ -1856,8 +1864,7 @@ senior: {
         {title:"Order cap & gown",sub:"By Nov 14 · rental ~$65.",state:"todo",src:"IU Bookstore",link:"the IU Bookstore",linkLabel:"Order"},
         {title:"Commencement — Dec 19",sub:"Simon Skjodt Assembly Hall · guest tickets open in Nov.",state:"todo",src:"Info"},
       ]},
-      {type:"progress",title:"📊 Degree audit · from iGPS",pct:94,label:"114 / 120 credits",
-       note:"Major core complete · Cognate complete · Capstone in progress · 1 credit of Arts & Humanities remaining."},
+      {type:"degree"},
       {type:"notice",tone:"gold",icon:"⏰",title:"Key deadlines",
        sub:"Apply to graduate by September 15, and enroll in the remaining A&H credit before the second-eight-week session begins (Oct 12). The remaining items are ceremony logistics."},
     ],
@@ -1925,9 +1932,12 @@ staff: {
   ],
   views:{
     home:[
-      {type:"hero",kicker:"Office of First Year Experience",title:"Four timesheets are waiting on your approval",
-       sub:"Approve before Friday payroll. Open enrollment begins October 15.",
-       stats:[{n:"3",l:"Meetings today"},{n:"4",l:"Approvals waiting"},{n:"Sep 30",l:"Payday"}]},
+      {type:"hero",kicker:"Office of First Year Experience",signals:[
+        {cat:"approval",n:"4",l:"timesheets to approve",src:"Kuali Time",count:4},
+        {cat:"today",n:"3",l:"meetings today",src:"Exchange"},
+        {cat:"status",n:"Sep 30",l:"next payday",src:"Payroll"},
+        {cat:"status",n:"Oct 15",l:"open enrollment begins",src:"HR",days:30},
+      ]},
       {type:"calendar"},
       {type:"actionitems"},
       {type:"crimsoncard"},
@@ -2038,9 +2048,12 @@ faculty: {
   ],
   views:{
     home:[
-      {type:"hero",kicker:"Luddy School of Informatics",title:"38 I-365 projects are waiting to be graded",
-       sub:"Early evaluations are also open in the Student Engagement Roster (due Oct 4). Three advisee requests are pending, and the NSF internal deadline is October 1.",
-       stats:[{n:"2",l:"Classes today"},{n:"38",l:"To grade"},{n:"3",l:"Advisee requests"}]},
+      {type:"hero",kicker:"Luddy School of Informatics",signals:[
+        {cat:"grading",n:"38",l:"submissions to grade",src:"Canvas",count:38},
+        {cat:"deadline",n:"3",l:"advisee requests",src:"advising",days:7,count:3},
+        {cat:"deadline",n:"Oct 4",l:"early evaluations due",src:"SER",days:19},
+        {cat:"today",n:"2",l:"classes today",src:"SIS"},
+      ]},
       {type:"calendar"},
       {type:"actionitems"},
       {type:"crimsoncard"},
@@ -2147,9 +2160,11 @@ parent: {
   ],
   views:{
     home:[
-      {type:"hero",kicker:"Parent & family portal",title:"The fall statement is ready",
-       sub:"Jake's fall bill of $6,240 is due September 25, and Family Weekend registration is open. You have proxy access to billing and the records Jake has chosen to share.",
-       stats:[{n:"$6,240",l:"Due Sep 25"},{n:"Oct 17",l:"Family Weekend"},{n:"15",l:"Credit hours"}]},
+      {type:"hero",kicker:"Parent & family portal",signals:[
+        {cat:"money",n:"$6,240",l:"balance due Sep 25",src:"Bursar",days:10},
+        {cat:"status",n:"Oct 17",l:"Family Weekend",src:"Events",days:32},
+        {cat:"status",n:"15",l:"credit hours (shared)",src:"SIS"},
+      ]},
       {type:"actionitems"},
       {type:"list",title:"🧑‍🎓 Shared by Jake",items:[
         {icon:"📚",bg:"blue",title:"Enrolled: 15 credit hours",sub:"Fall schedule confirmed · Kelley sophomore",badge:{txt:"Shared",cls:"blue"}},
@@ -2217,7 +2232,7 @@ law: {
   name:"Marcus Ellison", first:"Marcus", avatar:"⚖️",
   campus:"iui",
   role:"2L · McKinney School of Law", adminDesc:"Second-year law student at the IU Robert H. McKinney School of Law on the IU Indianapolis campus; on the law journal and recruiting for a summer associate position.",
-  greetSub:"2 classes today · journal edits due Friday.",
+  greetSub:"2 classes today · fall balance due Sep 25.",
   crimsonCard:{holder:"Marcus Ellison",kind:"Student",id:"6017 88•• •••• 7729",since:"Aug 2024",
     balances:[
       {icon:"🥗",label:"Dining Dollars",value:"$96.40",note:"Cafés & campus dining",add:true},
@@ -2246,6 +2261,7 @@ law: {
     ill:[{title:"Law review article — PDF scan",status:"Ready — check your email"}],
     rooms:[{room:"Ruth Lilly Law Library · Study Room 3",when:"Today 4:00–6:00 p.m.",status:"Reserved"}]},
   favorites:["canvas","payBill","transcript","grades","dining","duo"],
+  degree:{program:"Juris Doctor (J.D.)",creditsDone:34,creditsReq:90,unit:"credit hours",reqsDone:5,reqsTotal:14,src:"the McKinney registrar"},
   calendar:[
     {t1:"9:00",t2:"10:15",title:"LAW-D 100 · Constitutional Law",loc:"Inlow Hall 121 · Prof. Reed",src:"SIS",color:"crimson",now:true,recurring:true},
     {t1:"10:30",t2:"11:45",title:"LAW-B 200 · Evidence",loc:"Inlow Hall 118",src:"SIS",color:"blue",recurring:true},
@@ -2275,9 +2291,12 @@ law: {
   ],
   views:{
     home:[
-      {type:"hero",kicker:"Week 4 · Fall semester",title:"Two classes today, journal edits Friday",
-       sub:"Next: Constitutional Law at 9:00 a.m. in Inlow Hall 121.",
-       stats:[{n:"2",l:"Classes today"},{n:"14",l:"Credit hours"},{n:"$8,930",l:"Due Sep 25"}]},
+      {type:"hero",kicker:"Week 4 · Fall semester",signals:[
+        {cat:"submission",n:"Evidence problem set",l:"due tomorrow",src:"Canvas",days:1},
+        {cat:"money",n:"$8,930",l:"balance due Sep 25",src:"Bursar",days:10},
+        {cat:"today",n:"2",l:"classes today",src:"SIS"},
+        {cat:"status",n:"38%",l:"J.D. credits earned",src:"McKinney registrar"},
+      ]},
       {type:"calendar"},
       {type:"actionitems"},
       {type:"crimsoncard"},
@@ -2290,6 +2309,7 @@ law: {
     ],
     tasks:[{type:"tasklauncher"}],
     classes:[
+      {type:"degree"},
       {type:"list",title:"📚 Fall schedule · 14 credit hours · from SIS",items:[
         {icon:"🏛️",bg:"red",title:"LAW-D 100 · Constitutional Law",sub:"MW 9:00–10:15 · Inlow Hall 121",right:"4 cr",rightSub:"enrolled"},
         {icon:"⚖️",bg:"blue",title:"LAW-B 200 · Evidence",sub:"MW 10:30–11:45 · Inlow Hall 118",right:"3 cr",rightSub:"enrolled"},
@@ -2339,7 +2359,7 @@ northwest: {
   name:"Destiny Carter", first:"Destiny", avatar:"🎒",
   campus:"iun",
   role:"Sophomore · Nursing · IU Northwest", adminDesc:"Second-year nursing student commuting to IU Northwest in Gary; works a part-time campus job and rides the South Shore Line.",
-  greetSub:"2 classes today · clinicals orientation Thursday.",
+  greetSub:"2 classes today · timesheet due Friday.",
   crimsonCard:{holder:"Destiny Carter",kind:"Student",id:"6017 88•• •••• 5540",since:"Aug 2025",
     balances:[
       {icon:"🥗",label:"Dining Dollars",value:"$65.20",note:"Commuter — dining & cafés",add:true},
@@ -2374,6 +2394,7 @@ northwest: {
       {icon:"✍️",title:"Résumé drop-in",where:"Hawthorn Hall · Career Services",when:"Sep 24"},
     ]},
   favorites:["canvas","dining","payBill","grades","timesheet","duo"],
+  degree:{program:"B.S. Nursing (pre-nursing)",creditsDone:34,creditsReq:120,reqsDone:12,reqsTotal:40,src:"iGPS"},
   kualitime:{assignment:"Front desk · Savannah Center",rate:"$13.00/hr",todayMin:0,weekMin:480},
   calendar:[
     {t1:"9:30",t2:"10:45",title:"NURS-B 244 · Community Nursing",loc:"Dunes Medical 108 · Prof. Hill",src:"SIS",color:"crimson",now:true,recurring:true},
@@ -2402,9 +2423,13 @@ northwest: {
   ],
   views:{
     home:[
-      {type:"hero",kicker:"Week 4 · Fall semester",title:"Two classes today · clinicals orientation Thursday",
-       sub:"Next: Community Nursing at 9:30 a.m. in Dunes Medical 108.",
-       stats:[{n:"2",l:"Classes today"},{n:"8h",l:"Worked this week"},{n:"$1,410",l:"Due Sep 25"}]},
+      {type:"hero",kicker:"Week 4 · Fall semester",signals:[
+        {cat:"submission",n:"A&P lab report",l:"due tomorrow",src:"Canvas",days:1},
+        {cat:"deadline",n:"Timesheet",l:"due Friday",src:"Kuali Time",days:3},
+        {cat:"money",n:"$1,410",l:"balance due Sep 25",src:"Bursar",days:10},
+        {cat:"today",n:"2",l:"classes today",src:"SIS"},
+        {cat:"status",n:"8h",l:"worked this week",src:"Kuali Time"},
+      ]},
       {type:"calendar"},
       {type:"actionitems"},
       {type:"kualitime"},
@@ -2416,6 +2441,7 @@ northwest: {
     ],
     tasks:[{type:"tasklauncher"}],
     classes:[
+      {type:"degree"},
       {type:"list",title:"📚 Fall schedule · 14 credit hours · from SIS",items:[
         {icon:"🩺",bg:"red",title:"NURS-B 244 · Community Nursing",sub:"MW 9:30–10:45 · Dunes Medical 108",right:"3 cr",rightSub:"enrolled"},
         {icon:"🧬",bg:"blue",title:"PHSL-P 261 · Anatomy & Physiology",sub:"MW 11:00–12:15 · Marram Hall 210",right:"5 cr",rightSub:"enrolled"},
@@ -2489,6 +2515,38 @@ state.campus = loadCampusFor(state.persona);
 
 const $ = id => document.getElementById(id);
 const P = () => DATA[state.persona];
+/* hero "Next" line — assembled from the calendar (the in-progress item, else the first) */
+function heroNext(){
+  const cal=P().calendar; if(!cal || !cal.length) return "";
+  const it = cal.find(x=>x.now) || cal[0];
+  if(!it) return "";
+  return `Next: ${it.title} at ${it.t1}${it.loc?` · ${it.loc}`:""}`;
+}
+/* ---- Hero selection rule (deterministic) ----
+   The headline is chosen from the user's current signals by a fixed priority:
+     1 blocking  — approvals you owe / grading others wait on
+     2 urgent    — anything due within 2 days
+     3 money     — a balance due
+     4 deadline  — your other dated items (soonest first)
+     5 today     — today's schedule
+     6 status    — standing indicators (degree %, application status, hours)
+   Ties: soonest due date, then largest count. Rank 1 = headline; next 3 = chips. */
+function heroTier(s){
+  if(s.cat==="approval"||s.cat==="grading") return 1;
+  if(s.days!=null && s.days<=2) return 2;
+  if(s.cat==="money") return 3;
+  if(s.cat==="deadline"||s.cat==="submission") return 4;
+  if(s.cat==="today") return 5;
+  return 6;
+}
+function pickHero(sigs){
+  const ranked=[...sigs].map(s=>({s,tier:heroTier(s)}))
+    .sort((a,b)=> a.tier-b.tier
+      || ((a.s.days==null?999:a.s.days)-(b.s.days==null?999:b.s.days))
+      || ((b.s.count==null?0:b.s.count)-(a.s.count==null?0:a.s.count)));
+  const cap=x=>x.charAt(0).toUpperCase()+x.slice(1);
+  return { lead:ranked[0].s, chips:ranked.slice(1,4).map(r=>({n:r.s.n,l:cap(r.s.l)})) };
+}
 
 function greeting(){
   const h = new Date().getHours();
@@ -2530,13 +2588,19 @@ function stripProv(s){return String(s??"").replace(/\s*·\s*(from .+|published e
 
 function renderCard(c){
   switch(c.type){
-    case "hero": return `
+    case "hero": {
+      const picked = (c.signals && c.signals.length) ? pickHero(c.signals) : null;
+      const lead = picked ? picked.lead : (c.lead||{n:"",l:(c.title||"")});
+      const chips = picked ? picked.chips : (c.stats||[]);
+      const nx = heroNext();
+      return `
       <div class="hero">
         <span class="kicker">${esc(c.kicker)}</span>
-        <h2>${esc(c.title)}</h2>
-        <p>${esc(c.sub)}</p>
-        <div class="hero-stats">${c.stats.map(s=>`<div class="hstat"><div class="n">${esc(s.n)}</div><div class="l">${esc(s.l)}</div></div>`).join("")}</div>
+        <h2>${esc((lead.n?lead.n+" ":"")+lead.l)}</h2>
+        ${nx?`<p>${esc(nx)}</p>`:""}
+        <div class="hero-stats">${chips.map(s=>`<div class="hstat"><div class="n">${esc(s.n)}</div><div class="l">${esc(s.l)}</div></div>`).join("")}</div>
       </div>`;
+    }
     case "schedule": return card(c.title, `<div class="sched">${c.items.map(i=>`
       <div class="sched-item ${i.now?"sched-now":""}">
         <div class="sched-time"><div class="t1">${esc(i.t1)}</div><div class="t2">${esc(i.t2)}</div></div>
@@ -2595,6 +2659,14 @@ function renderCard(c){
       <div class="prog-label"><span>${esc(c.label)}</span><span>${c.pct}%</span></div>
       <div class="prog-bar"><div class="prog-fill" style="width:${c.pct}%"></div></div>
       <div class="prog-note">${esc(c.note)}</div>`);
+    case "degree": { const d=P().degree;
+      if(!d) return card("📊 Degree progress", `<div class="empty">No degree audit is linked to this account.</div>`);
+      const pct=Math.round(d.creditsDone/d.creditsReq*100);
+      const left=d.creditsReq-d.creditsDone, unit=d.unit||"credits";
+      return card(`📊 Degree progress · ${esc(d.program)}`, `
+      <div class="prog-label"><span>${d.creditsDone} of ${d.creditsReq} ${esc(unit)}</span><span>${pct}%</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <div class="prog-note">${d.reqsDone} of ${d.reqsTotal} requirements complete · ${left} ${esc(unit)} remaining · from ${esc(d.src)}</div>`); }
     case "steps": return card(c.title, c.items.map((s,i)=>`
       <div class="step ${s.state}">
         <div class="rail"><div class="knob">${s.state==="done"?"✓":i+1}</div>${i<c.items.length-1?'<div class="wire"></div>':""}</div>
@@ -3537,6 +3609,7 @@ const WIDGET_CATALOG = [
   {type:"orgs",       label:"🧑‍🤝‍🧑 Student Organizations", desc:"Memberships, announcements & events"},
   {type:"careers",    label:"🎯 Careers",            desc:"Handshake activity, coaching & events"},
   {type:"libraries",  label:"📚 Libraries",          desc:"Loans, ILL, study rooms & catalog"},
+  {type:"degree",     label:"📊 Degree progress",     desc:"Credits & requirements from your degree audit", need:"degree"},
   {type:"launch",     label:"♥ Favorite tasks",      desc:"Your pinned & popular tasks"},
 ];
 const FULL_WIDTH_TYPES = ["hero","launch","tasklauncher","campusmap","signin"];
@@ -3547,6 +3620,7 @@ function widgetInfo(def){
     assignments:"From Canvas — your enrolled courses.",crimsoncard:"Card and balances from CSGold.",
     orgs:"Memberships and events from BeInvolved.",careers:"Your activity from Handshake.",
     libraries:"Loans, holds and rooms from IUCAT / your library account.",kualitime:"IU timekeeping for hourly and work-study jobs.",
+    degree:"Credits earned and requirements remaining, from your degree audit (iGPS for undergraduates; your school's registrar for professional programs).",
     actionitems:'Actions from across IU — a link starts a task; its source marks it done.<br><br><b>🔗 System-confirmed</b> (default): clears when the source reports it (Canvas, Bursar, Registrar).<br><b>🖊️ Needs approval</b>: you act, then someone signs off.<br><b>Dismiss</b> hides an item without notifying the source.'};
   if(m[def.type]) return m[def.type];
   const p=(def.title||"").match(/·\s*(from .+|published estimate.*)$/i);
@@ -3563,6 +3637,7 @@ function widgetLabel(def){
   if(def.type==="orgs") return "🧑‍🤝‍🧑 Student Organizations";
   if(def.type==="libraries") return "📚 Libraries";
   if(def.type==="campusfeed") return "📰 Campus feed";
+  if(def.type==="degree") return "📊 Degree progress";
   if(def.type==="hero") return "📣 Highlights banner";
   if(def.type==="launch") return "♥ Favorite tasks";
   if(def.type==="tasklauncher") return "⊞ One.IU tasks";
@@ -3675,7 +3750,7 @@ function openWidgetPicker(){
   const defs=P().views[state.tab]||[];
   const lay=getLayout();
   const vis=visibleTypes();
-  const catRows = WIDGET_CATALOG.map(w=>`
+  const catRows = WIDGET_CATALOG.filter(w=>!w.need || P()[w.need]).map(w=>`
     <div class="wp-row">
       <div style="flex:1;min-width:0"><div class="wpn">${w.label}</div><div class="lis">${w.desc}</div></div>
       ${vis.includes(w.type)
