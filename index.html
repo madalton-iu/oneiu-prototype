@@ -311,6 +311,21 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 }
 .empty{padding:26px 10px;text-align:center;color:var(--muted);font-weight:600;font-size:14px}
 /* one.iu.edu-style task tiles */
+.task-filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0 10px}
+.flt-pill{display:inline-flex;align-items:center;background:var(--link);border-radius:999px;overflow:hidden}
+.flt-pill .flt-lbl{color:#fff;font-weight:800;font-size:12.5px;padding:7px 4px 7px 14px;cursor:pointer}
+.flt-pill .flt-x{color:rgba(255,255,255,.8);font-size:11px;padding:7px 12px 7px 7px;cursor:pointer}
+.flt-pill .flt-x:hover{color:#fff}
+.flt-add{padding:7px 14px;border-radius:999px;border:1.5px dashed var(--line);background:var(--card);color:var(--link);font-weight:800;font-size:12.5px;cursor:pointer}
+.flt-add:hover{border-color:var(--link)}
+.flt-reset{color:var(--muted);font-size:12px;font-weight:700;text-decoration:underline;background:none;border:0;padding:6px 4px;cursor:pointer}
+.flt-reset:hover{color:var(--link)}
+.flt-cat{padding:7px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-weight:800;font-size:12.5px;cursor:pointer}
+.flt-cat.on{background:var(--link);color:#fff;border-color:var(--link)}
+.flt-cat:hover{border-color:var(--link)}
+.chk{width:20px;height:20px;border-radius:6px;border:2px solid var(--link);flex-shrink:0;position:relative}
+.chk.on{background:var(--link)}
+.chk.on::after{content:"✓";position:absolute;inset:0;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center}
 .task-chips{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
 .task-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:12px}
 .task-tile{position:relative;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 15px 14px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:transform .12s,box-shadow .12s,border-color .12s;color:var(--ink);min-height:132px}
@@ -2466,6 +2481,115 @@ northwest: {
     ],
   }
 },
+
+/* ---------- 9. PhD CANDIDATE + ADJUNCT (two roles, two campuses) ---------- */
+phd: {
+  name:"Rachel Adeyemi", first:"Rachel", avatar:"✒️",
+  campus:"iub", campuses:["iub","iusb"],
+  role:"PhD candidate · English (IUB) · Adjunct (IU South Bend)",
+  adminDesc:"Doctoral candidate in English at Bloomington writing her dissertation, who also teaches a full load of W131 as an adjunct at IU South Bend — a member with two roles and two campuses.",
+  greetSub:"Dissertation writing at 9 · W131 essays to grade.",
+  crimsonCard:{holder:"Rachel Adeyemi",kind:"Student · Instructor",id:"6017 88•• •••• 3061",since:"Aug 2021",
+    balances:[
+      {icon:"🥗",label:"Dining Dollars",value:"$44.10",note:"Cafés & campus dining",add:true},
+      {icon:"💵",label:"Crimson Cash",value:"$28.75",note:"Printing & off-campus",add:true},
+    ],
+    access:["Wells Library grad carrel (IUB)","Ballantine Hall after-hours","Wiekamp Hall (IU South Bend)"]},
+  library:{
+    onLoan:[
+      {title:"The Country and the City",author:"Williams",due:"Oct 12",renew:true},
+      {title:"Cane",author:"Toomer",due:"Sep 26",renew:false,soon:true},
+    ],
+    ill:[{title:"Journal scans · dissertation ch. 3",status:"Ready — check your email"}],
+    rooms:[{room:"Wells Library · Grad Carrel 214",when:"Reserved for the semester",status:"Reserved"}]},
+  degree:{program:"Ph.D. English",creditsDone:78,creditsReq:90,unit:"credit hours",reqsDone:5,reqsTotal:6,src:"the University Graduate School"},
+  favorites:["canvas","rosters","payslip","grades","printing","duo"],
+  calendar:[
+    {t1:"9:00",t2:"12:00",title:"Dissertation writing",loc:"Remote",src:"Exchange",color:"purple",now:true,recurring:true},
+    {t1:"1:00",t2:"2:15",title:"ENG-W 131 · Sec. 4",loc:"Wiekamp Hall 1255 · IU South Bend",src:"SIS",color:"crimson",recurring:true},
+    {t1:"2:30",t2:"3:45",title:"ENG-W 131 · Sec. 5",loc:"Wiekamp Hall 1255 · IU South Bend",src:"SIS",color:"crimson",recurring:true},
+    {t1:"4:00",t2:"5:00",title:"W131 office hours",loc:"Wiekamp Hall 2145 · IU South Bend",src:"Exchange",color:"gold",recurring:true},
+  ],
+  actionItems:[
+    {id:"ai_phd1",src:"canvas",title:"Grade W131 · Essay 2",desc:"~46 submissions across your two IU South Bend sections.",due:"Fri 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"Canvas SpeedGrader"},confirm:"system",confirmedBy:"Canvas records your grading"},
+    {id:"ai_phd2",src:"registrar",title:"Enroll in spring dissertation hours",desc:"G901 · maintains candidacy · when your window opens.",due:"Oct 6",action:{label:"Open Student Center",target:"Student Center registration"},confirm:"system",confirmedBy:"enrollment confirms immediately"},
+    {id:"ai_phd3",src:"compliance",title:"Data security training",desc:"Required annually for instructors · ~20 min.",due:"Sep 30",action:{label:"Start training",target:"the IU information security training (Protect IU)"},confirm:"system",confirmedBy:"your completion is recorded"},
+    {id:"ai_phd4",src:"advising",title:"Submit W131 early evaluations",desc:"For your students, in the Student Engagement Roster.",due:"Oct 4",action:{label:"Open the SER",target:"the Student Engagement Roster"},confirm:"system",confirmedBy:"the SER records your submission"},
+  ],
+  notifCount:2,
+  notifications:[
+    {icon:"📝",unread:true,title:"W131 Essay 2 submissions in",sub:"46 essays across Sections 4 and 5 are ready to grade in Canvas.",time:"2h ago"},
+    {icon:"📋",unread:true,title:"Early evaluations open",sub:"Submit early evaluations for your W131 students in the SER by Oct 4.",time:"Today"},
+    {icon:"💵",unread:false,title:"Adjunct pay deposited",sub:"Your monthly appointment pay from IU South Bend posted to direct deposit.",time:"Aug 29"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"teaching",label:"Academics",icon:"📖"},
+    {id:"money",label:"Finances",icon:"💳"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Two roles · two campuses",signals:[
+        {cat:"grading",n:"46",l:"W131 essays to grade",src:"Canvas",count:46},
+        {cat:"deadline",n:"Oct 4",l:"W131 early evaluations due",src:"SER",days:19},
+        {cat:"today",n:"2",l:"sections today",src:"SIS"},
+        {cat:"status",n:"87%",l:"of the Ph.D. complete",src:"University Graduate School"},
+      ]},
+      {type:"actionitems"},
+      {type:"calendar"},
+      {type:"campusfeed"},
+      {type:"crimsoncard"},
+      {type:"libraries"},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    teaching:[
+      {type:"degree"},
+      {type:"list",title:"📖 Doctoral enrollment · from SIS",items:[
+        {icon:"✒️",bg:"purple",title:"ENG-G 901 · Advanced Research",sub:"Dissertation hours · maintains candidacy",right:"6 cr",rightSub:"enrolled"},
+      ]},
+      {type:"acad"},
+      {type:"list",title:"📋 Teaching · W131 at IU South Bend · from SIS",items:[
+        {icon:"✍️",bg:"red",title:"ENG-W 131 · Section 4",sub:"MW 1:00–2:15 · Wiekamp Hall 1255 · 23 students",right:"Fall 2026",rightSub:"IUSB"},
+        {icon:"✍️",bg:"blue",title:"ENG-W 131 · Section 5",sub:"MW 2:30–3:45 · Wiekamp Hall 1255 · 23 students",right:"Fall 2026",rightSub:"IUSB"},
+      ]},
+      {type:"assignments",title:"📚 Grading & prep",items:[
+        {course:"W131 · Sec 4 & 5",title:"Essay 2 — grade in Canvas",due:"Friday · 11:59 p.m.",soon:true},
+        {course:"W131",title:"Early evaluations (SER)",due:"Oct 4"},
+        {course:"W131",title:"Unit 3 workshop materials",due:"Next Monday"},
+      ]},
+      {type:"list",title:"🧰 Instructor tools",items:[
+        {icon:"🖥️",bg:"red",title:"Canvas",sub:"Your W131 course sites & SpeedGrader",src:"Canvas",link:"Canvas",linkLabel:"Open"},
+        {icon:"📋",bg:"blue",title:"Faculty Center",sub:"Rosters & final grades · SIS",src:"SIS",link:"the Faculty Center",linkLabel:"Open"},
+        {icon:"🚩",bg:"gold",title:"Student Engagement Roster",sub:"Attendance & early evaluations",src:"SER",link:"the SER",linkLabel:"Open"},
+      ]},
+    ],
+    money:[
+      {type:"balances",title:"💼 Adjunct appointment · IU South Bend",items:[
+        {icon:"🏫",label:"Appointment",value:"Adjunct lecturer",note:"English · IU South Bend"},
+        {icon:"📋",label:"Load",value:"2 sections",note:"ENG-W 131"},
+        {icon:"💰",label:"Pay",value:"Per course",note:"Paid monthly · HRMS"},
+        {icon:"🗓️",label:"Next payday",value:"Sep 30",note:"Direct deposit"},
+      ]},
+      {type:"balances",title:"💳 All balances",items:[
+        {icon:"🧾",label:"Bursar",value:"$612.00",note:"Bursar · PhD program fee, due Sep 25"},
+        {icon:"🥗",label:"Dining Dollars",value:"$44.10",note:"CrimsonCard"},
+        {icon:"💵",label:"Crimson Cash",value:"$28.75",note:"CrimsonCard · reload anytime"},
+      ]},
+      {type:"list",title:"🧾 Recent activity",items:[
+        {icon:"💼",bg:"gold",title:"Adjunct pay direct deposit",sub:"Monthly appointment pay · IU South Bend",src:"Payroll",right:"+$3,050",rightSub:"Aug 29"},
+        {icon:"🖨️",bg:"blue",title:"Wells Library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$3.20",rightSub:"Yesterday"},
+        {icon:"☕",bg:"red",title:"Sugar & Spice (IMU)",sub:"Dining Dollars",src:"CrimsonCard",right:"−$4.85",rightSub:"Sep 11"},
+      ]},
+    ],
+    campus:[
+      {type:"campusmap"},
+      {type:"campusfeed"},
+    ],
+  }
+},
 };
 
 /* =====================================================
@@ -2494,6 +2618,8 @@ function loadCampusFor(persona){
 state.campus = loadCampusFor(state.persona);
 state.acadSem = "Fall 2026";   // current semester (prototype "today" = Sep 2026)
 state.acadTerm = "Full term";
+state.fRoles = [];            // Tasks-tab role filters (set on open)
+state.fCampuses = [];         // Tasks-tab campus filters (set on open)
 
 const $ = id => document.getElementById(id);
 const P = () => DATA[state.persona];
@@ -2543,13 +2669,31 @@ function todayStr(){
 
 /* ---------- task-catalog helpers ---------- */
 function taskById(id){ return TASKS.find(t=>t.id===id); }
+/* Tasks carry roles (derived from personas) and, for the few genuinely
+   campus-specific ones, a campus scope. People can wear multiple roles and
+   belong to multiple campuses, so filters are multi-value. */
+const PERSONA_ROLE = {firstyear:"Student",senior:"Student",law:"Student",northwest:"Student",phd:"Student",faculty:"Faculty",staff:"Employee",parent:"Family",applicant:"Applicant"};
+const ROLES = ["Student","Employee","Faculty","Family","Applicant"];
+const ROLE_LABEL = {Student:"Student",Employee:"Employee",Faculty:"Faculty",Family:"Parent / Family",Applicant:"Applicant"};
+const PERSONA_ROLES = {
+  guest:[], applicant:["Applicant"], firstyear:["Student","Employee"], senior:["Student"],
+  staff:["Employee"], faculty:["Faculty"], parent:["Family"], law:["Student"], northwest:["Student","Employee"],
+  phd:["Student","Faculty"]
+};
+const CAMPUS_TASKS = {bus:["iub","iui"], housingApp:["iub","iui","ius","iusb"], dining:["iub","iui","ius","iusb"]};
+function personaRoles(p){ return PERSONA_ROLES[p] || (PERSONA_ROLE[p]?[PERSONA_ROLE[p]]:[]); }
+function personaCampuses(p){ const d=DATA[p]; return (d&&d.campuses)?d.campuses:(d&&d.campus?[d.campus]:[]); }
+function taskRoles(t){ return t.personas.includes("all")?null:[...new Set(t.personas.map(p=>PERSONA_ROLE[p]).filter(Boolean))]; }
+function roleMatchAny(t,roles){ if(!roles||!roles.length) return true; if(t.personas.includes("all")) return true; const r=taskRoles(t); return !!(r&&r.some(x=>roles.includes(x))); }
+function campusMatchAny(t,camps){ if(!camps||!camps.length) return true; const cs=CAMPUS_TASKS[t.id]; return !cs||cs.some(x=>camps.includes(x)); }
+function sameSet(a,b){ if(a.length!==b.length) return false; const s=new Set(b); return a.every(x=>s.has(x)); }
 function personaTasks(){
-  // Guests browse the full One.IU catalog (like one.iu.edu when signed out)
   if(P().guest) return TASKS.slice();
-  return TASKS.filter(t=>t.personas.includes("all")||t.personas.includes(state.persona));
+  return TASKS.filter(t=>roleMatchAny(t, personaRoles(state.persona)));
 }
+function filteredTasks(){ return TASKS.filter(t=>roleMatchAny(t,state.fRoles)&&campusMatchAny(t,state.fCampuses)); }
 function taskCategories(){
-  const cats = ["All",...new Set(personaTasks().map(t=>t.cat))];
+  const cats = ["All",...new Set(filteredTasks().map(t=>t.cat))];
   if(!P().guest) cats.splice(1,0,"Favorites");
   return cats;
 }
@@ -2701,22 +2845,28 @@ function renderLaunchCard(){
 
 /* Full searchable One.IU task directory */
 function renderTaskLauncher(){
-  const cats = taskCategories();
+  const total = filteredTasks().length;
+  const pill=(kind,val,label)=>`<span class="flt-pill"><button class="flt-lbl" onclick="${kind==='role'?'openRolePicker':'openTaskCampusPicker'}()">${esc(label)}</button><button class="flt-x" title="Remove" onclick="removeTaskFilter('${kind}','${val}')">✕</button></span>`;
+  const rolePills = state.fRoles.map(r=>pill('role',r,ROLE_LABEL[r]||r)).join("");
+  const campPills = state.fCampuses.map(c=>{const cc=campusById(c);return pill('campus',c,cc?cc.abbr:c);}).join("");
+  const addRole = state.fRoles.length<ROLES.length?`<button class="flt-add" onclick="openRolePicker()">＋ Role</button>`:"";
+  const addCamp = state.fCampuses.length<CAMPUSES.length?`<button class="flt-add" onclick="openTaskCampusPicker()">＋ Campus</button>`:"";
+  const catChip = `<button class="flt-cat ${state.cat!=="All"?"on":""}" onclick="openCatPicker()">${state.cat==="All"?"All categories":esc(state.cat)} ▾</button>`;
+  const atDefault = sameSet(state.fRoles, P().guest?[]:personaRoles(state.persona)) && sameSet(state.fCampuses, personaCampuses(state.persona)) && state.cat==="All";
   return `<div class="card span2">
     <div class="card-head"><h3>One.IU tasks</h3>
-      <span class="link" style="cursor:default;color:var(--muted)">${personaTasks().length} tasks${P().guest?"":" for your role"}</span></div>
-    <div class="task-chips" id="taskChips">${cats.map(c=>`
-      <button class="chip ${state.cat===c?"active":""}" onclick="setCat('${c}')">${c}</button>`).join("")}</div>
+      <span class="link" style="cursor:default;color:var(--muted)">${total} task${total!==1?'s':''}</span></div>
+    <div class="task-filters">${rolePills}${addRole}${campPills}${addCamp}${catChip}${atDefault?"":`<button class="flt-reset" onclick="resetTaskFilters()">Reset</button>`}</div>
     <div id="taskResults">${taskResultsHTML()}</div>
   </div>`;
 }
 function taskResultsHTML(){
-  let list = personaTasks();
+  let list = filteredTasks();
   if(state.cat==="Favorites") list = list.filter(t=>state.favs.has(t.id));
   else if(state.cat!=="All") list = list.filter(t=>t.cat===state.cat);
   if(!list.length) return `<div class="empty">${state.cat==="Favorites"
     ?"No favorites yet. Tap the ♥ on any task to pin it here and on your home screen."
-    :"No tasks in "+esc(state.cat)+"."}</div>`;
+    :"No tasks match these filters. Remove a filter to see more."}</div>`;
   return `<div class="task-grid">${list.map(t=>`
     <div class="task-tile" onclick="launchTask('${t.id}')">
       ${P().guest?"":`<button class="task-star ${state.favs.has(t.id)?"on":""}" title="Favorite"
@@ -2728,11 +2878,44 @@ function taskResultsHTML(){
     </div>`).join("")}</div>`;
 }
 function onTaskSearch(v){ state.q = v; refreshTaskResults(); }
-function setCat(c){ state.cat = c; state.q=""; const i=$("taskSearchInput"); if(i) i.value="";
-  refreshTaskResults();
-  document.querySelectorAll("#taskChips .chip").forEach(ch=>ch.classList.toggle("active",ch.textContent===c));
+function setCat(c){ state.cat = c; renderMain(); }
+function openDrawerNow(){ $("drawer").classList.add("open"); $("scrim").classList.add("open"); }
+function openRolePicker(){
+  const opt=r=>{const on=state.fRoles.includes(r);return `<button class="camp-opt ${on?"sel":""}" onclick="toggleTaskFilter('role','${r}')"><span class="chk ${on?"on":""}"></span><span class="co-name">${esc(ROLE_LABEL[r]||r)}</span></button>`;};
+  $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
+    <h2>Filter tasks by role</h2><p class="dsub">Pick the roles you're filtering to; universal tasks always appear.</p>
+    <div class="camp-list">${ROLES.map(opt).join("")}</div>`;
+  openDrawerNow();
 }
-function refreshTaskResults(){ const r=$("taskResults"); if(r) r.innerHTML = taskResultsHTML(); }
+function openTaskCampusPicker(){
+  const opt=c=>{const on=state.fCampuses.includes(c.id);return `<button class="camp-opt ${on?"sel":""}" onclick="toggleTaskFilter('campus','${c.id}')"><span class="chk ${on?"on":""}"></span><span style="min-width:0"><span class="co-name">${esc(c.name)}</span><br><span class="co-city">${esc(c.city)}</span></span></button>`;};
+  $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
+    <h2>Filter tasks by campus</h2><p class="dsub">Most tasks are university-wide; a few (transit, housing, dining) are campus-specific.</p>
+    <div class="camp-list">${CAMPUSES.map(opt).join("")}</div>`;
+  openDrawerNow();
+}
+function openCatPicker(){
+  const cats=taskCategories();
+  const opt=c=>`<button class="camp-opt ${state.cat===c?"sel":""}" onclick="setCat('${c}');closeDrawer()"><span class="camp-radio"></span><span class="co-name">${c==="All"?"All categories":esc(c)}</span></button>`;
+  $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
+    <h2>Category</h2><div class="camp-list">${cats.map(opt).join("")}</div>`;
+  openDrawerNow();
+}
+function toggleTaskFilter(kind,v){
+  const arr = kind==="role"?state.fRoles:state.fCampuses;
+  const i=arr.indexOf(v); if(i>=0) arr.splice(i,1); else arr.push(v);
+  renderMain(); (kind==="role"?openRolePicker:openTaskCampusPicker)();
+}
+function removeTaskFilter(kind,v){
+  const arr = kind==="role"?state.fRoles:state.fCampuses;
+  const i=arr.indexOf(v); if(i>=0) arr.splice(i,1);
+  renderMain();
+}
+function resetTaskFilters(){
+  state.fRoles = P().guest?[]:personaRoles(state.persona).slice();
+  state.fCampuses = personaCampuses(state.persona).slice();
+  state.cat="All"; renderMain();
+}
 
 /* ---------- campus map ---------- */
 function renderCampusMap(){
@@ -3885,7 +4068,12 @@ function renderMain(){
 function render(){ renderSidebar(); renderBottomNav(); renderMain(); }
 
 /* ---------- interactions ---------- */
-function setTab(id){ state.tab=id; state.q=""; state.cat="All"; state.moving=null; state.omniQ=""; render(); window.scrollTo({top:0}); }
+function setTab(id){ state.tab=id; state.q=""; state.cat="All"; state.moving=null; state.omniQ="";
+  if(id==="tasks"){
+    state.fRoles = P().guest?[]:personaRoles(state.persona).slice();
+    state.fCampuses = P().guest ? (state.campus?[state.campus]:[]) : personaCampuses(state.persona).slice();
+  }
+  render(); window.scrollTo({top:0}); }
 function goToTaskSearch(){
   setTab("tasks");
   setTimeout(()=>{ const i=$("taskSearchInput"); if(i) i.focus(); },50);
