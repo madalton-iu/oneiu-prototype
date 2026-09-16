@@ -1550,8 +1550,8 @@ guest: {
   ],
   views:{
     home:[
-      {type:"hero",kicker:"Welcome to One.IU",lead:{n:"3",l:"ways to explore IU"},
-       stats:[{n:"🎟️",l:"Events & news"},{n:"🗺️",l:"Campus map"},{n:"🔎",l:"Search IU"}]},
+      {type:"hero",kicker:"Welcome to One.IU",title:"Explore Indiana University",
+       sub:"Browse news and events, find your way around campus, or search all IU systems and services."},
       {type:"signin"},
       {type:"campusfeed"},
       {type:"launch"},
@@ -1617,8 +1617,6 @@ applicant: {
         {icon:"🏛️",bg:"purple",title:"Kelley-specific tour",sub:"Hodge Hall, trading lab & undergraduate advising",right:"Fridays",rightSub:"11am"},
         {icon:"💻",bg:"green",title:"Virtual tour",sub:"Explore campus online at your own pace",right:"Anytime",rightSub:"Self-paced"},
       ]},
-      {type:"notice",tone:"gold",icon:"🗺️",title:"Planning your visit",
-       sub:"Morning tours pair well with lunch at the Indiana Memorial Union and a walk through the arboretum. Visit parking is free with registration."},
     ],
     aid:[
       {type:"balances",title:"💰 Cost of attendance · published estimate (In-state, 2027–28)",items:[
@@ -1631,9 +1629,8 @@ applicant: {
         {icon:"💸",bg:"gold",title:"File your FAFSA",sub:"IU code 001809 · 2027–28 form opens Oct 1",src:"Financial Aid",link:"FAFSA at studentaid.gov",linkLabel:"File"},
         {icon:"✨",bg:"gold",title:"IU Academic Scholarships",sub:"Automatically considered with your Early Action application",src:"Financial Aid"},
         {icon:"🎓",bg:"green",title:"21st Century Scholars",sub:"Check eligibility · Indiana residents",src:"Financial Aid",link:"the eligibility check",linkLabel:"Check"},
+        {icon:"🤝",bg:"green",title:"Talk to Student Central",sub:"Aid options for you and your family",href:"https://studentcentral.indiana.edu",linkLabel:"Contact"},
       ]},
-      {type:"notice",tone:"green",icon:"🤝",title:"Financial aid assistance",
-       sub:"Student Central can walk you and your family through your aid options. Call (812) 855-6500 or chat online, weekdays 9 a.m.–4 p.m."},
     ],
   }
 },
@@ -1738,8 +1735,6 @@ firstyear: {
         {course:"GEOG-G 110",title:"Map quiz",due:"Friday · 11:59 p.m."},
         {course:"MUS-Z 111",title:"Listening journal 4",due:"Sunday · 11:59 p.m."},
       ]},
-      {type:"notice",tone:"blue",icon:"🧭",title:"Spring registration opens next month",
-       sub:"Your advising hold clears after Thursday's meeting. Consider bringing two or three majors you are interested in — the Majors & Minors Fair on Tuesday is a good starting point."},
     ],
     money:[
       {type:"balances",title:"💼 Work-study at a glance",items:[
@@ -1762,16 +1757,10 @@ firstyear: {
         {icon:"💼",bg:"gold",title:"Work-study direct deposit",sub:"Biweekly pay",src:"Payroll",right:"+$142.88",rightSub:"Sep 4"},
         {icon:"☕",bg:"red",title:"Starbucks (IMU)",sub:"Dining Dollars",src:"CrimsonCard",right:"−$6.45",rightSub:"Sep 11"},
       ]},
-      {type:"notice",tone:"green",icon:"📊",title:"Award pacing",
-       sub:"At about 12 hours per week, you will use your full $2,800 work-study award by late April. To request additional spring hours, contact your supervisor by November."},
-      {type:"notice",tone:"gold",icon:"🎯",title:"Scholarship deadlines",
-       sub:"The Hudson & Holland and exploratory-student scholarship cycles open November 1. Filing your FAFSA renewal early keeps you eligible for all award programs."},
     ],
     campus:[
       {type:"campusmap"},
       {type:"campusfeed"},
-      {type:"notice",tone:"blue",icon:"🧘",title:"Counseling & support",
-       sub:"CAPS offers free drop-in \"Let's Talk\" sessions at Eigenmann and the Well House — no appointment needed. Standard appointments can be scheduled from the Tasks tab."},
     ],
   }
 },
@@ -1886,8 +1875,6 @@ senior: {
       ]},
       {type:"degree"},
       {type:"acad"},
-      {type:"notice",tone:"gold",icon:"⏰",title:"Key deadlines",
-       sub:"Apply to graduate by September 15, and enroll in the remaining A&H credit before the second-eight-week session begins (Oct 12). The remaining items are ceremony logistics."},
     ],
     money:[
       {type:"balances",title:"💳 Money snapshot",items:[
@@ -1900,8 +1887,6 @@ senior: {
         {icon:"🎓",bg:"gold",title:"Federal loan exit counseling",sub:"Required before December graduation",src:"Financial Aid",link:"studentaid.gov",linkLabel:"Start"},
         {icon:"💵",bg:"blue",title:"Use remaining printing & Crimson Cash",sub:"Balances expire after your final semester",src:"CrimsonCard"},
       ]},
-      {type:"notice",tone:"blue",icon:"🧮",title:"Federal loan repayment",
-       sub:"Your federal loan balance and repayment estimates live on studentaid.gov — IU can't see or store them. IU's MoneySmarts offers free one-on-one repayment-planning sessions before you graduate."},
     ],
   }
 },
@@ -1989,14 +1974,10 @@ staff: {
         {icon:"💵",bg:"green",title:"Jul 31 · Monthly",sub:"Regular pay",right:"$4,558.33",rightSub:"net"},
         {icon:"💵",bg:"green",title:"Jun 30 · Monthly",sub:"Regular pay",right:"$4,558.33",rightSub:"net"},
       ]},
-      {type:"notice",tone:"green",icon:"🎓",title:"About the tuition benefit",
-       sub:"IU covers a significant portion of tuition for staff, and 50% for dependents at IU campuses. Applying and deadlines are handled in your Action Items."},
     ],
     campus:[
       {type:"campusmap"},
       {type:"campusfeed"},
-      {type:"notice",tone:"blue",icon:"🅿️",title:"Home football gameday parking",
-       sub:"EM-S lots near Memorial Stadium have restrictions for the Sep 19 home game. Plan alternate parking or use campus transit; details are on the Tasks tab."},
     ],
   }
 },
@@ -2107,8 +2088,6 @@ faculty: {
         {icon:"🎓",bg:"gold",title:"Miguel Torres",sub:"MS-HCI · 1st year"},
         {icon:"🎓",bg:"purple",title:"+ 5 more advisees",sub:"Open your advising roster",link:"the advising roster",linkLabel:"Open"},
       ]},
-      {type:"notice",tone:"blue",icon:"ℹ️",title:"Approvals & committee forms",
-       sub:"Plan-of-study approvals and PhD committee nominations are handled on the University Graduate School's forms — they aren't tracked here. Anything needing your sign-off appears in your Action Items."},
     ],
     money:[
       {type:"balances",title:"🏖️ Pay & time",items:[
@@ -2147,8 +2126,6 @@ faculty: {
         {icon:"✅",bg:"green",title:"#2306-2291 · Accessible interfaces study",sub:"Approved · annual continuing review",src:"Kuali Protocols",link:"Kuali Protocols",linkLabel:"Open",right:"Expires",rightSub:"Feb 2027"},
         {icon:"⏳",bg:"gold",title:"Amendment · add two RAs to the study",sub:"Submitted Sep 8 · with the IRB analyst",src:"Kuali Protocols",link:"Kuali Protocols",linkLabel:"Track",badge:{txt:"In review",cls:"gold"}},
       ]},
-      {type:"notice",tone:"blue",icon:"🔗",title:"Where this data comes from",
-       sub:"Proposals and awards are records in Kuali Coeus; account balances and expenditures come from the Kuali Financial System; IRB status is from Kuali Protocols — all IU systems behind your IU login. Sponsor-side status lives outside IU: NSF on Research.gov, NIH in eRA Commons."},
     ],
   }
 },
@@ -2208,8 +2185,6 @@ parent: {
         {icon:"💻",bg:"blue",title:"Family webinar series",sub:"Monthly · sophomore year topics",right:"Oct 7",rightSub:"Next session"},
         {icon:"🎓",bg:"purple",title:"Commencement (projected)",sub:"Based on Jake's current four-year track",right:"May 2029"},
       ]},
-      {type:"notice",tone:"green",icon:"🏨",title:"Hotel availability",
-       sub:"Bloomington hotels fill months in advance for Family Weekend and Homecoming. The Office of Parent & Family Programs maintains a list of reserved room blocks."},
     ],
     student:[
       {type:"list",title:"🧑‍🎓 Jake Miller · Sophomore, Kelley",items:[
@@ -2218,8 +2193,6 @@ parent: {
         {icon:"🍽️",bg:"green",title:"Meal plan",sub:"Standard plan · renews with fall bill",badge:{txt:"Active",cls:"green"}},
         {icon:"🔒",bg:"red",title:"Grades & academic record",sub:"Not shared. Students control this under FERPA; sharing can be updated in Jake's One.IU settings.",badge:{txt:"Not shared",cls:"gray"}},
       ]},
-      {type:"notice",tone:"blue",icon:"🔗",title:"How proxy access works",
-       sub:"Jake determines what is shared and can update it at any time in his settings. Billing is fully shared; grades are not. To request additional access, he can update his sharing preferences under \"Manage third-party access.\""},
       {type:"list",title:"🚨 Safety & wellbeing resources",items:[
         {icon:"🚨",bg:"red",title:"IU-Notify alerts",sub:"You are subscribed to Bloomington campus alerts",badge:{txt:"Active",cls:"green"}},
         {icon:"🩺",bg:"green",title:"Student Health Center",sub:"How care works, insurance & after-hours options",href:"https://healthcenter.indiana.edu",linkLabel:"Learn more"},
@@ -2242,8 +2215,6 @@ parent: {
         {icon:"✅",bg:"green",title:"Spring 2026 · paid in full",sub:"eCheck · Jan 8, 2026",right:"$6,180"},
         {icon:"✅",bg:"green",title:"Fall 2025 · payment plan",sub:"4 installments, completed",right:"$6,090"},
       ]},
-      {type:"notice",tone:"gold",icon:"⏰",title:"Payment deadline",
-       sub:"Balances unpaid after September 25 incur a late fee and a registration hold. Enrolling in the payment plan by September 25 counts as on-time payment."},
     ],
   }
 },
@@ -2324,8 +2295,6 @@ law: {
       {type:"orgs"},
       {type:"libraries"},
       {type:"campusfeed"},
-      {type:"notice",tone:"blue",icon:"🎯",title:"Career & professional development",
-       sub:"Summer-associate and OCI recruiting is run by the McKinney Professional Development Office through its own recruiting system — One.IU links you there but does not read your applications, interviews, or appointments from it."},
       {type:"launch"},
     ],
     tasks:[{type:"tasklauncher"}],
@@ -2343,8 +2312,6 @@ law: {
         {course:"Con Law",title:"Reading response 5",due:"Wednesday, in class"},
         {course:"Law Review",title:"Note edits — round 1",due:"Friday · 5:00 p.m."},
       ]},
-      {type:"notice",tone:"blue",icon:"⚖️",title:"Registration & the Registrar",
-       sub:"Your class schedule, grades, and transcript are official records in the Student Information System (SIS); assignments and course materials are in Canvas. Bar-exam registration and character-and-fitness steps are handled outside IU through your state board of law examiners."},
     ],
     money:[
       {type:"balances",title:"🧾 Fall 2026 statement · from Bursar",items:[
@@ -2364,14 +2331,10 @@ law: {
         {icon:"🖨️",bg:"blue",title:"Law library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$2.40",rightSub:"Yesterday"},
         {icon:"🎓",bg:"green",title:"Scholarship disbursement",sub:"Merit award",src:"Financial Aid",right:"+$3,500",rightSub:"Aug 22"},
       ]},
-      {type:"notice",tone:"gold",icon:"🏦",title:"Grad PLUS & federal loans live outside IU",
-       sub:"Your federal loan balances and Grad PLUS steps are handled on studentaid.gov, not by IU. One.IU shows what the Bursar bills and what Financial Aid has awarded and disbursed — it does not pull your federal loan balance."},
     ],
     campus:[
       {type:"campusmap"},
       {type:"campusfeed"},
-      {type:"notice",tone:"blue",icon:"🚌",title:"Getting around IU Indianapolis",
-       sub:"The free JagLine shuttle connects campus, parking, and the nearby medical district; Route 5 (Purple) links to the IndyGo Red Line. Live routes are on the campus map above."},
     ],
   }
 },
@@ -2476,8 +2439,6 @@ northwest: {
         {course:"Community Nursing",title:"Care-plan draft",due:"Thursday, in class"},
         {course:"PSY-P 103",title:"Chapter quiz 4",due:"Friday · 11:59 p.m."},
       ]},
-      {type:"notice",tone:"blue",icon:"🩺",title:"Nursing sequence & advising",
-       sub:"Your schedule and grades are official records in SIS; assignments are in Canvas. Progression into clinical courses is tracked by the College of Health & Human Services — confirm each step with your nursing advisor in Hawthorn Hall."},
     ],
     money:[
       {type:"balances",title:"💼 Work-study at a glance",items:[
@@ -2498,14 +2459,10 @@ northwest: {
         {icon:"🖨️",bg:"blue",title:"Library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$1.50",rightSub:"Yesterday"},
         {icon:"💼",bg:"gold",title:"Work-study direct deposit",sub:"Biweekly pay",src:"Payroll",right:"+$104.00",rightSub:"Sep 4"},
       ]},
-      {type:"notice",tone:"gold",icon:"🎯",title:"Scholarships & FAFSA",
-       sub:"Filing your FAFSA renewal early keeps you eligible for IU Northwest and state (Frank O'Bannon / 21st Century Scholar) aid. Campus scholarship cycles open in the spring."},
     ],
     campus:[
       {type:"campusmap"},
       {type:"campusfeed"},
-      {type:"notice",tone:"blue",icon:"🚆",title:"Commuting to IU Northwest",
-       sub:"IU Northwest is a commuter campus in Gary. The South Shore Line rail and regional buses serve the area, and student parking lots are shown on the campus map above."},
     ],
   }
 },
@@ -2625,8 +2582,8 @@ function renderCard(c){
       <div class="hero">
         <span class="kicker">${esc(c.kicker)}</span>
         <h2>${esc((lead.n?lead.n+" ":"")+lead.l)}</h2>
-        ${nx?`<p>${esc(nx)}</p>`:""}
-        <div class="hero-stats">${chips.map(s=>`<div class="hstat"><div class="n">${esc(s.n)}</div><div class="l">${esc(s.l)}</div></div>`).join("")}</div>
+        ${nx?`<p>${esc(nx)}</p>`:(c.sub?`<p>${esc(c.sub)}</p>`:"")}
+        ${chips.length?`<div class="hero-stats">${chips.map(s=>`<div class="hstat"><div class="n">${esc(s.n)}</div><div class="l">${esc(s.l)}</div></div>`).join("")}</div>`:""}
       </div>`;
     }
     case "schedule": return card(c.title, `<div class="sched">${c.items.map(i=>`
