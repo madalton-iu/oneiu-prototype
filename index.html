@@ -920,7 +920,6 @@ body.dark .switch::after{ background:#efe9df; }
 body.reduce-motion *{animation:none !important; transition:none !important}
 
 /* ---- icon declutter: hide tiny, generic icons that add no meaning ---- */
-.li .lic,.bal .bi,.assign-ic,.src-ic{display:none !important}
 .src-chip{padding-left:10px}
 /* widget info popover + fixed (non-rearrangeable) blocks */
 .w-note{display:none;position:absolute;top:46px;right:12px;max-width:260px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);padding:11px 13px;font-size:12px;color:var(--muted);line-height:1.5;z-index:6}
@@ -944,7 +943,7 @@ body.reduce-motion *{animation:none !important; transition:none !important}
 <div class="admin-modal" id="adminModal">
   <div class="admin-box">
     <button class="close" onclick="toggleAdmin(false)">✕</button>
-    <h2>🛠️ Prototype Admin</h2>
+    <h2>Prototype Admin</h2>
     <p class="asub">Switch between personas to preview how One.IU adapts to each member of the IU community. All data is simulated.</p>
     <div class="persona-grid" id="personaGrid"></div>
   </div>
@@ -962,7 +961,7 @@ body.reduce-motion *{animation:none !important; transition:none !important}
 </div>
 
 <div class="fc-modal" id="fcModal"></div>
-<button class="admin-fab" onclick="toggleAdmin(true)">🛠️ Personas</button>
+<button class="admin-fab" onclick="toggleAdmin(true)">Personas</button>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1892,15 +1891,21 @@ senior: {
       {type:"acad"},
     ],
     money:[
-      {type:"balances",title:"💳 Money snapshot",items:[
-        {icon:"🧾",label:"Bursar balance",value:"$1,284.00",note:"Bursar · due Sep 25",alert:true},
-        {icon:"💰",label:"Payment plan",value:"Available",note:"Bursar · 4 installments, no interest"},
-        {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"Financial Aid · fall award applied"},
+      {type:"balances",title:"🧾 Fall 2026 statement · from Bursar",items:[
+        {icon:"💰",label:"Amount due",value:"$1,284.00",note:"Due Sep 25",alert:true},
+        {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"Fall award applied"},
+        {icon:"📅",label:"Payment plan",value:"Available",note:"4 installments · no interest"},
       ]},
-      {type:"list",title:"💳 Account — what's outstanding",items:[
-        {icon:"🧾",bg:"red",title:"Pay fall balance ($1,284)",sub:"Due Sep 25 · or enroll in the payment plan",src:"Bursar",link:"the Bursar payment page",linkLabel:"Pay"},
-        {icon:"🎓",bg:"gold",title:"Federal loan exit counseling",sub:"Required before December graduation",src:"Financial Aid",link:"studentaid.gov",linkLabel:"Start"},
-        {icon:"💵",bg:"blue",title:"Use remaining printing & Crimson Cash",sub:"Balances expire after your final semester",src:"CrimsonCard"},
+      {type:"balances",title:"💳 All balances",items:[
+        {icon:"🧾",label:"Bursar",value:"$1,284.00",note:"Bursar · due Sep 25"},
+        {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"Financial Aid · award letter"},
+        {icon:"🥗",label:"Dining Dollars",value:"$18.65",note:"CrimsonCard · commuter plan"},
+        {icon:"💵",label:"Crimson Cash",value:"$41.10",note:"CrimsonCard · reload anytime"},
+      ]},
+      {type:"list",title:"🧾 Recent activity",items:[
+        {icon:"🥗",bg:"green",title:"Wells Library café",sub:"Dining Dollars",src:"CrimsonCard",right:"−$6.25",rightSub:"Today"},
+        {icon:"🖨️",bg:"blue",title:"Luddy Hall printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$1.80",rightSub:"Yesterday"},
+        {icon:"🎓",bg:"green",title:"Financial aid disbursement",sub:"Fall award",src:"Financial Aid",right:"+$4,200",rightSub:"Aug 20"},
       ]},
     ],
   }
@@ -2743,12 +2748,10 @@ function renderCard(c){
         <div><div class="tt">${esc(i.txt)}</div><div class="td ${i.urgent?"urgent":""}">${esc(i.due)}</div></div>
       </div>`;}).join(""));
     case "balances": return card(c.title, `<div class="bal-grid">${c.items.map(i=>`
-      <div class="bal ${i.alert?"alert":""}"><div class="bi">${esc(i.icon)}</div>
-        <div class="bv">${esc(i.value)}</div><div class="bl">${esc(i.label)}</div><div class="bn">${esc(i.note)}</div>
+      <div class="bal ${i.alert?"alert":""}"><div class="bv">${esc(i.value)}</div><div class="bl">${esc(i.label)}</div><div class="bn">${esc(i.note)}</div>
       </div>`).join("")}</div>`);
     case "list": return card(c.title, c.items.map(i=>`
       <div class="li">
-        <div class="lic ${esc(i.bg||"")}">${esc(i.icon)}</div>
         <div style="min-width:0">
           <div class="lit">${esc(i.title)}${i.src?`<span class="step-src">${esc(i.src)}</span>`:""}</div>
           <div class="lis">${esc(i.sub)}${
@@ -2778,7 +2781,6 @@ function renderCard(c){
     case "assignments": return card(c.title,
       c.items.map(a=>`
       <div class="assign">
-        <div class="assign-ic">📘</div>
         <div style="min-width:0"><div class="assign-course">${esc(a.course)}</div><div class="assign-title">${esc(a.title)}</div></div>
         <div class="assign-right">
           <div class="assign-due ${a.soon?"soon":""}">${esc(a.due)}</div>
@@ -2791,7 +2793,7 @@ function renderCard(c){
       <div class="prog-bar"><div class="prog-fill" style="width:${c.pct}%"></div></div>
       <div class="prog-note">${esc(c.note)}</div>`);
     case "degree": { const d=P().degree;
-      if(!d) return card("📊 Degree progress", `<div class="empty">No degree audit is linked to this account.</div>`);
+      if(!d) return card("Degree progress", `<div class="empty">No degree audit is linked to this account.</div>`);
       const pct=Math.round(d.creditsDone/d.creditsReq*100);
       const left=d.creditsReq-d.creditsDone, unit=d.unit||"credits";
       return card(`📊 Degree progress · ${esc(d.program)}`, `
@@ -2807,7 +2809,7 @@ function renderCard(c){
         </div>
       </div>`).join(""));
     case "notice": return `
-      <div class="notice ${esc(c.tone)}"><div class="ni">${esc(c.icon)}</div>
+      <div class="notice ${esc(c.tone)}">
         <div><div class="nt">${esc(c.title)}</div><div class="ns">${esc(c.sub)}</div></div>
       </div>`;
   }
@@ -3118,7 +3120,7 @@ function aiInner(){
     <div class="ai-items">${ list.length ? `<div class="ai-grid">${list.map(aiRenderItem).join("")}</div>` : aiEmpty() }</div>
     <div class="ai-foot">
       ${dismissedCount ? `<span class="restore" onclick="aiRestoreAll()">↺ Restore ${dismissedCount} dismissed</span>` : `<span>Nothing dismissed</span>`}
-      <span class="sync">🔄 Synced just now</span>
+      <span class="sync">Synced just now</span>
     </div>`;
 }
 function aiChip(key,label){ return `<button class="chip ${state.ai.filter===key?"active":""}" onclick="aiSetFilter('${key}')">${label}</button>`; }
@@ -3129,7 +3131,7 @@ function aiRenderItem(it){
   return `
     <div class="item ${it.high&&!resolved?"high":""} ${resolved?"resolved":""}">
       <div class="it-top">
-        <span class="src-chip ${S.cls}"><span class="src-ic">${S.icon}</span>${esc(S.name)}</span>
+        <span class="src-chip ${S.cls}">${esc(S.name)}</span>
         ${aiModelTag(it)}
         <span class="due ${it.high?"high":""}">${esc(it.due)}</span>
       </div>
@@ -3141,8 +3143,8 @@ function aiRenderItem(it){
     </div>`;
 }
 function aiModelTag(it){
-  if(it.confirm==="approval") return `<span class="model approve" title="You act, then ${esc(it.approver)} signs off.">🖊️ Needs approval</span>`;
-  if(it.confirm==="self")     return `<span class="model self" title="Nothing verifies this — Mark done only clears your list.">🙋 Self-reported</span>`;
+  if(it.confirm==="approval") return `<span class="model approve" title="You act, then ${esc(it.approver)} signs off.">Needs approval</span>`;
+  if(it.confirm==="self")     return `<span class="model self" title="Nothing verifies this — Mark done only clears your list.">Self-reported</span>`;
   return "";
 }
 function aiStatus(it){
@@ -3153,7 +3155,7 @@ function aiStatus(it){
     return aiStrip("doneS","✓",`Confirmed by ${esc(short)}`);
   }
   if(aiStarted(it.id)){
-    if(it.confirm==="approval") return aiStrip("approve","🖊️",`Your part done · awaiting ${esc(it.approver)}`);
+    if(it.confirm==="approval") return aiStrip("approve","",`Your part done · awaiting ${esc(it.approver)}`);
     return aiStrip("wait","⏳",`In progress · awaiting ${esc(short)}`,it.confirmedBy);
   }
   return "";
@@ -3171,7 +3173,7 @@ function aiActions(it){
   out += `<button class="dismiss" title="Hide it — doesn't mark complete or notify the source" onclick="aiDismiss('${it.id}')">✕ Dismiss</button>`;
   return out;
 }
-function aiSim(it){ return `<button class="sim" onclick="aiSimulate('${it.id}')">🛠️ Simulate ${it.confirm==="approval"?"approval":"source confirmation"}</button>`; }
+function aiSim(it){ return `<button class="sim" onclick="aiSimulate('${it.id}')">Simulate ${it.confirm==="approval"?"approval":"source confirmation"}</button>`; }
 function aiEmpty(){
   if(state.ai.filter==="progress") return `<div class="empty">Nothing in progress right now.</div>`;
   if(state.ai.filter==="urgent")   return `<div class="empty">No urgent items right now.</div>`;
@@ -3227,32 +3229,32 @@ function renderCrimsonCard(){
 function openCrimsonCard(){
   const cc=P().crimsonCard;
   if(!cc){ $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
-    <h2>💳 CrimsonCard</h2><p class="dsub">powered by CSGold</p>
+    <h2>CrimsonCard</h2><p class="dsub">powered by CSGold</p>
     <div class="empty">No CrimsonCard is linked to this account.</div>`;
     $("drawer").classList.add("open"); $("scrim").classList.add("open"); return; }
   $("drawer").innerHTML = `
     <button class="close" onclick="closeDrawer()">✕</button>
-    <h2>💳 CrimsonCard</h2>
+    <h2>CrimsonCard</h2>
     <p class="dsub">Your card, balances and photo · powered by CSGold</p>
     ${ccVisual(cc,true)}
     <div class="it-actions" style="margin-top:14px">
-      <button class="act" onclick="toast('Prototype: adds your CrimsonCard to your phone wallet.')">📲 Add to phone</button>
-      <button class="act ghost" onclick="toast('Prototype: opens the photo upload flow.')">📸 Update photo</button>
+      <button class="act" onclick="toast('Prototype: adds your CrimsonCard to your phone wallet.')">Add to phone</button>
+      <button class="act ghost" onclick="toast('Prototype: opens the photo upload flow.')">Update photo</button>
     </div>
-    <div class="dsec"><h4>💰 Balances</h4>
-      ${cc.balances.map(b=>`<div class="drow"><div>${b.icon} ${esc(b.label)}
+    <div class="dsec"><h4>Balances</h4>
+      ${cc.balances.map(b=>`<div class="drow"><div>${esc(b.label)}
         <div class="sub">${esc(b.note)}</div></div>
         <span class="right" style="display:flex;align-items:center;gap:8px">
           <b style="font-size:15px">${esc(b.value)}</b>
           ${b.add?`<button class="pill-btn" onclick="toast('Prototype: add funds to ${esc(b.label)} (CSGold).')">Add</button>`:""}
         </span></div>`).join("")}
     </div>
-    <div class="dsec"><h4>🚪 Building & meal access</h4>
+    <div class="dsec"><h4>Building & meal access</h4>
       ${cc.access.map(a=>`<div class="drow">${esc(a)}</div>`).join("")}</div>
-    <div class="dsec"><h4>🛟 Card help</h4>
+    <div class="dsec"><h4>Card help</h4>
       <div class="it-actions">
-        <button class="act ghost" onclick="toast('Prototype: freezes your card in CSGold.')">🔒 Freeze card</button>
-        <button class="act ghost" onclick="toast('Prototype: reports your card lost.')">⚠️ Report lost</button>
+        <button class="act ghost" onclick="toast('Prototype: freezes your card in CSGold.')">Freeze card</button>
+        <button class="act ghost" onclick="toast('Prototype: reports your card lost.')">Report lost</button>
       </div></div>`;
   $("drawer").classList.add("open"); $("scrim").classList.add("open");
 }
@@ -3271,8 +3273,7 @@ function renderOrgs(){
     <div class="card-head"><h3>Student Organizations</h3><span class="link" onclick="openOrgs()">Open →</span></div>
     ${o.memberships.slice(0,3).map(m=>{
       const anns=annByOrg[m.name]||[];
-      return `<div class="li"><div class="lic purple">${m.icon}</div>
-        <div style="min-width:0;flex:1"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div>
+      return `<div class="li"><div style="min-width:0;flex:1"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div>
           ${anns.map(a=>`<div class="org-ann"><span>${esc(a.text)} <span class="org-ann-time">· ${esc(a.time)}</span></span></div>`).join("")}
         </div>
       </div>`;}).join("")}
@@ -3282,27 +3283,25 @@ function renderOrgs(){
 function openOrgs(){
   const o=P().orgs;
   if(!o){ $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
-    <h2>🧑‍🤝‍🧑 Student Organizations</h2><p class="dsub">via BeInvolved</p>
+    <h2>Student Organizations</h2><p class="dsub">via BeInvolved</p>
     <div class="empty">No memberships are linked to your account.</div>
     <a class="getthere" onclick="toast('Prototype: opens BeInvolved to browse organizations.')">➔ Discover organizations</a>
     <div class="cc-hint" style="margin-top:12px">beinvolved.indiana.edu</div>`;
     $("drawer").classList.add("open"); $("scrim").classList.add("open"); return; }
   $("drawer").innerHTML = `
     <button class="close" onclick="closeDrawer()">✕</button>
-    <h2>🧑‍🤝‍🧑 Student Organizations</h2>
+    <h2>Student Organizations</h2>
     <p class="dsub">Your memberships, announcements and events · via BeInvolved</p>
-    <div class="dsec"><h4>👥 My organizations</h4>
-      ${o.memberships.map(m=>`<div class="li"><div class="lic purple">${m.icon}</div>
-        <div style="min-width:0"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div></div>
+    <div class="dsec"><h4>My organizations</h4>
+      ${o.memberships.map(m=>`<div class="li"><div style="min-width:0"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div></div>
         <div class="lir"><span class="badge gray">Active</span></div></div>`).join("")}</div>
-    <div class="dsec"><h4>📣 Announcements</h4>
+    <div class="dsec"><h4>Announcements</h4>
       ${o.announcements.map(a=>`<div class="notif">
-        <div class="nic">📣</div>
+        <div class="nic"></div>
         <div><div class="nt">${esc(a.org)}</div><div class="ns">${esc(a.text)}</div><div class="ntime">${esc(a.time)}</div></div>
       </div>`).join("")}</div>
-    <div class="dsec"><h4>📅 Upcoming events</h4>
-      ${o.events.map(e=>`<div class="li"><div class="lic gold">${e.icon}</div>
-        <div style="min-width:0"><div class="lit">${esc(e.title)}</div><div class="lis">${esc(e.where)}</div></div>
+    <div class="dsec"><h4>Upcoming events</h4>
+      ${o.events.map(e=>`<div class="li"><div style="min-width:0"><div class="lit">${esc(e.title)}</div><div class="lis">${esc(e.where)}</div></div>
         <div class="lir"><div class="lirt">${esc(e.when)}</div></div></div>`).join("")}</div>
     <a class="getthere" onclick="toast('Prototype: opens BeInvolved to discover organizations.')">➔ Discover organizations</a>
     <div class="cc-hint" style="margin-top:12px">via BeInvolved · beinvolved.indiana.edu</div>`;
@@ -3321,9 +3320,9 @@ function renderCareers(){
   const hasCounts=(c.applied!=null && c.saved!=null);
   return `<div class="card">
     <div class="card-head"><h3>Careers</h3><span class="link" onclick="openCareers()">Open →</span></div>
-    <div class="li"><div class="lic green">🗣️</div><div style="min-width:0">
+    <div class="li"><div style="min-width:0">
       <div class="lit">${esc(c.apptLabel||"Career coach appointment")}</div><div class="lis">${esc(c.appt.when)} · ${esc(c.appt.who)}</div></div></div>
-    <div class="li"><div class="lic gold">${hasCounts?"⭐":"↗"}</div><div style="min-width:0">
+    <div class="li"><div style="min-width:0">
       <div class="lit">${hasCounts?`${c.saved} saved · ${c.applied} applied`:"Applications & interviews"}</div>
       <div class="lis">${hasCounts?`Tracked in ${esc(plat)}`:`Managed in ${esc(plat)}`}</div></div></div>
     <div class="cc-hint" style="text-align:left;margin-top:10px">
@@ -3333,7 +3332,7 @@ function renderCareers(){
 function openCareers(){
   const c=P().careers;
   if(!c){ $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
-    <h2>🎯 Careers</h2><p class="dsub">powered by Handshake</p>
+    <h2>Careers</h2><p class="dsub">powered by Handshake</p>
     <div class="empty">Handshake isn't linked to this account.</div>
     <a class="getthere" onclick="toast('Prototype: opens Handshake.')">➔ Open Handshake</a>`;
     $("drawer").classList.add("open"); $("scrim").classList.add("open"); return; }
@@ -3341,15 +3340,14 @@ function openCareers(){
   const hasCounts=(c.applied!=null && c.saved!=null);
   $("drawer").innerHTML = `
     <button class="close" onclick="closeDrawer()">✕</button>
-    <h2>🎯 Careers</h2>
+    <h2>Careers</h2>
     <p class="dsub">Your ${esc(plat)} activity, appointments and events</p>
-    <div class="dsec"><h4>🗓️ Your activity</h4>
-      <div class="drow"><div>🗣️ ${esc(c.apptLabel||"Career coach appointment")}<div class="sub">${esc(c.appt.when)} · ${esc(c.appt.who)}</div></div><span class="right badge green">Upcoming</span></div>
-      ${hasCounts?`<div class="drow"><div>📨 Applications in ${esc(plat)}<div class="sub">Statuses update only when employers post them</div></div><span class="right"><b>${c.applied}</b></span></div>
-      <div class="drow"><div>⭐ Saved &amp; recommended jobs<div class="sub">Refresh weekly from your profile</div></div><span class="right"><b>${c.saved}</b></span></div>`:`<div class="drow"><div>📨 Applications &amp; interviews<div class="sub">Managed in ${esc(plat)} — One.IU links you there but does not show counts</div></div><span class="right">↗</span></div>`}</div>
-    <div class="dsec"><h4>📅 Career events</h4>
-      ${c.events.map(e=>`<div class="li"><div class="lic gold">${e.icon}</div>
-        <div style="min-width:0"><div class="lit">${esc(e.title)}</div><div class="lis">${esc(e.where)}</div></div>
+    <div class="dsec"><h4>Your activity</h4>
+      <div class="drow"><div>${esc(c.apptLabel||"Career coach appointment")}<div class="sub">${esc(c.appt.when)} · ${esc(c.appt.who)}</div></div><span class="right badge green">Upcoming</span></div>
+      ${hasCounts?`<div class="drow"><div>Applications in ${esc(plat)}<div class="sub">Statuses update only when employers post them</div></div><span class="right"><b>${c.applied}</b></span></div>
+      <div class="drow"><div>Saved &amp; recommended jobs<div class="sub">Refresh weekly from your profile</div></div><span class="right"><b>${c.saved}</b></span></div>`:`<div class="drow"><div>Applications &amp; interviews<div class="sub">Managed in ${esc(plat)} — One.IU links you there but does not show counts</div></div><span class="right">↗</span></div>`}</div>
+    <div class="dsec"><h4>Career events</h4>
+      ${c.events.map(e=>`<div class="li"><div style="min-width:0"><div class="lit">${esc(e.title)}</div><div class="lis">${esc(e.where)}</div></div>
         <div class="lir"><div class="lirt">${esc(e.when)}</div></div></div>`).join("")}</div>
     <a class="getthere" onclick="toast('Prototype: opens ${esc(plat)}.')">➔ Open ${esc(plat)}</a>
     <div class="cc-hint" style="margin-top:12px">${esc(c.platNote||plat+" shows what you access through IU. Jobs you apply to directly on a company's own site won't appear here.")}</div>`;
@@ -3370,13 +3368,13 @@ function renderLibraries(){
     <div class="card-head"><h3>Libraries</h3><span class="link" onclick="openLibraries()">Open →</span></div>
     <input class="lib-search" type="text" placeholder="Search the catalog…"
       onkeydown="if(event.key==='Enter')openLibraries(this.value)" onclick="openLibraries()">
-    <div class="li"><div class="lic blue">📕</div><div style="min-width:0">
+    <div class="li"><div style="min-width:0">
       <div class="lit">${due} item${due!==1?'s':''} on loan</div>
       <div class="lis">${soon?`Due soon: ${esc(soon.title)} (${esc(soon.due)})`:'Nothing due this week'}</div></div></div>
-    ${L.ill.length?`<div class="li"><div class="lic green">🔁</div><div style="min-width:0">
+    ${L.ill.length?`<div class="li"><div style="min-width:0">
       <div class="lit">${L.ill.length} interlibrary loan${L.ill.length>1?'s':''}</div>
       <div class="lis">${illReady?`${illReady} ready for pickup/download`:'In progress'}</div></div></div>`:''}
-    ${L.rooms.length?`<div class="li"><div class="lic gold">🚪</div><div style="min-width:0">
+    ${L.rooms.length?`<div class="li"><div style="min-width:0">
       <div class="lit">Study room ${L.rooms[0].status.toLowerCase().includes('reserved')?'reserved':'available'}</div>
       <div class="lis">${esc(L.rooms[0].room)} · ${esc(L.rooms[0].when)}</div></div></div>`:''}
   </div>`;
@@ -3384,7 +3382,7 @@ function renderLibraries(){
 function openLibraries(prefill){
   const L=P().library;
   if(!L){ $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
-    <h2>📚 Libraries</h2><p class="dsub">libraries.indiana.edu · IUCAT</p>
+    <h2>Libraries</h2><p class="dsub">libraries.indiana.edu · IUCAT</p>
     <input class="lib-search" type="text" placeholder="Search the catalog…"
       onkeydown="if(event.key==='Enter')toast('Prototype: searches IUCAT for “'+this.value+'”.')">
     <div class="empty">No library account is linked to this profile.</div>`;
@@ -3392,22 +3390,22 @@ function openLibraries(prefill){
   const q = typeof prefill==="string" ? prefill : "";
   $("drawer").innerHTML = `
     <button class="close" onclick="closeDrawer()">✕</button>
-    <h2>📚 Libraries</h2>
+    <h2>Libraries</h2>
     <p class="dsub">Your account · catalog, loans, ILL and study rooms</p>
     <input class="lib-search" id="libSearch" type="text" placeholder="Search the catalog…" value="${esc(q).replace(/"/g,'&quot;')}"
       onkeydown="if(event.key==='Enter')toast('Prototype: searches the IUCAT catalog for “'+this.value+'”.')">
-    <div class="dsec"><h4>📕 On loan</h4>
+    <div class="dsec"><h4>On loan</h4>
       ${L.onLoan.map(b=>`<div class="drow"><div>${esc(b.title)}
         <div class="sub">${esc(b.author)} · due ${esc(b.due)}</div></div>
         <span class="right" style="display:flex;align-items:center;gap:8px">
           ${b.soon?'<span class="badge red">Due soon</span>':'<span class="badge green">On time</span>'}
           ${b.renew?`<button class="pill-btn" onclick="toast('Prototype: renews “${esc(b.title)}”.')">Renew</button>`:''}
         </span></div>`).join("")}</div>
-    <div class="dsec"><h4>🔁 Interlibrary loan</h4>
+    <div class="dsec"><h4>Interlibrary loan</h4>
       ${L.ill.length?L.ill.map(i=>`<div class="drow"><div>${esc(i.title)}<div class="sub">${esc(i.status)}</div></div></div>`).join("")
         :'<div class="drow"><div class="sub" style="margin:0">No active requests.</div></div>'}
       <button class="act ghost" style="margin-top:8px" onclick="toast('Prototype: opens a new ILL request.')">＋ New request</button></div>
-    <div class="dsec"><h4>🚪 Study rooms</h4>
+    <div class="dsec"><h4>Study rooms</h4>
       ${L.rooms.map(r=>`<div class="drow"><div>${esc(r.room)}<div class="sub">${esc(r.when)}</div></div>
         <span class="right badge blue">${esc(r.status)}</span></div>`).join("")}
       <button class="act ghost" style="margin-top:8px" onclick="toast('Prototype: opens the study-room reservation tool.')">＋ Reserve a room</button></div>
@@ -3423,9 +3421,9 @@ function openLibraries(prefill){
 const FEED_SRC = {events:"events.iu.edu", news:"news.iu.edu", athletics:"iuhoosiers.com"};
 function renderAcad(){
   const c=curCampus();
-  if(!c) return card("📅 Academic calendar", `<div class="empty">Select a campus to see its key dates.</div>`);
+  if(!c) return card("Academic calendar", `<div class="empty">Select a campus to see its key dates.</div>`);
   const data=ACAD[c.id];
-  if(!data) return card("📅 Academic calendar", `<div class="empty">No published calendar for ${esc(c.name)}.</div>`);
+  if(!data) return card("Academic calendar", `<div class="empty">No published calendar for ${esc(c.name)}.</div>`);
   let sem=state.acadSem; if(!data[sem]) sem=state.acadSem=Object.keys(data)[0];
   let term=state.acadTerm; if(!data[sem].terms[term]) term=state.acadTerm=Object.keys(data[sem].terms)[0];
   const t=data[sem].terms[term];
@@ -3446,7 +3444,7 @@ function renderAcad(){
   } else {
     rows.push(["Classes and exams end", acadFmt(t.last)]);
   }
-  return card("📅 Academic calendar", `
+  return card("Academic calendar", `
     <button class="acad-term" onclick="openAcadPicker()">${esc(sem)} · ${esc(term)} <span class="acad-caret">▾</span></button>
     <div class="acad-progress">
       <div class="acad-ends"><span>${acadFmt(t.first)}</span><span>${acadFmt(t.exE||t.last)}</span></div>
@@ -3465,7 +3463,7 @@ function openAcadPicker(){
     <span class="camp-radio"></span><span class="co-name">${esc(v)}</span></button>`;
   $("drawer").innerHTML=`
     <button class="close" onclick="closeDrawer()">✕</button>
-    <h2>📅 Academic calendar</h2>
+    <h2>Academic calendar</h2>
     <p class="dsub">${esc(c.name)} — choose a semester and term.</p>
     <div class="dsec"><h4>Semester</h4><div class="camp-list">${sems.map(s=>opt(s,state.acadSem===s,"sem")).join("")}</div></div>
     <div class="dsec"><h4>Term</h4><div class="camp-list">${terms.map(tm=>opt(tm,state.acadTerm===tm,"term")).join("")}</div></div>`;
@@ -3502,7 +3500,7 @@ function ktInner(){
       <div><div class="kt-h">${weekH}</div><div class="kt-hl">This week</div></div>
     </div>
     ${state.ktIn?`
-      <div class="kt-timer"><span class="kt-clock">🕐</span>
+      <div class="kt-timer"><span class="kt-clock"></span>
         <div id="ktTimer">${ktFmtElapsed(Date.now()-state.ktSince)}</div>
         <div class="kt-since">Clocked in at ${esc(state.ktSinceLabel)}</div></div>
       <button class="kt-btn" onclick="ktClockOut()">Clock out</button>`
@@ -3571,7 +3569,7 @@ function renderCalendar(){
           </div>
         </div>`;}).join("")}</div>`
       : `<div class="empty">Nothing on your calendar today.</div>`);
-  return card("📅 Today", body, "",
+  return card("Today", body, "",
     `<span class="link" onclick="openFullCalendar()">Full calendar ↗</span>`);
 }
 /* Full calendar — today + next 4 days, same aggregation + dedup rules */
@@ -3595,7 +3593,7 @@ function openFullCalendar(){
   const days=fullCalendarDays();
   $("fcModal").innerHTML = `<div class="fc-box">
     <button class="close" onclick="closeFullCalendar()">✕</button>
-    <h2>📅 Full calendar</h2>
+    <h2>Full calendar</h2>
     <p class="asub">Today and the next 4 days · aggregated from Outlook, SIS classes &amp; event RSVPs.</p>
     <div class="fc-grid">${days.map(d=>`
       <div class="fc-col ${d.today?"today":""}">
@@ -3614,7 +3612,7 @@ function closeFullCalendar(){ $("fcModal").classList.remove("open"); }
 /* Sign-in call to action (guest view) */
 function renderSignin(){
   return `<div class="card signin-card">
-    <div class="signin-ic">🔐</div>
+    <div class="signin-ic"></div>
     <div class="signin-body">
       <div class="signin-t">Sign in to One.IU</div>
       <div class="signin-s">Access your classes, Action Items, CrimsonCard, library account, and personalized services.</div>
@@ -3687,7 +3685,7 @@ function openFeedItem(kind,id){
       <h2>${esc(e.title)}</h2>
       <div class="dhead-addr">${esc(e.loc)}</div>
       <div class="dsec"><h4>ℹ️ About</h4><p style="font-size:13.5px;color:var(--body-text);font-weight:600;line-height:1.6">${esc(e.desc)}</p></div>
-      <div class="dsec"><h4>🏛️ Hosted by</h4><div class="drow">${esc(e.host)}</div></div>
+      <div class="dsec"><h4>Hosted by</h4><div class="drow">${esc(e.host)}</div></div>
       <a class="getthere" onclick="toast('Prototype: adds this event to your calendar.')">➕ Add to calendar</a>
       <div class="cc-hint" style="margin-top:12px">events.iu.edu</div>`;
   } else if(kind==="news"){
@@ -3695,7 +3693,7 @@ function openFeedItem(kind,id){
     html=`<button class="close" onclick="closeDrawer()">✕</button>
       <div class="dhead-dist">${esc(n.date)} · ${esc(n.cat)}</div>
       <h2>${esc(n.title)}</h2>
-      <div class="dsec"><h4>📄 Summary</h4><p style="font-size:13.5px;color:var(--body-text);font-weight:600;line-height:1.6">${esc(n.summary)}</p></div>
+      <div class="dsec"><h4>Summary</h4><p style="font-size:13.5px;color:var(--body-text);font-weight:600;line-height:1.6">${esc(n.summary)}</p></div>
       <a class="getthere" onclick="toast('Prototype: opens the full story on news.iu.edu.')">➔ Read full story</a>
       <div class="cc-hint" style="margin-top:12px">news.iu.edu</div>`;
   } else {
@@ -3703,15 +3701,15 @@ function openFeedItem(kind,id){
     html=`<button class="close" onclick="closeDrawer()">✕</button>
       <div class="dhead-dist">${esc(g.sport)} · ${esc(g.date)}</div>
       <h2>${esc(g.away.name)} at ${esc(g.home.name)}</h2>
-      <div class="dsec"><h4>🏟️ Matchup</h4>
+      <div class="dsec"><h4>Matchup</h4>
         <div class="team" style="font-size:15px">${teamLogo(g.away.logo)}<span>${esc(g.away.name)}</span><span class="ha">A</span></div>
         <div class="team" style="font-size:15px">${teamLogo(g.home.logo)}<span>${esc(g.home.name)}</span><span class="ha">H</span></div>
       </div>
-      <div class="dsec"><h4>📍 Details</h4>
+      <div class="dsec"><h4>Details</h4>
         <div class="drow">Time <span class="right"><b>${esc(g.time)}</b></span></div>
         <div class="drow">Venue <span class="right">${esc(g.venue)}</span></div>
         <div class="drow"><div class="sub" style="margin:0">${esc(g.note)}</div></div></div>
-      <a class="getthere" onclick="toast('Prototype: opens tickets on iuhoosiers.com.')">🎟️ Tickets & info</a>
+      <a class="getthere" onclick="toast('Prototype: opens tickets on iuhoosiers.com.')">Tickets & info</a>
       <div class="cc-hint" style="margin-top:12px">iuhoosiers.com</div>`;
   }
   $("drawer").innerHTML=html;
@@ -3731,7 +3729,7 @@ function buildSearchIndex(){
   p.tabs.forEach(tab=>{
     const nav=`omniGo('${tab.id}')`, g="Your "+tab.label;
     (p.views[tab.id]||[]).forEach(w=>{
-      if(w.type==="schedule") w.items.forEach(i=>add({icon:"📅",title:i.title,sub:i.loc,tag:tab.label,group:g,run:nav}));
+      if(w.type==="schedule") w.items.forEach(i=>add({icon:"",title:i.title,sub:i.loc,tag:tab.label,group:g,run:nav}));
       if(w.type==="list")     w.items.forEach(i=>add({icon:i.icon||"•",title:i.title,sub:i.sub,tag:tab.label,group:g,run:nav}));
       if(w.type==="tasks")    w.items.forEach(i=>add({icon:"✅",title:i.txt,sub:i.due,tag:tab.label,group:g,run:nav}));
       if(w.type==="steps")    w.items.forEach(i=>add({icon:"◉",title:i.title,sub:i.sub,tag:tab.label,group:g,run:nav}));
@@ -3772,7 +3770,6 @@ function omniResultsHTML(){
     if(!rows.length || total>=24) continue;
     out += `<div class="omni-group">${esc(g)}</div>` + rows.map(r=>`
       <div class="ores" onclick="${r.run}">
-        <div class="oic">${r.icon}</div>
         <div style="min-width:0"><div class="ot">${esc(r.title)}</div><div class="os">${esc(r.sub||"")}</div></div>
         <span class="otag">${esc(r.tag)}</span>
       </div>`).join("");
@@ -3796,10 +3793,11 @@ function omniGo(tab){ state.omniQ=""; setTab(tab); }
 ===================================================== */
 let layouts = {};
 (function loadLayouts(){
-  try{ const s = localStorage.getItem("oneiu_layouts"); if(s) layouts = JSON.parse(s)||{}; }catch(e){}
+  try{ const s = localStorage.getItem("oneiu_layouts_v2"); if(s) layouts = JSON.parse(s)||{}; }catch(e){}
+  try{ localStorage.removeItem("oneiu_layouts"); }catch(e){}
 })();
 function saveLayouts(){
-  try{ localStorage.setItem("oneiu_layouts", JSON.stringify(layouts)); }catch(e){}
+  try{ localStorage.setItem("oneiu_layouts_v2", JSON.stringify(layouts)); }catch(e){}
 }
 /* Tokens are strings: "0","1"… index a persona's default defs;
    "cat:orgs" is a catalog widget added by the user. */
@@ -3828,15 +3826,15 @@ function visibleTypes(){ return visibleTokens().map(tokenDef).filter(Boolean).ma
 /* Every widget a user can add, regardless of their default screen. */
 const WIDGET_CATALOG = [
   {type:"actionitems",label:"✅ Action Items",     desc:"Tasks that need you, from across IU"},
-  {type:"calendar",   label:"📅 Today's calendar",  desc:"Your Outlook / Exchange calendar"},
-  {type:"kualitime",  label:"🕐 Kuali Time",        desc:"Clock in/out · timekeeping for hourly jobs"},
-  {type:"campusfeed", label:"📰 Campus feed",       desc:"Athletics, events & news across IU"},
-  {type:"crimsoncard",label:"💳 CrimsonCard",       desc:"Your card, balances & photo"},
-  {type:"orgs",       label:"🧑‍🤝‍🧑 Student Organizations", desc:"Memberships, announcements & events"},
-  {type:"careers",    label:"🎯 Careers",            desc:"Handshake activity, coaching & events"},
-  {type:"libraries",  label:"📚 Libraries",          desc:"Loans, ILL, study rooms & catalog"},
-  {type:"degree",     label:"📊 Degree progress",     desc:"Credits & requirements from your degree audit", need:"degree"},
-  {type:"acad",       label:"📅 Academic calendar",   desc:"Key dates & term progress for your campus"},
+  {type:"calendar",   label:"Today's calendar",  desc:"Your Outlook / Exchange calendar"},
+  {type:"kualitime",  label:"Kuali Time",        desc:"Clock in/out · timekeeping for hourly jobs"},
+  {type:"campusfeed", label:"Campus feed",       desc:"Athletics, events & news across IU"},
+  {type:"crimsoncard",label:"CrimsonCard",       desc:"Your card, balances & photo"},
+  {type:"orgs",       label:"Student Organizations", desc:"Memberships, announcements & events"},
+  {type:"careers",    label:"Careers",            desc:"Handshake activity, coaching & events"},
+  {type:"libraries",  label:"Libraries",          desc:"Loans, ILL, study rooms & catalog"},
+  {type:"degree",     label:"Degree progress",     desc:"Credits & requirements from your degree audit", need:"degree"},
+  {type:"acad",       label:"Academic calendar",   desc:"Key dates & term progress for your campus"},
   {type:"launch",     label:"♥ Favorite tasks",      desc:"Your pinned & popular tasks"},
 ];
 const FULL_WIDTH_TYPES = ["hero","launch","tasklauncher","campusmap","signin"];
@@ -3849,7 +3847,7 @@ function widgetInfo(def){
     libraries:"Loans, holds and rooms from IUCAT / your library account.",kualitime:"IU timekeeping for hourly and work-study jobs.",
     degree:"Credits earned and requirements remaining, from your degree audit (iGPS for undergraduates; your school's registrar for professional programs).",
     acad:"Official term start/end, breaks, and finals for the selected campus, compiled from IU registrar calendars. Tap the term to switch semester or session; it follows the campus you've selected. Dates are subject to change.",
-    actionitems:'Actions from across IU — a link starts a task; its source marks it done.<br><br><b>🔗 System-confirmed</b> (default): clears when the source reports it (Canvas, Bursar, Registrar).<br><b>🖊️ Needs approval</b>: you act, then someone signs off.<br><b>Dismiss</b> hides an item without notifying the source.'};
+    actionitems:'Actions from across IU — a link starts a task; its source marks it done.<br><br><b>System-confirmed</b> (default): clears when the source reports it (Canvas, Bursar, Registrar).<br><b>Needs approval</b>: you act, then someone signs off.<br><b>Dismiss</b> hides an item without notifying the source.'};
   if(m[def.type]) return m[def.type];
   const p=(def.title||"").match(/·\s*(from .+|published estimate.*)$/i);
   return p ? p[1].charAt(0).toUpperCase()+p[1].slice(1) : "";
@@ -3857,20 +3855,20 @@ function widgetInfo(def){
 function toggleWidgetInfo(ev,btn){ ev.stopPropagation(); const w=btn.closest(".widget"); if(w) w.classList.toggle("info-open"); }
 const WIDE_TYPES = ["actionitems","campusfeed"];   // max 2 columns wide
 function widgetLabel(def){
-  if(def.type==="signin") return "🔐 Sign in";
+  if(def.type==="signin") return "Sign in";
   if(def.type==="actionitems") return "✅ Action Items";
-  if(def.type==="calendar") return "📅 Today's calendar";
-  if(def.type==="kualitime") return "🕐 Kuali Time";
-  if(def.type==="crimsoncard") return "💳 CrimsonCard";
-  if(def.type==="orgs") return "🧑‍🤝‍🧑 Student Organizations";
-  if(def.type==="libraries") return "📚 Libraries";
-  if(def.type==="campusfeed") return "📰 Campus feed";
-  if(def.type==="acad") return "📅 Academic calendar";
-  if(def.type==="degree") return "📊 Degree progress";
-  if(def.type==="hero") return "📣 Highlights banner";
+  if(def.type==="calendar") return "Today's calendar";
+  if(def.type==="kualitime") return "Kuali Time";
+  if(def.type==="crimsoncard") return "CrimsonCard";
+  if(def.type==="orgs") return "Student Organizations";
+  if(def.type==="libraries") return "Libraries";
+  if(def.type==="campusfeed") return "Campus feed";
+  if(def.type==="acad") return "Academic calendar";
+  if(def.type==="degree") return "Degree progress";
+  if(def.type==="hero") return "Highlights banner";
   if(def.type==="launch") return "♥ Favorite tasks";
   if(def.type==="tasklauncher") return "⊞ One.IU tasks";
-  if(def.type==="campusmap") return "🗺️ Campus map";
+  if(def.type==="campusmap") return "Campus map";
   return def.title || def.type;
 }
 function widgetWrap(tok,def){
@@ -3994,7 +3992,7 @@ function openWidgetPicker(){
     <button class="close" onclick="closeDrawer()">✕</button>
     <h2>＋ Add widgets</h2>
     <p class="dsub">Add any widget to this screen — even ones not shown by default.</p>
-    <div class="dsec"><h4>🧩 Widget library</h4>${catRows}</div>
+    <div class="dsec"><h4>Widget library</h4>${catRows}</div>
     ${ctxRows ? `<div class="dsec"><h4>↩︎ Removed from this screen</h4>${ctxRows}</div>` : ""}
     <div class="dsec"><h4>↺ Start over</h4>
       <button class="lbtn" onclick="resetLayout();closeDrawer()">Reset this screen to default</button></div>`;
@@ -4180,25 +4178,25 @@ function openSettings(){
     </div>
     <div class="dsec"><h4>Campus</h4>
       <div class="set-row" style="cursor:pointer" onclick="openCampusPicker()">
-        <div class="si">📍</div>
+        <div class="si"></div>
         <div style="min-width:0"><div class="st">Campus</div>
           <div class="ss">${curCampus()?esc(curCampus().name):"None selected"}</div></div>
         <div class="set-right">›</div></div>
     </div>
     <div class="dsec"><h4>Appearance</h4>
-      ${setRow(dark?"🌙":"☀️","Dark mode",(dark?"On":"Off")+" · easier on the eyes at night",sw(dark,"toggleTheme()"))}
+      ${setRow(dark?"":"","Dark mode",(dark?"On":"Off")+" · easier on the eyes at night",sw(dark,"toggleTheme()"))}
     </div>
     <div class="dsec"><h4>Notifications</h4>
       ${setRow("🔔","Push notifications","Deadlines, holds & campus alerts",sw(state.settings.notifs,"toggleSetting('notifs')"))}
       ${setRow("✉️","Weekly email digest","A summary of your Action Items",sw(state.settings.digest,"toggleSetting('digest')"))}
     </div>
     <div class="dsec"><h4>Accessibility</h4>
-      ${setRow("🎬","Reduce motion","Minimize animations and transitions",sw(state.settings.reduceMotion,"toggleSetting('reduceMotion')"))}
+      ${setRow("","Reduce motion","Minimize animations and transitions",sw(state.settings.reduceMotion,"toggleSetting('reduceMotion')"))}
     </div>
     <div class="dsec"><h4>General</h4>
-      <div class="set-row" style="cursor:pointer" onclick="toast('Prototype: language settings.')">${'<div class="si">🌐</div><div style="min-width:0"><div class="st">Language</div><div class="ss">English (US)</div></div><div class="set-right">›</div>'}</div>
-      <div class="set-row" style="cursor:pointer" onclick="toast('Prototype: privacy & data sharing.')">${'<div class="si">🔒</div><div style="min-width:0"><div class="st">Privacy &amp; data sharing</div><div class="ss">Manage what you share</div></div><div class="set-right">›</div>'}</div>
-      <div class="set-row" style="cursor:pointer" onclick="toggleAdmin(true)">${'<div class="si">🛠️</div><div style="min-width:0"><div class="st">Switch persona (demo)</div><div class="ss">Preview One.IU as another member</div></div><div class="set-right">›</div>'}</div>
+      <div class="set-row" style="cursor:pointer" onclick="toast('Prototype: language settings.')">${'<div class="si"></div><div style="min-width:0"><div class="st">Language</div><div class="ss">English (US)</div></div><div class="set-right">›</div>'}</div>
+      <div class="set-row" style="cursor:pointer" onclick="toast('Prototype: privacy & data sharing.')">${'<div class="si"></div><div style="min-width:0"><div class="st">Privacy &amp; data sharing</div><div class="ss">Manage what you share</div></div><div class="set-right">›</div>'}</div>
+      <div class="set-row" style="cursor:pointer" onclick="toggleAdmin(true)">${'<div class="si"></div><div style="min-width:0"><div class="st">Switch persona (demo)</div><div class="ss">Preview One.IU as another member</div></div><div class="set-right">›</div>'}</div>
     </div>
     <div class="cc-hint" style="margin-top:8px">One.IU prototype · v0.9</div>`;
   $("drawer").classList.add("open"); $("scrim").classList.add("open");
