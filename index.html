@@ -58,6 +58,20 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .nav button:hover{background:rgba(255,255,255,.12)}
 .nav button.active{background:#fff;color:#006298}
 .nav .ic{font-size:18px;width:22px;text-align:center}
+.rico{display:inline-block;vertical-align:-.125em;flex-shrink:0}
+.ic .rico,.omnibar-ic .rico{width:18px;height:18px}
+.bic .rico{width:20px;height:20px}
+.icon-btn .rico{width:20px;height:20px}
+.avatar .rico,.pav .rico,.set-av .rico{width:56%;height:56%;color:var(--crimson)}
+.cc-photo .rico{width:56%;height:56%;color:#fff}
+.nic .rico{width:20px;height:20px;color:var(--crimson)}
+.pdot .rico{width:22px;height:22px}
+.si .rico{width:20px;height:20px;color:var(--crimson)}
+.dsec h4 .rico{width:14px;height:14px;margin-right:7px;vertical-align:-.1em;color:var(--crimson)}
+.mchip .rico{width:14px;height:14px;margin-right:5px;vertical-align:-.1em}
+.map-note .rico{width:14px;height:14px;margin-right:3px;vertical-align:-.1em}
+.task-star .rico{width:16px;height:16px}
+.w-info .rico{width:15px;height:15px;vertical-align:-.15em}
 .side-foot{
   margin-top:auto;padding:14px 12px;border-radius:16px;background:rgba(0,0,0,.18);
   font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.85);
@@ -1349,6 +1363,67 @@ const SOURCES = {
   health:{name:"Student Health",cls:"green"},
 };
 
+/* ---------- Rivet Icons (Indiana University · rivet-icons, BSD-3) ---------- */
+const RICONS = {
+  "home":'<path d="m8 .798 7 4.667V15H9v-4.444H7V15H1V5.465L8 .798ZM3 6.535V13h2V8.556h6V13h2V6.535L8 3.202 3 6.535Z"/>',
+  "grid":'<path d="M7 0H0v7h7V0ZM2 5V2h3v3H2Zm14-5H9v7h7V0Zm-5 5V2h3v3h-3ZM9 9h7v7H9V9Zm2 2v3h3v-3h-3ZM7 9H0v7h7V9Zm-5 5v-3h3v3H2Z"/>',
+  "note":'<path d="M10 8H6V6h4v2Zm0 3H6V9h4v2Z"/><path d="M10.414 1H2v14h12V4.586L10.414 1ZM4 13V3h5.586L12 5.414V13H4Z"/>',
+  "credit-card":'<path d="M0 2h16v12H0V2Zm2 2v2h10v2H2v4h12V4H2Z"/>',
+  "map-pin":'<path d="M10 6.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/><path d="M7.193 15.162a18.223 18.223 0 0 1-2.666-2.283C3.1 11.386 1.5 9.145 1.5 6.5 1.5 3.245 4.141 0 8 0s6.5 3.245 6.5 6.5c0 2.645-1.6 4.886-3.027 6.379a18.22 18.22 0 0 1-2.666 2.283c-.263.183-.536.351-.807.523-.27-.172-.544-.34-.807-.523ZM8 2C5.359 2 3.5 4.232 3.5 6.5c0 1.855 1.15 3.614 2.473 4.996A16.217 16.217 0 0 0 8 13.28a16.22 16.22 0 0 0 2.027-1.783C11.35 10.114 12.5 8.356 12.5 6.5 12.5 4.232 10.641 2 8 2Z"/>',
+  "file":'<path d="M2 1h8.414L14 4.586V15H2V1Zm2 2v10h8V7.5H7.5V3H4Zm5.5 0v2.5H12v-.086L9.586 3H9.5Z"/>',
+  "clipboard":'<path d="M5 7h6v2H5V7Zm0 3h6v2H5v-2Z"/><path d="M6 0a2 2 0 0 0-2 2H1v14h14V2h-3a2 2 0 0 0-2-2H6ZM3 4h1v1h8V4h1v10H3V4Zm3-1V2h4v1H6Z"/>',
+  "user-group":'<path d="M11 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-1 3a1 1 0 1 1 2 0 1 1 0 0 1-2 0ZM5 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM4 6a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm-4 7a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v3H0v-3Zm3-1a1 1 0 0 0-1 1v1h6v-1a1 1 0 0 0-1-1H3Zm6-5v2h4a1 1 0 0 1 1 1v1h-3v2h5v-3a3 3 0 0 0-3-3H9Z"/>',
+  "user-solid":'<path d="M8 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM6 9a3 3 0 0 0-3 3v4h10v-4a3 3 0 0 0-3-3H6Z"/>',
+  "bell":'<path d="M10 14h5.5v-2h-1.382l-.366-.733a2.86 2.86 0 0 1-.298-1.12l-.234-4.209A5.23 5.23 0 0 0 9 1.096V0H7v1.096a5.23 5.23 0 0 0-4.22 4.842l-.234 4.209a2.86 2.86 0 0 1-.298 1.12L1.882 12H.5v2H6a2 2 0 1 0 4 0Zm1.886-2H4.114a4.86 4.86 0 0 0 .429-1.742l.234-4.209a3.228 3.228 0 0 1 6.446 0l.234 4.209A4.86 4.86 0 0 0 11.886 12Z"/>',
+  "magnifying-glass":'<path d="M7 2a5 5 0 1 0 0 10A5 5 0 0 0 7 2ZM0 7a7 7 0 1 1 12.606 4.192l3.101 3.1-1.414 1.415-3.1-3.1A7 7 0 0 1 0 7Z"/>',
+  "calendar":'<path d="M7 9.5v2H5v-2h2Zm4 2v-2H9v2h2Z"/><path d="M5 0a1 1 0 0 1 1 1v1h4V1a1 1 0 1 1 2 0v1h3v13H1V2h3V1a1 1 0 0 1 1-1ZM3 4v2h10V4H3Zm10 4H3v5h10V8Z"/>',
+  "money":'<path d="M7 2H5a3.5 3.5 0 1 0 0 7h2v3H2.5v2H7v2h2v-2h2a3.5 3.5 0 1 0 0-7H9V4h4.5V2H9V0H7v2Zm2 7h2a1.5 1.5 0 0 1 0 3H9V9ZM7 7H5a1.5 1.5 0 1 1 0-3h2v3Z"/>',
+  "inbox":'<path d="M9 4.086V0H7v4.086l-1.5-1.5L4.086 4 8 7.914 11.914 4 10.5 2.586 9 4.086ZM6 8H0v8h16V8h-6v2H6V8Zm6 4v-2h2v4H2v-4h2v2h8Z"/>',
+  "check-circle":'<path d="M7 11.414 11.914 6.5 10.5 5.086 7 8.586l-1.5-1.5L4.086 8.5 7 11.414Z"/><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM2 8a6 6 0 1 1 12 0A6 6 0 0 1 2 8Z"/>',
+  "image":'<path d="M10 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M15 1H1v14h14V1ZM3 6.92V3h10v7.132l-1.928-1.286-1.914.957-4.624-4.11L3 6.918Zm7.928 4.234L13 12.535V13H3V9.48l1.466-1.172 4.376 3.89 2.086-1.044Z"/>',
+  "caution":'<path d="M7 10V6h2v4H7Zm1 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/><path d="M6.382 0h3.236L16 12.764V16H0v-3.236L6.382 0Zm1.236 2L2 13.236V14h12v-.764L8.382 2h-.764Z"/>',
+  "megaphone":'<path d="M15 5.764V1.382L9.975 3.894A1 1 0 0 1 9.528 4H3a3 3 0 0 0-3 3v2a3 3 0 0 0 2.83 2.995L.59 14.61l1.518 1.301L5.46 12h4.068a1 1 0 0 1 .447.106L15 14.618v-4.382c.614-.55 1-1.347 1-2.236 0-.888-.386-1.687-1-2.236Zm-4.13-.08L13 4.617v6.764l-2.13-1.065A3 3 0 0 0 9.527 10H7V6h2.528a3 3 0 0 0 1.341-.317ZM5 6v4H3a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h2Z"/>',
+  "bookmark":'<path d="m13 15.563-5-2.308-5 2.308V1h10v14.563ZM11 3H5v9.437l3-1.384 3 1.384V3Z"/>',
+  "heart":'<path d="M8 5.5 6.32 3.82a2.375 2.375 0 0 0-3.358 3.36L8 12.216l5.038-5.038A2.375 2.375 0 1 0 9.68 3.821L8 5.5Zm0 9.546L1.548 8.594a4.375 4.375 0 0 1 6.187-6.188L8 2.672l.265-.266a4.375 4.375 0 1 1 6.187 6.188L8 15.046Z"/>',
+  "heart-solid":'<path d="M8 5.5 6.32 3.82a2.375 2.375 0 0 0-3.358 3.36L8 12.216l5.038-5.038A2.375 2.375 0 1 0 9.68 3.821L8 5.5Z"/><path d="M8 15.046 1.548 8.594a4.375 4.375 0 0 1 6.187-6.188L8 2.672l.265-.266a4.375 4.375 0 1 1 6.187 6.188L8 15.046Z"/>',
+  "sync":'<path d="M0 8v1h.1A5.002 5.002 0 0 0 5 13v-2a3 3 0 0 1-.5-5.959v1.827L8.803 4 4.5 1.131v1.894A5 5 0 0 0 0 8Zm16 0V7h-.1A5.002 5.002 0 0 0 11 3h-1v2h1a3 3 0 0 1 .5 5.959V9.13L7.197 12l4.303 2.868v-1.893A5 5 0 0 0 16 8Z"/>',
+  "building":'<path d="M5 4h2v2H5V4Zm6 0H9v2h2V4ZM5 7h2v2H5V7Zm6 0H9v2h2V7Z"/><path d="M2 0h12v14h1v2H1v-2h1V0Zm2 14h3v-2a1 1 0 1 1 2 0v2h3V2H4v12Z"/>',
+  "parking":'<path d="M9 4H5v8h2v-2h2a3 3 0 1 0 0-6Zm0 4H7V6h2a1 1 0 0 1 0 2Z"/><path d="M15 1H1v14h14V1ZM3 13V3h10v10H3Z"/>',
+  "bus":'<path d="M15 0H1v14h2v1.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V14h6v1.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V14h2V0ZM3.5 2h9a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-5a.5.5 0 0 1 .5-.5ZM5 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm7 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>',
+  "utensils":'<path d="m9.975 3.44 1.94-1.94L10.5.086l-1.94 1.94a3.501 3.501 0 0 0-.429 4.428L8 6.586l-5.5-5.5-.94.94a3.5 3.5 0 0 0 0 4.949L4.587 10l-4 4L2 15.414l4-4 2 2 2-2 4 4L15.414 14l-6-6 .132-.131a3.501 3.501 0 0 0 4.429-.43l1.94-1.939L14.5 4.086l-1.94 1.94a1.5 1.5 0 0 1-1.534.362L13.914 3.5 12.5 2.086 9.612 4.974a1.5 1.5 0 0 1 .363-1.535ZM8.585 10 8 10.586 2.975 5.56a1.5 1.5 0 0 1-.363-1.535L8.586 10Z"/>',
+  "printer":'<path d="M12 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/><path d="M13 0H3v4H0v9h3v3h10v-3h3V4h-3V0Zm-2 4H5V2h6v2Zm0 10H5v-2h6v2Zm-9-3V6h12v5h-1v-1H3v1H2Z"/>',
+  "globe":'<path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm4.17-1a16.97 16.97 0 0 1 .624-3.67l.14-.488A6.005 6.005 0 0 0 2.083 7H4.17Zm0 2H2.083a6.005 6.005 0 0 0 2.85 4.159l-.139-.489A17 17 0 0 1 4.17 9Zm3.07 4.952a6.059 6.059 0 0 0 1.52 0l.523-1.831c.292-1.023.473-2.07.543-3.121H6.174c.07 1.052.251 2.098.543 3.12l.524 1.832ZM6.175 7h3.652a15 15 0 0 0-.543-3.12L8.76 2.048a6.057 6.057 0 0 0-1.518 0l-.524 1.831A15 15 0 0 0 6.174 7Zm5.032 5.67-.14.489A6.005 6.005 0 0 0 13.917 9H11.83a17.004 17.004 0 0 1-.624 3.67Zm0-9.34c.343 1.202.551 2.433.624 3.67h2.087a6.005 6.005 0 0 0-2.85-4.158l.139.488Z"/>',
+  "lock-closed":'<path d="M9 10a1 1 0 1 0-2 0v1a1 1 0 1 0 2 0v-1Z"/><path d="M7 0a3 3 0 0 0-3 3v2a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2V3a3 3 0 0 0-3-3H7Zm3 5H6V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2Zm-6 9V7h8v7H4Z"/>',
+  "gear":'<path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M5 1.5A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1.304l1.13-.652a1.5 1.5 0 0 1 2.048.549l1.5 2.598a1.5 1.5 0 0 1-.549 2.05L14 8l1.13.652a1.5 1.5 0 0 1 .548 2.049l-1.5 2.598a1.5 1.5 0 0 1-2.049.55L11 13.195V14.5A1.5 1.5 0 0 1 9.5 16h-3A1.5 1.5 0 0 1 5 14.5v-1.304l-1.13.652a1.5 1.5 0 0 1-2.048-.549l-1.5-2.598a1.5 1.5 0 0 1 .549-2.05L2 8 .87 7.348A1.5 1.5 0 0 1 .323 5.3l1.5-2.598a1.5 1.5 0 0 1 2.049-.55L5 2.805V1.5ZM7 2v1.67c0 .169-.027.329-.076.476a3.996 3.996 0 0 0-1.722.996 1.513 1.513 0 0 1-.452-.173l-1.446-.835-1 1.732 1.446.835c.146.084.271.188.375.304a4.007 4.007 0 0 0 0 1.99c-.104.116-.229.22-.375.304l-1.446.835 1 1.732 1.446-.835a1.52 1.52 0 0 1 .452-.173 3.995 3.995 0 0 0 1.722.996c.05.147.076.307.076.476V14h2v-1.67c0-.169.027-.329.076-.476a3.995 3.995 0 0 0 1.722-.996c.153.032.305.088.452.173l1.446.835 1-1.732-1.446-.835a1.514 1.514 0 0 1-.375-.304 4.007 4.007 0 0 0 0-1.99c.104-.116.229-.22.375-.304l1.446-.835-1-1.732-1.446.835a1.514 1.514 0 0 1-.452.173 3.996 3.996 0 0 0-1.722-.996A1.513 1.513 0 0 1 9 3.67V2H7Z"/>',
+  "info-circle":'<path d="M9 7v5H7V7h2ZM8 4a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6a6 6 0 1 0 0 12A6 6 0 0 0 8 2Z"/>',
+  "envelope":'<path d="M0 2v12h16V2H0Zm2 2.023V4h12v.023L8 7.356 2 4.023ZM2 6.31l6 3.333 6-3.333V12H2V6.31Z"/>',
+  "pencil":'<path d="M15.353 2.938 13.06.646a1.5 1.5 0 0 0-2.122 0L1 10.586v4.359h4.413l9.937-9.882a1.5 1.5 0 0 0 .003-2.125Zm-4.439.562L12 2.414l1.584 1.584-1.089 1.083-1.58-1.581ZM9.5 4.914l1.577 1.577-6.49 6.454H3v-1.53l6.5-6.5Z"/>',
+  "question-mark":'<path d="M9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.5 4A2.5 2.5 0 0 0 5 6.5h2a.5.5 0 0 1 .5-.5h.646a.382.382 0 0 1 .17.724L7 7.382V9h2v-.382l.211-.106A2.382 2.382 0 0 0 8.146 4H7.5Z"/><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6a6 6 0 1 0 0 12A6 6 0 0 0 8 2Z"/>',
+  "circle":'<path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Z"/>',
+};
+const EMOJI_MAP = {
+  "🏠":"home","⊞":"grid","📖":"note","💳":"credit-card","🗺️":"map-pin","📄":"file","🧭":"clipboard","🎓":"user-group",
+  "📬":"inbox","🎟️":"bookmark","💸":"money","🎉":"check-circle","💼":"money","📋":"clipboard","📸":"image","📅":"calendar","🗓️":"calendar","⚠️":"caution","🔔":"bell","📣":"megaphone","✅":"check-circle","💰":"money","🩺":"info-circle",
+  "🔍":"magnifying-glass","🔄":"sync","♥":"heart-solid","♡":"heart",
+  "🏛️":"building","🅿️":"parking","🚌":"bus","🍽️":"utensils","♿":"info-circle","🖨️":"printer",
+  "🌐":"globe","🔒":"lock-closed","🛠️":"gear","✉️":"envelope","🖊️":"pencil","🙋":"question-mark",
+  "🌱":"user-solid","🌟":"user-solid","🎒":"user-solid","👤":"user-solid","⚖️":"user-solid","✒️":"user-solid","🧑‍💼":"user-solid","🔓":"user-solid",
+  "⏰":"bell","📉":"money","🏀":"bookmark","🏥":"info-circle","🔬":"note","🧑‍🎓":"user-group","🧑‍🏫":"user-group","🧾":"note","🏈":"bookmark","📚":"note","📕":"note","📝":"pencil","💵":"money"
+};
+function icoName(x){
+  if(RICONS[x]) return x;
+  if(EMOJI_MAP[x]) return EMOJI_MAP[x];
+  const b=String(x==null?"":x).replace(/[\uFE0F\u200D]/g,"");
+  if(RICONS[b]) return b;
+  if(EMOJI_MAP[b]) return EMOJI_MAP[b];
+  return "circle";
+}
+function ico(x){
+  const p=RICONS[icoName(x)]||RICONS.circle;
+  return `<svg class="rico" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" aria-hidden="true" focusable="false">${p}</svg>`;
+}
+
+
 /* =====================================================
    Campus feed — shared, campus-wide (simulated)
    events.iu.edu · news.iu.edu · iuhoosiers.com
@@ -1383,13 +1458,13 @@ const FEED = {
   ],
   athletics:[
     {id:"g1",date:"September 18, 2026",sport:"Men's Soccer",time:"7 P.M.",venue:"Bill Armstrong Stadium",
-     away:{name:"Michigan",logo:"〽️"}, home:{name:"Hoosiers",logo:"IU"}, note:"Big Ten opener · student tickets via CrimsonCard"},
+     away:{name:"Michigan",logo:"MICH"}, home:{name:"Hoosiers",logo:"IU"}, note:"Big Ten opener · student tickets via CrimsonCard"},
     {id:"g2",date:"September 19, 2026",sport:"Football",time:"3:30 P.M.",venue:"Memorial Stadium",
-     away:{name:"Illinois",logo:"🟠"}, home:{name:"Hoosiers",logo:"IU"}, note:"Big Ten home opener · student tickets via CrimsonCard"},
+     away:{name:"Illinois",logo:"ILL"}, home:{name:"Hoosiers",logo:"IU"}, note:"Big Ten home opener · student tickets via CrimsonCard"},
     {id:"g3",date:"September 20, 2026",sport:"Women's Soccer",time:"1 P.M.",venue:"Bill Armstrong Stadium",
-     away:{name:"Ohio State",logo:"🌰"}, home:{name:"Hoosiers",logo:"IU"}, note:"Big Ten play · free with CrimsonCard"},
+     away:{name:"Ohio State",logo:"OSU"}, home:{name:"Hoosiers",logo:"IU"}, note:"Big Ten play · free with CrimsonCard"},
     {id:"g4",date:"September 26, 2026",sport:"Football",time:"TBA",venue:"Iowa City, Iowa",
-     away:{name:"Hoosiers",logo:"IU"}, home:{name:"Iowa",logo:"🦅"}, note:"Away · Big Ten · watch parties on campus"},
+     away:{name:"Hoosiers",logo:"IU"}, home:{name:"Iowa",logo:"IOWA"}, note:"Away · Big Ten · watch parties on campus"},
   ],
 };
 
@@ -1609,7 +1684,7 @@ applicant: {
         {cat:"status",n:"Complete",l:"admissions checklist",src:"IU Admissions"},
       ]},
       {type:"actionitems"},
-      {type:"list",title:"🎟️ Admissions events",items:[
+      {type:"list",title:"Admissions events",items:[
         {icon:"🚌",bg:"gold",title:"Red Carpet Day",sub:"Full-day visit: tours, Kelley info session, lunch",right:"Oct 10",rightSub:"Bloomington"},
         {icon:"💻",bg:"blue",title:"Virtual Q&A: Life at IU",sub:"Live session with current students",right:"Sep 24",rightSub:"7pm ET"},
         {icon:"🏦",bg:"green",title:"Paying for IU 101",sub:"Aid, scholarships & the 21st Century Scholars program",right:"Oct 1",rightSub:"Webinar"},
@@ -1619,7 +1694,7 @@ applicant: {
     tasks:[{type:"tasklauncher"}],
     campus:[{type:"campusmap"},{type:"campusfeed"}],
     application:[
-      {type:"list",title:"📄 Application checklist · from the IU Admissions Portal",items:[
+      {type:"list",title:"Application checklist · from the IU Admissions Portal",items:[
         {icon:"🎓",bg:"blue",title:"Kelley School of Business · Direct Admit",sub:"First-year · Early Action · Fall 2027",badge:{txt:"Applied",cls:"blue"}},
         {icon:"📄",bg:"green",title:"Application",sub:"Submitted Sep 10 · Common App · Early Action",badge:{txt:"Received",cls:"green"}},
         {icon:"🏫",bg:"green",title:"Official transcript",sub:"Bloomington High School South",badge:{txt:"Received",cls:"green"}},
@@ -1627,7 +1702,7 @@ applicant: {
       ]},
       {type:"notice",tone:"blue",icon:"✅",title:"Your application is complete",
        sub:"Nothing else is required. A complete application submitted by Nov 1 receives a decision by January 15 — posted here in the IU Admissions Portal and by email."},
-      {type:"list",title:"🚌 Visit IU",items:[
+      {type:"list",title:"Visit IU",items:[
         {icon:"🎟️",bg:"gold",title:"Red Carpet Day",sub:"Full-day prospective student experience",right:"Oct 10",badge:{txt:"80% full",cls:"gold"}},
         {icon:"🚶",bg:"blue",title:"Daily campus tour",sub:"90-minute walking tour with a student ambassador",right:"Weekdays",rightSub:"10am & 2pm"},
         {icon:"🏛️",bg:"purple",title:"Kelley-specific tour",sub:"Hodge Hall, trading lab & undergraduate advising",right:"Fridays",rightSub:"11am"},
@@ -1635,13 +1710,13 @@ applicant: {
       ]},
     ],
     aid:[
-      {type:"balances",title:"💰 Cost of attendance · published estimate (In-state, 2027–28)",items:[
+      {type:"balances",title:"Cost of attendance · published estimate (In-state, 2027–28)",items:[
         {icon:"🎓",label:"Tuition & fees",value:"$12,144",note:"Per year, in-state"},
         {icon:"🏠",label:"Housing & food",value:"$13,308",note:"Standard res hall + meals"},
         {icon:"📚",label:"Books & misc",value:"$2,050",note:"Estimate"},
         {icon:"✨",label:"Avg. freshman award",value:"$11,500",note:"Grants + scholarships"},
       ]},
-      {type:"list",title:"💰 Financial aid — what's outstanding",items:[
+      {type:"list",title:"Financial aid — what's outstanding",items:[
         {icon:"💸",bg:"gold",title:"File your FAFSA",sub:"IU code 001809 · 2027–28 form opens Oct 1",src:"Financial Aid",link:"FAFSA at studentaid.gov",linkLabel:"File"},
         {icon:"✨",bg:"gold",title:"IU Academic Scholarships",sub:"Automatically considered with your Early Action application",src:"Financial Aid"},
         {icon:"🎓",bg:"green",title:"21st Century Scholars",sub:"Check eligibility · Indiana residents",src:"Financial Aid",link:"the eligibility check",linkLabel:"Check"},
@@ -1808,14 +1883,14 @@ firstyear: {
     classes:[
       {type:"degree"},
       {type:"acad"},
-      {type:"list",title:"📚 Fall schedule · 15 credit hours · from SIS",items:[
+      {type:"list",title:"Fall schedule · 15 credit hours · from SIS",items:[
         {icon:"➗",bg:"red",title:"MATH-M 118 · Finite Mathematics",sub:"MWF 10:10–11:00 · Ballantine 013",right:"3 cr",rightSub:"enrolled"},
         {icon:"✍️",bg:"blue",title:"ENG-W 131 · Reading, Writing & Inquiry",sub:"TR 9:30–10:45 · Wells Library 001",right:"3 cr",rightSub:"enrolled"},
         {icon:"🧠",bg:"purple",title:"COLL-C 104 · Critical Approaches",sub:"MW 1:00–2:15 · Woodburn 101",right:"3 cr",rightSub:"enrolled"},
         {icon:"🌎",bg:"green",title:"GEOG-G 110 · Human Geography",sub:"TR 1:00–2:15 · Student Building 150",right:"3 cr",rightSub:"enrolled"},
         {icon:"🎹",bg:"gold",title:"MUS-Z 111 · Intro to Music Theory",sub:"F 1:25–2:15 · Simon Music Center",right:"3 cr",rightSub:"enrolled"},
       ]},
-      {type:"assignments",title:"📚 Assignments due this week",items:[
+      {type:"assignments",title:"Assignments due this week",items:[
         {course:"MATH-M 118",title:"Problem Set 7",due:"Tomorrow · 11:59 p.m.",soon:true},
         {course:"ENG-W 131",title:"Draft 2 — peer review",due:"Thursday, in class"},
         {course:"GEOG-G 110",title:"Map quiz",due:"Friday · 11:59 p.m."},
@@ -1823,13 +1898,13 @@ firstyear: {
       ]},
     ],
     money:[
-      {type:"balances",title:"💼 Pay & time",items:[
+      {type:"balances",title:"Pay & time",items:[
         {icon:"🏛️",label:"Position",value:"Wells Library",note:"Circulation assistant"},
         {icon:"⏱️",label:"This week",value:"9.5 hrs",note:"logged in Kuali Time"},
         {icon:"💰",label:"Earned so far",value:"$1,118",note:"of $2,800 award"},
         {icon:"🗓️",label:"Next payday",value:"Sep 18",note:"Direct deposit"},
       ]},
-      {type:"balances",title:"💳 All balances",items:[
+      {type:"balances",title:"All balances",items:[
         {icon:"🧾",label:"Bursar",value:"$0.00",note:"Bursar · fall paid in full"},
         {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"Financial Aid · award letter"},
         {icon:"💼",label:"Work-study earned",value:"$1,118",note:"Payroll · of $2,800 award"},
@@ -1837,7 +1912,7 @@ firstyear: {
         {icon:"🥗",label:"Dining Dollars",value:"$412.00",note:"CrimsonCard · this semester"},
         {icon:"💵",label:"Crimson Cash",value:"$23.50",note:"CrimsonCard · reload anytime"},
       ]},
-      {type:"list",title:"🧾 Recent activity",items:[
+      {type:"list",title:"Recent activity",items:[
         {icon:"🥗",bg:"green",title:"Woodland Eatery",sub:"Dining Dollars",src:"CrimsonCard",right:"−$11.25",rightSub:"Today"},
         {icon:"👕",bg:"blue",title:"Teter laundry",sub:"Crimson Cash",src:"CrimsonCard",right:"−$3.00",rightSub:"Yesterday"},
         {icon:"💼",bg:"gold",title:"Work-study direct deposit",sub:"Biweekly pay",src:"Payroll",right:"+$142.88",rightSub:"Sep 4"},
@@ -1938,18 +2013,18 @@ senior: {
     tasks:[{type:"tasklauncher"}],
     campus:[{type:"campusmap"},{type:"campusfeed"}],
     classes:[
-      {type:"list",title:"📚 Final semester · enrolled courses · from SIS",items:[
+      {type:"list",title:"Final semester · enrolled courses · from SIS",items:[
         {icon:"🚀",bg:"red",title:"INFO-I 494 · Capstone I",sub:"TR 11:15–12:30 · Luddy 1106",right:"3 cr",rightSub:"enrolled"},
         {icon:"🤖",bg:"purple",title:"INFO-I 421 · Applied ML",sub:"MW 2:30–3:45 · Luddy 3166",right:"3 cr",rightSub:"enrolled"},
         {icon:"⚖️",bg:"blue",title:"INFO-I 453 · Computer & Info Ethics",sub:"Online asynchronous",right:"3 cr",rightSub:"enrolled"},
         {icon:"🎨",bg:"gold",title:"1 A&H credit still required",sub:"iGPS audit · not yet satisfied — plan it with your advisor",badge:{txt:"Action needed",cls:"red"}},
       ]},
-      {type:"assignments",title:"📚 Assignments due soon",items:[
+      {type:"assignments",title:"Assignments due soon",items:[
         {course:"INFO-I 494",title:"Capstone — user research report",due:"Next Friday · 11:59 p.m.",soon:true},
         {course:"INFO-I 421",title:"Assignment 4 — model evaluation",due:"Monday · 11:59 p.m."},
         {course:"INFO-I 453",title:"Ethics discussion post + 2 replies",due:"Sunday · 11:59 p.m."},
       ]},
-      {type:"steps",title:"🎓 Graduation checklist · December 2026",items:[
+      {type:"steps",title:"Graduation checklist · December 2026",items:[
         {title:"Apply to graduate",sub:"Submitted for December 2026 · your academic unit certifies eligibility.",state:"done",src:"Registrar",link:"the graduation application",linkLabel:"View"},
         {title:"Degree audit review",sub:"94% complete — reviewed with your advisor in April.",state:"done",src:"iGPS",link:"your iGPS degree audit",linkLabel:"View audit"},
         {title:"Clear your last degree requirement",sub:"iGPS shows 1 A&H credit still unmet — plan it with your advisor.",state:"now",src:"Advising",link:"advising",linkLabel:"Schedule advising"},
@@ -1960,18 +2035,18 @@ senior: {
       {type:"acad"},
     ],
     money:[
-      {type:"balances",title:"🧾 Fall 2026 statement · from Bursar",items:[
+      {type:"balances",title:"Fall 2026 statement · from Bursar",items:[
         {icon:"💰",label:"Amount due",value:"$1,284.00",note:"Due Sep 25",alert:true},
         {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"Fall award applied"},
         {icon:"📅",label:"Payment plan",value:"Available",note:"4 installments · no interest"},
       ]},
-      {type:"balances",title:"💳 All balances",items:[
+      {type:"balances",title:"All balances",items:[
         {icon:"🧾",label:"Bursar",value:"$1,284.00",note:"Bursar · due Sep 25"},
         {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"Financial Aid · award letter"},
         {icon:"🥗",label:"Dining Dollars",value:"$18.65",note:"CrimsonCard · commuter plan"},
         {icon:"💵",label:"Crimson Cash",value:"$41.10",note:"CrimsonCard · reload anytime"},
       ]},
-      {type:"list",title:"🧾 Recent activity",items:[
+      {type:"list",title:"Recent activity",items:[
         {icon:"🥗",bg:"green",title:"Wells Library café",sub:"Dining Dollars",src:"CrimsonCard",right:"−$6.25",rightSub:"Today"},
         {icon:"🖨️",bg:"blue",title:"Luddy Hall printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$1.80",rightSub:"Yesterday"},
         {icon:"🎓",bg:"green",title:"Financial aid disbursement",sub:"Fall award",src:"Financial Aid",right:"+$4,200",rightSub:"Aug 20"},
@@ -2040,19 +2115,19 @@ staff: {
     ],
     tasks:[{type:"tasklauncher"}],
     money:[
-      {type:"balances",title:"💼 Pay & time",items:[
+      {type:"balances",title:"Pay & time",items:[
         {icon:"🌴",label:"PTO",value:"156 hrs",note:"Accrues 24 hrs/mo (6+ yrs service)"},
         {icon:"🤒",label:"Sick (IPT)",value:"88 hrs",note:"Income Protection Time"},
         {icon:"💵",label:"Next payday",value:"Sep 30",note:"Monthly · direct deposit"},
         {icon:"🎓",label:"Tuition benefit",value:"Eligible",note:"Spring · apply by Nov 15"},
       ]},
-      {type:"balances",title:"🏥 Benefits snapshot",items:[
+      {type:"balances",title:"Benefits snapshot",items:[
         {icon:"🩺",label:"Medical",value:"Anthem PPO HDHP",note:"Employee + spouse"},
         {icon:"🏦",label:"HSA",value:"Enrolled",note:"IU contributes $150/mo · balance at your HSA bank"},
         {icon:"📈",label:"Retirement",value:"9%",note:"IU base · optional 403(b)/457(b)"},
         {icon:"🦷",label:"Dental / Vision",value:"Enrolled",note:"Cigna / Anthem"},
       ]},
-      {type:"list",title:"💵 Recent payslips",items:[
+      {type:"list",title:"Recent payslips",items:[
         {icon:"💵",bg:"green",title:"Aug 31 · Monthly",sub:"Regular pay",right:"$4,558.33",rightSub:"net"},
         {icon:"💵",bg:"green",title:"Jul 31 · Monthly",sub:"Regular pay",right:"$4,558.33",rightSub:"net"},
         {icon:"💵",bg:"green",title:"Jun 30 · Monthly",sub:"Regular pay",right:"$4,558.33",rightSub:"net"},
@@ -2143,7 +2218,7 @@ faculty: {
       {type:"actionitems"},
       {type:"crimsoncard"},
       {type:"libraries"},
-      {type:"list",title:"📖 Your courses",items:[
+      {type:"list",title:"Your courses",items:[
         {icon:"🎨",bg:"red",title:"INFO-I 365 · HCI Design",sub:"MWF 10:10 · Luddy 1106",right:"82",rightSub:"students"},
         {icon:"🧪",bg:"purple",title:"INFO-I 590 · Grad UX Methods",sub:"T 4:00–6:30 · Luddy 3166",right:"18",rightSub:"students"},
       ]},
@@ -2152,20 +2227,20 @@ faculty: {
     tasks:[{type:"tasklauncher"}],
     campus:[{type:"campusmap"},{type:"campusfeed"}],
     teaching:[
-      {type:"list",title:"📖 Your courses · from SIS",items:[
+      {type:"list",title:"Your courses · from SIS",items:[
         {icon:"🎨",bg:"red",title:"INFO-I 365 · HCI Design",sub:"MWF 10:10–11:25 · Luddy 1106 · 82 enrolled"},
         {icon:"🧪",bg:"purple",title:"INFO-I 590 · Grad UX Methods",sub:"T 4:00–6:30 · Luddy 3166 · 18 enrolled"},
       ]},
-      {type:"list",title:"📝 Grading · from Canvas",items:[
+      {type:"list",title:"Grading · from Canvas",items:[
         {icon:"📘",bg:"red",title:"INFO-I 365 · project 2",sub:"38 submissions ungraded",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
         {icon:"📗",bg:"blue",title:"INFO-I 590 · annotated bibliographies",sub:"18 submissions ungraded",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
       ]},
-      {type:"list",title:"📊 Rosters & alerts",items:[
+      {type:"list",title:"Rosters & alerts",items:[
         {icon:"📝",bg:"red",title:"Early evaluations — I-365",sub:"Submit early-evaluation grades for beginning students",src:"Student Engagement Roster",link:"the Student Engagement Roster",linkLabel:"Open SER",right:"Due",rightSub:"Oct 4"},
         {icon:"⚠️",bg:"gold",title:"Early alerts",sub:"Students you've flagged for missed work in the roster",src:"Student Engagement Roster",link:"the Student Engagement Roster",linkLabel:"Flag",right:"4",rightSub:"flagged"},
         {icon:"📋",bg:"blue",title:"Class roster — I-365",sub:"Verify enrolled students · 0 pending adds",src:"Faculty Center",link:"the Faculty Center",linkLabel:"Open",right:"82",rightSub:"enrolled"},
       ]},
-      {type:"list",title:"👥 Your advisees · from SIS advising",items:[
+      {type:"list",title:"Your advisees · from SIS advising",items:[
         {icon:"🎓",bg:"purple",title:"Jamie Kim",sub:"PhD · 3rd year"},
         {icon:"🎓",bg:"purple",title:"Sarah Okafor",sub:"MS-HCI · 2nd year"},
         {icon:"🎓",bg:"gold",title:"Miguel Torres",sub:"MS-HCI · 1st year"},
@@ -2173,37 +2248,37 @@ faculty: {
       ]},
     ],
     money:[
-      {type:"balances",title:"💼 Pay & time",items:[
+      {type:"balances",title:"Pay & time",items:[
         {icon:"💵",label:"Appointment",value:"10-month",note:"Academic-year faculty"},
         {icon:"💵",label:"Next payday",value:"Sep 30",note:"Monthly · direct deposit"},
         {icon:"📈",label:"Retirement",value:"9%",note:"IU base · optional 403(b)/457(b)"},
         {icon:"🌴",label:"Leave",value:"Sabbatical",note:"Eligible AY 2028–29"},
       ]},
-      {type:"balances",title:"🏥 Benefits snapshot",items:[
+      {type:"balances",title:"Benefits snapshot",items:[
         {icon:"🩺",label:"Medical",value:"Anthem PPO",note:"Employee + family"},
         {icon:"🦷",label:"Dental / Vision",value:"Enrolled",note:"Cigna / Anthem"},
         {icon:"🏦",label:"HSA",value:"Enrolled",note:"IU contributes $150/mo · balance at your HSA bank"},
         {icon:"🎓",label:"Tuition benefit",value:"Eligible",note:"Dependents 50% at IU"},
       ]},
-      {type:"list",title:"💵 Recent payslips",items:[
+      {type:"list",title:"Recent payslips",items:[
         {icon:"💵",bg:"green",title:"Aug 31 · Monthly",sub:"Regular pay",right:"$6,742.10",rightSub:"net"},
         {icon:"💵",bg:"green",title:"Jul 31 · Monthly",sub:"Regular pay",right:"$6,742.10",rightSub:"net"},
         {icon:"💵",bg:"green",title:"Jun 30 · Monthly",sub:"Regular pay",right:"$6,742.10",rightSub:"net"},
       ]},
     ],
     research:[
-      {type:"steps",title:"🔬 Proposal routing · from Kuali Coeus (KC)",items:[
+      {type:"steps",title:"Proposal routing · from Kuali Coeus (KC)",items:[
         {title:"Proposal built in Kuali Coeus",sub:"CISE core · $642K over 5 years · budget finalized with co-PI.",state:"done",src:"Kuali Coeus"},
         {title:"Routing for institutional approval",sub:"Department approved Sep 4 · now with ORA for sign-off.",state:"now",src:"Kuali Coeus",link:"your KC routing queue",linkLabel:"Open KC"},
         {title:"ORA submits to NSF via Grants.gov",sub:"Submitted system-to-system once institutional routing clears.",state:"todo",src:"Kuali Coeus"},
         {title:"Sponsor review",sub:"NSF status posts on Research.gov (external) · sponsor deadline Oct 15.",state:"todo",src:"Research.gov (external)",link:"Research.gov",linkLabel:"Check"},
       ]},
-      {type:"list",title:"💰 Sponsored accounts · from Kuali Financial System",items:[
+      {type:"list",title:"Sponsored accounts · from Kuali Financial System",items:[
         {icon:"🏛️",bg:"blue",title:"NSF HCC — award account",sub:"Acct 4471902 · you (PI) · ends Aug 2027",src:"KFS",link:"the KFS account",linkLabel:"View",right:"$121K",rightSub:"remaining"},
         {icon:"🏥",bg:"purple",title:"NIH R21 — subaward account",sub:"Acct 4471955 · year 2 of 2",src:"KFS",link:"the KFS account",linkLabel:"View",right:"$38K",rightSub:"remaining"},
         {icon:"🧾",bg:"gold",title:"Expenditures to certify",sub:"3 transactions posted this period need your review",src:"KFS",link:"the KFS balances",linkLabel:"Review",badge:{txt:"Action",cls:"gold"}},
       ]},
-      {type:"list",title:"🧪 Human-subjects protocols · from Kuali Protocols",items:[
+      {type:"list",title:"Human-subjects protocols · from Kuali Protocols",items:[
         {icon:"✅",bg:"green",title:"#2306-2291 · Accessible interfaces study",sub:"Approved · annual continuing review",src:"Kuali Protocols",link:"Kuali Protocols",linkLabel:"Open",right:"Expires",rightSub:"Feb 2027"},
         {icon:"⏳",bg:"gold",title:"Amendment · add two RAs to the study",sub:"Submitted Sep 8 · with the IRB analyst",src:"Kuali Protocols",link:"Kuali Protocols",linkLabel:"Track",badge:{txt:"In review",cls:"gold"}},
       ]},
@@ -2244,12 +2319,12 @@ parent: {
         {cat:"status",n:"15",l:"credit hours (shared)",src:"SIS"},
       ]},
       {type:"actionitems"},
-      {type:"list",title:"🧑‍🎓 Shared by Jake",items:[
+      {type:"list",title:"Shared by Jake",items:[
         {icon:"📚",bg:"blue",title:"Enrolled: 15 credit hours",sub:"Fall schedule confirmed · Kelley sophomore",badge:{txt:"Shared",cls:"blue"}},
         {icon:"🧾",bg:"green",title:"Billing & payments",sub:"Full proxy access",badge:{txt:"Shared",cls:"green"}},
         {icon:"🔒",bg:"red",title:"Grades",sub:"Not shared. Students control academic record sharing under FERPA.",badge:{txt:"Not shared",cls:"gray"}},
       ]},
-      {type:"list",title:"🏈 For IU families",items:[
+      {type:"list",title:"For IU families",items:[
         {icon:"🏈",bg:"red",title:"Family Weekend",sub:"Homecoming game, tailgate & campus open houses",right:"Oct 17–19",rightSub:"Register"},
         {icon:"📰",bg:"gold",title:"Parent & family newsletter",sub:"September edition · sophomore-year tips",right:"New",rightSub:"Read"},
         {icon:"💻",bg:"blue",title:"Webinar: Supporting your sophomore",sub:"Advising, majors & the second-year transition",right:"Oct 7",rightSub:"7pm ET"},
@@ -2260,7 +2335,7 @@ parent: {
     campus:[
       {type:"campusmap"},
       {type:"campusfeed"},
-      {type:"list",title:"🏈 Family events this year",items:[
+      {type:"list",title:"Family events this year",items:[
         {icon:"🏈",bg:"red",title:"Family Weekend + Homecoming",sub:"Tailgate, game tickets, open houses & brunch",right:"Oct 17–19",rightSub:"Register now"},
         {icon:"📦",bg:"gold",title:"Fall move-in",sub:"Completed in August · Briscoe Quad",right:"Done",rightSub:"Aug 20"},
         {icon:"💻",bg:"blue",title:"Family webinar series",sub:"Monthly · sophomore year topics",right:"Oct 7",rightSub:"Next session"},
@@ -2268,31 +2343,31 @@ parent: {
       ]},
     ],
     student:[
-      {type:"list",title:"🧑‍🎓 Jake Miller · Sophomore, Kelley",items:[
+      {type:"list",title:"Jake Miller · Sophomore, Kelley",items:[
         {icon:"📚",bg:"blue",title:"Enrollment status",sub:"Full-time · 15 credit hours · Fall 2026",badge:{txt:"Confirmed",cls:"green"}},
         {icon:"🏠",bg:"gold",title:"Housing",sub:"Briscoe Quad · double room · moved in Aug 20",badge:{txt:"Active",cls:"green"}},
         {icon:"🍽️",bg:"green",title:"Meal plan",sub:"Standard plan · renews with fall bill",badge:{txt:"Active",cls:"green"}},
         {icon:"🔒",bg:"red",title:"Grades & academic record",sub:"Not shared. Students control this under FERPA; sharing can be updated in Jake's One.IU settings.",badge:{txt:"Not shared",cls:"gray"}},
       ]},
-      {type:"list",title:"🚨 Safety & wellbeing resources",items:[
+      {type:"list",title:"Safety & wellbeing resources",items:[
         {icon:"🚨",bg:"red",title:"IU-Notify alerts",sub:"You are subscribed to Bloomington campus alerts",badge:{txt:"Active",cls:"green"}},
         {icon:"🩺",bg:"green",title:"Student Health Center",sub:"How care works, insurance & after-hours options",href:"https://healthcenter.indiana.edu",linkLabel:"Learn more"},
         {icon:"🧘",bg:"purple",title:"CAPS (counseling)",sub:"Sessions included in student fees",href:"https://healthcenter.indiana.edu/counseling/",linkLabel:"Learn more"},
       ]},
     ],
     billing:[
-      {type:"balances",title:"🧾 Fall 2026 statement · from Bursar",items:[
+      {type:"balances",title:"Fall 2026 statement · from Bursar",items:[
         {icon:"💰",label:"Amount due",value:"$6,240.00",note:"Due Sep 25",alert:true},
         {icon:"🎓",label:"Tuition & fees",value:"$6,072",note:"In-state, 15 cr"},
         {icon:"🏠",label:"Housing & meals",value:"$6,654",note:"Briscoe + standard plan"},
         {icon:"✨",label:"Aid applied",value:"−$6,486",note:"Scholarship + grant"},
       ]},
-      {type:"list",title:"💳 Payment options",items:[
+      {type:"list",title:"Payment options",items:[
         {icon:"⚡",bg:"green",title:"Pay in full",sub:"eCheck (free) or card (2.85% fee)",right:"$6,240"},
         {icon:"📅",bg:"blue",title:"4-installment plan",sub:"No interest · $25 enrollment fee",right:"$1,560",rightSub:"/month"},
         {icon:"🏦",bg:"purple",title:"529 / third-party",sub:"Send directly from your plan provider",right:"Guide"},
       ]},
-      {type:"list",title:"🧾 Payment history",items:[
+      {type:"list",title:"Payment history",items:[
         {icon:"✅",bg:"green",title:"Spring 2026 · paid in full",sub:"eCheck · Jan 8, 2026",right:"$6,180"},
         {icon:"✅",bg:"green",title:"Fall 2025 · payment plan",sub:"4 installments, completed",right:"$6,090"},
       ]},
@@ -2368,7 +2443,6 @@ law: {
         {cat:"submission",n:"Evidence problem set",l:"due tomorrow",src:"Canvas",days:1},
         {cat:"money",n:"$8,930",l:"balance due Sep 25",src:"Bursar",days:10},
         {cat:"today",n:"2",l:"classes today",src:"SIS"},
-        {cat:"status",n:"38%",l:"J.D. credits earned",src:"McKinney registrar"},
       ]},
       {type:"calendar"},
       {type:"actionitems"},
@@ -2380,34 +2454,33 @@ law: {
     ],
     tasks:[{type:"tasklauncher"}],
     classes:[
-      {type:"degree"},
       {type:"acad"},
-      {type:"list",title:"📚 Fall schedule · 14 credit hours · from SIS",items:[
+      {type:"list",title:"Fall schedule · 14 credit hours · from SIS",items:[
         {icon:"🏛️",bg:"red",title:"LAW-D 100 · Constitutional Law",sub:"MW 9:00–10:15 · Inlow Hall 121",right:"4 cr",rightSub:"enrolled"},
         {icon:"⚖️",bg:"blue",title:"LAW-B 200 · Evidence",sub:"MW 10:30–11:45 · Inlow Hall 118",right:"3 cr",rightSub:"enrolled"},
         {icon:"🏢",bg:"purple",title:"LAW-B 250 · Business Associations",sub:"TR 1:00–2:15 · Inlow Hall 245",right:"4 cr",rightSub:"enrolled"},
         {icon:"🧭",bg:"green",title:"LAW-L 710 · Legal Profession",sub:"F 9:00–10:50 · Inlow Hall 116",right:"3 cr",rightSub:"enrolled"},
       ]},
-      {type:"assignments",title:"📚 Coming due",items:[
+      {type:"assignments",title:"Coming due",items:[
         {course:"Evidence",title:"Problem set 4",due:"Tomorrow · 11:59 p.m.",soon:true},
         {course:"Con Law",title:"Reading response 5",due:"Wednesday, in class"},
         {course:"Law Review",title:"Note edits — round 1",due:"Friday · 5:00 p.m."},
       ]},
     ],
     money:[
-      {type:"balances",title:"🧾 Fall 2026 statement · from Bursar",items:[
+      {type:"balances",title:"Fall 2026 statement · from Bursar",items:[
         {icon:"💰",label:"Amount due",value:"$8,930.00",note:"Due Sep 25",alert:true},
         {icon:"🎓",label:"Tuition & fees",value:"$15,930",note:"McKinney · resident"},
         {icon:"✨",label:"Aid applied",value:"−$7,000",note:"Scholarship + loans"},
         {icon:"📅",label:"Payment plan",value:"Available",note:"4 installments · no interest"},
       ]},
-      {type:"balances",title:"💳 All balances",items:[
+      {type:"balances",title:"All balances",items:[
         {icon:"🧾",label:"Bursar",value:"$8,930.00",note:"Bursar · due Sep 25"},
         {icon:"🎓",label:"Financial aid",value:"Awarded",note:"Financial Aid · award letter"},
         {icon:"🥗",label:"Dining Dollars",value:"$96.40",note:"CrimsonCard"},
         {icon:"💵",label:"Crimson Cash",value:"$41.15",note:"CrimsonCard · reload anytime"},
       ]},
-      {type:"list",title:"🧾 Recent activity",items:[
+      {type:"list",title:"Recent activity",items:[
         {icon:"☕",bg:"red",title:"Campus Center café",sub:"Dining Dollars",src:"CrimsonCard",right:"−$5.75",rightSub:"Today"},
         {icon:"🖨️",bg:"blue",title:"Law library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$2.40",rightSub:"Yesterday"},
         {icon:"🎓",bg:"green",title:"Scholarship disbursement",sub:"Merit award",src:"Financial Aid",right:"+$3,500",rightSub:"Aug 22"},
@@ -2509,33 +2582,33 @@ northwest: {
     classes:[
       {type:"degree"},
       {type:"acad"},
-      {type:"list",title:"📚 Fall schedule · 14 credit hours · from SIS",items:[
+      {type:"list",title:"Fall schedule · 14 credit hours · from SIS",items:[
         {icon:"🩺",bg:"red",title:"NURS-B 244 · Community Nursing",sub:"MW 9:30–10:45 · Dunes Medical 108",right:"3 cr",rightSub:"enrolled"},
         {icon:"🧬",bg:"blue",title:"PHSL-P 261 · Anatomy & Physiology",sub:"MW 11:00–12:15 · Marram Hall 210",right:"5 cr",rightSub:"enrolled"},
         {icon:"🧠",bg:"purple",title:"PSY-P 103 · General Psychology",sub:"TR 1:00–2:15 · Hawthorn Hall 104",right:"3 cr",rightSub:"enrolled"},
         {icon:"✍️",bg:"green",title:"ENG-W 131 · Writing & Inquiry",sub:"TR 9:30–10:45 · Raintree Hall 12",right:"3 cr",rightSub:"enrolled"},
       ]},
-      {type:"assignments",title:"📚 Assignments due this week",items:[
+      {type:"assignments",title:"Assignments due this week",items:[
         {course:"A&P",title:"Lab report 3",due:"Tomorrow · 11:59 p.m.",soon:true},
         {course:"Community Nursing",title:"Care-plan draft",due:"Thursday, in class"},
         {course:"PSY-P 103",title:"Chapter quiz 4",due:"Friday · 11:59 p.m."},
       ]},
     ],
     money:[
-      {type:"balances",title:"💼 Pay & time",items:[
+      {type:"balances",title:"Pay & time",items:[
         {icon:"🏛️",label:"Position",value:"Savannah Center",note:"Front-desk assistant"},
         {icon:"⏱️",label:"This week",value:"8 hrs",note:"logged in Kuali Time"},
         {icon:"💰",label:"Earned so far",value:"$612",note:"of $2,000 award"},
         {icon:"🗓️",label:"Next payday",value:"Sep 18",note:"Direct deposit"},
       ]},
-      {type:"balances",title:"💳 All balances",items:[
+      {type:"balances",title:"All balances",items:[
         {icon:"🧾",label:"Bursar",value:"$1,410.00",note:"Bursar · due Sep 25"},
         {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"Financial Aid · award letter"},
         {icon:"💼",label:"Work-study earned",value:"$612",note:"Payroll · of $2,000 award"},
         {icon:"🥗",label:"Dining Dollars",value:"$65.20",note:"CrimsonCard"},
         {icon:"💵",label:"Crimson Cash",value:"$12.75",note:"CrimsonCard · reload anytime"},
       ]},
-      {type:"list",title:"🧾 Recent activity",items:[
+      {type:"list",title:"Recent activity",items:[
         {icon:"🥗",bg:"green",title:"Moraine Student Center dining",sub:"Dining Dollars",src:"CrimsonCard",right:"−$8.10",rightSub:"Today"},
         {icon:"🖨️",bg:"blue",title:"Library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$1.50",rightSub:"Yesterday"},
         {icon:"💼",bg:"gold",title:"Work-study direct deposit",sub:"Biweekly pay",src:"Payroll",right:"+$104.00",rightSub:"Sep 4"},
@@ -2601,7 +2674,6 @@ phd: {
         {cat:"grading",n:"46",l:"W131 essays to grade",src:"Canvas",count:46},
         {cat:"deadline",n:"Oct 4",l:"W131 early evaluations due",src:"SER",days:19},
         {cat:"today",n:"2",l:"sections today",src:"SIS"},
-        {cat:"status",n:"87%",l:"of the Ph.D. complete",src:"University Graduate School"},
       ]},
       {type:"actionitems"},
       {type:"calendar"},
@@ -2612,37 +2684,36 @@ phd: {
     ],
     tasks:[{type:"tasklauncher"}],
     teaching:[
-      {type:"degree"},
-      {type:"list",title:"📚 Fall schedule · 6 credit hours · from SIS",items:[
+      {type:"list",title:"Fall schedule · 6 credit hours · from SIS",items:[
         {icon:"✒️",bg:"purple",title:"ENG-G 901 · Advanced Research",sub:"Dissertation hours · maintains candidacy",right:"6 cr",rightSub:"enrolled"},
       ]},
       {type:"acad"},
-      {type:"list",title:"📖 Your courses · from SIS",items:[
+      {type:"list",title:"Your courses · from SIS",items:[
         {icon:"✍️",bg:"red",title:"ENG-W 131 · Section 4",sub:"MW 1:00–2:15 · Wiekamp Hall 1255 · 23 enrolled"},
         {icon:"✍️",bg:"blue",title:"ENG-W 131 · Section 5",sub:"MW 2:30–3:45 · Wiekamp Hall 1255 · 23 enrolled"},
       ]},
-      {type:"list",title:"📝 Grading · from Canvas",items:[
+      {type:"list",title:"Grading · from Canvas",items:[
         {icon:"📘",bg:"red",title:"W131 · Essay 2",sub:"46 submissions ungraded",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
       ]},
-      {type:"list",title:"📊 Rosters & alerts",items:[
+      {type:"list",title:"Rosters & alerts",items:[
         {icon:"📝",bg:"red",title:"Early evaluations — W131",sub:"Submit early-evaluation grades for beginning students",src:"Student Engagement Roster",link:"the Student Engagement Roster",linkLabel:"Open SER",right:"Due",rightSub:"Oct 4"},
         {icon:"📋",bg:"blue",title:"Class roster — W131",sub:"Verify enrolled students · 0 pending adds",src:"Faculty Center",link:"the Faculty Center",linkLabel:"Open",right:"46",rightSub:"enrolled"},
       ]},
     ],
     money:[
-      {type:"balances",title:"💼 Pay & time",items:[
+      {type:"balances",title:"Pay & time",items:[
         {icon:"🏫",label:"Appointment",value:"Adjunct lecturer",note:"English · IU South Bend"},
         {icon:"💰",label:"Pay basis",value:"Per course",note:"Paid monthly · HRMS"},
         {icon:"💵",label:"Earned this term",value:"$3,050",note:"1 monthly payment so far"},
         {icon:"🗓️",label:"Next payday",value:"Sep 30",note:"Direct deposit"},
       ]},
-      {type:"balances",title:"💳 All balances",items:[
+      {type:"balances",title:"All balances",items:[
         {icon:"🧾",label:"Bursar",value:"$612.00",note:"Bursar · PhD program fee, due Sep 25"},
         {icon:"💼",label:"Appointment pay",value:"$3,050",note:"Payroll · fall, to date"},
         {icon:"🥗",label:"Dining Dollars",value:"$44.10",note:"CrimsonCard"},
         {icon:"💵",label:"Crimson Cash",value:"$28.75",note:"CrimsonCard · reload anytime"},
       ]},
-      {type:"list",title:"🧾 Recent activity",items:[
+      {type:"list",title:"Recent activity",items:[
         {icon:"💼",bg:"gold",title:"Adjunct pay direct deposit",sub:"Monthly appointment pay · IU South Bend",src:"Payroll",right:"+$3,050",rightSub:"Aug 29"},
         {icon:"🖨️",bg:"blue",title:"Wells Library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$3.20",rightSub:"Yesterday"},
         {icon:"☕",bg:"red",title:"Sugar & Spice (IMU)",sub:"Dining Dollars",src:"CrimsonCard",right:"−$4.85",rightSub:"Sep 11"},
@@ -2793,6 +2864,10 @@ function greeting(){
 function todayStr(){
   return new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
 }
+function subtitleStr(){
+  const c=curCampus();
+  return c ? `${todayStr()} · ${c.name}` : todayStr();
+}
 
 /* ---------- task-catalog helpers ---------- */
 function taskById(id){ return TASKS.find(t=>t.id===id); }
@@ -2920,7 +2995,7 @@ function renderCard(c){
       if(!d) return card("Degree progress", `<div class="empty">No degree audit is linked to this account.</div>`);
       const pct=Math.round(d.creditsDone/d.creditsReq*100);
       const left=d.creditsReq-d.creditsDone, unit=d.unit||"credits";
-      return card(`📊 Degree progress · ${esc(d.program)}`, `
+      return card(`Degree progress · ${esc(d.program)}`, `
       <div class="prog-label"><span>${d.creditsDone} of ${d.creditsReq} ${esc(unit)}</span><span>${pct}%</span></div>
       <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
       <div class="prog-note">${d.reqsDone} of ${d.reqsTotal} requirements complete · ${left} ${esc(unit)} remaining · from ${esc(d.src)}</div>`); }
@@ -2949,21 +3024,21 @@ function renderLaunchCard(){
     const pop = personaTasks().filter(t=>t.popular).slice(0,8);
     const popHtml = `<div class="qa-grid">${pop.map(t=>`
       <button class="qa" onclick="launchTask('${t.id}')"><div class="qi">${taskIcon(t)}</div>${esc(t.name)}</button>`).join("")}</div>`;
-    return card("🔥 Popular on One.IU", popHtml, "span2",
+    return card("Popular on One.IU", popHtml, "span2",
       `<span class="link" onclick="setTab('tasks')">All tasks →</span>`);
   }
   const favs = [...state.favs].map(taskById).filter(Boolean);
   const favHtml = favs.length
     ? `<div class="qa-grid">${favs.slice(0,8).map(t=>`
         <button class="qa" onclick="launchTask('${t.id}')"><div class="qi">${taskIcon(t)}</div>${esc(t.name)}</button>`).join("")}</div>`
-    : `<div class="empty">No favorites yet. Tap the ♥ on a task in the Tasks tab to pin it here.</div>`;
+    : `<div class="empty">No favorites yet. Tap the heart on a task in the Tasks tab to pin it here.</div>`;
   const pop = personaTasks().filter(t=>t.popular && !state.favs.has(t.id)).slice(0,5);
   const popHtml = pop.length
     ? `<div class="launch-divider">Popular on One.IU</div>
        <div class="pop-row">${pop.map(t=>`
          <button class="pop-chip" onclick="launchTask('${t.id}')">${taskIcon(t)} ${esc(t.name)}</button>`).join("")}</div>`
     : "";
-  return card("♥ Favorite tasks", favHtml + popHtml, "span2",
+  return card("Favorite tasks", favHtml + popHtml, "span2",
     `<span class="link" onclick="setTab('tasks')">All tasks →</span>`);
 }
 
@@ -2989,12 +3064,12 @@ function taskResultsHTML(){
   if(state.cat==="Favorites") list = list.filter(t=>state.favs.has(t.id));
   else if(state.cat!=="All") list = list.filter(t=>t.cat===state.cat);
   if(!list.length) return `<div class="empty">${state.cat==="Favorites"
-    ?"No favorites yet. Tap the ♥ on any task to pin it here and on your home screen."
+    ?"No favorites yet. Tap the heart on any task to pin it here and on your home screen."
     :"No tasks match these filters. Remove a filter to see more."}</div>`;
   return `<div class="task-grid">${list.map(t=>`
     <div class="task-tile" onclick="launchTask('${t.id}')">
       ${P().guest?"":`<button class="task-star ${state.favs.has(t.id)?"on":""}" title="Favorite"
-        onclick="toggleFav(event,'${t.id}')">${state.favs.has(t.id)?"♥":"♡"}</button>`}
+        onclick="toggleFav(event,'${t.id}')">${state.favs.has(t.id)?ico("heart-solid"):ico("heart")}</button>`}
       <div class="task-ic">${taskIcon(t)}</div>
       <div class="task-name">${esc(t.name)}</div>
       <div class="task-desc">${esc(t.desc)}</div>
@@ -3046,8 +3121,8 @@ function renderCampusMap(){
   const c = curCampus();
   if(!c) return renderCampusEmpty();
   // available filters for this campus (buses only where a campus bus exists)
-  let chips=[["buildings","🏛️ Buildings"],["parking","🅿️ Parking"],["food","🍽️ Food"]];
-  if(c.transit.hasBus) chips.splice(1,0,["buses","🚌 Buses"]);
+  let chips=[["buildings",ico("building")+" Buildings"],["parking",ico("parking")+" Parking"],["food",ico("utensils")+" Food"]];
+  if(c.transit.hasBus) chips.splice(1,0,["buses",ico("bus")+" Buses"]);
   if(!chips.some(ch=>ch[0]===state.mapFilter)) state.mapFilter="buildings";
   const noteRight = c.transit.hasBus ? "Sorted by distance"
                     : (c.transit.note || "Sorted by distance");
@@ -3060,7 +3135,7 @@ function renderCampusMap(){
     <div class="map-chips" id="mapChips">${chips.map(([k,l])=>`
       <button class="mchip ${state.mapFilter===k?"active":""}" data-f="${k}" onclick="setMapFilter('${k}')">${l}</button>`).join("")}</div>
     <div id="leafletMap" class="map-box"></div>
-    <div class="map-note">📍 ${c.id==="iub"?esc(USER_LOC.label):esc(c.name)+" · "+esc(c.city)} — ${c.id==="iub"?"distances and availability are simulated":"pin positions are approximate; availability is illustrative"}.
+    <div class="map-note">${ico("map-pin")} ${c.id==="iub"?esc(USER_LOC.label):esc(c.name)+" · "+esc(c.city)} — ${c.id==="iub"?"distances and availability are simulated":"pin positions are approximate; availability is illustrative"}.
       <a class="link" href="${c.mapUrl}" target="_blank" rel="noopener" style="display:inline-block;margin-top:4px">Open the official ${esc(c.abbr)} interactive map ↗</a></div>
     <div class="card" style="margin-top:14px">
       <div class="card-head"><h3 id="placeListTitle">${placeListTitle()}</h3>
@@ -3093,8 +3168,8 @@ function placeListTitle(){
 function placeSub(p){
   if(p.type==="building"){
     const feats=[];
-    if(p.food&&p.food.length) feats.push("🍽️"); if(p.accessible&&p.accessible.length) feats.push("♿");
-    if(p.printers) feats.push("🖨️");
+    if(p.food&&p.food.length) feats.push("Dining"); if(p.accessible&&p.accessible.length) feats.push("Accessible");
+    if(p.printers) feats.push("Printing");
     return `${esc(p.addr)}${feats.length?" · "+feats.join(" "):""}`;
   }
   if(p.type==="parking") return `${esc(p.rate)}`;
@@ -3107,7 +3182,7 @@ function placeListHTML(){
   if(!list.length) return `<div class="empty">No places match "${esc(state.mapQ)}".</div>`;
   return list.map(p=>`
     <div class="li" style="cursor:pointer" onclick="openPlace('${p.id}')">
-      <div class="pdot ${p.type}">${TYPE_ICONS[p.type]}</div>
+      <div class="pdot ${p.type}">${ico(TYPE_ICONS[p.type])}</div>
       <div style="min-width:0">
         <div class="lis" style="margin:0 0 2px">${distLabel(p)}</div>
         <div class="lit">${esc(p.name)}</div>
@@ -3134,7 +3209,7 @@ function setupCampusMap(){
   if(!el) return;
   if(window._campusMap){ try{window._campusMap.remove();}catch(e){} window._campusMap=null; }
   if(typeof L==="undefined"){
-    el.innerHTML='<div class="empty" style="padding-top:130px">🗺️ Map tiles unavailable (offline). The place list below still works.</div>';
+    el.innerHTML='<div class="empty" style="padding-top:130px">Map tiles unavailable (offline). The place list below still works.</div>';
     return;
   }
   const c=curCampus(); const here=hereLoc();
@@ -3172,16 +3247,16 @@ function openPlace(id){
     <h2>${esc(p.name)}</h2>
     ${p.addr?`<div class="dhead-addr">${esc(p.addr).toUpperCase()}</div>`:""}
     ${p.desc?`<p class="dhead-desc">${esc(p.desc)}</p>`:""}
-    <a class="getthere" href="${gmapsLink(p)}" target="_blank" rel="noopener">➔ Getting there</a>`;
+    <a class="getthere" href="${gmapsLink(p)}" target="_blank" rel="noopener">Getting there</a>`;
   if(p.type==="building"){
     if(p.accessible && p.accessible.length) html += `
-      <div class="dsec"><h4>♿ Accessible entrances</h4>
+      <div class="dsec"><h4>${ico("info-circle")} Accessible entrances</h4>
         ${p.accessible.map(a=>`<div class="drow">${esc(a)}</div>`).join("")}</div>`;
     if(p.printers) html += `
-      <div class="dsec"><h4>🖨️ Printers</h4>
+      <div class="dsec"><h4>${ico("printer")} Printers</h4>
         <div class="drow">IU Print stations <span class="right cat-tag">${p.printers} locations</span></div></div>`;
     if(p.food && p.food.length) html += `
-      <div class="dsec"><h4>🍽️ Food</h4>
+      <div class="dsec"><h4>${ico("utensils")} Food</h4>
         ${p.food.map(f=>`<div class="drow"><div>${esc(f.name)}
           <div class="sub">${esc(f.floor)} · ${hr12(f.hours[0])}–${hr12(f.hours[1])} ${esc(f.days)} · ${esc(f.services)}</div></div>
           <span class="right">${openBadge(f)}</span></div>`).join("")}</div>`;
@@ -3192,16 +3267,16 @@ function openPlace(id){
       <div class="drow">${esc(p.rate)}</div>
       <div class="drow"><span class="sub" style="margin:0">Live space availability isn't published by IU — check ParkMobile.</span></div></div>`;
   if(p.type==="bus") html += `
-    <div class="dsec"><h4>🚌 Next departures</h4>
+    <div class="dsec"><h4>${ico("bus")} Next departures</h4>
       ${p.routes.map(r=>`<div class="drow">${esc(r.r)} <span class="right badge blue">${r.mins} min</span></div>`).join("")}</div>`;
   if(p.type==="food") html += `
-    <div class="dsec"><h4>🍽️ Hours & ordering</h4>
+    <div class="dsec"><h4>${ico("utensils")} Hours & ordering</h4>
       <div class="drow">${hr12(p.hours[0])}–${hr12(p.hours[1])} ${esc(p.days)} <span class="right">${openBadge(p)}</span></div>
       <div class="drow"><div class="sub" style="margin:0">${esc(p.services)}</div></div></div>`;
   if(p.type!=="bus"){
     const stops = nearestStops(p);
     if(stops.length) html += `
-      <div class="dsec"><h4>🚌 Nearby bus stops</h4>
+      <div class="dsec"><h4>${ico("bus")} Nearby bus stops</h4>
         ${stops.map(({s})=>`<div class="drow" style="cursor:pointer" onclick="openPlace('${s.id}')">
           <div>${esc(s.name)}<div class="sub">Next: ${esc(s.routes[0].r)} in ${s.routes[0].mins} min</div></div>
           <span class="right sub" style="margin:0">${distLabel(s)}</span></div>`).join("")}</div>`;
@@ -3280,7 +3355,7 @@ function aiStatus(it){
   }
   if(aiStarted(it.id)){
     if(it.confirm==="approval") return aiStrip("approve","",`Your part done · awaiting ${esc(it.approver)}`);
-    return aiStrip("wait","⏳",`In progress · awaiting ${esc(short)}`,it.confirmedBy);
+    return aiStrip("wait","",`In progress · awaiting ${esc(short)}`,it.confirmedBy);
   }
   return "";
 }
@@ -3332,7 +3407,7 @@ function aiRestoreAll(){ state.aiDismissed[state.persona].clear(); aiRefresh(); 
 function ccVisual(cc,lg){
   return `<div class="cc-card ${lg?'lg':''}">
     <div class="cc-top"><span>CrimsonCard</span><span class="cc-iu">${TRIDENT}</span></div>
-    <div class="cc-photo">${P().avatar}</div>
+    <div class="cc-photo">${ico("user-solid")}</div>
     <div class="cc-name">${esc(cc.holder)}</div>
     <div class="cc-kind">${esc(cc.kind)}</div>
     <div class="cc-id">${esc(cc.id)}</div>
@@ -3409,7 +3484,7 @@ function openOrgs(){
   if(!o){ $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
     <h2>Student Organizations</h2><p class="dsub">via BeInvolved</p>
     <div class="empty">No memberships are linked to your account.</div>
-    <a class="getthere" onclick="toast('Prototype: opens BeInvolved to browse organizations.')">➔ Discover organizations</a>
+    <a class="getthere" onclick="toast('Prototype: opens BeInvolved to browse organizations.')">Discover organizations</a>
     <div class="cc-hint" style="margin-top:12px">beinvolved.indiana.edu</div>`;
     $("drawer").classList.add("open"); $("scrim").classList.add("open"); return; }
   $("drawer").innerHTML = `
@@ -3427,7 +3502,7 @@ function openOrgs(){
     <div class="dsec"><h4>Upcoming events</h4>
       ${o.events.map(e=>`<div class="li"><div style="min-width:0"><div class="lit">${esc(e.title)}</div><div class="lis">${esc(e.where)}</div></div>
         <div class="lir"><div class="lirt">${esc(e.when)}</div></div></div>`).join("")}</div>
-    <a class="getthere" onclick="toast('Prototype: opens BeInvolved to discover organizations.')">➔ Discover organizations</a>
+    <a class="getthere" onclick="toast('Prototype: opens BeInvolved to discover organizations.')">Discover organizations</a>
     <div class="cc-hint" style="margin-top:12px">via BeInvolved · beinvolved.indiana.edu</div>`;
   $("drawer").classList.add("open"); $("scrim").classList.add("open");
 }
@@ -3458,7 +3533,7 @@ function openCareers(){
   if(!c){ $("drawer").innerHTML=`<button class="close" onclick="closeDrawer()">✕</button>
     <h2>Careers</h2><p class="dsub">powered by Handshake</p>
     <div class="empty">Handshake isn't linked to this account.</div>
-    <a class="getthere" onclick="toast('Prototype: opens Handshake.')">➔ Open Handshake</a>`;
+    <a class="getthere" onclick="toast('Prototype: opens Handshake.')">Open Handshake</a>`;
     $("drawer").classList.add("open"); $("scrim").classList.add("open"); return; }
   const plat=c.platform||"Handshake";
   const hasCounts=(c.applied!=null && c.saved!=null);
@@ -3473,7 +3548,7 @@ function openCareers(){
     <div class="dsec"><h4>Career events</h4>
       ${c.events.map(e=>`<div class="li"><div style="min-width:0"><div class="lit">${esc(e.title)}</div><div class="lis">${esc(e.where)}</div></div>
         <div class="lir"><div class="lirt">${esc(e.when)}</div></div></div>`).join("")}</div>
-    <a class="getthere" onclick="toast('Prototype: opens ${esc(plat)}.')">➔ Open ${esc(plat)}</a>
+    <a class="getthere" onclick="toast('Prototype: opens ${esc(plat)}.')">Open ${esc(plat)}</a>
     <div class="cc-hint" style="margin-top:12px">${esc(c.platNote||plat+" shows what you access through IU. Jobs you apply to directly on a company's own site won't appear here.")}</div>`;
   $("drawer").classList.add("open"); $("scrim").classList.add("open");
 }
@@ -3810,7 +3885,7 @@ function openFeedItem(kind,id){
       <div class="dhead-addr">${esc(e.loc)}</div>
       <div class="dsec"><h4>ℹ️ About</h4><p style="font-size:13.5px;color:var(--body-text);font-weight:600;line-height:1.6">${esc(e.desc)}</p></div>
       <div class="dsec"><h4>Hosted by</h4><div class="drow">${esc(e.host)}</div></div>
-      <a class="getthere" onclick="toast('Prototype: adds this event to your calendar.')">➕ Add to calendar</a>
+      <a class="getthere" onclick="toast('Prototype: adds this event to your calendar.')">Add to calendar</a>
       <div class="cc-hint" style="margin-top:12px">events.iu.edu</div>`;
   } else if(kind==="news"){
     const n=f.news.find(x=>x.id===id);
@@ -3818,7 +3893,7 @@ function openFeedItem(kind,id){
       <div class="dhead-dist">${esc(n.date)} · ${esc(n.cat)}</div>
       <h2>${esc(n.title)}</h2>
       <div class="dsec"><h4>Summary</h4><p style="font-size:13.5px;color:var(--body-text);font-weight:600;line-height:1.6">${esc(n.summary)}</p></div>
-      <a class="getthere" onclick="toast('Prototype: opens the full story on news.iu.edu.')">➔ Read full story</a>
+      <a class="getthere" onclick="toast('Prototype: opens the full story on news.iu.edu.')">Read full story</a>
       <div class="cc-hint" style="margin-top:12px">news.iu.edu</div>`;
   } else {
     const g=f.athletics.find(x=>x.id===id);
@@ -3873,7 +3948,7 @@ function buildSearchIndex(){
 function renderOmnibar(){
   const has = !!state.omniQ.trim();
   return `<div class="omnibar">
-    <span class="omnibar-ic">🔍</span>
+    <span class="omnibar-ic">${ico("magnifying-glass")}</span>
     <input class="omnibar-input" id="omniInput" type="text" placeholder="Search all of IU"
       value="${esc(state.omniQ).replace(/"/g,"&quot;")}" autocomplete="off"
       oninput="onOmniSearch(this.value)" onkeydown="if(event.key==='Escape')omniClear()">
@@ -3929,6 +4004,10 @@ function getLayout(){
   const p=state.persona, t=state.tab;
   const defs=DATA[p].views[t]||[];
   const all=[...defs.keys()].filter(i=>!FIXED_TYPES.includes(defs[i].type)).map(String);
+  if(t==="home"){
+    const PR={hero:0,calendar:1,actionitems:2,launch:3};
+    all.sort((a,b)=>((PR[defs[+a].type]??4)-(PR[defs[+b].type]??4)) || (+a)-(+b));
+  }
   layouts[p]=layouts[p]||{};
   let lay=layouts[p][t];
   if(!lay || !Array.isArray(lay.order) || !Array.isArray(lay.removed)){
@@ -3949,7 +4028,7 @@ function visibleTypes(){ return visibleTokens().map(tokenDef).filter(Boolean).ma
 
 /* Every widget a user can add, regardless of their default screen. */
 const WIDGET_CATALOG = [
-  {type:"actionitems",label:"✅ Action Items",     desc:"Tasks that need you, from across IU"},
+  {type:"actionitems",label:"Action Items",     desc:"Tasks that need you, from across IU"},
   {type:"calendar",   label:"Today's calendar",  desc:"Your Outlook / Exchange calendar"},
   {type:"kualitime",  label:"Kuali Time",        desc:"Clock in/out · timekeeping for hourly jobs"},
   {type:"campusfeed", label:"Campus feed",       desc:"Athletics, events & news across IU"},
@@ -3959,7 +4038,7 @@ const WIDGET_CATALOG = [
   {type:"libraries",  label:"Libraries",          desc:"Loans, ILL, study rooms & catalog"},
   {type:"degree",     label:"Degree progress",     desc:"Credits & requirements from your degree audit", need:"degree"},
   {type:"acad",       label:"Academic calendar",   desc:"Key dates & term progress for your campus"},
-  {type:"launch",     label:"♥ Favorite tasks",      desc:"Your pinned & popular tasks"},
+  {type:"launch",     label:"Favorite tasks",      desc:"Your pinned & popular tasks"},
 ];
 const FULL_WIDTH_TYPES = ["hero","launch","tasklauncher","campusmap","signin"];
 const FIXED_TYPES = ["tasklauncher","campusmap"];   // too large to rearrange — rendered fixed, not as widgets
@@ -3980,7 +4059,7 @@ function toggleWidgetInfo(ev,btn){ ev.stopPropagation(); const w=btn.closest(".w
 const WIDE_TYPES = ["actionitems","campusfeed"];   // max 2 columns wide
 function widgetLabel(def){
   if(def.type==="signin") return "Sign in";
-  if(def.type==="actionitems") return "✅ Action Items";
+  if(def.type==="actionitems") return "Action Items";
   if(def.type==="calendar") return "Today's calendar";
   if(def.type==="kualitime") return "Kuali Time";
   if(def.type==="crimsoncard") return "CrimsonCard";
@@ -3990,7 +4069,7 @@ function widgetLabel(def){
   if(def.type==="acad") return "Academic calendar";
   if(def.type==="degree") return "Degree progress";
   if(def.type==="hero") return "Highlights banner";
-  if(def.type==="launch") return "♥ Favorite tasks";
+  if(def.type==="launch") return "Favorite tasks";
   if(def.type==="tasklauncher") return "⊞ One.IU tasks";
   if(def.type==="campusmap") return "Campus map";
   return def.title || def.type;
@@ -4005,7 +4084,7 @@ function widgetWrap(tok,def){
       ondragover="wDragOver(event,this)" ondragleave="this.classList.remove('drop-target')"
       ondrop="wDrop(event,this)">
     <div class="w-controls">
-      ${info?`<button class="w-info" title="About this widget & its data source" onclick="toggleWidgetInfo(event,this)">ⓘ</button>`:""}
+      ${info?`<button class="w-info" title="About this widget & its data source" onclick="toggleWidgetInfo(event,this)">${ico("info-circle")}</button>`:""}
       <button class="w-grab" title="Drag to rearrange (or tap, then tap a destination)"
         onmousedown="armDrag(this)" onclick="grabClick(event,'${tok}')">⠿</button>
       <button class="w-x" title="Remove widget" onclick="removeWidget(event,'${tok}')">✕</button>
@@ -4134,7 +4213,7 @@ function renderSidebar(){
     <div class="logo"><div class="logo-mark">${TRIDENT}</div><div class="logo-name">One<span>.IU</span></div></div>
     <div class="nav">${p.tabs.map(t=>`
       <button class="${state.tab===t.id?"active":""}" onclick="setTab('${t.id}')">
-        <span class="ic">${t.icon}</span>${t.label}</button>`).join("")}
+        <span class="ic">${ico(t.icon)}</span>${t.label}</button>`).join("")}
     </div>
     <div class="side-foot">
       ${p.guest ? `<b>Not signed in</b><br>Public view
@@ -4147,7 +4226,7 @@ function renderBottomNav(){
   const p = P();
   $("bottomNav").innerHTML = p.tabs.map(t=>`
     <button class="${state.tab===t.id?"active":""}" onclick="setTab('${t.id}')">
-      <span class="bic">${t.icon}</span>${t.label}</button>`).join("");
+      <span class="bic">${ico(t.icon)}</span>${t.label}</button>`).join("");
 }
 function renderMain(){
   const p = P();
@@ -4167,11 +4246,11 @@ function renderMain(){
     <div class="topbar">
       <div class="greeting">
         <h1>${isHome ? (p.guest ? "Welcome to One.IU" : `${greeting()}, ${p.first}`) : tabLabel}</h1>
-        <p>${isHome ? (p.guest ? p.greetSub : `${todayStr()} · ${p.greetSub}`) : p.role}</p>
+        <p>${subtitleStr()}</p>
       </div>
       <div class="top-actions">
-        ${p.guest ? "" : `<button class="icon-btn" onclick="openNotifs()">🔔${p.notifCount?'<span class="dot"></span>':""}</button>`}
-        <div class="avatar" onclick="openSettings()" title="Profile & settings">${p.avatar}</div>
+        ${p.guest ? "" : `<button class="icon-btn" onclick="openNotifs()">${ico("bell")}${p.notifCount?'<span class="dot"></span>':""}</button>`}
+        <div class="avatar" onclick="openSettings()" title="Profile & settings">${ico("user-solid")}</div>
       </div>
     </div>
     ${renderOmnibar()}
@@ -4242,7 +4321,7 @@ function toggleAdmin(open){
   if(open){
     $("personaGrid").innerHTML = Object.entries(DATA).map(([k,p])=>`
       <button class="pcard ${state.persona===k?"sel":""}" onclick="setPersona('${k}')">
-        <div class="pav">${p.avatar}</div>
+        <div class="pav">${ico("user-solid")}</div>
         <div class="pr">${p.role}</div>
         <div class="pn">${p.name}</div>
         <div class="pd">${p.adminDesc}</div>
@@ -4254,11 +4333,11 @@ function openNotifs(){
   const p = P();
   $("drawer").innerHTML = `
     <button class="close" onclick="closeDrawer()">✕</button>
-    <h2>🔔 Notifications</h2>
+    <h2>Notifications</h2>
     <p class="dsub">${p.notifCount} unread</p>
     ${p.notifications.map(n=>`
       <div class="notif ${n.unread?"unread":""}">
-        <div class="nic">${n.icon}</div>
+        <div class="nic">${ico(n.icon)}</div>
         <div><div class="nt">${esc(n.title)}</div><div class="ns">${esc(n.sub)}</div><div class="ntime">${esc(n.time)}</div></div>
       </div>`).join("")}`;
   $("drawer").classList.add("open"); $("scrim").classList.add("open");
@@ -4291,7 +4370,7 @@ function openSettings(){
     <button class="close" onclick="closeDrawer()">✕</button>
     <h2>Profile &amp; settings</h2>
     <div class="set-profile">
-      <div class="set-av">${p.avatar}</div>
+      <div class="set-av">${ico("user-solid")}</div>
       <div style="min-width:0"><div class="set-name">${p.guest?"Not signed in":esc(p.name)}</div>
         <div class="set-role">${esc(p.role)}</div></div>
     </div>
@@ -4311,8 +4390,8 @@ function openSettings(){
       ${setRow(dark?"":"","Dark mode",(dark?"On":"Off")+" · easier on the eyes at night",sw(dark,"toggleTheme()"))}
     </div>
     <div class="dsec"><h4>Notifications</h4>
-      ${setRow("🔔","Push notifications","Deadlines, holds & campus alerts",sw(state.settings.notifs,"toggleSetting('notifs')"))}
-      ${setRow("✉️","Weekly email digest","A summary of your Action Items",sw(state.settings.digest,"toggleSetting('digest')"))}
+      ${setRow(ico("bell"),"Push notifications","Deadlines, holds & campus alerts",sw(state.settings.notifs,"toggleSetting('notifs')"))}
+      ${setRow(ico("envelope"),"Weekly email digest","A summary of your Action Items",sw(state.settings.digest,"toggleSetting('digest')"))}
     </div>
     <div class="dsec"><h4>Accessibility</h4>
       ${setRow("","Reduce motion","Minimize animations and transitions",sw(state.settings.reduceMotion,"toggleSetting('reduceMotion')"))}
