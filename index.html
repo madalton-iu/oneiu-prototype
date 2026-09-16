@@ -2042,7 +2042,7 @@ faculty: {
   actionItems:[
     {id:"ai_fac1",src:"registrar",title:"Submit I-365 early evaluations",desc:"Beginning students · enter grades in the Student Engagement Roster.",due:"Oct 4",high:true,action:{label:"Open SER",target:"the Student Engagement Roster"},confirm:"system",confirmedBy:"the roster records your submissions"},
     {id:"ai_fac2",src:"advising",title:"Sign off on 2 advisee plans of study",desc:"Approve on the University Graduate School plan-of-study forms.",due:"This week",high:true,action:{label:"Open forms",target:"the Graduate School plan-of-study forms"},confirm:"system",confirmedBy:"the Graduate School records your sign-off"},
-    {id:"ai_fac3",src:"research",title:"Route NSF CISE proposal through ORA",desc:"Internal deadline before the Oct 15 sponsor date.",due:"Oct 1",action:{label:"Open Kuali Research",target:"Kuali Research routing"},confirm:"approval",approver:"ORA (reviews & submits to NSF)"},
+    {id:"ai_fac3",src:"research",title:"Route NSF CISE proposal through ORA",desc:"CISE core · $642K · for the Oct 15 NSF sponsor deadline.",due:"Oct 15",action:{label:"Open Kuali Research",target:"Kuali Research routing"},confirm:"approval",approver:"ORA (reviews & submits to NSF)"},
     {id:"ai_fac4",src:"deptform",title:"Sign PhD committee form — J. Kim",desc:"Yours is the last signature needed.",due:"This week",action:{label:"Sign form",target:"the Graduate School form"},confirm:"system",confirmedBy:"the form records your signature and closes"},
     {id:"ai_fac5",src:"compliance",title:"Annual conflict-of-interest disclosure",desc:"Required for all PIs.",due:"Sep 30",action:{label:"Open disclosure",target:"the compliance disclosure form"},confirm:"system",confirmedBy:"the disclosure system logs your filing"},
     {id:"ai_fac6",src:"registrar",title:"Submit spring textbook orders",desc:"Bookstore adoption deadline.",due:"Oct 9",action:{label:"Open adoptions",target:"the textbook adoption tool"},confirm:"system",confirmedBy:"the adoption tool records your orders"},
@@ -2052,7 +2052,7 @@ faculty: {
   notifications:[
     {icon:"🧑‍🎓",unread:true,title:"3 advisee requests pending",sub:"Two course-plan approvals and one committee signature.",time:"2h ago"},
     {icon:"📅",unread:true,title:"Early evaluations are open",sub:"Submit I-365 early-evaluation grades in the Student Engagement Roster by Oct 4.",time:"Today"},
-    {icon:"💰",unread:true,title:"NSF proposal internal deadline",sub:"Route through ORA by Oct 1 for the Oct 15 submission.",time:"Yesterday"},
+    {icon:"💰",unread:true,title:"NSF CISE proposal is routing",sub:"With ORA for institutional sign-off ahead of the Oct 15 NSF deadline.",time:"Yesterday"},
     {icon:"🏛️",unread:false,title:"Faculty council agenda posted",sub:"AI-in-coursework policy is up for a first read.",time:"3d ago"},
   ],
   tabs:[
@@ -2129,7 +2129,7 @@ faculty: {
       {type:"steps",title:"🔬 Proposal routing · from Kuali Coeus (KC)",items:[
         {title:"Proposal built in Kuali Coeus",sub:"CISE core · $642K over 5 years · budget finalized with co-PI.",state:"done",src:"Kuali Coeus"},
         {title:"Routing for institutional approval",sub:"Department approved Sep 4 · now with ORA for sign-off.",state:"now",src:"Kuali Coeus",link:"your KC routing queue",linkLabel:"Open KC"},
-        {title:"ORA submits to NSF via Grants.gov",sub:"Sent once routing clears · internal deadline Oct 1.",state:"todo",src:"Kuali Coeus"},
+        {title:"ORA submits to NSF via Grants.gov",sub:"Submitted system-to-system once institutional routing clears.",state:"todo",src:"Kuali Coeus"},
         {title:"Sponsor review",sub:"NSF status posts on Research.gov (external) · sponsor deadline Oct 15.",state:"todo",src:"Research.gov (external)",link:"Research.gov",linkLabel:"Check"},
       ]},
       {type:"list",title:"💰 Sponsored accounts · from Kuali Financial System",items:[
