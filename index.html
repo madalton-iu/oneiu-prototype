@@ -2547,23 +2547,20 @@ phd: {
     tasks:[{type:"tasklauncher"}],
     teaching:[
       {type:"degree"},
-      {type:"list",title:"📖 Doctoral enrollment · from SIS",items:[
+      {type:"list",title:"📚 Fall schedule · 6 credit hours · from SIS",items:[
         {icon:"✒️",bg:"purple",title:"ENG-G 901 · Advanced Research",sub:"Dissertation hours · maintains candidacy",right:"6 cr",rightSub:"enrolled"},
       ]},
       {type:"acad"},
-      {type:"list",title:"📋 Teaching · W131 at IU South Bend · from SIS",items:[
-        {icon:"✍️",bg:"red",title:"ENG-W 131 · Section 4",sub:"MW 1:00–2:15 · Wiekamp Hall 1255 · 23 students",right:"Fall 2026",rightSub:"IUSB"},
-        {icon:"✍️",bg:"blue",title:"ENG-W 131 · Section 5",sub:"MW 2:30–3:45 · Wiekamp Hall 1255 · 23 students",right:"Fall 2026",rightSub:"IUSB"},
+      {type:"list",title:"📖 Your courses · from SIS",items:[
+        {icon:"✍️",bg:"red",title:"ENG-W 131 · Section 4",sub:"MW 1:00–2:15 · Wiekamp Hall 1255 · 23 enrolled"},
+        {icon:"✍️",bg:"blue",title:"ENG-W 131 · Section 5",sub:"MW 2:30–3:45 · Wiekamp Hall 1255 · 23 enrolled"},
       ]},
-      {type:"assignments",title:"📚 Grading & prep",items:[
-        {course:"W131 · Sec 4 & 5",title:"Essay 2 — grade in Canvas",due:"Friday · 11:59 p.m.",soon:true},
-        {course:"W131",title:"Early evaluations (SER)",due:"Oct 4"},
-        {course:"W131",title:"Unit 3 workshop materials",due:"Next Monday"},
+      {type:"list",title:"📝 Grading · from Canvas",items:[
+        {icon:"📘",bg:"red",title:"W131 · Essay 2",sub:"46 submissions ungraded",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
       ]},
-      {type:"list",title:"🧰 Instructor tools",items:[
-        {icon:"🖥️",bg:"red",title:"Canvas",sub:"Your W131 course sites & SpeedGrader",src:"Canvas",link:"Canvas",linkLabel:"Open"},
-        {icon:"📋",bg:"blue",title:"Faculty Center",sub:"Rosters & final grades · SIS",src:"SIS",link:"the Faculty Center",linkLabel:"Open"},
-        {icon:"🚩",bg:"gold",title:"Student Engagement Roster",sub:"Attendance & early evaluations",src:"SER",link:"the SER",linkLabel:"Open"},
+      {type:"list",title:"📊 Rosters & alerts",items:[
+        {icon:"📝",bg:"red",title:"Early evaluations — W131",sub:"Submit early-evaluation grades for beginning students",src:"Student Engagement Roster",link:"the Student Engagement Roster",linkLabel:"Open SER",right:"Due",rightSub:"Oct 4"},
+        {icon:"📋",bg:"blue",title:"Class roster — W131",sub:"Verify enrolled students · 0 pending adds",src:"Faculty Center",link:"the Faculty Center",linkLabel:"Open",right:"46",rightSub:"enrolled"},
       ]},
     ],
     money:[
