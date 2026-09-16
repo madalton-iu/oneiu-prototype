@@ -1783,7 +1783,7 @@ firstyear: {
 senior: {
   name:"Devon Williams", first:"Devon", avatar:"🎓",
   campus:"iub",
-  role:"Senior · Informatics", adminDesc:"December graduate completing a capstone, searching for jobs, and working through the graduation checklist.",
+  role:"Senior · Informatics", adminDesc:"Senior who has applied to graduate in December 2026 — finishing a capstone, job-searching, and working through the graduation checklist.",
   greetSub:"96 days until December commencement.",
   crimsonCard:{holder:"Devon Williams",kind:"Student",id:"6017 88•• •••• 1183",since:"Aug 2023",
     balances:[
@@ -1828,18 +1828,17 @@ senior: {
     {t1:"5:30",t2:"6:30",title:"Informatics Student Assoc.",loc:"Luddy 2nd-floor commons",src:"Events",color:"purple"},
   ],
   actionItems:[
-    {id:"ai_sr1",src:"registrar",title:"Apply to graduate",desc:"Submit, then your academic unit certifies eligibility.",due:"Sept 15",high:true,action:{label:"Apply now",target:"the Registrar graduation application"},confirm:"approval",approver:"your academic unit"},
     {id:"ai_sr2",src:"bursar",title:"Pay fall balance ($1,284)",desc:"Or enroll in the no-interest payment plan.",due:"Sept 25",high:true,action:{label:"Pay bill",target:"the Bursar payment page"},confirm:"system",confirmedBy:"the payment posts to your account"},
-    {id:"ai_sr3",src:"registrar",title:"Add your last A&H credit",desc:"Degree audit needs 1 more credit — a 2nd-eight-week FINA-A 110 section has seats.",due:"By Oct 12",high:true,action:{label:"Register",target:"Student Center registration"},confirm:"system",confirmedBy:"enrollment confirms immediately"},
+    {id:"ai_sr3",src:"advising",title:"Plan your last degree requirement",desc:"iGPS audit shows 1 A&H credit still unmet for December graduation — plan it with your advisor.",due:"By Oct 12",high:true,action:{label:"Schedule advising",target:"the advising scheduler"},confirm:"system",confirmedBy:"the scheduler marks it confirmed"},
     {id:"ai_sr4",src:"canvas",title:"INFO-I 494 · User research report",desc:"Capstone milestone 2.",due:"Next Friday",action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
     {id:"ai_sr5",src:"finaid",title:"Complete federal loan exit counseling",desc:"Required before you graduate.",due:"Before December",action:{label:"Open studentaid.gov",target:"loan exit counseling"},confirm:"system",confirmedBy:"studentaid.gov reports completion to IU"},
     {id:"ai_sr6",src:"deptform",title:"Order cap & gown",desc:"IU Bookstore · rental ~$65.",due:"By Nov 14",action:{label:"Order regalia",target:"the IU Bookstore"},confirm:"system",confirmedBy:"your order is confirmed at checkout"},
   ],
   notifCount:3,
   notifications:[
-    {icon:"🎓",unread:true,title:"Apply-to-graduate window is open",sub:"December graduates must apply by Sept 15. The application takes about 5 minutes.",time:"Today"},
+    {icon:"🎓",unread:true,title:"Graduation application received",sub:"Your December 2026 graduation application is on file · your academic unit will certify eligibility.",time:"Today"},
     {icon:"💼",unread:true,title:"New Handshake recommendations",sub:"Roles matched to your profile were added in Handshake.",time:"3h ago"},
-    {icon:"📋",unread:true,title:"Degree audit updated",sub:"You are at 94% — one requirement remains open. See the Graduation tab.",time:"Yesterday"},
+    {icon:"📋",unread:true,title:"Degree audit updated",sub:"You are at 94% — one requirement remains open. See the Academics tab.",time:"Yesterday"},
     {icon:"📸",unread:false,title:"Senior portraits at the Sample Gates",sub:"Free portrait sessions Oct 20–24. Booking opens soon.",time:"2d ago"},
   ],
   tabs:[
@@ -1852,9 +1851,8 @@ senior: {
   views:{
     home:[
       {type:"hero",kicker:"Final semester",signals:[
-        {cat:"deadline",n:"Apply to graduate",l:"— due today",src:"Registrar",days:0},
-        {cat:"money",n:"$1,284",l:"balance due Sep 25",src:"Bursar",days:10},
         {cat:"today",n:"2",l:"classes today",src:"SIS"},
+        {cat:"money",n:"$1,284",l:"balance due Sep 25",src:"Bursar",days:10},
         {cat:"status",n:"94%",l:"degree complete",src:"iGPS"},
       ]},
       {type:"actionitems"},
@@ -1872,7 +1870,7 @@ senior: {
         {icon:"🚀",bg:"red",title:"INFO-I 494 · Capstone I",sub:"TR 11:15–12:30 · Luddy 1106",right:"3 cr",rightSub:"enrolled"},
         {icon:"🤖",bg:"purple",title:"INFO-I 421 · Applied ML",sub:"MW 2:30–3:45 · Luddy 3166",right:"3 cr",rightSub:"enrolled"},
         {icon:"⚖️",bg:"blue",title:"INFO-I 453 · Computer & Info Ethics",sub:"Online asynchronous",right:"3 cr",rightSub:"enrolled"},
-        {icon:"🎨",bg:"gold",title:"FINA-A 110 · 1-cr A&H elective",sub:"Not yet enrolled — required to graduate",badge:{txt:"Action needed",cls:"red"}},
+        {icon:"🎨",bg:"gold",title:"1 A&H credit still required",sub:"iGPS audit · not yet satisfied — plan it with your advisor",badge:{txt:"Action needed",cls:"red"}},
       ]},
       {type:"assignments",title:"📚 Assignments due soon",items:[
         {course:"INFO-I 494",title:"Capstone — user research report",due:"Next Friday · 11:59 p.m.",soon:true},
@@ -1880,10 +1878,9 @@ senior: {
         {course:"INFO-I 453",title:"Ethics discussion post + 2 replies",due:"Sunday · 11:59 p.m."},
       ]},
       {type:"steps",title:"🎓 Graduation checklist · December 2026",items:[
+        {title:"Apply to graduate",sub:"Submitted for December 2026 · your academic unit certifies eligibility.",state:"done",src:"Registrar",link:"the graduation application",linkLabel:"View"},
         {title:"Degree audit review",sub:"94% complete — reviewed with your advisor in April.",state:"done",src:"iGPS",link:"your iGPS degree audit",linkLabel:"View audit"},
-        {title:"Register for final credits",sub:"12 credits enrolled — 1 A&H credit still to add.",state:"done",src:"SIS"},
-        {title:"Apply to graduate",sub:"Window is open now — deadline Sept 15.",state:"now",src:"Registrar",link:"the graduation application",linkLabel:"Apply"},
-        {title:"Add the last A&H credit",sub:"2nd-eight-week FINA-A 110 / MUS-Z 103 sections have seats.",state:"now",src:"SIS",link:"Student Center registration",linkLabel:"Register"},
+        {title:"Clear your last degree requirement",sub:"iGPS shows 1 A&H credit still unmet — plan it with your advisor.",state:"now",src:"Advising",link:"advising",linkLabel:"Schedule advising"},
         {title:"Order cap & gown",sub:"By Nov 14 · rental ~$65.",state:"todo",src:"IU Bookstore",link:"the IU Bookstore",linkLabel:"Order"},
         {title:"Commencement — Dec 19",sub:"Simon Skjodt Assembly Hall · guest tickets open in Nov.",state:"todo",src:"Info"},
       ]},
