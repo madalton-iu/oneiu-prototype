@@ -1047,9 +1047,9 @@ const TASKS = [
   // Finances
   {id:"payBill",icon:"money",name:"View/Pay Bursar Bill",desc:"Statements & payments · IU Bursar Pay",cat:"Finances",personas:["firstyear","senior","parent"],popular:true},
   {id:"payPlan",icon:"money",name:"Payment Plan",desc:"Split your balance · Bursar",cat:"Finances",personas:["firstyear","senior","parent"]},
-  {id:"aid",icon:"money",name:"Financial Aid",desc:"Awards, disbursements & to-dos · SIS",cat:"Finances",personas:["firstyear","senior","applicant","parent"]},
-  {id:"fafsa",icon:"money",name:"FAFSA",desc:"File or renew · studentaid.gov",cat:"Finances",personas:["applicant","firstyear","parent"]},
-  {id:"scholarships",icon:"star",name:"IU Scholarships",desc:"Browse & apply · Scholarships",cat:"Finances",personas:["applicant","firstyear","senior"]},
+  {id:"aid",icon:"money",name:"Financial Aid",desc:"Awards, disbursements & to-dos · SIS",cat:"Finances",personas:["admit","firstyear","senior","applicant","parent"]},
+  {id:"fafsa",icon:"money",name:"FAFSA",desc:"File or renew · studentaid.gov",cat:"Finances",personas:["admit","applicant","firstyear","parent"]},
+  {id:"scholarships",icon:"star",name:"IU Scholarships",desc:"Browse & apply · Scholarships",cat:"Finances",personas:["admit","applicant","firstyear","senior"]},
   {id:"titleIV",icon:"doc",name:"Title IV Authorization",desc:"Let aid cover other charges · SIS",cat:"Finances",personas:["firstyear","senior"]},
   {id:"refund",icon:"bank",name:"Direct Deposit & Refunds",desc:"Bank info for refunds & pay · SIS",cat:"Finances",personas:["firstyear","senior","staff","faculty"]},
 
@@ -1068,7 +1068,7 @@ const TASKS = [
   {id:"appStatus",icon:"envelope",name:"Check Application Status",desc:"Track your application · IU Admissions Portal",cat:"Admissions",personas:["applicant"],popular:true},
   {id:"visitReg",icon:"ticket",name:"Register for a Campus Visit",desc:"Tours & Red Carpet Days · Admissions",cat:"Admissions",personas:["applicant"]},
   {id:"acceptOffer",icon:"check",name:"Intent to Enroll",desc:"Confirm enrollment & deposit · Admissions",cat:"Admissions",personas:["applicant"]},
-  {id:"housingApp",icon:"home",name:"Housing",desc:"Apply for & manage housing · RPS",cat:"Admissions",personas:["applicant","firstyear"]},
+  {id:"housingApp",icon:"home",name:"Housing",desc:"Apply for & manage housing · RPS",cat:"Admissions",personas:["admit","applicant","firstyear"]},
 
   // Campus Life
   {id:"bus",icon:"bus",name:"IU Bus & Transit",desc:"Live campus & city routes",cat:"Campus Life",personas:["all"],popular:true},
@@ -1078,7 +1078,7 @@ const TASKS = [
   {id:"events",icon:"calendar",name:"Events at IU",desc:"What's happening · events.iu.edu",cat:"Campus Life",personas:["all"]},
   {id:"recreation",icon:"dumbbell",name:"Recreational Sports",desc:"SRSC, classes & intramurals",cat:"Campus Life",personas:["firstyear","senior","staff","faculty"]},
   {id:"library",icon:"book",name:"IU Libraries",desc:"Search IUCAT & reserve rooms",cat:"Campus Life",personas:["firstyear","senior","faculty","staff"]},
-  {id:"health",icon:"cross",name:"Student Health",desc:"Schedule care · Health Center",cat:"Campus Life",personas:["firstyear","senior"]},
+  {id:"health",icon:"cross",name:"Student Health",desc:"Schedule care · Health Center",cat:"Campus Life",personas:["admit","firstyear","senior"]},
   {id:"caps",icon:"chat",name:"CAPS Counseling",desc:"Appointments & drop-in",cat:"Campus Life",personas:["firstyear","senior"]},
   {id:"parking",icon:"parking",name:"Parking Permits",desc:"Buy & manage · Parking Operations",cat:"Campus Life",personas:["staff","faculty","senior"]},
   {id:"iumobile",icon:"phone",name:"IU Mobile",desc:"The IU app",cat:"Campus Life",personas:["all"]},
@@ -1345,6 +1345,8 @@ const SOURCES = {
   advising:{name:"Academic Advising",icon:"🧑‍🏫",cls:"blue"},
   benefits:{name:"HR Benefits",icon:"🏥",cls:"green"},
   reminder:{name:"Personal reminder",icon:"🔔",cls:"gold"},
+  orientation:{name:"New Student Orientation",cls:"purple"},
+  health:{name:"Student Health",cls:"green"},
 };
 
 /* =====================================================
@@ -1646,6 +1648,76 @@ applicant: {
         {icon:"🤝",bg:"green",title:"Talk to Student Central",sub:"Aid options for you and your family",href:"https://studentcentral.indiana.edu",linkLabel:"Contact"},
       ]},
     ],
+  }
+},
+
+/* ---------- 1b. ADMITTED / INCOMING STUDENT (committed, pre-arrival) ---------- */
+admit: {
+  name:"Caleb Turner", first:"Caleb", avatar:"🌱",
+  campus:"iub",
+  role:"Incoming First-Year · Fall 2026",
+  adminDesc:"Admitted and committed first-year who has paid the enrollment deposit and is completing onboarding over the summer before arriving in Bloomington.",
+  greetSub:"Your steps before move-in — orientation, housing, aid, and your IU account.",
+  favorites:["housingApp","fafsa","aid","duo","iumobile"],
+  actionItems:[
+    {id:"ai_ad1",src:"finaid",title:"Review and accept your financial aid",desc:"Your award is ready in the Student Center — accept or decline each item.",due:"Before your first bill",high:true,action:{label:"Open Student Center",target:"your financial aid award"},confirm:"system",confirmedBy:"the Student Center records your decisions"},
+    {id:"ai_ad2",src:"orientation",title:"Register for New Student Orientation",desc:"Pick a summer session — you'll meet an advisor and register for fall classes.",due:"Summer sessions open",high:true,action:{label:"Register",target:"New Student Orientation"},confirm:"system",confirmedBy:"orientation records your session"},
+    {id:"ai_ad3",src:"housing",title:"Complete your housing contract",desc:"Sign your RPS contract to be included in room assignments.",due:"Before assignments run",high:true,action:{label:"Open housing",target:"the RPS housing contract"},confirm:"system",confirmedBy:"RPS records your signed contract"},
+    {id:"ai_ad4",src:"health",title:"Submit your immunization records",desc:"Required for all new students before your first term.",due:"Before classes begin",action:{label:"Open the health portal",target:"the student health portal"},confirm:"system",confirmedBy:"the health portal records your compliance"},
+  ],
+  notifCount:3,
+  notifications:[
+    {icon:"🎉",unread:true,title:"Your enrollment deposit was received",sub:"You're committed for Fall 2026. Your next steps appear in your admitted-student checklist.",time:"This week"},
+    {icon:"🧭",unread:true,title:"New Student Orientation registration is open",sub:"Summer sessions are filling — choose the date that works for you.",time:"2d ago"},
+    {icon:"🏠",unread:false,title:"Housing selection is available",sub:"Sign your RPS contract to be included in room assignments.",time:"5d ago"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"prep",label:"Get ready",icon:"🧭"},
+    {id:"aid",label:"Finances",icon:"💳"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Admitted · Fall 2026",signals:[
+        {cat:"deadline",n:"5",l:"steps before move-in",src:"IU Admissions",days:20,count:5},
+        {cat:"status",n:"Paid",l:"enrollment deposit",src:"IU Admissions"},
+        {cat:"status",n:"Fall 2026",l:"entering term",src:"IU Admissions"},
+      ]},
+      {type:"actionitems"},
+      {type:"campusfeed"},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    prep:[
+      {type:"steps",title:"Your admitted-student checklist",items:[
+        {title:"Accept your offer & pay the enrollment deposit",sub:"You're committed for Fall 2026.",state:"done",src:"IU Admissions"},
+        {title:"Set up your IU account & Two-Step Login",sub:"Create your passphrase and enroll a device in Two-Step Login (Duo).",state:"done",src:"IU Login"},
+        {title:"Review and accept your financial aid",sub:"Accept or decline each item in the Student Center.",state:"now",src:"Financial Aid",link:"your award in the Student Center",linkLabel:"Open"},
+        {title:"Register for New Student Orientation",sub:"Choose a summer session — you'll advise and register for classes there.",state:"now",src:"Orientation",link:"orientation registration",linkLabel:"Register"},
+        {title:"Complete your housing contract",sub:"Sign your RPS contract to receive a room assignment.",state:"now",src:"RPS Housing",link:"the housing contract",linkLabel:"Open"},
+        {title:"Complete math placement (ALEKS)",sub:"Placement helps your advisor build your first schedule.",state:"todo",src:"Advising",link:"the ALEKS placement",linkLabel:"Start"},
+        {title:"Upload your CrimsonCard photo",sub:"Submit your ID photo online before you arrive.",state:"todo",src:"CrimsonCard",link:"the photo upload",linkLabel:"Upload"},
+        {title:"Submit your immunization records",sub:"Required before your first term.",state:"todo",src:"Student Health",link:"the health portal",linkLabel:"Open"},
+      ]},
+      {type:"acad"},
+    ],
+    aid:[
+      {type:"balances",title:"Bill & aid · published estimate (In-state, 2026–27)",items:[
+        {label:"Est. cost of attendance",value:"$27,500",note:"In-state · published estimate"},
+        {label:"Grants & scholarships",value:"−$11,500",note:"Financial Aid · award to accept"},
+        {label:"First bill",value:"Posts in July",note:"Bursar · due before classes begin"},
+        {label:"Payment plan",value:"Available",note:"Bursar · 4 installments, no interest"},
+      ]},
+      {type:"list",title:"Financial aid — your next steps",items:[
+        {title:"Confirm your FAFSA lists IU",sub:"IU school code 001809",src:"Financial Aid",href:"https://studentaid.gov",linkLabel:"studentaid.gov"},
+        {title:"Review and accept your award",sub:"Accept or decline each item",src:"Financial Aid",link:"your award in the Student Center",linkLabel:"Open"},
+        {title:"Set up an authorized payer",sub:"Let a parent or family member view and pay your bill",src:"Bursar",link:"authorized-payer setup",linkLabel:"Set up"},
+        {title:"Explore IU scholarships",sub:"Search and apply for additional awards",src:"Financial Aid",link:"IU Scholarships",linkLabel:"Browse"},
+      ]},
+    ],
+    campus:[{type:"campusmap"},{type:"campusfeed"}],
   }
 },
 
@@ -1959,17 +2031,11 @@ staff: {
         {cat:"approval",n:"4",l:"timesheets to approve",src:"Kuali Time",count:4},
         {cat:"today",n:"3",l:"meetings today",src:"Exchange"},
         {cat:"status",n:"Sep 30",l:"next payday",src:"Payroll"},
-        {cat:"status",n:"Oct 15",l:"open enrollment begins",src:"HR",days:30},
       ]},
       {type:"calendar"},
       {type:"actionitems"},
       {type:"crimsoncard"},
       {type:"libraries"},
-      {type:"list",title:"📣 For IU staff",items:[
-        {icon:"🏥",bg:"red",title:"Open enrollment 2027",sub:"Oct 15 – Nov 5 · info sessions all month",right:"Oct 15",rightSub:"Starts"},
-        {icon:"🧑‍💻",bg:"blue",title:"LinkedIn Learning day",sub:"Free workshops for staff development",right:"Oct 7",rightSub:"IMU"},
-        {icon:"🚶",bg:"green",title:"Healthy IU walking challenge",sub:"Team registration open",right:"Now",rightSub:"Join in"},
-      ]},
       {type:"launch"},
     ],
     tasks:[{type:"tasklauncher"}],
@@ -2124,8 +2190,6 @@ faculty: {
         {icon:"💵",bg:"green",title:"Jul 31 · Monthly",sub:"Regular pay",right:"$6,742.10",rightSub:"net"},
         {icon:"💵",bg:"green",title:"Jun 30 · Monthly",sub:"Regular pay",right:"$6,742.10",rightSub:"net"},
       ]},
-      {type:"notice",tone:"blue",icon:"🗓️",title:"Open enrollment starts Oct 15",
-       sub:"Benefit elections for 2027 are made in the Employee Center (IU HR) during the Oct 15 – Nov 5 window."},
     ],
     research:[
       {type:"steps",title:"🔬 Proposal routing · from Kuali Coeus (KC)",items:[
@@ -2590,6 +2654,69 @@ phd: {
     ],
   }
 },
+
+/* ---------- 10. IUPUI ALUMNA (~10 years out) ---------- */
+alum: {
+  name:"Rebecca Lin", first:"Rebecca", avatar:"🧑‍💼",
+  campus:"iui",
+  role:"Alumna · IU Indianapolis",
+  adminDesc:"Earned a B.S. from IUPUI in 2016 (now IU Indianapolis after the 2024 realignment). Signs in occasionally for transcripts, degree verification, alumni membership, and events.",
+  greetSub:"Your degree record, transcripts, and alumni connection.",
+  favorites:[],
+  actionItems:[],
+  notifCount:0,
+  notifications:[
+    {icon:"🎓",unread:false,title:"IU Alumni Association",sub:"Your membership, benefits, and regional chapter events are available at alumni.iu.edu.",time:"—"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"records",label:"Records",icon:"📄"},
+    {id:"alumni",label:"Alumni",icon:"🎓"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"IU Indianapolis alumni",signals:[
+        {cat:"status",n:"B.S. 2016",l:"degree on file",src:"Office of the Registrar"},
+        {cat:"status",n:"Member",l:"IU Alumni Association",src:"IU Alumni Association"},
+        {cat:"status",n:"Available",l:"official transcripts",src:"Office of the Registrar"},
+      ]},
+      {type:"list",title:"Your IU record",items:[
+        {title:"B.S. in Informatics",sub:"IUPUI School of Informatics and Computing (now IU Indianapolis) · conferred May 2016",src:"Office of the Registrar",right:"Conferred",rightSub:"2016"},
+        {title:"Order an official transcript",sub:"Electronic or mailed",src:"Office of the Registrar",link:"the transcript order",linkLabel:"Order"},
+      ]},
+      {type:"list",title:"IU Alumni Association",items:[
+        {title:"Membership & benefits",sub:"Your alumni membership",src:"IU Alumni Association",href:"https://alumni.iu.edu",linkLabel:"Open"},
+        {title:"Alumni events & Homecoming",sub:"Regional chapters and campus events",src:"IU Alumni Association",href:"https://alumni.iu.edu",linkLabel:"Browse"},
+      ]},
+      {type:"campusfeed"},
+    ],
+    records:[
+      {type:"list",title:"Your IU degree",items:[
+        {title:"B.S. in Informatics",sub:"IUPUI School of Informatics and Computing (now IU Indianapolis) · conferred May 2016",src:"Office of the Registrar",right:"Conferred",rightSub:"2016"},
+      ]},
+      {type:"list",title:"Transcripts & verification",items:[
+        {title:"Order an official transcript",sub:"Electronic or mailed",src:"Office of the Registrar",link:"the transcript order",linkLabel:"Order"},
+        {title:"Enrollment & degree verification",sub:"For employers · National Student Clearinghouse",src:"National Student Clearinghouse",link:"the verification request",linkLabel:"Verify"},
+        {title:"Request a replacement diploma",sub:"Reprints of your IU diploma",src:"Office of the Registrar",link:"the diploma request",linkLabel:"Request"},
+      ]},
+    ],
+    alumni:[
+      {type:"list",title:"IU Alumni Association",items:[
+        {title:"Membership & benefits",sub:"Your alumni membership",src:"IU Alumni Association",href:"https://alumni.iu.edu",linkLabel:"Open"},
+        {title:"Alumni events & Homecoming",sub:"Regional chapters and campus events",src:"IU Alumni Association",href:"https://alumni.iu.edu",linkLabel:"Browse"},
+        {title:"Update your contact information",sub:"Keep your alumni record current",src:"IU Alumni Association",href:"https://alumni.iu.edu",linkLabel:"Update"},
+      ]},
+      {type:"list",title:"Giving",items:[
+        {title:"Make a gift",sub:"Support IU Indianapolis and your school",src:"IU Foundation",href:"https://iufoundation.iu.edu",linkLabel:"Give"},
+      ]},
+      {type:"list",title:"Alumni resources",items:[
+        {title:"IU Libraries alumni access",sub:"On-site borrowing and databases",src:"IU Libraries",link:"IU Libraries alumni access",linkLabel:"Open"},
+      ]},
+    ],
+    campus:[{type:"campusmap"},{type:"campusfeed"}],
+  }
+},
 };
 
 /* =====================================================
@@ -2672,13 +2799,13 @@ function taskById(id){ return TASKS.find(t=>t.id===id); }
 /* Tasks carry roles (derived from personas) and, for the few genuinely
    campus-specific ones, a campus scope. People can wear multiple roles and
    belong to multiple campuses, so filters are multi-value. */
-const PERSONA_ROLE = {firstyear:"Student",senior:"Student",law:"Student",northwest:"Student",phd:"Student",faculty:"Faculty",staff:"Employee",parent:"Family",applicant:"Applicant"};
-const ROLES = ["Student","Employee","Faculty","Family","Applicant"];
-const ROLE_LABEL = {Student:"Student",Employee:"Employee",Faculty:"Faculty",Family:"Parent / Family",Applicant:"Applicant"};
+const PERSONA_ROLE = {firstyear:"Student",senior:"Student",law:"Student",northwest:"Student",phd:"Student",faculty:"Faculty",staff:"Employee",parent:"Family",applicant:"Applicant",admit:"Incoming",alum:"Alumni"};
+const ROLES = ["Student","Employee","Faculty","Family","Applicant","Incoming"];
+const ROLE_LABEL = {Student:"Student",Employee:"Employee",Faculty:"Faculty",Family:"Parent / Family",Applicant:"Applicant",Incoming:"Incoming Student",Alumni:"Alumni"};
 const PERSONA_ROLES = {
-  guest:[], applicant:["Applicant"], firstyear:["Student","Employee"], senior:["Student"],
+  guest:[], applicant:["Applicant"], admit:["Incoming"], firstyear:["Student","Employee"], senior:["Student"],
   staff:["Employee"], faculty:["Faculty"], parent:["Family"], law:["Student"], northwest:["Student","Employee"],
-  phd:["Student","Faculty"]
+  phd:["Student","Faculty"], alum:["Alumni"]
 };
 const CAMPUS_TASKS = {bus:["iub","iui"], housingApp:["iub","iui","ius","iusb"], dining:["iub","iui","ius","iusb"]};
 function personaRoles(p){ return PERSONA_ROLES[p] || (PERSONA_ROLE[p]?[PERSONA_ROLE[p]]:[]); }
