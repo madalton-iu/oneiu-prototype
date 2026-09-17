@@ -1926,6 +1926,134 @@ firstyear: {
   }
 },
 
+/* ---------- 8. SOPHOMORE · IU Northwest ---------- */
+northwest: {
+  name:"Destiny Carter", first:"Destiny", avatar:"🎒",
+  campus:"iun",
+  role:"Sophomore · Nursing · IU Northwest", adminDesc:"Second-year nursing student commuting to IU Northwest in Gary; works a part-time campus job and rides the South Shore Line.",
+  greetSub:"2 classes today · timesheet due Friday.",
+  crimsonCard:{holder:"Destiny Carter",kind:"Student",id:"6017 88•• •••• 5540",since:"Aug 2025",
+    balances:[
+      {icon:"🥗",label:"Dining Dollars",value:"$65.20",note:"Commuter — dining & cafés",add:true},
+      {icon:"💵",label:"Crimson Cash",value:"$12.75",note:"Printing & bookstore",add:true},
+    ],
+    access:["Savannah Fitness Center","John W. Anderson Library","Student parking lots"]},
+  orgs:{
+    memberships:[
+      {icon:"🩺",name:"Student Nurses Association",role:"Member"},
+      {icon:"🏛️",name:"Student Government Association",role:"Senator"},
+    ],
+    announcements:[
+      {org:"Student Nurses Association",text:"Clinicals orientation Thursday 4 p.m. in Dunes Medical.",time:"5h ago"},
+      {org:"Student Government Association",text:"Commuter lounge hours extended during midterms.",time:"2d ago"},
+    ],
+    events:[
+      {icon:"🩺",title:"SNA clinicals orientation",when:"Thu 4:00 p.m.",where:"Dunes Medical/Professional Bldg"},
+      {icon:"🎭",title:"Theatre night",when:"Fri 7:30 p.m.",where:"Arts & Sciences Building"},
+    ]},
+  library:{
+    onLoan:[
+      {title:"Fundamentals of Nursing",author:"Potter & Perry",due:"Oct 1",renew:true},
+      {title:"Anatomy & Physiology",author:"Marieb",due:"Sep 25",renew:false,soon:true},
+    ],
+    ill:[{title:"Journal article — nursing ethics",status:"In progress"}],
+    rooms:[{room:"John W. Anderson Library · Group Room B",when:"Today 2:00–4:00 p.m.",status:"Reserved"}]},
+  careers:{
+    appt:{when:"Mon 11:00 a.m.",who:"IU Northwest Career Services"},
+    applied:3, saved:9,
+    events:[
+      {icon:"🏥",title:"Health careers fair",where:"Savannah Center gym · NW Indiana employers",when:"Sep 30"},
+      {icon:"✍️",title:"Résumé drop-in",where:"Hawthorn Hall · Career Services",when:"Sep 24"},
+    ]},
+  favorites:["canvas","dining","payBill","grades","timesheet","duo"],
+  degree:{program:"B.S. Nursing (pre-nursing)",creditsDone:34,creditsReq:120,reqsDone:12,reqsTotal:40,src:"iGPS"},
+  kualitime:{assignment:"Front desk · Savannah Center",rate:"$13.00/hr",todayMin:0,weekMin:480},
+  calendar:[
+    {t1:"9:30",t2:"10:45",title:"NURS-B 244 · Community Nursing",loc:"Dunes Medical 108 · Prof. Hill",src:"SIS",color:"crimson",now:true,recurring:true},
+    {t1:"11:00",t2:"12:15",title:"PHSL-P 261 · Anatomy & Physiology",loc:"Marram Hall 210",src:"SIS",color:"blue",recurring:true},
+    {t1:"1:00",t2:"4:00",title:"Savannah Center shift",loc:"Blocked on your Outlook",src:"Exchange",color:"gold",recurring:true},
+  ],
+  actionItems:[
+    {id:"ai_nw1",src:"hr",title:"Submit work-study timesheet",desc:"8 hours logged this week.",due:"Fri 5:00 p.m.",high:true,action:{label:"Open Kuali Time",target:"Kuali Time"},confirm:"approval",approver:"your supervisor"},
+    {id:"ai_nw2",src:"canvas",title:"A&P · Lab report 3",desc:"Submit on the Canvas assignment page.",due:"Tomorrow 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
+    {id:"ai_nw3",src:"advising",title:"Confirm advising for the nursing sequence",desc:"Hawthorn Hall · plan spring clinicals.",due:"Thu 2:00 p.m.",action:{label:"Confirm time",target:"the advising scheduler"},confirm:"system",confirmedBy:"the scheduler marks it confirmed"},
+    {id:"ai_nw4",src:"bursar",title:"Pay fall balance ($1,410)",desc:"Or enroll in the no-interest payment plan.",due:"Sep 25",high:true,action:{label:"Pay bill",target:"the Bursar payment page"},confirm:"system",confirmedBy:"the payment posts to your account"},
+    {id:"ai_nw5",src:"compliance",title:"FERPA refresher training",desc:"Required for student employees · ~15 min.",due:"End of month",action:{label:"Start training",target:"the IU FERPA Tutorial"},confirm:"system",confirmedBy:"the FERPA Tutorial records your completion"},
+  ],
+  notifCount:2,
+  notifications:[
+    {icon:"🩺",unread:true,title:"Clinicals orientation Thursday",sub:"4 p.m. in the Dunes Medical/Professional Building. Bring your health clearance.",time:"3h ago"},
+    {icon:"🧾",unread:true,title:"Fall bill due Sep 25",sub:"Balance of $1,410. A no-interest payment plan is available through the Bursar.",time:"Today"},
+    {icon:"📕",unread:false,title:"Library book due Sep 25",sub:"“Anatomy & Physiology” is due soon — renew online if you still need it.",time:"2d ago"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"classes",label:"Academics",icon:"📖"},
+    {id:"money",label:"Finances",icon:"💳"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Week 4 · Fall semester",signals:[
+        {cat:"submission",n:"A&P lab report",l:"due tomorrow",src:"Canvas",days:1},
+        {cat:"deadline",n:"Timesheet",l:"due Friday",src:"Kuali Time",days:3},
+        {cat:"money",n:"$1,410",l:"balance due Sep 25",src:"Bursar",days:10},
+        {cat:"today",n:"2",l:"classes today",src:"SIS"},
+        {cat:"status",n:"8h",l:"worked this week",src:"Kuali Time"},
+      ]},
+      {type:"calendar"},
+      {type:"actionitems"},
+      {type:"kualitime"},
+      {type:"crimsoncard"},
+      {type:"orgs"},
+      {type:"libraries"},
+      {type:"campusfeed"},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    classes:[
+      {type:"degree"},
+      {type:"acad"},
+      {type:"list",title:"Fall schedule · 14 credit hours · from SIS",items:[
+        {icon:"🩺",bg:"red",title:"NURS-B 244 · Community Nursing",sub:"MW 9:30–10:45 · Dunes Medical 108",right:"3 cr",rightSub:"enrolled"},
+        {icon:"🧬",bg:"blue",title:"PHSL-P 261 · Anatomy & Physiology",sub:"MW 11:00–12:15 · Marram Hall 210",right:"5 cr",rightSub:"enrolled"},
+        {icon:"🧠",bg:"purple",title:"PSY-P 103 · General Psychology",sub:"TR 1:00–2:15 · Hawthorn Hall 104",right:"3 cr",rightSub:"enrolled"},
+        {icon:"✍️",bg:"green",title:"ENG-W 131 · Writing & Inquiry",sub:"TR 9:30–10:45 · Raintree Hall 12",right:"3 cr",rightSub:"enrolled"},
+      ]},
+      {type:"assignments",title:"Assignments due this week",items:[
+        {course:"A&P",title:"Lab report 3",due:"Tomorrow · 11:59 p.m.",soon:true},
+        {course:"Community Nursing",title:"Care-plan draft",due:"Thursday, in class"},
+        {course:"PSY-P 103",title:"Chapter quiz 4",due:"Friday · 11:59 p.m."},
+      ]},
+    ],
+    money:[
+      {type:"balances",title:"Pay & time",items:[
+        {icon:"🏛️",label:"Position",value:"Savannah Center",note:"Front-desk assistant"},
+        {icon:"⏱️",label:"This week",value:"8 hrs",note:"logged in Kuali Time"},
+        {icon:"💰",label:"Earned so far",value:"$612",note:"of $2,000 award"},
+        {icon:"🗓️",label:"Next payday",value:"Sep 18",note:"Direct deposit"},
+      ]},
+      {type:"balances",title:"All balances",items:[
+        {icon:"🧾",label:"Bursar",value:"$1,410.00",note:"Bursar · due Sep 25"},
+        {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"Financial Aid · award letter"},
+        {icon:"💼",label:"Work-study earned",value:"$612",note:"Payroll · of $2,000 award"},
+        {icon:"🥗",label:"Dining Dollars",value:"$65.20",note:"CrimsonCard"},
+        {icon:"💵",label:"Crimson Cash",value:"$12.75",note:"CrimsonCard · reload anytime"},
+      ]},
+      {type:"list",title:"Recent activity",items:[
+        {icon:"🥗",bg:"green",title:"Moraine Student Center dining",sub:"Dining Dollars",src:"CrimsonCard",right:"−$8.10",rightSub:"Today"},
+        {icon:"🖨️",bg:"blue",title:"Library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$1.50",rightSub:"Yesterday"},
+        {icon:"💼",bg:"gold",title:"Work-study direct deposit",sub:"Biweekly pay",src:"Payroll",right:"+$104.00",rightSub:"Sep 4"},
+      ]},
+    ],
+    campus:[
+      {type:"campusmap"},
+      {type:"campusfeed"},
+    ],
+  }
+},
+
 /* ---------- 3. GRADUATING SENIOR ---------- */
 senior: {
   name:"Devon Williams", first:"Devon", avatar:"🎓",
@@ -2051,6 +2179,229 @@ senior: {
         {icon:"🖨️",bg:"blue",title:"Luddy Hall printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$1.80",rightSub:"Yesterday"},
         {icon:"🎓",bg:"green",title:"Financial aid disbursement",sub:"Fall award",src:"Financial Aid",right:"+$4,200",rightSub:"Aug 20"},
       ]},
+    ],
+  }
+},
+
+/* ---------- 7. LAW STUDENT (2L) · IU Indianapolis ---------- */
+law: {
+  name:"Marcus Ellison", first:"Marcus", avatar:"⚖️",
+  campus:"iui",
+  role:"2L · McKinney School of Law", adminDesc:"Second-year law student at the IU Robert H. McKinney School of Law on the IU Indianapolis campus; on the law journal and recruiting for a summer associate position.",
+  greetSub:"2 classes today · fall balance due Sep 25.",
+  crimsonCard:{holder:"Marcus Ellison",kind:"Student",id:"6017 88•• •••• 7729",since:"Aug 2024",
+    balances:[
+      {icon:"🥗",label:"Dining Dollars",value:"$96.40",note:"Cafés & campus dining",add:true},
+      {icon:"💵",label:"Crimson Cash",value:"$41.15",note:"Printing & off-campus",add:true},
+    ],
+    access:["Inlow Hall after-hours","Ruth Lilly Law Library","Campus Center recreation"]},
+  orgs:{
+    memberships:[
+      {icon:"📚",name:"Indiana Law Review",role:"Associate member"},
+      {icon:"⚖️",name:"Moot Court Society",role:"Competitor"},
+      {icon:"🏛️",name:"Student Bar Association",role:"Member"},
+    ],
+    announcements:[
+      {org:"Indiana Law Review",text:"Note edits due to your line editor by Friday 5 p.m.",time:"3h ago"},
+      {org:"Moot Court Society",text:"Regional problem released — brief teams are posted.",time:"1d ago"},
+    ],
+    events:[
+      {icon:"⚖️",title:"Moot Court practice round",when:"Thu 6:00 p.m.",where:"Inlow Hall Moot Court Room"},
+      {icon:"🤝",title:"1L/2L mentoring mixer",when:"Fri 5:00 p.m.",where:"Inlow Hall Atrium"},
+    ]},
+  library:{
+    onLoan:[
+      {title:"Chemerinsky, Constitutional Law",author:"Chemerinsky",due:"Oct 2",renew:true},
+      {title:"Federal Rules of Evidence (2026)",author:"West",due:"Sep 26",renew:false,soon:true},
+    ],
+    ill:[{title:"Law review article — PDF scan",status:"Ready — check your email"}],
+    rooms:[{room:"Ruth Lilly Law Library · Study Room 3",when:"Today 4:00–6:00 p.m.",status:"Reserved"}]},
+  favorites:["canvas","payBill","transcript","grades","dining","duo"],
+  degree:{program:"Juris Doctor (J.D.)",creditsDone:34,creditsReq:90,unit:"credit hours",reqsDone:5,reqsTotal:14,src:"the McKinney registrar"},
+  calendar:[
+    {t1:"9:00",t2:"10:15",title:"LAW-D 100 · Constitutional Law",loc:"Inlow Hall 121 · Prof. Reed",src:"SIS",color:"crimson",now:true,recurring:true},
+    {t1:"10:30",t2:"11:45",title:"LAW-B 200 · Evidence",loc:"Inlow Hall 118",src:"SIS",color:"blue",recurring:true},
+    {t1:"1:00",t2:"2:00",title:"Indiana Law Review — edits",loc:"Ruth Lilly Law Library",src:"Exchange",color:"gold",recurring:true},
+    {t1:"6:00",t2:"7:30",title:"Moot Court practice",loc:"Inlow Hall Moot Court Room",src:"Events",color:"purple"},
+  ],
+  actionItems:[
+    {id:"ai_law1",src:"canvas",title:"Evidence · problem set 4",desc:"Submit on the Canvas assignment page.",due:"Tomorrow 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
+    {id:"ai_law2",src:"registrar",title:"Register for spring courses",desc:"Enroll when your registration window opens.",due:"Oct 6",action:{label:"Open Student Center",target:"Student Center registration"},confirm:"system",confirmedBy:"enrollment confirms immediately"},
+    {id:"ai_law3",src:"bursar",title:"Pay fall balance ($8,930)",desc:"Or enroll in the no-interest payment plan.",due:"Sep 25",high:true,action:{label:"Pay bill",target:"the Bursar payment page"},confirm:"system",confirmedBy:"the payment posts to your account"},
+    {id:"ai_law4",src:"finaid",title:"Complete Grad PLUS loan steps",desc:"Federal steps are on studentaid.gov, outside IU.",due:"Before disbursement",action:{label:"Open studentaid.gov",target:"federal loan tasks"},confirm:"system",confirmedBy:"studentaid.gov reports completion to IU"},
+    {id:"ai_law5",src:"compliance",title:"Data security training",desc:"Required annually · ~20 min.",due:"Sep 30",action:{label:"Start training",target:"the IU information security training (Protect IU)"},confirm:"system",confirmedBy:"your completion is recorded"},
+  ],
+  notifCount:3,
+  notifications:[
+    {icon:"🗓️",unread:true,title:"Spring registration window opens Oct 6",sub:"Your enrollment appointment is set in the Student Center — plan your spring courses.",time:"2h ago"},
+    {icon:"🧾",unread:true,title:"Fall bill due Sep 25",sub:"Balance of $8,930. A no-interest payment plan is available through the Bursar.",time:"Today"},
+    {icon:"📚",unread:true,title:"Law Review edits due Friday",sub:"Return note edits to your line editor by 5 p.m.",time:"Yesterday"},
+    {icon:"🏛️",unread:false,title:"Guest lecture: appellate practice",sub:"Judge-in-residence · Inlow Hall Moot Court Room.",time:"2d ago"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"classes",label:"Academics",icon:"📖"},
+    {id:"money",label:"Finances",icon:"💳"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Week 4 · Fall semester",signals:[
+        {cat:"submission",n:"Evidence problem set",l:"due tomorrow",src:"Canvas",days:1},
+        {cat:"money",n:"$8,930",l:"balance due Sep 25",src:"Bursar",days:10},
+        {cat:"today",n:"2",l:"classes today",src:"SIS"},
+      ]},
+      {type:"calendar"},
+      {type:"actionitems"},
+      {type:"crimsoncard"},
+      {type:"orgs"},
+      {type:"libraries"},
+      {type:"campusfeed"},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    classes:[
+      {type:"acad"},
+      {type:"list",title:"Fall schedule · 14 credit hours · from SIS",items:[
+        {icon:"🏛️",bg:"red",title:"LAW-D 100 · Constitutional Law",sub:"MW 9:00–10:15 · Inlow Hall 121",right:"4 cr",rightSub:"enrolled"},
+        {icon:"⚖️",bg:"blue",title:"LAW-B 200 · Evidence",sub:"MW 10:30–11:45 · Inlow Hall 118",right:"3 cr",rightSub:"enrolled"},
+        {icon:"🏢",bg:"purple",title:"LAW-B 250 · Business Associations",sub:"TR 1:00–2:15 · Inlow Hall 245",right:"4 cr",rightSub:"enrolled"},
+        {icon:"🧭",bg:"green",title:"LAW-L 710 · Legal Profession",sub:"F 9:00–10:50 · Inlow Hall 116",right:"3 cr",rightSub:"enrolled"},
+      ]},
+      {type:"assignments",title:"Coming due",items:[
+        {course:"Evidence",title:"Problem set 4",due:"Tomorrow · 11:59 p.m.",soon:true},
+        {course:"Con Law",title:"Reading response 5",due:"Wednesday, in class"},
+        {course:"Law Review",title:"Note edits — round 1",due:"Friday · 5:00 p.m."},
+      ]},
+    ],
+    money:[
+      {type:"balances",title:"Fall 2026 statement · from Bursar",items:[
+        {icon:"💰",label:"Amount due",value:"$8,930.00",note:"Due Sep 25",alert:true},
+        {icon:"🎓",label:"Tuition & fees",value:"$15,930",note:"McKinney · resident"},
+        {icon:"✨",label:"Aid applied",value:"−$7,000",note:"Scholarship + loans"},
+        {icon:"📅",label:"Payment plan",value:"Available",note:"4 installments · no interest"},
+      ]},
+      {type:"balances",title:"All balances",items:[
+        {icon:"🧾",label:"Bursar",value:"$8,930.00",note:"Bursar · due Sep 25"},
+        {icon:"🎓",label:"Financial aid",value:"Awarded",note:"Financial Aid · award letter"},
+        {icon:"🥗",label:"Dining Dollars",value:"$96.40",note:"CrimsonCard"},
+        {icon:"💵",label:"Crimson Cash",value:"$41.15",note:"CrimsonCard · reload anytime"},
+      ]},
+      {type:"list",title:"Recent activity",items:[
+        {icon:"☕",bg:"red",title:"Campus Center café",sub:"Dining Dollars",src:"CrimsonCard",right:"−$5.75",rightSub:"Today"},
+        {icon:"🖨️",bg:"blue",title:"Law library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$2.40",rightSub:"Yesterday"},
+        {icon:"🎓",bg:"green",title:"Scholarship disbursement",sub:"Merit award",src:"Financial Aid",right:"+$3,500",rightSub:"Aug 22"},
+      ]},
+    ],
+    campus:[
+      {type:"campusmap"},
+      {type:"campusfeed"},
+    ],
+  }
+},
+
+/* ---------- 9. PhD CANDIDATE + ADJUNCT (two roles, two campuses) ---------- */
+phd: {
+  name:"Rachel Adeyemi", first:"Rachel", avatar:"✒️",
+  campus:"iub", campuses:["iub","iusb"],
+  role:"PhD candidate · English (IUB) · Adjunct (IU South Bend)",
+  adminDesc:"Doctoral candidate in English at Bloomington writing her dissertation, who also teaches a full load of W131 as an adjunct at IU South Bend — a member with two roles and two campuses.",
+  greetSub:"Dissertation writing at 9 · W131 essays to grade.",
+  crimsonCard:{holder:"Rachel Adeyemi",kind:"Student · Instructor",id:"6017 88•• •••• 3061",since:"Aug 2021",
+    balances:[
+      {icon:"🥗",label:"Dining Dollars",value:"$44.10",note:"Cafés & campus dining",add:true},
+      {icon:"💵",label:"Crimson Cash",value:"$28.75",note:"Printing & off-campus",add:true},
+    ],
+    access:["Wells Library grad carrel (IUB)","Ballantine Hall after-hours","Wiekamp Hall (IU South Bend)"]},
+  library:{
+    onLoan:[
+      {title:"The Country and the City",author:"Williams",due:"Oct 12",renew:true},
+      {title:"Cane",author:"Toomer",due:"Sep 26",renew:false,soon:true},
+    ],
+    ill:[{title:"Journal scans · dissertation ch. 3",status:"Ready — check your email"}],
+    rooms:[{room:"Wells Library · Grad Carrel 214",when:"Reserved for the semester",status:"Reserved"}]},
+  degree:{program:"Ph.D. English",creditsDone:78,creditsReq:90,unit:"credit hours",reqsDone:5,reqsTotal:6,src:"the University Graduate School"},
+  favorites:["canvas","rosters","payslip","grades","printing","duo"],
+  calendar:[
+    {t1:"9:00",t2:"12:00",title:"Dissertation writing",loc:"Remote",src:"Exchange",color:"purple",now:true,recurring:true},
+    {t1:"1:00",t2:"2:15",title:"ENG-W 131 · Sec. 4",loc:"Wiekamp Hall 1255 · IU South Bend",src:"SIS",color:"crimson",recurring:true},
+    {t1:"2:30",t2:"3:45",title:"ENG-W 131 · Sec. 5",loc:"Wiekamp Hall 1255 · IU South Bend",src:"SIS",color:"crimson",recurring:true},
+    {t1:"4:00",t2:"5:00",title:"W131 office hours",loc:"Wiekamp Hall 2145 · IU South Bend",src:"Exchange",color:"gold",recurring:true},
+  ],
+  actionItems:[
+    {id:"ai_phd1",src:"canvas",title:"Grade W131 · Essay 2",desc:"~46 submissions across your two IU South Bend sections.",due:"Fri 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"Canvas SpeedGrader"},confirm:"system",confirmedBy:"Canvas records your grading"},
+    {id:"ai_phd2",src:"registrar",title:"Enroll in spring dissertation hours",desc:"G901 · maintains candidacy · when your window opens.",due:"Oct 6",action:{label:"Open Student Center",target:"Student Center registration"},confirm:"system",confirmedBy:"enrollment confirms immediately"},
+    {id:"ai_phd3",src:"compliance",title:"Data security training",desc:"Required annually for instructors · ~20 min.",due:"Sep 30",action:{label:"Start training",target:"the IU information security training (Protect IU)"},confirm:"system",confirmedBy:"your completion is recorded"},
+    {id:"ai_phd4",src:"advising",title:"Submit W131 early evaluations",desc:"For your students, in the Student Engagement Roster.",due:"Oct 4",action:{label:"Open the SER",target:"the Student Engagement Roster"},confirm:"system",confirmedBy:"the SER records your submission"},
+  ],
+  notifCount:2,
+  notifications:[
+    {icon:"📝",unread:true,title:"W131 Essay 2 submissions in",sub:"46 essays across Sections 4 and 5 are ready to grade in Canvas.",time:"2h ago"},
+    {icon:"📋",unread:true,title:"Early evaluations open",sub:"Submit early evaluations for your W131 students in the SER by Oct 4.",time:"Today"},
+    {icon:"💵",unread:false,title:"Adjunct pay deposited",sub:"Your monthly appointment pay from IU South Bend posted to direct deposit.",time:"Aug 29"},
+  ],
+  tabs:[
+    {id:"home",label:"Home",icon:"🏠"},
+    {id:"tasks",label:"Tasks",icon:"⊞"},
+    {id:"teaching",label:"Academics",icon:"📖"},
+    {id:"money",label:"Finances",icon:"💳"},
+    {id:"campus",label:"Campus",icon:"🗺️"},
+  ],
+  views:{
+    home:[
+      {type:"hero",kicker:"Week 4 · Fall semester",signals:[
+        {cat:"grading",n:"46",l:"W131 essays to grade",src:"Canvas",count:46},
+        {cat:"deadline",n:"Oct 4",l:"W131 early evaluations due",src:"SER",days:19},
+        {cat:"today",n:"2",l:"sections today",src:"SIS"},
+      ]},
+      {type:"actionitems"},
+      {type:"calendar"},
+      {type:"campusfeed"},
+      {type:"crimsoncard"},
+      {type:"libraries"},
+      {type:"launch"},
+    ],
+    tasks:[{type:"tasklauncher"}],
+    teaching:[
+      {type:"list",title:"Fall schedule · 6 credit hours · from SIS",items:[
+        {icon:"✒️",bg:"purple",title:"ENG-G 901 · Advanced Research",sub:"Dissertation hours · maintains candidacy",right:"6 cr",rightSub:"enrolled"},
+      ]},
+      {type:"acad"},
+      {type:"list",title:"Your courses · from SIS",items:[
+        {icon:"✍️",bg:"red",title:"ENG-W 131 · Section 4",sub:"MW 1:00–2:15 · Wiekamp Hall 1255 · 23 enrolled"},
+        {icon:"✍️",bg:"blue",title:"ENG-W 131 · Section 5",sub:"MW 2:30–3:45 · Wiekamp Hall 1255 · 23 enrolled"},
+      ]},
+      {type:"list",title:"Grading · from Canvas",items:[
+        {icon:"📘",bg:"red",title:"W131 · Essay 2",sub:"46 submissions ungraded",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
+      ]},
+      {type:"list",title:"Rosters & alerts",items:[
+        {icon:"📝",bg:"red",title:"Early evaluations — W131",sub:"Submit early-evaluation grades for beginning students",src:"Student Engagement Roster",link:"the Student Engagement Roster",linkLabel:"Open SER",right:"Due",rightSub:"Oct 4"},
+        {icon:"📋",bg:"blue",title:"Class roster — W131",sub:"Verify enrolled students · 0 pending adds",src:"Faculty Center",link:"the Faculty Center",linkLabel:"Open",right:"46",rightSub:"enrolled"},
+      ]},
+    ],
+    money:[
+      {type:"balances",title:"Pay & time",items:[
+        {icon:"🏫",label:"Appointment",value:"Adjunct lecturer",note:"English · IU South Bend"},
+        {icon:"💰",label:"Pay basis",value:"Per course",note:"Paid monthly · HRMS"},
+        {icon:"💵",label:"Earned this term",value:"$3,050",note:"1 monthly payment so far"},
+        {icon:"🗓️",label:"Next payday",value:"Sep 30",note:"Direct deposit"},
+      ]},
+      {type:"balances",title:"All balances",items:[
+        {icon:"🧾",label:"Bursar",value:"$612.00",note:"Bursar · PhD program fee, due Sep 25"},
+        {icon:"💼",label:"Appointment pay",value:"$3,050",note:"Payroll · fall, to date"},
+        {icon:"🥗",label:"Dining Dollars",value:"$44.10",note:"CrimsonCard"},
+        {icon:"💵",label:"Crimson Cash",value:"$28.75",note:"CrimsonCard · reload anytime"},
+      ]},
+      {type:"list",title:"Recent activity",items:[
+        {icon:"💼",bg:"gold",title:"Adjunct pay direct deposit",sub:"Monthly appointment pay · IU South Bend",src:"Payroll",right:"+$3,050",rightSub:"Aug 29"},
+        {icon:"🖨️",bg:"blue",title:"Wells Library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$3.20",rightSub:"Yesterday"},
+        {icon:"☕",bg:"red",title:"Sugar & Spice (IMU)",sub:"Dining Dollars",src:"CrimsonCard",right:"−$4.85",rightSub:"Sep 11"},
+      ]},
+    ],
+    campus:[
+      {type:"campusmap"},
+      {type:"campusfeed"},
     ],
   }
 },
@@ -2371,357 +2722,6 @@ parent: {
         {icon:"✅",bg:"green",title:"Spring 2026 · paid in full",sub:"eCheck · Jan 8, 2026",right:"$6,180"},
         {icon:"✅",bg:"green",title:"Fall 2025 · payment plan",sub:"4 installments, completed",right:"$6,090"},
       ]},
-    ],
-  }
-},
-
-/* ---------- 7. LAW STUDENT (2L) · IU Indianapolis ---------- */
-law: {
-  name:"Marcus Ellison", first:"Marcus", avatar:"⚖️",
-  campus:"iui",
-  role:"2L · McKinney School of Law", adminDesc:"Second-year law student at the IU Robert H. McKinney School of Law on the IU Indianapolis campus; on the law journal and recruiting for a summer associate position.",
-  greetSub:"2 classes today · fall balance due Sep 25.",
-  crimsonCard:{holder:"Marcus Ellison",kind:"Student",id:"6017 88•• •••• 7729",since:"Aug 2024",
-    balances:[
-      {icon:"🥗",label:"Dining Dollars",value:"$96.40",note:"Cafés & campus dining",add:true},
-      {icon:"💵",label:"Crimson Cash",value:"$41.15",note:"Printing & off-campus",add:true},
-    ],
-    access:["Inlow Hall after-hours","Ruth Lilly Law Library","Campus Center recreation"]},
-  orgs:{
-    memberships:[
-      {icon:"📚",name:"Indiana Law Review",role:"Associate member"},
-      {icon:"⚖️",name:"Moot Court Society",role:"Competitor"},
-      {icon:"🏛️",name:"Student Bar Association",role:"Member"},
-    ],
-    announcements:[
-      {org:"Indiana Law Review",text:"Note edits due to your line editor by Friday 5 p.m.",time:"3h ago"},
-      {org:"Moot Court Society",text:"Regional problem released — brief teams are posted.",time:"1d ago"},
-    ],
-    events:[
-      {icon:"⚖️",title:"Moot Court practice round",when:"Thu 6:00 p.m.",where:"Inlow Hall Moot Court Room"},
-      {icon:"🤝",title:"1L/2L mentoring mixer",when:"Fri 5:00 p.m.",where:"Inlow Hall Atrium"},
-    ]},
-  library:{
-    onLoan:[
-      {title:"Chemerinsky, Constitutional Law",author:"Chemerinsky",due:"Oct 2",renew:true},
-      {title:"Federal Rules of Evidence (2026)",author:"West",due:"Sep 26",renew:false,soon:true},
-    ],
-    ill:[{title:"Law review article — PDF scan",status:"Ready — check your email"}],
-    rooms:[{room:"Ruth Lilly Law Library · Study Room 3",when:"Today 4:00–6:00 p.m.",status:"Reserved"}]},
-  favorites:["canvas","payBill","transcript","grades","dining","duo"],
-  degree:{program:"Juris Doctor (J.D.)",creditsDone:34,creditsReq:90,unit:"credit hours",reqsDone:5,reqsTotal:14,src:"the McKinney registrar"},
-  calendar:[
-    {t1:"9:00",t2:"10:15",title:"LAW-D 100 · Constitutional Law",loc:"Inlow Hall 121 · Prof. Reed",src:"SIS",color:"crimson",now:true,recurring:true},
-    {t1:"10:30",t2:"11:45",title:"LAW-B 200 · Evidence",loc:"Inlow Hall 118",src:"SIS",color:"blue",recurring:true},
-    {t1:"1:00",t2:"2:00",title:"Indiana Law Review — edits",loc:"Ruth Lilly Law Library",src:"Exchange",color:"gold",recurring:true},
-    {t1:"6:00",t2:"7:30",title:"Moot Court practice",loc:"Inlow Hall Moot Court Room",src:"Events",color:"purple"},
-  ],
-  actionItems:[
-    {id:"ai_law1",src:"canvas",title:"Evidence · problem set 4",desc:"Submit on the Canvas assignment page.",due:"Tomorrow 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
-    {id:"ai_law2",src:"registrar",title:"Register for spring courses",desc:"Enroll when your registration window opens.",due:"Oct 6",action:{label:"Open Student Center",target:"Student Center registration"},confirm:"system",confirmedBy:"enrollment confirms immediately"},
-    {id:"ai_law3",src:"bursar",title:"Pay fall balance ($8,930)",desc:"Or enroll in the no-interest payment plan.",due:"Sep 25",high:true,action:{label:"Pay bill",target:"the Bursar payment page"},confirm:"system",confirmedBy:"the payment posts to your account"},
-    {id:"ai_law4",src:"finaid",title:"Complete Grad PLUS loan steps",desc:"Federal steps are on studentaid.gov, outside IU.",due:"Before disbursement",action:{label:"Open studentaid.gov",target:"federal loan tasks"},confirm:"system",confirmedBy:"studentaid.gov reports completion to IU"},
-    {id:"ai_law5",src:"compliance",title:"Data security training",desc:"Required annually · ~20 min.",due:"Sep 30",action:{label:"Start training",target:"the IU information security training (Protect IU)"},confirm:"system",confirmedBy:"your completion is recorded"},
-  ],
-  notifCount:3,
-  notifications:[
-    {icon:"🗓️",unread:true,title:"Spring registration window opens Oct 6",sub:"Your enrollment appointment is set in the Student Center — plan your spring courses.",time:"2h ago"},
-    {icon:"🧾",unread:true,title:"Fall bill due Sep 25",sub:"Balance of $8,930. A no-interest payment plan is available through the Bursar.",time:"Today"},
-    {icon:"📚",unread:true,title:"Law Review edits due Friday",sub:"Return note edits to your line editor by 5 p.m.",time:"Yesterday"},
-    {icon:"🏛️",unread:false,title:"Guest lecture: appellate practice",sub:"Judge-in-residence · Inlow Hall Moot Court Room.",time:"2d ago"},
-  ],
-  tabs:[
-    {id:"home",label:"Home",icon:"🏠"},
-    {id:"tasks",label:"Tasks",icon:"⊞"},
-    {id:"classes",label:"Academics",icon:"📖"},
-    {id:"money",label:"Finances",icon:"💳"},
-    {id:"campus",label:"Campus",icon:"🗺️"},
-  ],
-  views:{
-    home:[
-      {type:"hero",kicker:"Week 4 · Fall semester",signals:[
-        {cat:"submission",n:"Evidence problem set",l:"due tomorrow",src:"Canvas",days:1},
-        {cat:"money",n:"$8,930",l:"balance due Sep 25",src:"Bursar",days:10},
-        {cat:"today",n:"2",l:"classes today",src:"SIS"},
-      ]},
-      {type:"calendar"},
-      {type:"actionitems"},
-      {type:"crimsoncard"},
-      {type:"orgs"},
-      {type:"libraries"},
-      {type:"campusfeed"},
-      {type:"launch"},
-    ],
-    tasks:[{type:"tasklauncher"}],
-    classes:[
-      {type:"acad"},
-      {type:"list",title:"Fall schedule · 14 credit hours · from SIS",items:[
-        {icon:"🏛️",bg:"red",title:"LAW-D 100 · Constitutional Law",sub:"MW 9:00–10:15 · Inlow Hall 121",right:"4 cr",rightSub:"enrolled"},
-        {icon:"⚖️",bg:"blue",title:"LAW-B 200 · Evidence",sub:"MW 10:30–11:45 · Inlow Hall 118",right:"3 cr",rightSub:"enrolled"},
-        {icon:"🏢",bg:"purple",title:"LAW-B 250 · Business Associations",sub:"TR 1:00–2:15 · Inlow Hall 245",right:"4 cr",rightSub:"enrolled"},
-        {icon:"🧭",bg:"green",title:"LAW-L 710 · Legal Profession",sub:"F 9:00–10:50 · Inlow Hall 116",right:"3 cr",rightSub:"enrolled"},
-      ]},
-      {type:"assignments",title:"Coming due",items:[
-        {course:"Evidence",title:"Problem set 4",due:"Tomorrow · 11:59 p.m.",soon:true},
-        {course:"Con Law",title:"Reading response 5",due:"Wednesday, in class"},
-        {course:"Law Review",title:"Note edits — round 1",due:"Friday · 5:00 p.m."},
-      ]},
-    ],
-    money:[
-      {type:"balances",title:"Fall 2026 statement · from Bursar",items:[
-        {icon:"💰",label:"Amount due",value:"$8,930.00",note:"Due Sep 25",alert:true},
-        {icon:"🎓",label:"Tuition & fees",value:"$15,930",note:"McKinney · resident"},
-        {icon:"✨",label:"Aid applied",value:"−$7,000",note:"Scholarship + loans"},
-        {icon:"📅",label:"Payment plan",value:"Available",note:"4 installments · no interest"},
-      ]},
-      {type:"balances",title:"All balances",items:[
-        {icon:"🧾",label:"Bursar",value:"$8,930.00",note:"Bursar · due Sep 25"},
-        {icon:"🎓",label:"Financial aid",value:"Awarded",note:"Financial Aid · award letter"},
-        {icon:"🥗",label:"Dining Dollars",value:"$96.40",note:"CrimsonCard"},
-        {icon:"💵",label:"Crimson Cash",value:"$41.15",note:"CrimsonCard · reload anytime"},
-      ]},
-      {type:"list",title:"Recent activity",items:[
-        {icon:"☕",bg:"red",title:"Campus Center café",sub:"Dining Dollars",src:"CrimsonCard",right:"−$5.75",rightSub:"Today"},
-        {icon:"🖨️",bg:"blue",title:"Law library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$2.40",rightSub:"Yesterday"},
-        {icon:"🎓",bg:"green",title:"Scholarship disbursement",sub:"Merit award",src:"Financial Aid",right:"+$3,500",rightSub:"Aug 22"},
-      ]},
-    ],
-    campus:[
-      {type:"campusmap"},
-      {type:"campusfeed"},
-    ],
-  }
-},
-
-/* ---------- 8. SOPHOMORE · IU Northwest ---------- */
-northwest: {
-  name:"Destiny Carter", first:"Destiny", avatar:"🎒",
-  campus:"iun",
-  role:"Sophomore · Nursing · IU Northwest", adminDesc:"Second-year nursing student commuting to IU Northwest in Gary; works a part-time campus job and rides the South Shore Line.",
-  greetSub:"2 classes today · timesheet due Friday.",
-  crimsonCard:{holder:"Destiny Carter",kind:"Student",id:"6017 88•• •••• 5540",since:"Aug 2025",
-    balances:[
-      {icon:"🥗",label:"Dining Dollars",value:"$65.20",note:"Commuter — dining & cafés",add:true},
-      {icon:"💵",label:"Crimson Cash",value:"$12.75",note:"Printing & bookstore",add:true},
-    ],
-    access:["Savannah Fitness Center","John W. Anderson Library","Student parking lots"]},
-  orgs:{
-    memberships:[
-      {icon:"🩺",name:"Student Nurses Association",role:"Member"},
-      {icon:"🏛️",name:"Student Government Association",role:"Senator"},
-    ],
-    announcements:[
-      {org:"Student Nurses Association",text:"Clinicals orientation Thursday 4 p.m. in Dunes Medical.",time:"5h ago"},
-      {org:"Student Government Association",text:"Commuter lounge hours extended during midterms.",time:"2d ago"},
-    ],
-    events:[
-      {icon:"🩺",title:"SNA clinicals orientation",when:"Thu 4:00 p.m.",where:"Dunes Medical/Professional Bldg"},
-      {icon:"🎭",title:"Theatre night",when:"Fri 7:30 p.m.",where:"Arts & Sciences Building"},
-    ]},
-  library:{
-    onLoan:[
-      {title:"Fundamentals of Nursing",author:"Potter & Perry",due:"Oct 1",renew:true},
-      {title:"Anatomy & Physiology",author:"Marieb",due:"Sep 25",renew:false,soon:true},
-    ],
-    ill:[{title:"Journal article — nursing ethics",status:"In progress"}],
-    rooms:[{room:"John W. Anderson Library · Group Room B",when:"Today 2:00–4:00 p.m.",status:"Reserved"}]},
-  careers:{
-    appt:{when:"Mon 11:00 a.m.",who:"IU Northwest Career Services"},
-    applied:3, saved:9,
-    events:[
-      {icon:"🏥",title:"Health careers fair",where:"Savannah Center gym · NW Indiana employers",when:"Sep 30"},
-      {icon:"✍️",title:"Résumé drop-in",where:"Hawthorn Hall · Career Services",when:"Sep 24"},
-    ]},
-  favorites:["canvas","dining","payBill","grades","timesheet","duo"],
-  degree:{program:"B.S. Nursing (pre-nursing)",creditsDone:34,creditsReq:120,reqsDone:12,reqsTotal:40,src:"iGPS"},
-  kualitime:{assignment:"Front desk · Savannah Center",rate:"$13.00/hr",todayMin:0,weekMin:480},
-  calendar:[
-    {t1:"9:30",t2:"10:45",title:"NURS-B 244 · Community Nursing",loc:"Dunes Medical 108 · Prof. Hill",src:"SIS",color:"crimson",now:true,recurring:true},
-    {t1:"11:00",t2:"12:15",title:"PHSL-P 261 · Anatomy & Physiology",loc:"Marram Hall 210",src:"SIS",color:"blue",recurring:true},
-    {t1:"1:00",t2:"4:00",title:"Savannah Center shift",loc:"Blocked on your Outlook",src:"Exchange",color:"gold",recurring:true},
-  ],
-  actionItems:[
-    {id:"ai_nw1",src:"hr",title:"Submit work-study timesheet",desc:"8 hours logged this week.",due:"Fri 5:00 p.m.",high:true,action:{label:"Open Kuali Time",target:"Kuali Time"},confirm:"approval",approver:"your supervisor"},
-    {id:"ai_nw2",src:"canvas",title:"A&P · Lab report 3",desc:"Submit on the Canvas assignment page.",due:"Tomorrow 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"the Canvas assignment"},confirm:"system",confirmedBy:"Canvas records your submission"},
-    {id:"ai_nw3",src:"advising",title:"Confirm advising for the nursing sequence",desc:"Hawthorn Hall · plan spring clinicals.",due:"Thu 2:00 p.m.",action:{label:"Confirm time",target:"the advising scheduler"},confirm:"system",confirmedBy:"the scheduler marks it confirmed"},
-    {id:"ai_nw4",src:"bursar",title:"Pay fall balance ($1,410)",desc:"Or enroll in the no-interest payment plan.",due:"Sep 25",high:true,action:{label:"Pay bill",target:"the Bursar payment page"},confirm:"system",confirmedBy:"the payment posts to your account"},
-    {id:"ai_nw5",src:"compliance",title:"FERPA refresher training",desc:"Required for student employees · ~15 min.",due:"End of month",action:{label:"Start training",target:"the IU FERPA Tutorial"},confirm:"system",confirmedBy:"the FERPA Tutorial records your completion"},
-  ],
-  notifCount:2,
-  notifications:[
-    {icon:"🩺",unread:true,title:"Clinicals orientation Thursday",sub:"4 p.m. in the Dunes Medical/Professional Building. Bring your health clearance.",time:"3h ago"},
-    {icon:"🧾",unread:true,title:"Fall bill due Sep 25",sub:"Balance of $1,410. A no-interest payment plan is available through the Bursar.",time:"Today"},
-    {icon:"📕",unread:false,title:"Library book due Sep 25",sub:"“Anatomy & Physiology” is due soon — renew online if you still need it.",time:"2d ago"},
-  ],
-  tabs:[
-    {id:"home",label:"Home",icon:"🏠"},
-    {id:"tasks",label:"Tasks",icon:"⊞"},
-    {id:"classes",label:"Academics",icon:"📖"},
-    {id:"money",label:"Finances",icon:"💳"},
-    {id:"campus",label:"Campus",icon:"🗺️"},
-  ],
-  views:{
-    home:[
-      {type:"hero",kicker:"Week 4 · Fall semester",signals:[
-        {cat:"submission",n:"A&P lab report",l:"due tomorrow",src:"Canvas",days:1},
-        {cat:"deadline",n:"Timesheet",l:"due Friday",src:"Kuali Time",days:3},
-        {cat:"money",n:"$1,410",l:"balance due Sep 25",src:"Bursar",days:10},
-        {cat:"today",n:"2",l:"classes today",src:"SIS"},
-        {cat:"status",n:"8h",l:"worked this week",src:"Kuali Time"},
-      ]},
-      {type:"calendar"},
-      {type:"actionitems"},
-      {type:"kualitime"},
-      {type:"crimsoncard"},
-      {type:"orgs"},
-      {type:"libraries"},
-      {type:"campusfeed"},
-      {type:"launch"},
-    ],
-    tasks:[{type:"tasklauncher"}],
-    classes:[
-      {type:"degree"},
-      {type:"acad"},
-      {type:"list",title:"Fall schedule · 14 credit hours · from SIS",items:[
-        {icon:"🩺",bg:"red",title:"NURS-B 244 · Community Nursing",sub:"MW 9:30–10:45 · Dunes Medical 108",right:"3 cr",rightSub:"enrolled"},
-        {icon:"🧬",bg:"blue",title:"PHSL-P 261 · Anatomy & Physiology",sub:"MW 11:00–12:15 · Marram Hall 210",right:"5 cr",rightSub:"enrolled"},
-        {icon:"🧠",bg:"purple",title:"PSY-P 103 · General Psychology",sub:"TR 1:00–2:15 · Hawthorn Hall 104",right:"3 cr",rightSub:"enrolled"},
-        {icon:"✍️",bg:"green",title:"ENG-W 131 · Writing & Inquiry",sub:"TR 9:30–10:45 · Raintree Hall 12",right:"3 cr",rightSub:"enrolled"},
-      ]},
-      {type:"assignments",title:"Assignments due this week",items:[
-        {course:"A&P",title:"Lab report 3",due:"Tomorrow · 11:59 p.m.",soon:true},
-        {course:"Community Nursing",title:"Care-plan draft",due:"Thursday, in class"},
-        {course:"PSY-P 103",title:"Chapter quiz 4",due:"Friday · 11:59 p.m."},
-      ]},
-    ],
-    money:[
-      {type:"balances",title:"Pay & time",items:[
-        {icon:"🏛️",label:"Position",value:"Savannah Center",note:"Front-desk assistant"},
-        {icon:"⏱️",label:"This week",value:"8 hrs",note:"logged in Kuali Time"},
-        {icon:"💰",label:"Earned so far",value:"$612",note:"of $2,000 award"},
-        {icon:"🗓️",label:"Next payday",value:"Sep 18",note:"Direct deposit"},
-      ]},
-      {type:"balances",title:"All balances",items:[
-        {icon:"🧾",label:"Bursar",value:"$1,410.00",note:"Bursar · due Sep 25"},
-        {icon:"🎓",label:"Financial aid",value:"Disbursed",note:"Financial Aid · award letter"},
-        {icon:"💼",label:"Work-study earned",value:"$612",note:"Payroll · of $2,000 award"},
-        {icon:"🥗",label:"Dining Dollars",value:"$65.20",note:"CrimsonCard"},
-        {icon:"💵",label:"Crimson Cash",value:"$12.75",note:"CrimsonCard · reload anytime"},
-      ]},
-      {type:"list",title:"Recent activity",items:[
-        {icon:"🥗",bg:"green",title:"Moraine Student Center dining",sub:"Dining Dollars",src:"CrimsonCard",right:"−$8.10",rightSub:"Today"},
-        {icon:"🖨️",bg:"blue",title:"Library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$1.50",rightSub:"Yesterday"},
-        {icon:"💼",bg:"gold",title:"Work-study direct deposit",sub:"Biweekly pay",src:"Payroll",right:"+$104.00",rightSub:"Sep 4"},
-      ]},
-    ],
-    campus:[
-      {type:"campusmap"},
-      {type:"campusfeed"},
-    ],
-  }
-},
-
-/* ---------- 9. PhD CANDIDATE + ADJUNCT (two roles, two campuses) ---------- */
-phd: {
-  name:"Rachel Adeyemi", first:"Rachel", avatar:"✒️",
-  campus:"iub", campuses:["iub","iusb"],
-  role:"PhD candidate · English (IUB) · Adjunct (IU South Bend)",
-  adminDesc:"Doctoral candidate in English at Bloomington writing her dissertation, who also teaches a full load of W131 as an adjunct at IU South Bend — a member with two roles and two campuses.",
-  greetSub:"Dissertation writing at 9 · W131 essays to grade.",
-  crimsonCard:{holder:"Rachel Adeyemi",kind:"Student · Instructor",id:"6017 88•• •••• 3061",since:"Aug 2021",
-    balances:[
-      {icon:"🥗",label:"Dining Dollars",value:"$44.10",note:"Cafés & campus dining",add:true},
-      {icon:"💵",label:"Crimson Cash",value:"$28.75",note:"Printing & off-campus",add:true},
-    ],
-    access:["Wells Library grad carrel (IUB)","Ballantine Hall after-hours","Wiekamp Hall (IU South Bend)"]},
-  library:{
-    onLoan:[
-      {title:"The Country and the City",author:"Williams",due:"Oct 12",renew:true},
-      {title:"Cane",author:"Toomer",due:"Sep 26",renew:false,soon:true},
-    ],
-    ill:[{title:"Journal scans · dissertation ch. 3",status:"Ready — check your email"}],
-    rooms:[{room:"Wells Library · Grad Carrel 214",when:"Reserved for the semester",status:"Reserved"}]},
-  degree:{program:"Ph.D. English",creditsDone:78,creditsReq:90,unit:"credit hours",reqsDone:5,reqsTotal:6,src:"the University Graduate School"},
-  favorites:["canvas","rosters","payslip","grades","printing","duo"],
-  calendar:[
-    {t1:"9:00",t2:"12:00",title:"Dissertation writing",loc:"Remote",src:"Exchange",color:"purple",now:true,recurring:true},
-    {t1:"1:00",t2:"2:15",title:"ENG-W 131 · Sec. 4",loc:"Wiekamp Hall 1255 · IU South Bend",src:"SIS",color:"crimson",recurring:true},
-    {t1:"2:30",t2:"3:45",title:"ENG-W 131 · Sec. 5",loc:"Wiekamp Hall 1255 · IU South Bend",src:"SIS",color:"crimson",recurring:true},
-    {t1:"4:00",t2:"5:00",title:"W131 office hours",loc:"Wiekamp Hall 2145 · IU South Bend",src:"Exchange",color:"gold",recurring:true},
-  ],
-  actionItems:[
-    {id:"ai_phd1",src:"canvas",title:"Grade W131 · Essay 2",desc:"~46 submissions across your two IU South Bend sections.",due:"Fri 11:59 p.m.",high:true,action:{label:"Open in Canvas",target:"Canvas SpeedGrader"},confirm:"system",confirmedBy:"Canvas records your grading"},
-    {id:"ai_phd2",src:"registrar",title:"Enroll in spring dissertation hours",desc:"G901 · maintains candidacy · when your window opens.",due:"Oct 6",action:{label:"Open Student Center",target:"Student Center registration"},confirm:"system",confirmedBy:"enrollment confirms immediately"},
-    {id:"ai_phd3",src:"compliance",title:"Data security training",desc:"Required annually for instructors · ~20 min.",due:"Sep 30",action:{label:"Start training",target:"the IU information security training (Protect IU)"},confirm:"system",confirmedBy:"your completion is recorded"},
-    {id:"ai_phd4",src:"advising",title:"Submit W131 early evaluations",desc:"For your students, in the Student Engagement Roster.",due:"Oct 4",action:{label:"Open the SER",target:"the Student Engagement Roster"},confirm:"system",confirmedBy:"the SER records your submission"},
-  ],
-  notifCount:2,
-  notifications:[
-    {icon:"📝",unread:true,title:"W131 Essay 2 submissions in",sub:"46 essays across Sections 4 and 5 are ready to grade in Canvas.",time:"2h ago"},
-    {icon:"📋",unread:true,title:"Early evaluations open",sub:"Submit early evaluations for your W131 students in the SER by Oct 4.",time:"Today"},
-    {icon:"💵",unread:false,title:"Adjunct pay deposited",sub:"Your monthly appointment pay from IU South Bend posted to direct deposit.",time:"Aug 29"},
-  ],
-  tabs:[
-    {id:"home",label:"Home",icon:"🏠"},
-    {id:"tasks",label:"Tasks",icon:"⊞"},
-    {id:"teaching",label:"Academics",icon:"📖"},
-    {id:"money",label:"Finances",icon:"💳"},
-    {id:"campus",label:"Campus",icon:"🗺️"},
-  ],
-  views:{
-    home:[
-      {type:"hero",kicker:"Week 4 · Fall semester",signals:[
-        {cat:"grading",n:"46",l:"W131 essays to grade",src:"Canvas",count:46},
-        {cat:"deadline",n:"Oct 4",l:"W131 early evaluations due",src:"SER",days:19},
-        {cat:"today",n:"2",l:"sections today",src:"SIS"},
-      ]},
-      {type:"actionitems"},
-      {type:"calendar"},
-      {type:"campusfeed"},
-      {type:"crimsoncard"},
-      {type:"libraries"},
-      {type:"launch"},
-    ],
-    tasks:[{type:"tasklauncher"}],
-    teaching:[
-      {type:"list",title:"Fall schedule · 6 credit hours · from SIS",items:[
-        {icon:"✒️",bg:"purple",title:"ENG-G 901 · Advanced Research",sub:"Dissertation hours · maintains candidacy",right:"6 cr",rightSub:"enrolled"},
-      ]},
-      {type:"acad"},
-      {type:"list",title:"Your courses · from SIS",items:[
-        {icon:"✍️",bg:"red",title:"ENG-W 131 · Section 4",sub:"MW 1:00–2:15 · Wiekamp Hall 1255 · 23 enrolled"},
-        {icon:"✍️",bg:"blue",title:"ENG-W 131 · Section 5",sub:"MW 2:30–3:45 · Wiekamp Hall 1255 · 23 enrolled"},
-      ]},
-      {type:"list",title:"Grading · from Canvas",items:[
-        {icon:"📘",bg:"red",title:"W131 · Essay 2",sub:"46 submissions ungraded",src:"Canvas",link:"the Canvas gradebook",linkLabel:"Grade"},
-      ]},
-      {type:"list",title:"Rosters & alerts",items:[
-        {icon:"📝",bg:"red",title:"Early evaluations — W131",sub:"Submit early-evaluation grades for beginning students",src:"Student Engagement Roster",link:"the Student Engagement Roster",linkLabel:"Open SER",right:"Due",rightSub:"Oct 4"},
-        {icon:"📋",bg:"blue",title:"Class roster — W131",sub:"Verify enrolled students · 0 pending adds",src:"Faculty Center",link:"the Faculty Center",linkLabel:"Open",right:"46",rightSub:"enrolled"},
-      ]},
-    ],
-    money:[
-      {type:"balances",title:"Pay & time",items:[
-        {icon:"🏫",label:"Appointment",value:"Adjunct lecturer",note:"English · IU South Bend"},
-        {icon:"💰",label:"Pay basis",value:"Per course",note:"Paid monthly · HRMS"},
-        {icon:"💵",label:"Earned this term",value:"$3,050",note:"1 monthly payment so far"},
-        {icon:"🗓️",label:"Next payday",value:"Sep 30",note:"Direct deposit"},
-      ]},
-      {type:"balances",title:"All balances",items:[
-        {icon:"🧾",label:"Bursar",value:"$612.00",note:"Bursar · PhD program fee, due Sep 25"},
-        {icon:"💼",label:"Appointment pay",value:"$3,050",note:"Payroll · fall, to date"},
-        {icon:"🥗",label:"Dining Dollars",value:"$44.10",note:"CrimsonCard"},
-        {icon:"💵",label:"Crimson Cash",value:"$28.75",note:"CrimsonCard · reload anytime"},
-      ]},
-      {type:"list",title:"Recent activity",items:[
-        {icon:"💼",bg:"gold",title:"Adjunct pay direct deposit",sub:"Monthly appointment pay · IU South Bend",src:"Payroll",right:"+$3,050",rightSub:"Aug 29"},
-        {icon:"🖨️",bg:"blue",title:"Wells Library printing",sub:"Crimson Cash",src:"CrimsonCard",right:"−$3.20",rightSub:"Yesterday"},
-        {icon:"☕",bg:"red",title:"Sugar & Spice (IMU)",sub:"Dining Dollars",src:"CrimsonCard",right:"−$4.85",rightSub:"Sep 11"},
-      ]},
-    ],
-    campus:[
-      {type:"campusmap"},
-      {type:"campusfeed"},
     ],
   }
 },
