@@ -242,6 +242,8 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 
 /* generic list */
 .li{display:flex;align-items:center;gap:13px;padding:11px 2px;border-bottom:1px dashed var(--line)}
+.li-click{border-radius:10px;transition:background .12s}
+.li-click:hover{background:var(--cream)}
 .li:last-child{border-bottom:none}
 .li .lic{
   width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;
@@ -397,7 +399,8 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 
 /* campus map */
 .map-wrap{grid-column:1/-1}
-.map-topbar{display:flex;gap:10px;flex-wrap:wrap}
+.map-topbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.map-topbar-note{flex:1;min-width:0;font-size:12px;color:var(--muted);font-weight:600;line-height:1.4}
 .msearch{
   flex:1;min-width:200px;padding:12px 20px;border-radius:999px;border:1.5px solid var(--line);
   background:#fff;font:inherit;font-size:14.5px;font-weight:600;outline:none;box-shadow:var(--shadow);
@@ -572,6 +575,17 @@ button{font-family:inherit;border:none;background:none;cursor:pointer;color:inhe
 .omni-empty{padding:30px 12px;text-align:center;color:var(--muted);font-weight:600;font-size:13px;line-height:1.6}
 .omni-group{font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin:12px 4px 4px;position:sticky;top:0;background:#fff}
 .omni-group:first-child{margin-top:2px}
+.ores.best{background:var(--gold-soft);border:1px solid var(--gold);margin:2px 0}
+.sig-flash{animation:sigFlashKf 1.9s ease-out;border-radius:14px;position:relative;z-index:1}
+@keyframes sigFlashKf{0%,18%{box-shadow:0 0 0 3px var(--gold);background:var(--gold-soft)}100%{box-shadow:0 0 0 0 rgba(0,0,0,0)}}
+.kb-body{font-size:14px;line-height:1.6;color:var(--body-text);margin-top:11px}
+.ores .oic .rico{width:18px;height:18px;color:var(--crimson)}
+.omni-more{font-size:11px;color:var(--muted);font-weight:700;padding:3px 6px 8px}
+.task-actions{display:flex;gap:8px;margin-top:auto;padding-top:6px}
+.tbtn{flex:1;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:7px 8px;font-weight:800;font-size:11.5px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:4px}
+.tbtn:hover{border-color:var(--link);color:var(--link)}
+.tbtn.primary{background:var(--link);border-color:var(--link);color:#fff}
+.tbtn.primary:hover{color:#fff;opacity:.92}
 @media (max-width:768px){ .omni-results{height:auto;max-height:340px} }
 
 /* search bar (above widgets) */
@@ -1343,6 +1357,207 @@ function visiblePlaces(){
    Action Items — source systems + completion models
    confirm: "system" (source confirms) | "approval" (needs approver) | "self"
 ===================================================== */
+/* =====================================================
+   Universal search datasets — KB articles, public directory
+   people, and student orgs (authored for the demo).
+===================================================== */
+const KB = [
+  {id:"duo",      title:"Set up Two-Step Login (Duo)",           cat:"Accounts",         updated:"2026-08-01", summary:"Enroll a phone or hardware token so you can approve logins. Add a backup device in case you lose your primary one."},
+  {id:"passphrase",title:"Reset your IU passphrase",             cat:"Accounts",         updated:"2026-07-15", summary:"Change or recover the passphrase used for all IU systems. You'll verify with Two-Step Login before setting a new one."},
+  {id:"newacct",  title:"Create your IU computing account",       cat:"Accounts",         updated:"2026-06-20", summary:"New students and employees activate their username, set a passphrase, and enroll in Two-Step Login before first sign-in."},
+  {id:"eduroam",  title:"Connect to eduroam Wi-Fi",              cat:"Wi-Fi & Devices",  updated:"2026-08-10", summary:"Use your full IU address and passphrase to join eduroam on campus and at other member institutions worldwide."},
+  {id:"iusecure", title:"Set up IU Secure on your phone",         cat:"Wi-Fi & Devices",  updated:"2026-08-10", summary:"Install the IU Secure profile so your device connects automatically. eduroam is recommended for most people."},
+  {id:"iot",      title:"Register a game console or smart device",cat:"Wi-Fi & Devices",  updated:"2026-05-30", summary:"Devices that can't run Two-Step Login connect through the IoT network using their hardware (MAC) address."},
+  {id:"office",   title:"Install Microsoft 365 (Office)",         cat:"Wi-Fi & Devices",  updated:"2026-07-01", summary:"Students and employees can install Word, Excel, PowerPoint, and Outlook at no cost while affiliated with IU."},
+  {id:"univid",   title:"Find your 10-digit University ID",       cat:"Accounts",         updated:"2026-06-05", summary:"Your University ID appears in the Student Center and on your CrimsonCard. It is different from your username."},
+  {id:"bill",     title:"Understand your Bursar bill",            cat:"Money",            updated:"2026-08-18", summary:"Statements post monthly. Charges, credits, financial aid, and the amount due are itemized; due dates are shown per term."},
+  {id:"payer",    title:"Set up an authorized payer",             cat:"Money",            updated:"2026-08-18", summary:"Grant a parent or sponsor access to view and pay your bill without sharing your passphrase."},
+  {id:"payplan",  title:"Enroll in the installment payment plan", cat:"Money",            updated:"2026-08-01", summary:"Split each term's balance into interest-free installments. Enrollment reopens each term through the Bursar."},
+  {id:"refund",   title:"Set up direct deposit for refunds",      cat:"Money",            updated:"2026-07-20", summary:"Add a bank account so credit balances and payroll are deposited electronically instead of mailed as a check."},
+  {id:"acceptaid",title:"Accept or decline financial aid",        cat:"Financial Aid",    updated:"2026-08-05", summary:"Review each awarded item in the Student Center and accept, reduce, or decline it before disbursement."},
+  {id:"fafsa",    title:"File the FAFSA for IU",                   cat:"Financial Aid",    updated:"2026-09-01", summary:"Complete the FAFSA and list IU's federal school code 001809 so your aid can be packaged for the year."},
+  {id:"transcript",title:"Order an official transcript",          cat:"Records",          updated:"2026-06-28", summary:"Request electronic or mailed official transcripts through the Office of the Registrar; current students and alumni are eligible."},
+  {id:"adddrop",  title:"Add or drop a class",                    cat:"Records",          updated:"2026-08-22", summary:"Use the Student Center during your registration window. Deadlines and refund percentages depend on the term calendar."},
+  {id:"holds",    title:"Understand registration holds",          cat:"Records",          updated:"2026-08-22", summary:"A hold can block registration until you resolve it, for example an advising, bursar, or immunization hold."},
+  {id:"applygrad",title:"Apply to graduate",                      cat:"Records",          updated:"2026-07-10", summary:"Submit your graduation application the term before you finish. Your academic unit then certifies your eligibility."},
+  {id:"canvas",   title:"Submit work and check grades in Canvas", cat:"Canvas",           updated:"2026-08-12", summary:"Turn in assignments, view feedback, and track grades. Instructors post grades on their own schedule."},
+  {id:"speedgrader",title:"Grade with SpeedGrader (instructors)", cat:"Canvas",           updated:"2026-08-12", summary:"Review submissions, leave inline comments, and enter grades one student at a time from the Canvas gradebook."},
+  {id:"emailfwd", title:"Forward your IU email or set an alias",   cat:"Email",            updated:"2026-06-15", summary:"Manage forwarding and add a friendly alias for your Exchange Online mailbox from the account management tools."},
+  {id:"calshare", title:"Share your Outlook calendar",            cat:"Email",            updated:"2026-06-15", summary:"Grant colleagues view or edit access to your calendar and set the level of detail they can see."},
+  {id:"kualitime",title:"Clock in and submit hours (Kuali Time)", cat:"Employment",       updated:"2026-08-03", summary:"Hourly employees record time and submit each pay period for supervisor approval in Kuali Time."},
+  {id:"payslip",  title:"View your payslip",                      cat:"Employment",       updated:"2026-07-25", summary:"Find current and past pay statements, including gross pay, taxes, and deductions, in the Employee Center."},
+  {id:"immun",    title:"Submit immunization records",            cat:"Health",           updated:"2026-07-05", summary:"New students upload required immunization documentation before their first term to clear the related hold."},
+  {id:"healthappt",title:"Schedule a Health Center appointment",  cat:"Health",           updated:"2026-08-14", summary:"Book primary care, immunizations, and other visits online. Some services are covered by the student health fee."},
+  {id:"studyroom",title:"Reserve a library study room",           cat:"Campus",           updated:"2026-08-20", summary:"Book a group or individual room for a set time block through the library reservation system."},
+  {id:"busroutes",title:"Ride the campus bus and find routes",    cat:"Campus",           updated:"2026-08-20", summary:"See live routes and arrival times for the campus bus where available; some campuses are served by city transit instead."},
+];
+const KB_BODY = {
+  duo:[
+    "Two-Step Login adds a second check to your IU sign-in: after your username and passphrase, you approve the login on a device you carry. It protects your account even if someone learns your passphrase. Most people use the Duo Mobile app and simply tap Approve on a push notification.",
+    "To get started, install Duo Mobile, then enroll your phone from the Two-Step Login management page and follow the prompts to link the app. Add at least one backup option (a second device, a phone number, or printed passcodes) so you can still get in if your primary phone is lost or offline. You can manage or remove devices from that same page at any time."],
+  passphrase:[
+    "Your IU passphrase is the single credential you use across email, Canvas, the Student Center, and campus Wi-Fi. If you have forgotten it or think it may be compromised, you can set a new one online in a few minutes.",
+    "Go to the account management site and choose to change your passphrase; you will confirm your identity with Two-Step Login before continuing. Pick a phrase that is long and memorable, avoid reusing passwords from other sites, and update any saved copies on your phone and laptop so your devices reconnect."],
+  newacct:[
+    "New students and employees receive a university computing account that unlocks nearly every IU system. Before your first sign-in you will claim the account, choose a passphrase, and set up Two-Step Login.",
+    "Start from the account-creation link in your admission or hire communications and follow the guided steps. Once your username and passphrase are active, enroll a device in Two-Step Login and sign in to your IU email so you do not miss important notices."],
+  eduroam:[
+    "eduroam is the recommended Wi-Fi network on IU campuses. It connects automatically once configured and also works at thousands of other universities worldwide using your same IU credentials.",
+    "On most devices, select eduroam from the Wi-Fi list and sign in with your full IU address (username@iu.edu) and passphrase. If your device stops connecting after a passphrase change, tell it to forget the saved eduroam network and rejoin so it picks up the new credentials."],
+  iusecure:[
+    "IU Secure is an alternative campus Wi-Fi network. It uses a one-time configuration profile so your device can reconnect without re-entering credentials each time.",
+    "Install the IU Secure profile from the network setup tool and follow the prompts for your operating system. For everyday use eduroam is preferred, because it also works when you visit other member institutions, but IU Secure is a reliable fallback on campus."],
+  iot:[
+    "Devices that cannot complete Two-Step Login, such as game consoles, streaming sticks, smart speakers, and printers, connect through IU's device (IoT) network instead of eduroam.",
+    "Register the device by its hardware (MAC) address in the device registration tool, then choose the IoT network on the device itself. Registrations are tied to your account, so remove devices you no longer use to keep your list current."],
+  office:[
+    "As long as you are affiliated with IU, you can install the full Microsoft 365 suite (Word, Excel, PowerPoint, Outlook, and OneDrive) on your personal computers and mobile devices at no extra cost.",
+    "Sign in to the Microsoft portal with your IU address to download the installer, or use the web versions in a browser. Your license stays active while you are a student or employee, and files saved to OneDrive are backed up and available from any signed-in device."],
+  univid:[
+    "Your University ID is a 10-digit number that identifies you in student and HR systems. It is separate from your username and from the number printed on your CrimsonCard.",
+    "You can find it in the Student Center under your profile, and it also appears on official documents. Keep it private the way you would any account number, and have it ready when an office asks you to verify your identity."],
+  bill:[
+    "The Bursar posts a statement each month showing tuition, fees, housing, and any credits or financial aid, along with the current amount due and its due date. Reviewing it each month helps you avoid late fees and holds.",
+    "View and pay your statement through the Bursar's online payment system. If you cannot pay the full balance at once, look into the installment payment plan, and set up an authorized payer if a family member helps with payments."],
+  payer:[
+    "Students control who can see and pay their bill. Adding an authorized payer lets a parent, guardian, or sponsor view statements and make payments without ever using your passphrase.",
+    "Create the authorized payer from the Bursar payment system; the person you add receives their own separate login. You can adjust or remove their access at any time, and granting payment access does not share your grades or other records."],
+  payplan:[
+    "The installment payment plan splits a term's balance into several interest-free payments instead of one lump sum. It is a common way to spread costs across the semester.",
+    "Enroll each term through the Bursar payment system before the plan's deadline; a small enrollment fee may apply. Installments are drawn on set dates, so make sure your payment method has sufficient funds to avoid a returned-payment charge."],
+  refund:[
+    "Setting up direct deposit means refunds, such as excess financial aid, and (for employees) payroll are deposited straight to your bank account instead of mailed as a paper check.",
+    "Add your bank's routing and account numbers in the Student Center for refunds, or the Employee Center for pay. Double-check the numbers, since an incorrect account can delay your money, and update them whenever you change banks."],
+  acceptaid:[
+    "Financial aid you are offered is not final until you respond to it. In the Student Center you can accept, reduce, or decline each awarded item, such as grants, scholarships, and loans.",
+    "Grants and scholarships are usually applied automatically, while loans typically require you to accept the amount you want and finish a few steps with the lender. Review the terms of each item before accepting, and only borrow what you need."],
+  fafsa:[
+    "The Free Application for Federal Student Aid (FAFSA) determines your eligibility for federal and state grants, work-study, and loans, and IU uses it to build your aid offer.",
+    "File the FAFSA online and list Indiana University's federal school code, 001809, so your information is sent to IU. Submit early each year to meet priority deadlines, and renew it annually for as long as you want to be considered for aid."],
+  transcript:[
+    "An official transcript is a certified record of your IU coursework and degrees. Employers, graduate schools, and other institutions usually require the official version rather than an unofficial copy.",
+    "Order official transcripts through the Office of the Registrar; you can choose secure electronic delivery or a mailed paper copy. Current students and alumni are both eligible, though an outstanding hold may need to be resolved first."],
+  adddrop:[
+    "You can adjust your schedule during your registration window and the add/drop period at the start of a term. Adding, dropping, or swapping classes is done in the Student Center.",
+    "Deadlines matter: dropping after certain dates can affect your tuition refund and may leave a W on your record. Check the academic calendar for your campus and talk with your advisor before changes that affect your progress or financial aid."],
+  holds:[
+    "A hold is a flag on your account that can block actions like registering for classes, ordering a transcript, or receiving a diploma. Common types include advising, bursar (unpaid balance), and immunization holds.",
+    "You can see your holds in the Student Center, where each one lists the office that placed it and what you need to do. Resolve the underlying issue (meet with your advisor, pay a balance, submit a document) and the hold is usually released within a day or two."],
+  applygrad:[
+    "Applying to graduate tells your school you intend to finish, and it starts the review that confirms you have met every requirement for your degree.",
+    "Submit the graduation application in the Student Center the term before you plan to finish, by your school's deadline. Applying does not require that every requirement already be complete, but your academic unit certifies your eligibility before the degree is awarded."],
+  canvas:[
+    "Canvas is IU's learning management system, where you find your courses, submit assignments, take quizzes, and view feedback and grades.",
+    "Open an assignment to upload files or enter your work, and check the To-Do list and calendar so you do not miss due dates. Grades in Canvas are posted by your instructor and are unofficial; your official grades appear in the Student Center at the end of the term."],
+  speedgrader:[
+    "SpeedGrader is the Canvas tool instructors use to review and grade submissions one student at a time, with inline comments, rubrics, and annotations.",
+    "Open an assignment's SpeedGrader from the Canvas gradebook, move through submissions with the student selector, and enter scores and feedback that students see once you post grades. A rubric attached to the assignment lets you grade consistently and quickly."],
+  emailfwd:[
+    "Your IU email runs on Exchange Online (Outlook). You can add a friendly alias, organize mail with rules, and, if you prefer, forward messages to another address.",
+    "Manage forwarding and aliases from the account management tools rather than inside Outlook. Keep in mind that official university communications are sent to your IU address, so check it regularly even if you forward a copy elsewhere."],
+  calshare:[
+    "Outlook lets you share your calendar with colleagues so they can see when you are free or busy, or give them permission to view details and even edit events.",
+    "In Outlook, open calendar sharing, add the person, and choose how much they can see, from availability only up to full details. You can change or revoke access later, which is handy for scheduling with a team or an assistant."],
+  kualitime:[
+    "Kuali Time is IU's timekeeping system for hourly employees, including many student workers. You clock in and out and submit your hours each pay period.",
+    "Record time as you start and end shifts, review your timesheet for accuracy, and submit it by the deadline so your supervisor can approve it. If you forget to clock in or out, add a missed-punch note and let your supervisor know so your pay is correct."],
+  payslip:[
+    "Your payslip shows what you earned for a pay period along with taxes, benefits, and other deductions. Past and current statements are available in the Employee Center.",
+    "Open the Employee Center to view or download a statement, and set up direct deposit if you have not already. Reviewing your first few payslips helps you confirm that your tax withholding and benefit elections look right."],
+  immun:[
+    "IU requires new students to submit documentation of certain immunizations before their first term. Missing records usually create a hold that blocks registration.",
+    "Upload your immunization history through the student health portal and check that each required item is recorded. Submit early, since it can take a few days to process, and contact the health center if you need help locating your records."],
+  healthappt:[
+    "The campus health center offers primary care, immunizations, and other services to students. Many visits are covered by the student health fee, with some services billed to insurance.",
+    "Schedule most appointments online through the health portal, where you can also message providers and view results. For urgent concerns outside the center's hours, follow the after-hours guidance listed on the portal."],
+  studyroom:[
+    "IU Libraries offer group and individual study rooms you can reserve for a set block of time. Rooms fill up around midterms and finals, so book ahead when you can.",
+    "Use the library reservation system to pick a location, date, and time; you may need to check in when you arrive so the room is not released. Be mindful of time limits and per-day maximums so rooms stay available for everyone."],
+  busroutes:[
+    "Where a campus operates a bus system you can ride at no cost and track routes and arrival times in real time. Smaller campuses are often served by the local city transit system instead.",
+    "Check current routes, stops, and live arrivals in the campus transit tool or IU Mobile before you head out. Schedules change between the academic year and breaks, so confirm times during holidays and summer sessions."],
+};
+
+const PEOPLE = [
+  {id:"p_raman",   name:"Priya Raman",       role:"Faculty", title:"Associate Professor",       dept:"Luddy School of Informatics, Computing & Engineering", campus:"iub",  email:"praman@iu.edu",   building:"Luddy Hall"},
+  {id:"p_webb",    name:"Marcus Webb",       role:"Faculty", title:"Professor",                  dept:"Kelley School of Business",           campus:"iub",  email:"mwebb@iu.edu",    building:"Hodge Hall"},
+  {id:"p_foster",  name:"Angela Foster",     role:"Faculty", title:"Clinical Professor",         dept:"School of Nursing",                   campus:"iui",  email:"anfoster@iu.edu", building:"Nursing Building"},
+  {id:"p_okonkwo", name:"Samuel Okonkwo",    role:"Faculty", title:"Assistant Professor",        dept:"Physics",                             campus:"iub",  email:"sokonkwo@iu.edu", building:"Swain Hall West"},
+  {id:"p_brandt",  name:"Lena Brandt",       role:"Faculty", title:"Professor",                  dept:"School of Education",                 campus:"iub",  email:"lbrandt@iu.edu",  building:"Wright Education"},
+  {id:"p_ali",     name:"Hassan Ali",        role:"Faculty", title:"Associate Professor",        dept:"McKinney School of Law",              campus:"iui",  email:"hali@iu.edu",     building:"Inlow Hall"},
+  {id:"p_cho",     name:"Rebecca Cho",       role:"Faculty", title:"Assistant Professor",        dept:"English",                             campus:"iusb", email:"rcho@iu.edu",     building:"Wiekamp Hall"},
+  {id:"p_ruiz",    name:"Daniel Ruiz",       role:"Faculty", title:"Professor",                  dept:"Chemistry",                           campus:"iub",  email:"druiz@iu.edu",    building:"Chemistry Building"},
+  {id:"p_tanaka",  name:"Yuki Tanaka",       role:"Faculty", title:"Associate Professor",        dept:"Jacobs School of Music",              campus:"iub",  email:"ytanaka@iu.edu",  building:"Simon Music Center"},
+  {id:"p_mbeki",   name:"Grace Mbeki",       role:"Faculty", title:"Assistant Professor",        dept:"O'Neill School of Public & Environmental Affairs", campus:"iub", email:"gmbeki@iu.edu", building:"O'Neill Building"},
+  {id:"p_reilly",  name:"Thomas Reilly",     role:"Faculty", title:"Professor",                  dept:"School of Medicine",                  campus:"iui",  email:"treilly@iu.edu",  building:"Fesler Hall"},
+  {id:"p_diallo_a",name:"Amara Diallo",      role:"Faculty", title:"Associate Professor",        dept:"The Media School",                    campus:"iub",  email:"amdiallo@iu.edu", building:"Franklin Hall"},
+  {id:"p_whitfield",name:"Karen Whitfield",  role:"Staff",   title:"Academic Advisor",           dept:"Advising",                            campus:"iub",  email:"kwhitfie@iu.edu", building:"Maxwell Hall", phone:"(812) 855-0100"},
+  {id:"p_marsh",   name:"Devin Marsh",       role:"Staff",   title:"Financial Aid Counselor",    dept:"Student Central",                     campus:"iub",  email:"dmarsh@iu.edu",   building:"Wells Library", phone:"(812) 855-0110"},
+  {id:"p_delgado", name:"Sofia Delgado",     role:"Staff",   title:"Bursar Specialist",          dept:"Student Central",                     campus:"iub",  email:"sdelgado@iu.edu", building:"Poplars Building", phone:"(812) 855-0120"},
+  {id:"p_kingston",name:"Robert Kingston",   role:"Staff",   title:"IT Support Consultant",      dept:"UITS",                                campus:"iub",  email:"rkingsto@iu.edu", building:"Wells Library", phone:"(812) 855-6789"},
+  {id:"p_tran",    name:"Nicole Tran",       role:"Staff",   title:"Residence Life Coordinator", dept:"Residential Programs & Services",     campus:"iub",  email:"nictran@iu.edu",  building:"Teter Quad"},
+  {id:"p_holloway",name:"James Holloway",    role:"Staff",   title:"Employer Relations Recruiter",dept:"Kelley Career Services",             campus:"iub",  email:"jhollowa@iu.edu", building:"Hodge Hall"},
+  {id:"p_santos",  name:"Maria Santos",      role:"Staff",   title:"Registrar Services Specialist",dept:"Office of the Registrar",           campus:"iui",  email:"msantos@iu.edu",  building:"Campus Center"},
+  {id:"p_fields",  name:"Aaron Fields",      role:"Staff",   title:"CrimsonCard Office Manager", dept:"CrimsonCard",                         campus:"iub",  email:"aafields@iu.edu", building:"Campus View"},
+  {id:"p_lentz",   name:"Deborah Lentz",     role:"Staff",   title:"HR Generalist",              dept:"Human Resources",                     campus:"iub",  email:"dlentz@iu.edu",   building:"Poplars Building"},
+  {id:"p_osei",    name:"Kevin Osei",        role:"Staff",   title:"Reference Specialist",       dept:"IU Libraries",                        campus:"iub",  email:"kosei@iu.edu",    building:"Wells Library"},
+  {id:"p_nolan",   name:"Patricia Nolan",    role:"Staff",   title:"Nursing Student Advisor",    dept:"Nursing Student Services",            campus:"iun",  email:"pnolan@iu.edu",   building:"Dunes Medical Building"},
+  {id:"p_schultz", name:"Brian Schultz",     role:"Staff",   title:"Facilities Coordinator",     dept:"Campus Facilities",                   campus:"iusb", email:"bschultz@iu.edu", building:"Administration Building"},
+  {id:"p_zhang",   name:"Emily Zhang",       role:"Student", title:"Undergraduate · Informatics",dept:"Luddy School",                        campus:"iub",  email:"emzhang@iu.edu"},
+  {id:"p_blake",   name:"Jordan Blake",      role:"Student", title:"Undergraduate · Finance",    dept:"Kelley School of Business",           campus:"iub",  email:"joblake@iu.edu"},
+  {id:"p_ajohnson",name:"Aaliyah Johnson",   role:"Student", title:"Undergraduate · Nursing",    dept:"School of Nursing",                   campus:"iun",  email:"aajohnso@iu.edu"},
+  {id:"p_medina",  name:"Carlos Medina",     role:"Student", title:"Undergraduate · Engineering",dept:"Purdue School of Engineering & Technology", campus:"iui", email:"carmedin@iu.edu"},
+  {id:"p_suzuki",  name:"Hana Suzuki",       role:"Student", title:"Undergraduate · Biology",    dept:"College of Arts & Sciences",          campus:"iub",  email:"hsuzuki@iu.edu"},
+  {id:"p_brooks",  name:"Tyler Brooks",      role:"Student", title:"Graduate · English",         dept:"English",                             campus:"iusb", email:"tybrooks@iu.edu"},
+  {id:"p_nasser",  name:"Fatima Nasser",     role:"Student", title:"Undergraduate · Public Health",dept:"School of Public Health",           campus:"iub",  email:"fnasser@iu.edu"},
+  {id:"p_oconnor", name:"Liam O'Connor",     role:"Student", title:"Undergraduate · Voice",      dept:"Jacobs School of Music",              campus:"iub",  email:"loconnor@iu.edu"},
+  {id:"p_alvarez", name:"Mia Alvarez",       role:"Student", title:"Undergraduate · Political Science",dept:"School of Liberal Arts",         campus:"iui",  email:"mialvare@iu.edu"},
+  {id:"p_fischer", name:"Noah Fischer",      role:"Student", title:"Undergraduate · Computer Science",dept:"Purdue School of Science",        campus:"iui",  email:"nofische@iu.edu"},
+  {id:"p_park",    name:"Sydney Park",       role:"Student", title:"Undergraduate · Journalism", dept:"The Media School",                    campus:"iub",  email:"sydpark@iu.edu"},
+  {id:"p_idiallo", name:"Ibrahim Diallo",    role:"Student", title:"Graduate · Public Affairs",  dept:"O'Neill School",                      campus:"iub",  email:"ibdiallo@iu.edu"},
+];
+const ORGS = [
+  {id:"o_isa",     name:"Indian Student Association",        cat:"Cultural",     campus:"iub",  blurb:"Community, festivals, and cultural programming for Indian and South Asian students."},
+  {id:"o_hoc",     name:"Hoosier Outdoor Club",              cat:"Recreation",   campus:"iub",  blurb:"Weekend hikes, climbing, and paddling trips open to all experience levels."},
+  {id:"o_isa_inf", name:"Informatics Student Association",   cat:"Professional", campus:"iub",  blurb:"Tech talks, hackathons, and career events for Luddy students."},
+  {id:"o_iusg",    name:"IU Student Government",             cat:"Governance",   campus:"iub",  blurb:"Elected student representation and campus advocacy at Bloomington."},
+  {id:"o_wic",     name:"Women in Computing",                cat:"Professional", campus:"iub",  blurb:"Mentorship, workshops, and community for women and nonbinary students in computing."},
+  {id:"o_kesem",   name:"Camp Kesem at IU",                  cat:"Service",      campus:"iub",  blurb:"Student-run summer camp for children whose parents have been affected by cancer."},
+  {id:"o_sba",     name:"Student Bar Association",           cat:"Governance",   campus:"iui",  blurb:"Student government and programming for McKinney law students."},
+  {id:"o_moot",    name:"Moot Court Society",                cat:"Academic",     campus:"iui",  blurb:"Appellate advocacy competitions and oral-argument practice."},
+  {id:"o_lawrev",  name:"Indiana Law Review",                cat:"Academic",     campus:"iui",  blurb:"Student-edited legal scholarship journal."},
+  {id:"o_usg_iui", name:"Undergraduate Student Government",  cat:"Governance",   campus:"iui",  blurb:"Elected undergraduate representation at IU Indianapolis."},
+  {id:"o_swe",     name:"Society of Women Engineers",        cat:"Professional", campus:"iui",  blurb:"Professional development and outreach for women in engineering and technology."},
+  {id:"o_bsu_iui", name:"Black Student Union",               cat:"Cultural",     campus:"iui",  blurb:"Cultural community, advocacy, and events for Black students."},
+  {id:"o_sna",     name:"Student Nurses Association",        cat:"Professional", campus:"iun",  blurb:"Clinical prep, NCLEX resources, and service for nursing students."},
+  {id:"o_sga_iun", name:"Student Government Association",     cat:"Governance",   campus:"iun",  blurb:"Elected student representation at IU Northwest."},
+  {id:"o_lsu",     name:"Latino Student Union",              cat:"Cultural",     campus:"iun",  blurb:"Cultural programming and community for Latino students in Northwest Indiana."},
+  {id:"o_psych_iun",name:"Psychology Club",                  cat:"Academic",     campus:"iun",  blurb:"Speakers, grad-school prep, and research connections for psychology majors."},
+  {id:"o_esports_iun",name:"RedHawks Esports",               cat:"Recreation",   campus:"iun",  blurb:"Competitive and casual gaming teams and events."},
+  {id:"o_cjs",     name:"Criminal Justice Society",          cat:"Professional", campus:"iun",  blurb:"Career panels and site visits for criminal justice and public-service students."},
+  {id:"o_titanprod",name:"Titan Productions",                cat:"Programming",  campus:"iusb", blurb:"Plans concerts, film nights, and campus-wide social events."},
+  {id:"o_sga_iusb",name:"Student Government Association",     cat:"Governance",   campus:"iusb", blurb:"Elected student representation at IU South Bend."},
+  {id:"o_english", name:"English Club",                      cat:"Academic",     campus:"iusb", blurb:"Readings, writing workshops, and literary community."},
+  {id:"o_iso",     name:"International Student Organization", cat:"Cultural",     campus:"iusb", blurb:"Support and cultural exchange for international students."},
+  {id:"o_esports_iusb",name:"Titans Esports",                cat:"Recreation",   campus:"iusb", blurb:"Gaming club with competitive rosters and open play."},
+  {id:"o_sw",      name:"Social Work Student Association",   cat:"Professional", campus:"iusb", blurb:"Advocacy, field-placement support, and community service."},
+  {id:"o_sab_iuc", name:"Student Activities Board",          cat:"Programming",  campus:"iuc",  blurb:"Plans campus events and traditions at IU Columbus."},
+  {id:"o_nso_iuc", name:"Nursing Student Organization",      cat:"Professional", campus:"iuc",  blurb:"Peer support and clinical readiness for nursing students."},
+  {id:"o_biz_iuc", name:"Business Club",                     cat:"Professional", campus:"iuc",  blurb:"Networking and speaker events for business students."},
+  {id:"o_rwsg_iue",name:"Red Wolves Student Government",     cat:"Governance",   campus:"iue",  blurb:"Elected student representation at IU East."},
+  {id:"o_psych_iue",name:"Psychology Club",                  cat:"Academic",     campus:"iue",  blurb:"Speakers and grad-school prep for psychology students."},
+  {id:"o_cab_iue", name:"Campus Activities Board",           cat:"Programming",  campus:"iue",  blurb:"Student-run programming and events."},
+  {id:"o_sg_iufw", name:"Student Government",                cat:"Governance",   campus:"iufw", blurb:"Elected representation at IU Fort Wayne."},
+  {id:"o_dha_iufw",name:"Dental Hygiene Association",        cat:"Professional", campus:"iufw", blurb:"Clinical community and outreach for dental hygiene students."},
+  {id:"o_rad_iufw",name:"Radiography Club",                  cat:"Professional", campus:"iufw", blurb:"Peer support for radiologic and imaging sciences students."},
+  {id:"o_sga_iuk", name:"Student Government Association",     cat:"Governance",   campus:"iuk",  blurb:"Elected student representation at IU Kokomo."},
+  {id:"o_nurse_iuk",name:"Nursing Club",                     cat:"Professional", campus:"iuk",  blurb:"Study groups and service for nursing students."},
+  {id:"o_cab_iuk", name:"Cougar Activities Board",           cat:"Programming",  campus:"iuk",  blurb:"Plans social and traditions programming."},
+  {id:"o_sga_ius", name:"Student Government Association",     cat:"Governance",   campus:"ius",  blurb:"Elected student representation at IU Southeast."},
+  {id:"o_gab_ius", name:"Grenadier Activities Board",        cat:"Programming",  campus:"ius",  blurb:"Campus events and traditions at IU Southeast."},
+  {id:"o_bio_ius", name:"Biology Club",                      cat:"Academic",     campus:"ius",  blurb:"Field trips, speakers, and research connections for biology students."},
+];
+
 const SOURCES = {
   canvas:{name:"Canvas (LMS)",icon:"📘",cls:"blue"},
   registrar:{name:"Office of the Registrar",icon:"🎓",cls:"red"},
@@ -2904,7 +3119,7 @@ function launchTask(id){
   if(P().guest && !t.personas.includes("all")){
     toast(`Sign in with your IU username to use “${t.name}”.`); return;
   }
-  toast(`"${t.name}" opens the One.IU task — not connected in this prototype.`);
+  toast(`Opening “${t.name}” — this launches the external service (external link).`);
 }
 function toggleFav(ev,id){
   ev.stopPropagation();
@@ -2947,7 +3162,7 @@ function renderCard(c){
         <div><div class="tt">${esc(i.txt)}</div><div class="td ${i.urgent?"urgent":""}">${esc(i.due)}</div></div>
       </div>`;}).join(""));
     case "balances": return card(c.title, `<div class="bal-grid">${c.items.map(i=>`
-      <div class="bal ${i.alert?"alert":""}"><div class="bv">${esc(i.value)}</div><div class="bl">${esc(i.label)}</div><div class="bn">${esc(i.note)}</div>
+      <div class="bal ${i.alert?"alert":""}" id="${sigSlug(i.label)}"><div class="bv">${esc(i.value)}</div><div class="bl">${esc(i.label)}</div><div class="bn">${esc(i.note)}</div>
       </div>`).join("")}</div>`);
     case "list": return card(c.title, c.items.map(i=>`
       <div class="li">
@@ -3067,13 +3282,16 @@ function taskResultsHTML(){
     ?"No favorites yet. Tap the heart on any task to pin it here and on your home screen."
     :"No tasks match these filters. Remove a filter to see more."}</div>`;
   return `<div class="task-grid">${list.map(t=>`
-    <div class="task-tile" onclick="launchTask('${t.id}')">
+    <div class="task-tile">
       ${P().guest?"":`<button class="task-star ${state.favs.has(t.id)?"on":""}" title="Favorite"
         onclick="toggleFav(event,'${t.id}')">${state.favs.has(t.id)?ico("heart-solid"):ico("heart")}</button>`}
-      <div class="task-ic">${taskIcon(t)}</div>
+      <div class="task-ic" onclick="openTDP('${t.id}')" style="cursor:pointer">${taskIcon(t)}</div>
       <div class="task-name">${esc(t.name)}</div>
       <div class="task-desc">${esc(t.desc)}</div>
-      <div class="task-meta"><span class="task-tag">${esc(t.cat)}</span></div>
+      <div class="task-actions">
+        <button class="tbtn" onclick="openTDP('${t.id}')">Details</button>
+        <button class="tbtn primary" onclick="launchTaskExternal('${t.id}')">Launch ↗</button>
+      </div>
     </div>`).join("")}</div>`;
 }
 function onTaskSearch(v){ state.q = v; refreshTaskResults(); }
@@ -3128,8 +3346,7 @@ function renderCampusMap(){
                     : (c.transit.note || "Sorted by distance");
   return `<div class="map-wrap">
     <div class="map-topbar">
-      <input class="msearch" id="mapSearch" type="text" placeholder="Search ${esc(c.abbr)} places…"
-        value="${esc(state.mapQ).replace(/"/g,"&quot;")}" oninput="onMapSearch(this.value)">
+      <div class="map-topbar-note">Search ${esc(c.abbr)} places from the search bar above · filter by type below</div>
       <button class="campus-pill" onclick="openCampusPicker()">${esc(c.abbr)} ▾</button>
     </div>
     <div class="map-chips" id="mapChips">${chips.map(([k,l])=>`
@@ -3328,7 +3545,7 @@ function aiRefresh(){ const r=$("aiRoot"); if(r) r.innerHTML = aiInner(); }
 function aiRenderItem(it){
   const S=SOURCES[it.src], resolved=aiResolved(it.id), started=aiStarted(it.id);
   return `
-    <div class="item ${it.high&&!resolved?"high":""} ${resolved?"resolved":""}">
+    <div class="item ${it.high&&!resolved?"high":""} ${resolved?"resolved":""}" id="ai-${esc(it.id)}">
       <div class="it-top">
         <span class="src-chip ${S.cls}">${esc(S.name)}</span>
         ${aiModelTag(it)}
@@ -3470,9 +3687,9 @@ function renderOrgs(){
   const ev=o.events&&o.events[0];
   return `<div class="card">
     <div class="card-head"><h3>Student Organizations</h3><span class="link" onclick="openOrgs()">Open →</span></div>
-    ${o.memberships.slice(0,3).map(m=>{
+    ${o.memberships.slice(0,3).map((m,i)=>{
       const anns=annByOrg[m.name]||[];
-      return `<div class="li"><div style="min-width:0;flex:1"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div>
+      return `<div class="li li-click" onclick="openOrgMembership(${i})" style="cursor:pointer" title="View ${esc(m.name)}"><div style="min-width:0;flex:1"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div>
           ${anns.map(a=>`<div class="org-ann"><span>${esc(a.text)} <span class="org-ann-time">· ${esc(a.time)}</span></span></div>`).join("")}
         </div>
       </div>`;}).join("")}
@@ -3492,7 +3709,7 @@ function openOrgs(){
     <h2>Student Organizations</h2>
     <p class="dsub">Your memberships, announcements and events · via BeInvolved</p>
     <div class="dsec"><h4>My organizations</h4>
-      ${o.memberships.map(m=>`<div class="li"><div style="min-width:0"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div></div>
+      ${o.memberships.map((m,i)=>`<div class="li li-click" onclick="openOrgMembership(${i})" style="cursor:pointer" title="View ${esc(m.name)}"><div style="min-width:0"><div class="lit">${esc(m.name)}</div><div class="lis">${esc(m.role)}</div></div>
         <div class="lir"><span class="badge gray">Active</span></div></div>`).join("")}</div>
     <div class="dsec"><h4>Announcements</h4>
       ${o.announcements.map(a=>`<div class="notif">
@@ -3916,35 +4133,112 @@ function openFeedItem(kind,id){
 }
 
 /* =====================================================
+   Universal-search detail drawers + task launch/TDP
+===================================================== */
+function launchTaskExternal(id){ state.omniQ=""; const i=$("omniInput"); if(i) i.value=""; closeDrawer(); launchTask(id); }
+function taskTDP(t){
+  const SUP={ "Academics":"Office of the Registrar and your academic advisor",
+    "Finances":"Student Central (Bursar & Financial Aid)",
+    "Employment":"IU Human Resources",
+    "Admissions":"Office of Admissions",
+    "Campus Life":"the sponsoring campus office",
+    "IT & Accounts":"UITS Support Center · it.iu.edu",
+    "Family":"Student Central",
+    "Research":"Office of Research Administration" };
+  const KBFOR={ "IT & Accounts":"duo","Finances":"bill","Academics":"adddrop","Employment":"kualitime","Admissions":"fafsa","Campus Life":"busroutes","Family":"payer" };
+  const kb=KBFOR[t.cat];
+  const res=[];
+  if(kb){ const a=KB.find(k=>k.id===kb); if(a) res.push({label:a.title, run:`openKB('${kb}')`}); }
+  return {
+    description: t.desc + ". Launching opens the service in a new tab; this page explains what the task does and where to get help.",
+    resources: res,
+    support: SUP[t.cat] || "AskIU · answers.iu.edu",
+    feedback: "Was this task page helpful?"
+  };
+}
+function openTDP(id){
+  const t=taskById(id); if(!t) return;
+  const d=taskTDP(t);
+  $("drawer").innerHTML=`
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <span class="abbr-chip">${esc(t.cat)}</span>
+    <h2>${esc(t.name)}</h2>
+    <p class="dhead-desc">${esc(d.description)}</p>
+    <a class="getthere" onclick="launchTaskExternal('${t.id}')">Launch ${esc(t.name)} ↗</a>
+    ${d.resources.length?`<div class="dsec"><h4>${ico("note")} Resources</h4>
+      ${d.resources.map(r=>`<div class="drow"><button class="step-link" onclick="${r.run}">${esc(r.label)} ↗</button></div>`).join("")}</div>`:""}
+    <div class="dsec"><h4>${ico("info-circle")} Support</h4>
+      <div class="drow">${esc(d.support)}</div></div>
+    <div class="dsec"><h4>${ico("pencil")} Feedback</h4>
+      <div class="drow"><div>${esc(d.feedback)}</div>
+        <span class="right" style="display:flex;gap:6px">
+          <button class="pill-btn" onclick="toast('Thanks for the feedback.')">Yes</button>
+          <button class="pill-btn" onclick="toast('Thanks for the feedback.')">No</button></span></div></div>
+    <div class="cc-hint" style="margin-top:12px">Task details · one.iu.edu</div>`;
+  openDrawerNow();
+}
+function openKB(id){
+  const k=KB.find(x=>x.id===id); if(!k) return;
+  $("drawer").innerHTML=`
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <span class="abbr-chip">${esc(k.cat)}</span>
+    <h2>${esc(k.title)}</h2>
+    <div class="dhead-addr">KNOWLEDGE BASE · UPDATED ${esc(k.updated)}</div>
+    <p class="dhead-desc">${esc(k.summary)}</p>
+    ${(KB_BODY[k.id]||[]).map(x=>`<p class="kb-body">${esc(x)}</p>`).join("")}
+    <div class="dsec"><h4>${ico("info-circle")} Still need help?</h4>
+      <div class="drow">Contact the UITS Support Center at it.iu.edu, or ask a question through AskIU.</div></div>
+    <div class="cc-hint" style="margin-top:12px">kb.iu.edu</div>`;
+  openDrawerNow();
+}
+function openPerson(id){
+  const pp=PEOPLE.find(x=>x.id===id); if(!pp) return;
+  const c=campusById(pp.campus);
+  $("drawer").innerHTML=`
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <span class="abbr-chip">${esc(pp.role)}</span>
+    <h2>${esc(pp.name)}</h2>
+    <div class="dhead-addr">${esc(pp.title).toUpperCase()}</div>
+    <div class="dsec"><h4>${ico("user-group")} Directory</h4>
+      <div class="drow">Department <span class="right">${esc(pp.dept)}</span></div>
+      <div class="drow">Campus <span class="right">${esc(c?c.name:pp.campus)}</span></div>
+      <div class="drow">Email <span class="right">${esc(pp.email)}</span></div>
+      ${pp.building?`<div class="drow">Office <span class="right">${esc(pp.building)}</span></div>`:""}
+      ${pp.phone?`<div class="drow">Phone <span class="right">${esc(pp.phone)}</span></div>`:""}</div>
+    <div class="cc-hint" style="margin-top:12px">Public listing · directory.iu.edu</div>`;
+  openDrawerNow();
+}
+function orgByName(name){ const n=String(name||"").toLowerCase(); return ORGS.find(o=>o.name.toLowerCase()===n); }
+function memberRole(name){ const ms=(P().orgs&&P().orgs.memberships)||[]; const n=String(name||"").toLowerCase(); const m=ms.find(x=>String(x.name).toLowerCase()===n); return m?m.role:""; }
+function orgDrawerHTML(o, role){
+  const c=campusById(o.campus);
+  return `
+    <button class="close" onclick="closeDrawer()">✕</button>
+    <span class="abbr-chip">${esc(o.cat||"Student organization")}</span>
+    <h2>${esc(o.name)}</h2>
+    <div class="dhead-addr">${esc(c?c.name:(o.campus||"")).toUpperCase()}</div>
+    ${o.blurb?`<p class="dhead-desc">${esc(o.blurb)}</p>`:""}
+    ${role?`<div class="dsec"><h4>${ico("user-group")} Your membership</h4><div class="drow">${esc(role)}</div></div>`:""}
+    <a class="getthere" onclick="toast('Prototype: opens ${esc(o.name)} on BeInvolved.')">View on BeInvolved</a>
+    <div class="cc-hint" style="margin-top:12px">beinvolved.iu.edu</div>`;
+}
+function openOrg(id){
+  const o=ORGS.find(x=>x.id===id); if(!o) return;
+  $("drawer").innerHTML=orgDrawerHTML(o, memberRole(o.name));
+  openDrawerNow();
+}
+function openOrgMembership(i){
+  const m=((P().orgs&&P().orgs.memberships)||[])[i]; if(!m) return;
+  const o=orgByName(m.name) || {name:m.name, campus:P().campus, cat:"Student organization", blurb:""};
+  $("drawer").innerHTML=orgDrawerHTML(o, m.role);
+  openDrawerNow();
+}
+
+/* =====================================================
    Omni-search widget — searches One.IU tasks, this user's
    personalized portal content, and general campus content.
    Fixed-width column; results scroll inside a fixed-height panel.
 ===================================================== */
-function buildSearchIndex(){
-  const idx=[], seen=new Set();
-  const add=o=>{ const k=o.group+"|"+o.title.toLowerCase(); if(seen.has(k))return; seen.add(k); idx.push(o); };
-  const p=P();
-  // personalized content across this user's tabs
-  p.tabs.forEach(tab=>{
-    const nav=`omniGo('${tab.id}')`, g="Your "+tab.label;
-    (p.views[tab.id]||[]).forEach(w=>{
-      if(w.type==="schedule") w.items.forEach(i=>add({icon:"",title:i.title,sub:i.loc,tag:tab.label,group:g,run:nav}));
-      if(w.type==="list")     w.items.forEach(i=>add({icon:i.icon||"•",title:i.title,sub:i.sub,tag:tab.label,group:g,run:nav}));
-      if(w.type==="tasks")    w.items.forEach(i=>add({icon:"✅",title:i.txt,sub:i.due,tag:tab.label,group:g,run:nav}));
-      if(w.type==="steps")    w.items.forEach(i=>add({icon:"◉",title:i.title,sub:i.sub,tag:tab.label,group:g,run:nav}));
-      if(w.type==="balances") w.items.forEach(i=>add({icon:i.icon,title:i.label,sub:i.value,tag:tab.label,group:g,run:nav}));
-    });
-  });
-  // this user's action items
-  (p.actionItems||[]).forEach(i=>add({icon:SOURCES[i.src].icon,title:i.title,sub:i.desc,
-    tag:SOURCES[i.src].name.split(" (")[0].split(" · ")[0],group:"Your action items",run:`omniGo('home')`}));
-  // One.IU tasks (general services + role-specific)
-  TASKS.forEach(t=>add({icon:taskIcon(t),title:t.name,sub:t.desc,tag:t.cat,group:"One.IU tasks",run:`launchTask('${t.id}')`}));
-  // general campus content — buildings, parking, buses, food
-  allMapPlaces().forEach(pl=>add({icon:TYPE_ICONS[pl.type],title:pl.name,sub:pl.addr||placeSub(pl),
-    tag:pl.type,group:"Places & campus",run:`openPlace('${pl.id}')`}));
-  return idx;
-}
 function renderOmnibar(){
   const has = !!state.omniQ.trim();
   return `<div class="omnibar">
@@ -3956,23 +4250,133 @@ function renderOmnibar(){
     <div class="omnibar-results" id="omniResults" style="${has?'':'display:none'}">${omniResultsHTML()}</div>
   </div>`;
 }
+
+/* ---------- universal search engine ---------- */
+const SRC_META = {
+  feature:{tag:"Feature",   icon:"grid",       w:12, label:"Features"},
+  signal: {tag:"Your info", icon:"bell",       w:14, label:"Your info"},
+  task:   {tag:"Task",      icon:"clipboard",  w:12, label:"One.IU tasks"},
+  place:  {tag:"Place",     icon:"map-pin",    w:10, label:"Places"},
+  org:    {tag:"Org",       icon:"user-group", w:8,  label:"Student orgs"},
+  person: {tag:"Person",    icon:"user-group", w:8,  label:"People"},
+  kb:     {tag:"Help",      icon:"note",       w:6,  label:"Knowledge Base"},
+};
+function reEsc(x){ return String(x).replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
+const SEARCH_STOP=new Set("how do i to the a an of my your for is on in at with can where what find get about".split(" "));
+function searchTok(x){ return String(x).toLowerCase().split(/[^a-z0-9]+/).filter(Boolean); }
+function matchQuality(q, fields){
+  q=q.trim().toLowerCase(); if(!q) return 0;
+  const qAll=searchTok(q), qC=qAll.filter(t=>!SEARCH_STOP.has(t)), qt=qC.length?qC:qAll;
+  let best=0;
+  for(let f of fields){ if(!f) continue; const fl=String(f).toLowerCase(), ft=searchTok(fl);
+    if(fl===q){best=Math.max(best,100);continue;}
+    if(fl.startsWith(q)){best=Math.max(best,85);continue;}
+    if(fl.includes(q)) best=Math.max(best,60);
+    const ov=qt.filter(t=>ft.some(x=> x===t || (t.length>1&&x.length>1&&(x.startsWith(t)||t.startsWith(x))))).length;
+    if(ov) best=Math.max(best, Math.round(30 + 55*ov/qt.length));
+  }
+  return Math.min(best,100);
+}
+function detectIntent(q){
+  const s=q.trim().toLowerCase();
+  if(/(how do i|how to|how can|set up|setup|reset|connect|install|enable|find my|forgot)/.test(s) || s.endsWith("?")) return "kb";
+  if(/\b(hall|library|building|center|centre|quad|stadium|union|gym|dorm|arena)\b/.test(s)) return "place";
+  if(/^(pay|register|add|drop|clock|request|order|submit|apply|enroll|renew|book|reserve)\b/.test(s)) return "task";
+  if(/^[A-Z][a-z]+\s+[A-Z][a-z']+/.test(q.trim())) return "person";
+  return null;
+}
+function tabAffinity(){
+  const t=state.tab;
+  if(t==="home") return {signal:1,task:1};
+  if(["money","aid","billing"].includes(t)) return {signal:1,task:1};
+  if(["classes","teaching","application","prep","records"].includes(t)) return {signal:1,task:1,kb:1};
+  if(t==="campus") return {place:1,org:1,person:1};
+  if(t==="tasks") return {task:1};
+  if(t==="alumni") return {kb:1,task:1};
+  return {};
+}
+function featureAdapter(){
+  const p=P(), out=[];
+  (p.tabs||[]).forEach(t=>out.push({id:"tab_"+t.id,title:t.label,sub:"Go to "+t.label,fields:[t.label],run:`omniGo('${t.id}')`}));
+  const WF={crimsoncard:["CrimsonCard","Campus ID, funds & photo"],kualitime:["Kuali Time","Clock in and submit hours"],acad:["Academic calendar","Key term dates"],libraries:["Libraries","IUCAT, loans & study rooms"],orgs:["Student Organizations","Your memberships · BeInvolved"],careers:["Careers","Handshake activity & jobs"],campusmap:["Campus map","Buildings, parking & buses"],campusfeed:["Campus feed","Events, news & athletics"],launch:["One.IU tasks","Browse & launch services"],degree:["Degree progress","Credits & requirements"]};
+  const seen=new Set();
+  Object.entries(p.views||{}).forEach(([tab,widgets])=>{
+    (widgets||[]).forEach(w=>{ if(WF[w.type]&&!seen.has(w.type)){ seen.add(w.type);
+      out.push({id:"feat_"+w.type,title:WF[w.type][0],sub:WF[w.type][1],fields:[WF[w.type][0],WF[w.type][1]],run:`omniGo('${tab}')`}); }});
+  });
+  return out;
+}
+function sigSlug(x){ return "sigrow-"+String(x||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); }
+function sigFlash(el){ if(!el||!el.classList) return; el.classList.remove("sig-flash"); void el.offsetWidth; el.classList.add("sig-flash"); setTimeout(()=>{ if(el.classList) el.classList.remove("sig-flash"); },1900); }
+function revealSignal(tab,wtype,rowId){
+  state.omniQ=""; const inp=$("omniInput"); if(inp) inp.value="";
+  setTab(tab);
+  setTimeout(()=>{
+    let el = rowId ? document.getElementById(rowId) : null;
+    if(el){ if(el.scrollIntoView) el.scrollIntoView({behavior:"smooth",block:"center"}); sigFlash(el); const card=el.closest&&el.closest('[data-w]'); if(card) sigFlash(card); return; }
+    const list=document.querySelectorAll('[data-w="'+wtype+'"]'); el=list&&list[0];
+    if(el){ if(el.scrollIntoView) el.scrollIntoView({behavior:"smooth",block:"center"}); sigFlash(el); }
+  },80);
+}
+function signalAdapter(){
+  const p=P(), out=[];
+  Object.entries(p.views||{}).forEach(([tab,widgets])=>{
+    (widgets||[]).forEach(w=>{
+      if(w.type==="hero" && w.signals) w.signals.forEach((sg,i)=>out.push({id:"sg_h_"+tab+i,title:sg.l,sub:(sg.n?sg.n+" · ":"")+(sg.src||""),fields:[sg.l,sg.n,sg.src],run:`revealSignal('${tab}','hero','')`}));
+      if(w.type==="balances") (w.items||[]).forEach((it,i)=>{const money=/^[−-]?\$/.test(String(it.value||""));out.push({id:"sg_b_"+tab+i,title:it.label,sub:(it.value?it.value+" · ":"")+(it.note||""),fields:[it.label,it.value,it.note].concat(money?["balance","account"]:[]),run:`revealSignal('${tab}','balances','${sigSlug(it.label)}')`});});
+    });
+  });
+  (p.actionItems||[]).forEach((it,i)=>out.push({id:"sg_a_"+i,title:it.title,sub:it.desc||it.due||"",fields:[it.title,it.desc,it.due],run:`revealSignal('home','actionitems','ai-${it.id}')`}));
+  return out;
+}
+function searchSources(q){
+  const guest=P().guest, intent=detectIntent(q), aff=tabAffinity(), roles=personaRoles(state.persona), out=[];
+  const push=(source,o)=>{
+    const flds=o.fields||[o.title,o.sub];
+    const mqAny=matchQuality(q, flds); if(mqAny<20) return;
+    const mqT=matchQuality(q,[o.title]);
+    const mq = mqT>0 ? mqT : Math.round(mqAny*0.6);
+    let sc=SRC_META[source].w+mq;
+    if(aff[source]) sc+=18;
+    if(o.campus && o.campus===state.campus) sc+=12;
+    if(source==="task" && o.roleMatch) sc+=10;
+    if(source==="signal") sc+=15;
+    if(intent===source) sc+=40;
+    out.push({source,id:o.id,title:o.title,sub:o.sub,tag:SRC_META[source].tag,run:o.run,score:sc});
+  };
+  featureAdapter().forEach(f=>push("feature",f));
+  if(!guest) signalAdapter().forEach(sg=>push("signal",sg));
+  TASKS.filter(t=>!guest||t.personas.includes("all")).forEach(t=>push("task",{id:t.id,title:t.name,sub:t.desc,fields:[t.name,t.desc,t.cat],run:`launchTaskExternal('${t.id}')`,roleMatch:roleMatchAny(t,roles)}));
+  allMapPlaces().forEach(pl=>push("place",{id:pl.id,title:pl.name,sub:pl.addr||placeSub(pl),fields:[pl.name,pl.abbr,pl.addr],run:`openPlace('${pl.id}')`,campus:state.campus}));
+  ORGS.forEach(o=>push("org",{id:o.id,title:o.name,sub:o.blurb,fields:[o.name,o.cat,o.blurb],run:`openOrg('${o.id}')`,campus:o.campus}));
+  if(!guest) PEOPLE.forEach(pp=>push("person",{id:pp.id,title:pp.name,sub:pp.title+" · "+pp.dept,fields:[pp.name,pp.title,pp.dept,pp.email],run:`openPerson('${pp.id}')`,campus:pp.campus}));
+  KB.forEach(k=>push("kb",{id:k.id,title:k.title,sub:k.summary,fields:[k.title,k.summary,k.cat],run:`openKB('${k.id}')`}));
+  out.sort((a,b)=>b.score-a.score);
+  return out;
+}
+function omniRow(r,best){
+  return `<div class="ores${best?' best':''}" onclick="${r.run}">
+      <div class="oic">${ico(SRC_META[r.source].icon)}</div>
+      <div style="min-width:0"><div class="ot">${esc(r.title)}</div><div class="os">${esc(r.sub||"")}</div></div>
+      <span class="otag">${esc(r.tag)}</span></div>`;
+}
 function omniResultsHTML(){
-  const q=state.omniQ.trim().toLowerCase();
-  if(!q) return `<div class="omni-empty">Start typing to search across your schedule, to-dos and balances, every One.IU service, and campus buildings.</div>`;
-  const hits=buildSearchIndex().filter(e=>(e.title+" "+(e.sub||"")+" "+e.tag+" "+e.group).toLowerCase().includes(q));
-  if(!hits.length) return `<div class="omni-empty">No matches for “${esc(state.omniQ)}”.</div>`;
-  const rank=g=>g.startsWith("Your")?0:g==="One.IU tasks"?1:2;
-  const groups=[...new Set(hits.map(h=>h.group))].sort((a,b)=>rank(a)-rank(b)||a.localeCompare(b));
-  let out="", total=0;
-  for(const g of groups){
-    const rows=hits.filter(h=>h.group===g).slice(0,6);
-    if(!rows.length || total>=24) continue;
-    out += `<div class="omni-group">${esc(g)}</div>` + rows.map(r=>`
-      <div class="ores" onclick="${r.run}">
-        <div style="min-width:0"><div class="ot">${esc(r.title)}</div><div class="os">${esc(r.sub||"")}</div></div>
-        <span class="otag">${esc(r.tag)}</span>
-      </div>`).join("");
-    total += rows.length;
+  const q=state.omniQ.trim();
+  if(!q) return `<div class="omni-empty">Search across your info, One.IU tasks, campus places, the Knowledge Base, people, and student orgs.</div>`;
+  const hits=searchSources(q);
+  if(!hits.length) return `<div class="omni-empty">No matches for “${esc(q)}”.</div>`;
+  const best=hits[0], rest=hits.slice(1);
+  let out=`<div class="omni-group">Best match</div>`+omniRow(best,true);
+  let order=[...new Set(rest.map(r=>r.source))];
+  // On the Tasks screen, the One.IU tasks group is always the top grouping.
+  if(state.tab==="tasks") order=["task",...order.filter(s=>s!=="task")];
+  let total=1;
+  for(const src of order){
+    const rows=rest.filter(r=>r.source===src); if(!rows.length||total>=30) continue;
+    const show=rows.slice(0,3);
+    out+=`<div class="omni-group">${esc(SRC_META[src].label)}</div>`+show.map(r=>omniRow(r,false)).join("");
+    if(rows.length>3) out+=`<div class="omni-more">+${rows.length-3} more in ${esc(SRC_META[src].label)}</div>`;
+    total+=show.length;
   }
   return out;
 }
@@ -4079,7 +4483,7 @@ function widgetWrap(tok,def){
              : WIDE_TYPES.includes(def.type) ? "wide" : "";
   const sel = state.moving===tok;
   const info = widgetInfo(def);
-  return `<div class="widget ${span} ${sel?"selected":""}" data-tok="${tok}" draggable="false"
+  return `<div class="widget ${span} ${sel?"selected":""}" data-tok="${tok}" data-w="${def.type}" draggable="false"
       ondragstart="wDragStart(event,this)" ondragend="wDragEnd(event,this)"
       ondragover="wDragOver(event,this)" ondragleave="this.classList.remove('drop-target')"
       ondrop="wDrop(event,this)">
